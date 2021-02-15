@@ -6,6 +6,11 @@ using UnityEngine.InputSystem;
 public class PlayerMovement : MonoBehaviour
 {
     [SerializeField]
+    private Rigidbody rb = null;
+    [SerializeField]
+    private Transform eyePivot = null;
+
+    [SerializeField]
     private float speed = 1f;
     private Vector3 rawInputMovement;
 
@@ -25,13 +30,19 @@ public class PlayerMovement : MonoBehaviour
         Vector3 direction = rawInputMovement.normalized;
         if (direction.magnitude != 0)
         {
+            // Eye rotation
             float targetAngle = Mathf.Atan2(direction.x, direction.z) * Mathf.Rad2Deg;
-            float angle = Mathf.SmoothDampAngle(transform.eulerAngles.y, targetAngle, ref turnSmoothVelocity, turnSmoothTime);
-            Vector3 newAngles = transform.eulerAngles;
+            float angle = Mathf.SmoothDampAngle(eyePivot.eulerAngles.y, targetAngle, ref turnSmoothVelocity, turnSmoothTime);
+            Vector3 newAngles = eyePivot.eulerAngles;
             newAngles.y = angle;
-            transform.rotation = Quaternion.Euler(newAngles);
+            eyePivot.rotation = Quaternion.Euler(newAngles);
             // Movement.
-            transform.position += direction * Time.deltaTime * speed;
+            //transform.position += direction * Time.deltaTime * speed;
+            rb.velocity = direction * speed;
+        }
+        else
+        {
+            rb.velocity = Vector3.zero;
         }
     }
 

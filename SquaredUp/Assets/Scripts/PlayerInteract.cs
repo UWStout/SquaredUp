@@ -17,7 +17,19 @@ public class PlayerInteract : MonoBehaviour
     // Called when an object enters the trigger.
     private void OnTriggerEnter(Collider other)
     {
-        currentInteract = other.GetComponent<Interactable>();
+        if (currentInteract == null)
+        {
+            currentInteract = other.GetComponent<Interactable>();
+        }
+        else
+        {
+            float distToCur = (currentInteract.transform.position - this.transform.position).magnitude;
+            float distToNew = (other.transform.position - this.transform.position).magnitude;
+            if (distToNew > distToCur)
+            {
+                currentInteract = other.GetComponent<Interactable>();
+            }
+        }
     }
 
     // Called when an object leaves the trigger.
@@ -36,6 +48,14 @@ public class PlayerInteract : MonoBehaviour
         if (currentInteract == null)
         {
             currentInteract = other.GetComponent<Interactable>();
+        } else
+        {
+            float distToCur = (currentInteract.transform.position - this.transform.position).magnitude;
+            float distToNew = (other.transform.position - this.transform.position).magnitude;
+            if (distToNew > distToCur)
+            {
+                currentInteract = other.GetComponent<Interactable>();
+            }
         }
     }
 
