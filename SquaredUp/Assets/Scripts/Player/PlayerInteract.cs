@@ -1,6 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.InputSystem;
 
 public class PlayerInteract : MonoBehaviour
@@ -9,7 +7,7 @@ public class PlayerInteract : MonoBehaviour
     private Interactable currentInteract;
 
     // Start is called before the first frame update
-    void Start()
+    private void Start()
     {
         currentInteract = null;
     }
@@ -17,7 +15,7 @@ public class PlayerInteract : MonoBehaviour
     // Called when an object enters the trigger.
     private void OnTriggerEnter(Collider other)
     {
-        currentInteract = other.GetComponent<Interactable>();
+        SwapInteractable(other.GetComponent<Interactable>());
     }
 
     // Called when an object leaves the trigger.
@@ -26,6 +24,7 @@ public class PlayerInteract : MonoBehaviour
         Interactable leaveInteract = other.GetComponent<Interactable>();
         if (currentInteract == leaveInteract)
         {
+            currentInteract.HideAlert();
             currentInteract = null;
         }
     }
@@ -35,8 +34,23 @@ public class PlayerInteract : MonoBehaviour
     {
         if (currentInteract == null)
         {
-            currentInteract = other.GetComponent<Interactable>();
+            SwapInteractable(other.GetComponent<Interactable>());
         }
+    }
+
+    /// <summary>
+    /// Swaps the interactable to the new interactable.
+    /// Hides the last interactable's alert and shows the new interactable's alert.
+    /// </summary>
+    /// <param name="newInteractable">Interactable that is the new focus.</param>
+    private void SwapInteractable(Interactable newInteractable)
+    {
+        if (currentInteract != null)
+        {
+            currentInteract.HideAlert();
+        }
+        currentInteract = newInteractable;
+        newInteractable.DisplayAlert();
     }
 
     // Called when the player tries to interact with something from the input system.

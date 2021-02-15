@@ -1,17 +1,16 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
 public class CameraFollow : MonoBehaviour
 {
+    // Refernece to the target to follow.
     [SerializeField]
     private Transform followTarget = null;
 
     // LateUpdate is called once per end of frame
-    void LateUpdate()
+    private void LateUpdate()
     {
         Vector3 pos = followTarget.position;
-        pos.y = this.transform.position.y;
-        this.transform.position = pos;
+        pos.y = transform.position.y;
+        transform.position = pos;
     }
 }
