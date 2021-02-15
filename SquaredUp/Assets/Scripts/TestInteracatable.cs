@@ -16,14 +16,13 @@ public class TestInteracatable : Interactable
     public override void Interact()
     {
         base.Interact();
+        isMain = !isMain;
         if (isMain)
         {
             meshRendRef.material = mainMat;
-            isMain = false;
         } else
         {
             meshRendRef.material = otherMat;
-            isMain = true;
         }
     }
 }
