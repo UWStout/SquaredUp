@@ -1,7 +1,5 @@
-﻿using System.Collections;
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.InputSystem;
-using TMPro;
 
 public class DialogueController : MonoBehaviour
 {
@@ -20,23 +18,18 @@ public class DialogueController : MonoBehaviour
     // Object that shows the textbox when active
     [SerializeField]
     private GameObject uiComponent = null;
-    // Text to display the dialogue with
+    // Type writer to help display text
     [SerializeField]
-    private TextMeshProUGUI typeText = null;
-
-    // Delay between typing characters
-    [SerializeField]
-    private float delayBetweenLetters = 0.15f;
+    private TypeWriter typeWriteRef = null;
 
     // The lines that will be written in each text box
     private string[] dialogueLines;
     // Current line index
     private int curLineIndex;
 
-    // Reference to running coroutine
-    private Coroutine typeWriteCoroutine;
     // If the type writer has finished
     private bool finishedTyping;
+
 
     /// <summary>
     /// Starts the dialogue
@@ -52,21 +45,7 @@ public class DialogueController : MonoBehaviour
         dialogueLines = lines;
         curLineIndex = 0;
         // Start typing
-        TypeLine();
-    }
-
-    /// <summary>
-    /// Ends the dialogue
-    /// </summary>
-    private void EndDialogue()
-    {
-        // Reset some variables
-        typeText.text = "";
-        dialogueLines = null;
-        // Hide text box
-        uiComponent.SetActive(false);
-        // Swap input map back
-        playerInputRef.SwitchCurrentActionMap(playerActionMapName);
+        StartTyping();
     }
 
     /// <summary>
@@ -79,74 +58,56 @@ public class DialogueController : MonoBehaviour
             // Type next line if finished typing
             if (finishedTyping)
             {
-                // Try to type the next line, if we cannot, end the dialogue
-                if (!TypeLine())
+                // If there are more lines, continue the dialogue
+                if (curLineIndex < dialogueLines.Length)
                 {
+                    // Type next line.
+                    StartTyping();
+                }
+                else
+                {
+                    // End the dialogue.
                     EndDialogue();
                 }
             }
             // End the typing early
             else
             {
-                PreemptiveLineFinish();
+                typeWriteRef.PreemptiveLineFinish();
             }
         }
     }
 
     /// <summary>
-    /// Type the current line
+    /// Calls the type writer to start typing and sets finishedTyping to false.
     /// </summary>
-    /// <returns>False if out of lines to type</returns>
-    private bool TypeLine()
-    {
-        if (curLineIndex < dialogueLines.Length)
-        {
-            typeText.text = "";
-            typeWriteCoroutine = StartCoroutine(TypeWriter());
-            return true;
-        }
-        else
-        {
-            return false;
-        }
-    }
-
-    /// <summary>
-    /// Coroutine to make the letters appear slowly
-    /// </summary>
-    private IEnumerator TypeWriter()
+    private void StartTyping()
     {
         finishedTyping = false;
-        string line = dialogueLines[curLineIndex];
-        // Indiivually write each character
-        foreach (char c in line)
-        {
-            TypeOneLetter(c);
-            yield return new WaitForSeconds(delayBetweenLetters);
-        }
-        // Increment line and set finished tpying to true
-        finishedTyping = true;
-        ++curLineIndex;
-        yield return null;
+        typeWriteRef.TypeLine(dialogueLines[curLineIndex], HandleFinishTyping);
     }
 
     /// <summary>
-    /// Appends the given letter to the text
+    /// Sets finishedTyping to true and increments the line index.
     /// </summary>
-    /// <param name="c">Character to append</param>
-    private void TypeOneLetter(char c)
+    private void HandleFinishTyping()
     {
-        typeText.text += c;
+        ++curLineIndex;
+        finishedTyping = true;
     }
 
     /// <summary>
-    /// Show the whole line before the typewriter is done
+    /// Ends the dialogue
     /// </summary>
-    private void PreemptiveLineFinish()
+    private void EndDialogue()
     {
-        StopCoroutine(typeWriteCoroutine);
-        typeText.text = dialogueLines[curLineIndex];
-        finishedTyping = true;
-        ++curLineIndex;
+        // Reset some variables
+        dialogueLines = null;
+        // Hide text box
+        uiComponent.SetActive(false);
+        // Swap input map back
+        playerInputRef.SwitchCurrentActionMap(playerActionMapName);
     }
+
+    
 }
