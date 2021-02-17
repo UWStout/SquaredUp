@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 
+// Interactable for testing. Changes color of the interactable.
 public class TestInteracatable : Interactable
 {
     // References

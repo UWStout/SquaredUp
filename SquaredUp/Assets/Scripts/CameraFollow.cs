@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 
+// Put this on the camera and give it a follow target. It will follow that target on the x and y positions.
 public class CameraFollow : MonoBehaviour
 {
     // Refernece to the target to follow.
@@ -10,7 +11,7 @@ public class CameraFollow : MonoBehaviour
     private void LateUpdate()
     {
         Vector3 pos = followTarget.position;
-        pos.y = transform.position.y;
+        pos.z = transform.position.z;
         transform.position = pos;
     }
 }

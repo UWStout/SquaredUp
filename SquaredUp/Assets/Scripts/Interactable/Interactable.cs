@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 
+// Base class for an interactable
 public class Interactable : MonoBehaviour
 {
     /// <summary>

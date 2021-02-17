@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 
+// Interactable that lets you talk to an NPC
 public class NPCTalkInteractable : Interactable
 {
     // Reference to the dialogue controller

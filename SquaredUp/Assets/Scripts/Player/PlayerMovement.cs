@@ -2,12 +2,13 @@
 using UnityEngine;
 using UnityEngine.InputSystem;
 
+// For Player Movement
 public class PlayerMovement : MonoBehaviour
 {
     // References
     // Reference to the player's rigibbody.
     [SerializeField]
-    private Rigidbody rb = null;
+    private Rigidbody2D rb = null;
     // Reference to the pivot of the player's eyes.
     [SerializeField]
     private Transform eyePivot = null;
@@ -17,7 +18,7 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField]
     private float speed = 1f;
     // Holds the player's input axis values.
-    private Vector3 rawInputMovement;
+    private Vector2 rawInputMovement;
 
     // Smooths rotation/turn speed of eyes.
     [SerializeField]
@@ -30,14 +31,14 @@ public class PlayerMovement : MonoBehaviour
     // Start is called before the first frame update
     private void Start()
     {
-        rawInputMovement = Vector3.zero;
+        rawInputMovement = Vector2.zero;
     }
 
     // Update is called once per frame
     private void Update()
     {
         // Check if there is input.
-        Vector3 direction = rawInputMovement.normalized;
+        Vector2 direction = rawInputMovement.normalized;
         if (direction.magnitude != 0)
         {
             // Rotate the eye to fit the new player input.
@@ -48,7 +49,8 @@ public class PlayerMovement : MonoBehaviour
             eyeCoroutine = StartCoroutine(MoveEyes(direction));
 
             // Movement
-            //transform.position += direction * Time.deltaTime * speed;
+            //Vector2 move = direction * Time.deltaTime * speed;
+            //transform.position += new Vector3(move.x, move.y, 0);
             rb.velocity = direction * speed;
         }
         else
@@ -61,23 +63,22 @@ public class PlayerMovement : MonoBehaviour
     // Called when the player inputs movement.
     public void OnMovement(InputAction.CallbackContext value)
     {
-        Vector2 inputMovement = value.ReadValue<Vector2>();
-        rawInputMovement = new Vector3(inputMovement.x, 0, inputMovement.y);
+        rawInputMovement = value.ReadValue<Vector2>();
     }
 
     /// <summary>
     /// Coroutine to rotate the eyes to which direction the player is moving.
     /// </summary>
     /// <param name="direction">Direction to put the eyes in.</param>
-    private IEnumerator MoveEyes(Vector3 direction)
+    private IEnumerator MoveEyes(Vector2 direction)
     {
         // Eye rotation
-        float targetAngle = Mathf.Atan2(direction.x, direction.z) * Mathf.Rad2Deg;
-        while (targetAngle != eyePivot.eulerAngles.y)
+        float targetAngle = Mathf.Atan2(-direction.x, direction.y) * Mathf.Rad2Deg;
+        while (targetAngle != eyePivot.eulerAngles.z)
         {
-            float angle = Mathf.SmoothDampAngle(eyePivot.eulerAngles.y, targetAngle, ref turnSmoothVelocity, turnSmoothTime);
+            float angle = Mathf.SmoothDampAngle(eyePivot.eulerAngles.z, targetAngle, ref turnSmoothVelocity, turnSmoothTime);
             Vector3 newAngles = eyePivot.eulerAngles;
-            newAngles.y = angle;
+            newAngles.z = angle;
             eyePivot.rotation = Quaternion.Euler(newAngles);
 
             yield return null;

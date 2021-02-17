@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using UnityEngine.InputSystem;
 
+// Manages the dialogue box and typewriter
 public class DialogueController : MonoBehaviour
 {
     // Input References

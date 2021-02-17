@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using UnityEngine.InputSystem;
 
+// Does physics checks to see if the player is interacting with anything.
 public class PlayerInteract : MonoBehaviour
 {
     // The interactable the player is currently focused on.
@@ -13,13 +14,13 @@ public class PlayerInteract : MonoBehaviour
     }
 
     // Called when an object enters the trigger.
-    private void OnTriggerEnter(Collider other)
+    private void OnTriggerEnter2D(Collider2D other)
     {
         SwapInteractable(other.GetComponent<Interactable>());
     }
 
     // Called when an object leaves the trigger.
-    private void OnTriggerExit(Collider other)
+    private void OnTriggerExit2D(Collider2D other)
     {
         Interactable leaveInteract = other.GetComponent<Interactable>();
         if (currentInteract == leaveInteract)
@@ -30,7 +31,7 @@ public class PlayerInteract : MonoBehaviour
     }
 
     // Called when an object stays in the trigger.
-    private void OnTriggerStay(Collider other)
+    private void OnTriggerStay2D(Collider2D other)
     {
         if (currentInteract == null)
         {
