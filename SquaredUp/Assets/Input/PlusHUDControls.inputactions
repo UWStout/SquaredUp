@@ -1,0 +1,185 @@
+{
+    "name": "PlusHUDControls",
+    "maps": [
+        {
+            "name": "HUD",
+            "id": "11c6a41d-be15-458e-86ce-7aa8ebf3bc1f",
+            "actions": [
+                {
+                    "name": "OpenCloseHUD",
+                    "type": "PassThrough",
+                    "id": "e9fcbafb-03f0-4315-b55d-234e2c5c56af",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": ""
+                },
+                {
+                    "name": "MainUp",
+                    "type": "PassThrough",
+                    "id": "5b60fad3-6023-4ae7-b1a4-89d157c55c25",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "Press"
+                },
+                {
+                    "name": "MainDown",
+                    "type": "PassThrough",
+                    "id": "9878a560-ea74-4ba9-8f53-90db039d6390",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "Press"
+                },
+                {
+                    "name": "MainLeft",
+                    "type": "PassThrough",
+                    "id": "53e714ce-2b70-4473-906a-40b03c755508",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "Press"
+                },
+                {
+                    "name": "MainRight",
+                    "type": "PassThrough",
+                    "id": "0f451f07-0fe2-4b84-b186-82cfcddec791",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "Press"
+                },
+                {
+                    "name": "MinorUp",
+                    "type": "PassThrough",
+                    "id": "280e9cee-3673-488d-8c6d-d7a219b7ac58",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "Press"
+                },
+                {
+                    "name": "MinorDown",
+                    "type": "PassThrough",
+                    "id": "6e79fe68-7289-47c9-b5b7-9186e70ab72f",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "Press"
+                },
+                {
+                    "name": "MinorLeft",
+                    "type": "PassThrough",
+                    "id": "3a95862a-5ec7-4c64-8fa5-6fe53bc53102",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "Press"
+                },
+                {
+                    "name": "MinorRight",
+                    "type": "PassThrough",
+                    "id": "e874eba5-fdc4-481c-ac4b-a86b9f299713",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "Press"
+                }
+            ],
+            "bindings": [
+                {
+                    "name": "",
+                    "id": "84524abf-7105-4907-bea8-3964460a1efc",
+                    "path": "<Keyboard>/p",
+                    "interactions": "Press",
+                    "processors": "",
+                    "groups": "",
+                    "action": "OpenCloseHUD",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "df00fda3-2450-47fe-ad8b-e3fdcd703bef",
+                    "path": "<Keyboard>/w",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "MainUp",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "14cfff2d-34da-4bff-a0d1-488a6a2705b8",
+                    "path": "<Keyboard>/s",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "MainDown",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "07e2195a-7caa-48e2-b5b4-4628d3734c6a",
+                    "path": "<Keyboard>/a",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "MainLeft",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "c1c4e381-0a6f-4b34-aec9-783740116dbe",
+                    "path": "<Keyboard>/d",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "MainRight",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "813e495d-c9d9-42cb-84b2-a02a2ce3ec44",
+                    "path": "<Keyboard>/upArrow",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "MinorUp",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "5a52472a-0934-4b44-bb31-3c92ec88b91e",
+                    "path": "<Keyboard>/downArrow",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "MinorDown",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "276e9712-105f-4083-b905-2f0923d84a03",
+                    "path": "<Keyboard>/leftArrow",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "MinorLeft",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "2f0c4b32-f9ce-4c51-a6c7-943e5b7fe21a",
+                    "path": "<Keyboard>/rightArrow",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "MinorRight",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                }
+            ]
+        }
+    ],
+    "controlSchemes": []
+}

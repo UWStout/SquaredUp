@@ -1,0 +1,109 @@
+{
+    "name": "HUD_Controls",
+    "maps": [
+        {
+            "name": "HUD",
+            "id": "4d359301-42b5-47ee-8c34-5fa9ab4f56b7",
+            "actions": [
+                {
+                    "name": "OpenCloseHUD",
+                    "type": "PassThrough",
+                    "id": "02b08e71-6bb7-4945-9019-135f560f2092",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "Press"
+                },
+                {
+                    "name": "HUDLeft",
+                    "type": "PassThrough",
+                    "id": "6e58131a-3764-4aa6-8c7f-788a2d6e70c3",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "Press"
+                },
+                {
+                    "name": "HUDRight",
+                    "type": "PassThrough",
+                    "id": "aad95e07-631d-4c40-8380-568f540ddf10",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "Press"
+                },
+                {
+                    "name": "ColumnUp",
+                    "type": "PassThrough",
+                    "id": "8ac1d888-7b45-4295-a029-4369c65d9887",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "Press"
+                },
+                {
+                    "name": "ColumnDown",
+                    "type": "PassThrough",
+                    "id": "eeecb2f3-5b2a-45fd-9fa0-fdfb5171f5ac",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "Press"
+                }
+            ],
+            "bindings": [
+                {
+                    "name": "",
+                    "id": "af731bd6-9fa8-43da-a808-2578ab5523d3",
+                    "path": "<Keyboard>/p",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "OpenCloseHUD",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "57f530cb-0c75-4a29-82bd-796ae429e1d2",
+                    "path": "<Keyboard>/d",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "HUDLeft",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "2bfea82a-aff1-4410-97f4-abae7ca9e3f9",
+                    "path": "<Keyboard>/a",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "HUDRight",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "f336125a-b50b-4955-93cc-4956ae310522",
+                    "path": "<Keyboard>/w",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "ColumnUp",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "8070c1f0-4202-40f3-ba7c-784e964836c6",
+                    "path": "<Keyboard>/s",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "ColumnDown",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                }
+            ]
+        }
+    ],
+    "controlSchemes": []
+}
