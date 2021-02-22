@@ -49,8 +49,6 @@ public class PlayerMovement : MonoBehaviour
             eyeCoroutine = StartCoroutine(MoveEyes(direction));
 
             // Movement
-            //Vector2 move = direction * Time.deltaTime * speed;
-            //transform.position += new Vector3(move.x, move.y, 0);
             rb.velocity = direction * speed;
         }
         else

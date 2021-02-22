@@ -2,25 +2,25 @@
 
 public class ChangeShapeSkill : Skill
 {
-    private Transform playerScalableTrans;
-    private MeshFilter playerMeshFilterRef;
-    private PlayerColliderController playerCollContRef;
+    [SerializeField] private Transform playerScalableTrans;
+    [SerializeField] private MeshFilter[] playerMeshFilterRefs;
+    [SerializeField] private PlayerColliderController playerCollContRef;
 
-    private Mesh changeToMesh;
-    private ShapeData.ColliderType changeToCollider;
-    private Vector3 changeToScale;
+    private ShapeData changeToShape;
 
     public void SpecifyChangeType(ShapeData data)
     {
-        changeToMesh = data.Mesh;
-        changeToCollider = data.ColliderShape;
-        changeToScale = data.Scale;
+        changeToShape = data;
     }
 
     public override void Use()
     {
-        playerMeshFilterRef.mesh = changeToMesh;
-        playerCollContRef.ActivateCollider(changeToCollider);
-        playerScalableTrans.localScale = changeToScale;
+        foreach (MeshFilter filter in playerMeshFilterRefs)
+        {
+            filter.mesh = changeToShape.Mesh;
+        }
+        playerCollContRef.ActivateCollider(changeToShape.ColliderShape);
+        playerScalableTrans.localScale = changeToShape.Scale;
+        //playerScalableTrans.localPosition = (changeToShape.Scale - Vector3.one) / 2f;
     }
 }

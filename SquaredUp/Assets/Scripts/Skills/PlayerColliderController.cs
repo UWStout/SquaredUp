@@ -1,26 +1,19 @@
-﻿using UnityEngine;
+﻿using System.Collections.Generic;
+using UnityEngine;
 
 public class PlayerColliderController : MonoBehaviour
 {
-    [SerializeField] private GameObject playerColliderObj = null;
+    [SerializeField] private GameObject[] playerColliderObjs = new GameObject[2];
 
-    private BoxCollider2D boxCollider;
-    private CircleCollider2D circleCollider;
+    private List<BoxCollider2D> boxColliders = new List<BoxCollider2D>(2);
+    private List<CircleCollider2D> circleColliders = new List<CircleCollider2D>(2);
 
     private void Awake()
     {
-        boxCollider = playerColliderObj.GetComponent<BoxCollider2D>();
-        if (boxCollider == null)
-        {
-            boxCollider = gameObject.AddComponent<BoxCollider2D>();
-            boxCollider.enabled = false;
-        }
-        circleCollider = playerColliderObj.GetComponent<CircleCollider2D>();
-        if (circleCollider == null)
-        {
-            circleCollider = gameObject.AddComponent<CircleCollider2D>();
-            circleCollider.enabled = false;
-        }
+        // Box colliders
+        GetColliders(boxColliders);
+        // Circle colliders
+        GetColliders(circleColliders);
     }
 
     public void ActivateCollider(ShapeData.ColliderType type)
@@ -28,10 +21,10 @@ public class PlayerColliderController : MonoBehaviour
         switch (type)
         {
             case ShapeData.ColliderType.BOX:
-                EnableOneCollider(boxCollider);
+                EnableOneColliderType(boxColliders);
                 break;
             case ShapeData.ColliderType.CIRCLE:
-                EnableOneCollider(circleCollider);
+                EnableOneColliderType(circleColliders);
                 break;
             default:
                 Debug.LogError("Unhandled ColliderType of '" + type + "' in PlayerColliderController.cs");
@@ -39,15 +32,39 @@ public class PlayerColliderController : MonoBehaviour
         }
     }
 
-    private void DisableAllColliders()
+    private void GetColliders<T>(List<T> colliderList) where T : Collider2D
     {
-        boxCollider.enabled = false;
-        circleCollider.enabled = false;
+        colliderList.Clear();
+        foreach (GameObject obj in playerColliderObjs)
+        {
+            T col = obj.GetComponent<T>();
+            if (col == null)
+            {
+                col = gameObject.AddComponent<T>();
+                col.enabled = false;
+                colliderList.Add(col);
+            }
+        }
     }
 
-    private void EnableOneCollider(Collider2D col)
+    private void DisableAllColliders()
+    {
+        foreach (BoxCollider2D box in boxColliders)
+        {
+            box.enabled = false;
+        }
+        foreach (CircleCollider2D circ in circleColliders)
+        {
+            circ.enabled = false;
+        }
+    }
+
+    private void EnableOneColliderType<T>(List<T> colliderList) where T : Collider2D
     {
         DisableAllColliders();
-        col.enabled = true;
+        foreach (T col in colliderList)
+        {
+            col.enabled = true;
+        }
     }
 }
