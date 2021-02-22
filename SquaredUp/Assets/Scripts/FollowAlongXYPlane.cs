@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 
 // Put this on the camera and give it a follow target. It will follow that target on the x and y positions.
-public class CameraFollow : MonoBehaviour
+public class FollowAlongXYPlane : MonoBehaviour
 {
     // Refernece to the target to follow.
     [SerializeField]
