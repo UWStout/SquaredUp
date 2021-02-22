@@ -11,27 +11,24 @@ using UnityEngine;
 
 public class GridHUDManager : MonoBehaviour
 {
-    //private GameObject arrays that are needed
-    private List<GameObject> HUD_Shape = new List<GameObject>();
-    private List<GameObject> HUD_Color = new List<GameObject>();
-    private List<GameObject> HUD_Zoom = new List<GameObject>();
-    private List<GameObject> HUD_Scale = new List<GameObject>();
+    //private GameObjects
+    private List<List<GameObject>> HUD_Icons = new List<List<GameObject>>();
     //indexing information
     private int Row;
-    private int[] index = { 0, 0, 0, 0 };
+    private int[] index=new int[4];
     //Misc data needed to have both menus use same inputs
-    [SerializeField] private bool selectedHUD;
 
     // Start is called before the first frame update
     void Start()
-    {
-        //destroys gameobjects not in use
-        if (!selectedHUD)
-        {
-            Destroy(gameObject);
-        }
+    {  
         //general startup proceedure
         Debug.Log("Startup");
+        //finds all Abilities
+        HUD_Icons.Add(new List<GameObject>());
+        HUD_Icons.Add(new List<GameObject>());
+        HUD_Icons.Add(new List<GameObject>());
+        HUD_Icons.Add(new List<GameObject>());
+        
         FindObjects();
         HUDstatus(false);
         Time.timeScale = 1;
@@ -56,21 +53,12 @@ public class GridHUDManager : MonoBehaviour
     //activates and deactivates HUD
     private void HUDstatus(bool status)
     {
-        foreach(GameObject g in HUD_Shape)
+        foreach(List<GameObject> l in HUD_Icons)
         {
-            g.SetActive(status);
-        }
-        foreach (GameObject g in HUD_Color)
-        {
-            g.SetActive(status);
-        }
-        foreach (GameObject g in HUD_Zoom)
-        {
-            g.SetActive(status);
-        }
-        foreach (GameObject g in HUD_Scale)
-        {
-            g.SetActive(status);
+            foreach(GameObject g in l)
+            {
+                g.SetActive(status);
+            }
         }
     }
     //helper method
@@ -138,47 +126,59 @@ public class GridHUDManager : MonoBehaviour
     //code to find all the objects that are child of HUD to be encompassing and easily converted into Prefab
     private void FindObjects()
     {
+        ZeroOutIndex();
         foreach (Transform child in this.transform)
         {
             if (child.tag.Equals("HUDshape"))
             {
-                HUD_Shape.Add(child.gameObject);
+                HUD_Icons[0].Add(child.gameObject);
+                HUD_Icons[0][index[0]].transform.position = new Vector3(0, -150 * index[0],0) + this.transform.position;
+                index[0]++;
             }
             else if (child.tag.Equals("HUDcolor"))
             {
-                HUD_Color.Add(child.gameObject);
+                HUD_Icons[1].Add(child.gameObject);
+                HUD_Icons[1][index[1]].transform.position = new Vector3 (150, -150 * index[1],0) + this.transform.position;
+                index[1]++;
             }
             else if (child.tag.Equals("HUDzoom"))
             {
-                HUD_Zoom.Add(child.gameObject);
+                HUD_Icons[2].Add(child.gameObject);
+                HUD_Icons[2][index[2]].transform.position = new Vector3 (300, -150 * index[2], 0) + this.transform.position;
+                index[2]++;
             }
             else if (child.tag.Equals("HUDscale"))
             {
-                HUD_Scale.Add(child.gameObject);
+                HUD_Icons[3].Add(child.gameObject);
+                HUD_Icons[3][index[3]].transform.position = new Vector3 (450, -150 * index[3], 0) + this.transform.position;
+                index[3]++;
             }
         }
+        ZeroOutIndex();
     }
+
+    private void ZeroOutIndex()
+    {
+        index = new int[index.Length];
+        foreach(int i in index)
+        {
+            index[i] = 0;
+            Debug.Log(index[i]);
+        }
+    }
+
     //code to move the HUD left
     public void OnHUDLeft()
     {
         if (Time.timeScale == 0 && Row < 3)
         {
             Row++;
-            foreach (GameObject g in HUD_Shape)
+            foreach (List<GameObject> l in HUD_Icons)
             {
-                g.transform.Translate(-150, 0, 0);
-            }
-            foreach (GameObject g in HUD_Color)
-            {
-                g.transform.Translate(-150, 0, 0);
-            }
-            foreach (GameObject g in HUD_Zoom)
-            {
-                g.transform.Translate(-150, 0, 0);
-            }
-            foreach (GameObject g in HUD_Scale)
-            {
-                g.transform.Translate(-150, 0, 0);
+                foreach (GameObject g in l)
+                {
+                    g.transform.Translate(-150, 0, 0);
+                }
             }
         }
     }
@@ -188,21 +188,12 @@ public class GridHUDManager : MonoBehaviour
         if (Time.timeScale == 0 && Row > 0)
         {
             Row--;
-            foreach (GameObject g in HUD_Shape)
+            foreach (List<GameObject> l in HUD_Icons)
             {
-                g.transform.Translate(150, 0, 0);
-            }
-            foreach (GameObject g in HUD_Color)
-            {
-                g.transform.Translate(150, 0, 0);
-            }
-            foreach (GameObject g in HUD_Zoom)
-            {
-                g.transform.Translate(150, 0, 0);
-            }
-            foreach (GameObject g in HUD_Scale)
-            {
-                g.transform.Translate(150, 0, 0);
+                foreach (GameObject g in l)
+                {
+                    g.transform.Translate(150, 0, 0);
+                }
             }
         }
     }
@@ -216,7 +207,7 @@ public class GridHUDManager : MonoBehaviour
                 case 0:
                     if (index[0] < 3) {
                         index[0]++;
-                        foreach (GameObject g in HUD_Shape)
+                        foreach (GameObject g in HUD_Icons[0])
                         {
                             g.transform.Translate(0, 150, 0);
                         }
@@ -226,7 +217,7 @@ public class GridHUDManager : MonoBehaviour
                     if (index[1] < 3)
                     {
                         index[1]++;
-                        foreach (GameObject g in HUD_Color)
+                        foreach (GameObject g in HUD_Icons[1])
                         {
                             g.transform.Translate(0, 150, 0);
                         }
@@ -236,7 +227,7 @@ public class GridHUDManager : MonoBehaviour
                     if (index[2] < 1)
                     {
                         index[2]++;
-                        foreach (GameObject g in HUD_Zoom)
+                        foreach (GameObject g in HUD_Icons[2])
                         {
                             g.transform.Translate(0, 150, 0);
                         }
@@ -246,7 +237,7 @@ public class GridHUDManager : MonoBehaviour
                     if (index[3] < 1)
                     {
                         index[3]++;
-                        foreach (GameObject g in HUD_Scale)
+                        foreach (GameObject g in HUD_Icons[3])
                         {
                             g.transform.Translate(0, 150, 0);
                         }
@@ -266,7 +257,7 @@ public class GridHUDManager : MonoBehaviour
                     if (index[0] > 0)
                     {
                         index[0]--;
-                        foreach (GameObject g in HUD_Shape)
+                        foreach (GameObject g in HUD_Icons[0])
                         {
                             g.transform.Translate(0, -150, 0);
                         }
@@ -276,7 +267,7 @@ public class GridHUDManager : MonoBehaviour
                     if (index[1] > 0)
                     {
                         index[1]--;
-                        foreach (GameObject g in HUD_Color)
+                        foreach (GameObject g in HUD_Icons[1])
                         {
                             g.transform.Translate(0, -150, 0);
                         }
@@ -286,7 +277,7 @@ public class GridHUDManager : MonoBehaviour
                     if (index[2] > 0)
                     {
                         index[2]--;
-                        foreach (GameObject g in HUD_Zoom)
+                        foreach (GameObject g in HUD_Icons[2])
                         {
                             g.transform.Translate(0, -150, 0);
                         }
@@ -296,7 +287,7 @@ public class GridHUDManager : MonoBehaviour
                     if (index[3] > 0)
                     {
                         index[3]--;
-                        foreach (GameObject g in HUD_Scale)
+                        foreach (GameObject g in HUD_Icons[3])
                         {
                             g.transform.Translate(0, -150, 0);
                         }
