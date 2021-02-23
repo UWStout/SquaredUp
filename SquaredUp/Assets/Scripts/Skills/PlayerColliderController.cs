@@ -4,14 +4,18 @@ using UnityEngine;
 // Handles swapping the colliders that the player uses
 public class PlayerColliderController : MonoBehaviour
 {
+    private static readonly Vector2[] TRIANGLE_POINTS = { new Vector2(-0.5f, 0.5f), new Vector2(-0.5f, -0.5f), new Vector2(0.5f, 0) };
+
     // References to the gameObjects that hold the colldiers the player needs to change on shape swap
     [SerializeField] private GameObject[] playerColliderObjs = new GameObject[2];
 
     // Lists of colliders
     // List of box colliders
-    private List<BoxCollider2D> boxColliders = new List<BoxCollider2D>(2);
+    private List<BoxCollider2D> boxColliders = new List<BoxCollider2D>();
     // List of circle colliders
-    private List<CircleCollider2D> circleColliders = new List<CircleCollider2D>(2);
+    private List<CircleCollider2D> circleColliders = new List<CircleCollider2D>();
+    // List of polygon colliders
+    private List<PolygonCollider2D> polygonColliders = new List<PolygonCollider2D>();
 
     // Called 0th
     private void Awake()
@@ -21,6 +25,8 @@ public class PlayerColliderController : MonoBehaviour
         GetColliders(boxColliders);
         // Circle colliders
         GetColliders(circleColliders);
+        // Polygon colliders
+        GetColliders(polygonColliders);
     }
 
     /// <summary>Turns on the colliders for the given type</summary>
@@ -36,6 +42,11 @@ public class PlayerColliderController : MonoBehaviour
             // CircleCollider2D
             case ShapeData.ColliderType.CIRCLE:
                 EnableOneColliderType(circleColliders);
+                break;
+            // Triangle needs to be a specific kind of polygon collider
+            case ShapeData.ColliderType.TRIANGLE:
+                MorphPolygonToShape(TRIANGLE_POINTS);
+                EnableOneColliderType(polygonColliders);
                 break;
             default:
                 Debug.LogError("Unhandled ColliderType of '" + type + "' in PlayerColliderController.cs");
@@ -53,10 +64,10 @@ public class PlayerColliderController : MonoBehaviour
             T col = obj.GetComponent<T>();
             if (col == null)
             {
-                col = gameObject.AddComponent<T>();
+                col = obj.AddComponent<T>();
                 col.enabled = false;
-                colliderList.Add(col);
             }
+            colliderList.Add(col);
         }
     }
 
@@ -81,6 +92,15 @@ public class PlayerColliderController : MonoBehaviour
         foreach (T col in colliderList)
         {
             col.enabled = true;
+        }
+    }
+
+    /// <summary>Changes the polygon collider to have the given points</summary>
+    private void MorphPolygonToShape(Vector2[] points)
+    {
+        foreach (PolygonCollider2D col in polygonColliders)
+        {
+            col.points = points;
         }
     }
 }

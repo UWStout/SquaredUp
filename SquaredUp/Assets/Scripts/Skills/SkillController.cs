@@ -19,6 +19,7 @@ public class SkillController : MonoBehaviour
         InputEvents.UseAbilityEvent -= OnUseAbility;
     }
 
+    // Called when the player tries to use an ability
     private void OnUseAbility()
     {
         currentSkill.Use();

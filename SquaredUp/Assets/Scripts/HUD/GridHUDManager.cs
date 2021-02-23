@@ -11,6 +11,14 @@ using UnityEngine;
 
 public class GridHUDManager : MonoBehaviour
 {
+    // ShapeData for the shapes to change into
+    [SerializeField] private ShapeData squareData = null;
+    [SerializeField] private ShapeData rectangleData = null;
+    [SerializeField] private ShapeData circleData = null;
+    [SerializeField] private ShapeData triangleData = null;
+
+    [SerializeField] private ChangeShapeSkill changeShapeSkill = null;
+
     //private GameObjects
     private List<List<GameObject>> HUD_Icons = new List<List<GameObject>>();
     //indexing information
@@ -358,22 +366,31 @@ public class GridHUDManager : MonoBehaviour
      */
     private void ChangeSquare()
     {
+        ChangeShape(squareData);
         Debug.Log("Square");
     }
 
     private void ChangeRectangle()
     {
+        ChangeShape(rectangleData);
         Debug.Log("Rectangle");
     }
 
     private void ChangeCircle()
     {
+        ChangeShape(circleData);
         Debug.Log("Circle");
     }
 
     private void ChangeTriangle()
     {
+        ChangeShape(triangleData);
         Debug.Log("Triangle");
+    }
+
+    private void ChangeShape(ShapeData data)
+    {
+        changeShapeSkill.SpecifyChangeType(data);
     }
 
     private void ChangeDefault()

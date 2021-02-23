@@ -751,7 +751,6 @@ GameObject:
   m_Component:
   - component: {fileID: 6257086274534009297}
   - component: {fileID: 6257086274534009294}
-  - component: {fileID: 6257086274534009295}
   m_Layer: 0
   m_Name: ChangeShapeSkill
   m_TagString: Untagged
@@ -790,20 +789,6 @@ MonoBehaviour:
   - {fileID: 6257086274189949306}
   - {fileID: 6257086274373554982}
   playerCollContRef: {fileID: 6257086274752830768}
---- !u!114 &6257086274534009295
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6257086274534009296}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e4b50ee67d728b7499e9e23c5e1b22ea, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  changeShapeSkill: {fileID: 6257086274534009294}
-  shapeToChangeTo: {fileID: 11400000, guid: 4eaa314a18e291d4288a236c4b26f4b8, type: 2}
 --- !u!1 &6257086274558080414
 GameObject:
   m_ObjectHideFlags: 0
@@ -1036,7 +1021,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   playerColliderObjs:
-  - {fileID: 6257086275170067483}
+  - {fileID: 6257086274663262141}
   - {fileID: 6257086274738132776}
 --- !u!1 &6257086275068474216
 GameObject:
@@ -2077,7 +2062,7 @@ MonoBehaviour:
     m_ActionName: Dialogue/New action1
   - m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 6257086274534009295}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: TempChangeShapeTest, Assembly-CSharp
         m_MethodName: ChangeShape
         m_Mode: 1

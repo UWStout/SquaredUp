@@ -24,14 +24,21 @@ public class ChangeShapeSkill : Skill
     /// <summary>Changes the player to become the currently specified shape</summary>
     public override void Use()
     {
-        // Change all the meshes
-        foreach (MeshFilter filter in playerMeshFilterRefs)
+        if (changeToShape != null)
         {
-            filter.mesh = changeToShape.Mesh;
+            // Change all the meshes
+            foreach (MeshFilter filter in playerMeshFilterRefs)
+            {
+                filter.mesh = changeToShape.Mesh;
+            }
+            // Swap the colliders
+            playerCollContRef.ActivateCollider(changeToShape.ColliderShape);
+            // Adjust the scale
+            playerScalableTrans.localScale = changeToShape.Scale;
         }
-        // Swap the colliders
-        playerCollContRef.ActivateCollider(changeToShape.ColliderShape);
-        // Adjust the scale
-        playerScalableTrans.localScale = changeToShape.Scale;
+        else
+        {
+            Debug.Log("No Shape data specified");
+        }
     }
 }

@@ -17,7 +17,7 @@ public class TypeWriter : MonoBehaviour
     private string currentLine;
     // Event to call when finished typing
     public delegate void FinishWriting();
-    private event FinishWriting OnFinishWriting;
+    private FinishWriting OnFinishWriting;
 
     // Reference to running coroutine
     private Coroutine typeWriteCoroutine;

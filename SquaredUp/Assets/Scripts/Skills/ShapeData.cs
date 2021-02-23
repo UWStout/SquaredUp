@@ -5,7 +5,7 @@
 public class ShapeData : ScriptableObject
 {
     // Types of 2D colliders
-    public enum ColliderType { BOX, CIRCLE}
+    public enum ColliderType { BOX, CIRCLE, TRIANGLE}
 
     // Mesh that the shape will be changed to
     [SerializeField]
