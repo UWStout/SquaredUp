@@ -1,6 +1,5 @@
 ﻿using System.Collections;
 using UnityEngine;
-using UnityEngine.InputSystem;
 
 // For Player Movement
 public class PlayerMovement : MonoBehaviour
@@ -27,6 +26,20 @@ public class PlayerMovement : MonoBehaviour
 
     // Reference to the coroutine of the eyes moving.
     private Coroutine eyeCoroutine = null;
+
+
+    // Called when the script is enabled.
+    // Subscribe to events.
+    private void OnEnable()
+    {
+        InputEvents.MovementEvent += OnMovement;
+    }
+    // Called when the script is disabled.
+    // Unsubscribe from events.
+    private void OnDisable()
+    {
+        InputEvents.MovementEvent -= OnMovement;
+    }
 
     // Start is called before the first frame update
     private void Start()
@@ -59,9 +72,9 @@ public class PlayerMovement : MonoBehaviour
     }
 
     // Called when the player inputs movement.
-    public void OnMovement(InputAction.CallbackContext value)
+    public void OnMovement(Vector2 rawInputVector)
     {
-        rawInputMovement = value.ReadValue<Vector2>();
+        rawInputMovement = rawInputVector;
     }
 
     /// <summary>

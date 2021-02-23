@@ -32,6 +32,20 @@ public class DialogueController : MonoBehaviour
     private bool finishedTyping;
 
 
+    // Called when the script is enabled.
+    // Subscribe to events.
+    private void OnEnable()
+    {
+        InputEvents.AdvanceDialogueEvent += OnAdvanceDialogue;
+    }
+    // Called when the script is disabled.
+    // Unsubscribe from events.
+    private void OnDisable()
+    {
+        InputEvents.AdvanceDialogueEvent -= OnAdvanceDialogue;
+    }
+
+
     /// <summary>
     /// Starts the dialogue
     /// </summary>
@@ -52,30 +66,27 @@ public class DialogueController : MonoBehaviour
     /// <summary>
     /// Called when player inputs next or AdvanceDialogue
     /// </summary>
-    public void ProcessAdvanceCall(InputAction.CallbackContext value)
+    public void OnAdvanceDialogue()
     {
-        if (value.performed)
+        // Type next line if finished typing
+        if (finishedTyping)
         {
-            // Type next line if finished typing
-            if (finishedTyping)
+            // If there are more lines, continue the dialogue
+            if (curLineIndex < dialogueLines.Length)
             {
-                // If there are more lines, continue the dialogue
-                if (curLineIndex < dialogueLines.Length)
-                {
-                    // Type next line.
-                    StartTyping();
-                }
-                else
-                {
-                    // End the dialogue.
-                    EndDialogue();
-                }
+                // Type next line.
+                StartTyping();
             }
-            // End the typing early
             else
             {
-                typeWriteRef.PreemptiveLineFinish();
+                // End the dialogue.
+                EndDialogue();
             }
+        }
+        // End the typing early
+        else
+        {
+            typeWriteRef.PreemptiveLineFinish();
         }
     }
 

@@ -18,6 +18,28 @@ public class GridHUDManager : MonoBehaviour
     private int[] index=new int[4];
     //Misc data needed to have both menus use same inputs
 
+    private bool isHUDActive = false;
+
+
+    // Called when the script is enabled.
+    // Subscribe to events.
+    private void OnEnable()
+    {
+        // Open HUD when the game pauses and close it when it opens
+        PauseController.GamePauseEvent += OpenHUD;
+        PauseController.GameUnpauseEvent += CloseHUD;
+        // Navigate menu
+        InputEvents.MainAxisEvent += OnHUDAxis;
+    }
+    // Called when the script is disabled.
+    // Unsubscribe from events.
+    private void OnDisable()
+    {
+        PauseController.GamePauseEvent -= OpenHUD;
+        PauseController.GameUnpauseEvent -= CloseHUD;
+        InputEvents.MainAxisEvent -= OnHUDAxis;
+    }
+
     // Start is called before the first frame update
     void Start()
     {  
@@ -31,7 +53,6 @@ public class GridHUDManager : MonoBehaviour
         
         FindObjects();
         HUDstatus(false);
-        Time.timeScale = 1;
         Row = 0;
     }
 
@@ -60,6 +81,12 @@ public class GridHUDManager : MonoBehaviour
                 g.SetActive(status);
             }
         }
+        isHUDActive = status;
+    }
+    // Helper method to open HUD
+    private void OpenHUD()
+    {
+        HUDstatus(true);
     }
     //helper method
     private void CloseHUD()
@@ -164,6 +191,32 @@ public class GridHUDManager : MonoBehaviour
         {
             index[i] = 0;
             Debug.Log(index[i]);
+        }
+    }
+
+    /// <summary>Called when the player uses the HUD navigation</summary>
+    private void OnHUDAxis(Vector2 rawInput)
+    {
+        // Only navigate when active
+        if (isHUDActive)
+        {
+            if (rawInput.x < 0)
+            {
+                OnHUDRight();
+            }
+            else if (rawInput.x > 0)
+            {
+                OnHUDLeft();
+            }
+
+            if (rawInput.y < 0)
+            {
+                OnColumnUp();
+            }
+            else if (rawInput.y > 0)
+            {
+                OnColumnDown();
+            }
         }
     }
 

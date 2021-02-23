@@ -1,11 +1,24 @@
 ﻿using UnityEngine;
-using UnityEngine.InputSystem;
 
 // Does physics checks to see if the player is interacting with anything.
 public class PlayerInteract : MonoBehaviour
 {
     // The interactable the player is currently focused on.
     private Interactable currentInteract;
+
+
+    // Called when the script is enabled.
+    // Subscribe to events.
+    private void OnEnable()
+    {
+        InputEvents.InteractEvent += OnInteract;
+    }
+    // Called when the script is disabled.
+    // Unsubscribe from events.
+    private void OnDisable()
+    {
+        InputEvents.InteractEvent -= OnInteract;
+    }
 
     // Start is called before the first frame update
     private void Start()
@@ -55,9 +68,9 @@ public class PlayerInteract : MonoBehaviour
     }
 
     // Called when the player tries to interact with something from the input system.
-    public void OnInteract(InputAction.CallbackContext value)
+    private void OnInteract()
     {
-        if (currentInteract != null && value.started)
+        if (currentInteract != null)
         {
             currentInteract.Interact();
         }
