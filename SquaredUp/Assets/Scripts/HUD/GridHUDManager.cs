@@ -115,9 +115,11 @@ public class GridHUDManager : MonoBehaviour
         ChangeShapeSkill.Shape shape = (ChangeShapeSkill.Shape)index[0];
         // Index 1 is color
         ChangeColorSkill.ChangeColor color = (ChangeColorSkill.ChangeColor)index[1];
+        // Index 2 is zoom
+        ChangeZoomSkill.ZoomLevel zoom = (ChangeZoomSkill.ZoomLevel)index[2];
 
         // Use the skills
-        skillContRef.UseSkills(shape, color);
+        skillContRef.UseSkills(shape, color, zoom);
     }
 
     //code to find all the objects that are child of HUD to be encompassing and easily converted into Prefab
