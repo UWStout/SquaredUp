@@ -22,9 +22,9 @@ TagManager:
   - Push
   - Wall
   - WallCheck
-  - 
-  - 
-  - 
+  - GreenWall
+  - RedWall
+  - BlueWall
   - 
   - 
   - 

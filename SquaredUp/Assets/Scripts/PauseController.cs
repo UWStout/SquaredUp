@@ -48,7 +48,6 @@ public class PauseController : MonoBehaviour
     private void OnPause()
     {
         // Pause
-        //Time.timeScale = 0;
         playerInputRef.SwitchCurrentActionMap(pauseActionMapName);
         GamePauseEvent?.Invoke();
     }
@@ -56,7 +55,6 @@ public class PauseController : MonoBehaviour
     private void OnUnpause()
     {
         // Unpause
-        //Time.timeScale = 1;
         playerInputRef.SwitchCurrentActionMap(playerActionMapName);
         GameUnpauseEvent?.Invoke();
     }

@@ -19,21 +19,19 @@ public class ChangeColorSkill : Skill
     [SerializeField] private float changeSpeed = 0.03f;
     [SerializeField] private float closeEnoughVal = 0.001f;
 
-    // Reference to grid color change script that will be turned on
-    private GridColorChangeCheck gridColChangeRef = null;
     // Reference to the player in color script that will let us know if we can change color
     private PlayerInColorCheck playColCheckRef = null;
+
+    // References to the gameobjects that have the wall colliders on them
+    [SerializeField] private GameObject greenWall = null;
+    [SerializeField] private GameObject redWall = null;
+    [SerializeField] private GameObject blueWall = null;
 
 
     // Called 0th
     // Set references
     private void Awake()
     {
-        gridColChangeRef = FindObjectOfType<GridColorChangeCheck>();
-        if (gridColChangeRef == null)
-        {
-            Debug.LogError("ChangeColorSkill could not find GridColorChangeCheck");
-        }
         playColCheckRef = FindObjectOfType<PlayerInColorCheck>();
         if (playerMeshRendRef == null)
         {
@@ -49,7 +47,7 @@ public class ChangeColorSkill : Skill
         if (!playColCheckRef.IsInWall)
         {
             playerMeshRendRef.material = GetMaterial(col);
-            gridColChangeRef.DisableColorWalls(col);
+            AllowColorPassage(col);
         }
         else
         {
@@ -74,5 +72,36 @@ public class ChangeColorSkill : Skill
                 Debug.LogError("Unknown ChangeColor " + changeToColor + " in ChangeColorSkill");
                 return defaultMat;
         }
+    }
+
+    /// <summary>Turns off the collider that inhbits passage through the given color</summary>
+    private void AllowColorPassage(ChangeColor color)
+    {
+        DenyAllColorPassage();
+        switch (color)
+        {
+            case ChangeColor.DEFAULT:
+                break;
+            case ChangeColor.GREEN:
+                greenWall.SetActive(false);
+                break;
+            case ChangeColor.RED:
+                redWall.SetActive(false);
+                break;
+            case ChangeColor.BLUE:
+                blueWall.SetActive(false);
+                break;
+            default:
+                Debug.LogError("Unknown ChangeColor " + color + " in ChangeColorSkill");
+                break;
+        }
+    }
+
+    /// <summary>Turn off all colors</summary>
+    private void DenyAllColorPassage()
+    {
+        greenWall.SetActive(true);
+        redWall.SetActive(true);
+        blueWall.SetActive(true);
     }
 }
