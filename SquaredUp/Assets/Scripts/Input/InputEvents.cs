@@ -93,14 +93,4 @@ public class InputEvents : MonoBehaviour
         //Debug.Log("OnMainAxis" + rawInpVec);
         MainAxisEvent?.Invoke(rawInpVec);
     }
-
-    // MinorAxis
-    public delegate void MinorAxis(Vector2 rawMinorAxis);
-    public static event MinorAxis MinorAxisEvent;
-    private void OnMinorAxis(InputValue value)
-    {
-        Vector2 rawInpVec = value.Get<Vector2>();
-        //Debug.Log("OnMinorAxis" + rawInpVec);
-        MinorAxisEvent?.Invoke(rawInpVec);
-    }
 }

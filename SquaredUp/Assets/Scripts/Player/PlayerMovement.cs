@@ -2,31 +2,34 @@
 using UnityEngine;
 
 // For Player Movement
+[RequireComponent(typeof(Rigidbody2D))]
 public class PlayerMovement : MonoBehaviour
 {
     // References
-    // Reference to the player's rigibbody.
-    [SerializeField]
-    private Rigidbody2D rb = null;
     // Reference to the pivot of the player's eyes.
-    [SerializeField]
-    private Transform eyePivot = null;
+    [SerializeField] private Transform eyePivot = null;
+    // Reference to the player's rigibbody.
+    private Rigidbody2D rb = null;
 
     // Speed of the player.
-    [Min(0.01f)]
-    [SerializeField]
-    private float speed = 1f;
+    [SerializeField] [Min(0.01f)] private float speed = 1f;
     // Holds the player's input axis values.
     private Vector2 rawInputMovement;
 
     // Smooths rotation/turn speed of eyes.
-    [SerializeField]
-    private float turnSmoothTime = 0.1f;
+    [SerializeField] private float turnSmoothTime = 0.1f;
     private float turnSmoothVelocity = 0f;
 
     // Reference to the coroutine of the eyes moving.
     private Coroutine eyeCoroutine = null;
 
+
+    // Called 0th
+    // Set references
+    private void Awake()
+    {
+        rb = GetComponent<Rigidbody2D>();
+    }
 
     // Called when the script is enabled.
     // Subscribe to events.

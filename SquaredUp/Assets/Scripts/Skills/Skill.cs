@@ -4,5 +4,5 @@
 public abstract class Skill : MonoBehaviour
 {
     /// <summary>Activation of the skill</summary>
-    public abstract void Use();
+    public abstract void Use(int enumValue);
 }

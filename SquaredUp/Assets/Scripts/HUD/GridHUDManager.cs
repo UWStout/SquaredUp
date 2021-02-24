@@ -11,13 +11,8 @@ using UnityEngine;
 
 public class GridHUDManager : MonoBehaviour
 {
-    // ShapeData for the shapes to change into
-    [SerializeField] private ShapeData squareData = null;
-    [SerializeField] private ShapeData rectangleData = null;
-    [SerializeField] private ShapeData circleData = null;
-    [SerializeField] private ShapeData triangleData = null;
-
-    [SerializeField] private ChangeShapeSkill changeShapeSkill = null;
+    // References to skills
+    private SkillController skillContRef = null;
 
     //private GameObjects
     private List<List<GameObject>> HUD_Icons = new List<List<GameObject>>();
@@ -28,6 +23,17 @@ public class GridHUDManager : MonoBehaviour
 
     private bool isHUDActive = false;
 
+
+    // Called 0th
+    // Set references
+    private void Awake()
+    {
+        skillContRef = FindObjectOfType<SkillController>();
+        if (skillContRef == null)
+        {
+            Debug.LogError("GridHUDManager could not find SkillController");
+        }
+    }
 
     // Called when the script is enabled.
     // Subscribe to events.
@@ -49,10 +55,9 @@ public class GridHUDManager : MonoBehaviour
     }
 
     // Start is called before the first frame update
-    void Start()
+    private void Start()
     {  
         //general startup proceedure
-        Debug.Log("Startup");
         //finds all Abilities
         HUD_Icons.Add(new List<GameObject>());
         HUD_Icons.Add(new List<GameObject>());
@@ -67,15 +72,15 @@ public class GridHUDManager : MonoBehaviour
     //opens and closes HUD uses timescale to pause game, and know when game is paused
     public void OnOpenCloseHUD()
     {
-        if (Time.timeScale == 1)
+        if (!isHUDActive)
         {
             Time.timeScale = 0;
             HUDstatus(true);
         }
         else
         {
-            CloseHUD();
             Time.timeScale = 1;
+            CloseHUD();
         }
     }
 
@@ -102,62 +107,19 @@ public class GridHUDManager : MonoBehaviour
         HUDstatus(false);
         ExecuteHUD();
     }
+
     //executes HUD to set character
     private void ExecuteHUD()
     {
-        //index 0 is for shape
-        switch (index[0])
-        {
-            case 0:
-                ChangeSquare();
-                break;
-            case 1:
-                ChangeRectangle();
-                break;
-            case 2:
-                ChangeCircle();
-                break;
-            case 3:
-                ChangeTriangle();
-                break;
-        }
-        //index 1 is color
-        switch (index[1])
-        {
-            case 0:
-                ChangeDefault();
-                break;
-            case 1:
-                ChangeGreen();
-                break;
-            case 2:
-                ChangeRed();
-                break;
-            case 3:
-                ChangeBlue();
-                break;
-        }
-        //index 2 is zoom
-        switch (index[2])
-        {
-            case 0:
-                ZoomIn();
-                break;
-            case 1:
-                ZoomOut();
-                break;
-        }
-        //index 3 is scale
-        switch (index[3])
-        {
-            case 0:
-                ScaleUp();
-                break;
-            case 1:
-                ScaleDown();
-                break;
-        }
+        // Index 0 is shape
+        ChangeShapeSkill.Shape shape = (ChangeShapeSkill.Shape)index[0];
+        // Index 1 is color
+        ChangeColorSkill.ChangeColor color = (ChangeColorSkill.ChangeColor)index[1];
+
+        // Use the skills
+        skillContRef.UseSkills(shape, color);
     }
+
     //code to find all the objects that are child of HUD to be encompassing and easily converted into Prefab
     private void FindObjects()
     {
@@ -198,7 +160,6 @@ public class GridHUDManager : MonoBehaviour
         foreach(int i in index)
         {
             index[i] = 0;
-            Debug.Log(index[i]);
         }
     }
 
@@ -231,7 +192,7 @@ public class GridHUDManager : MonoBehaviour
     //code to move the HUD left
     public void OnHUDLeft()
     {
-        if (Time.timeScale == 0 && Row < 3)
+        if (isHUDActive && Row < 3)
         {
             Row++;
             foreach (List<GameObject> l in HUD_Icons)
@@ -246,7 +207,7 @@ public class GridHUDManager : MonoBehaviour
     //code to move the HUD right
     public void OnHUDRight()
     {
-        if (Time.timeScale == 0 && Row > 0)
+        if (isHUDActive && Row > 0)
         {
             Row--;
             foreach (List<GameObject> l in HUD_Icons)
@@ -261,7 +222,7 @@ public class GridHUDManager : MonoBehaviour
     //code to move one column up
     public void OnColumnUp()
     {
-        if (Time.timeScale == 0)
+        if (isHUDActive)
         {
             switch (Row)
             {
@@ -310,7 +271,7 @@ public class GridHUDManager : MonoBehaviour
     //code to move on column down
     public void OnColumnDown()
     {
-        if (Time.timeScale == 0)
+        if (isHUDActive)
         {
             switch (Row)
             {
@@ -357,60 +318,6 @@ public class GridHUDManager : MonoBehaviour
 
             }
         }
-    }
-
-    /*
-     * From here on out is connecting points for other code so abilities can be used
-     * 
-     * 
-     */
-    private void ChangeSquare()
-    {
-        ChangeShape(squareData);
-        Debug.Log("Square");
-    }
-
-    private void ChangeRectangle()
-    {
-        ChangeShape(rectangleData);
-        Debug.Log("Rectangle");
-    }
-
-    private void ChangeCircle()
-    {
-        ChangeShape(circleData);
-        Debug.Log("Circle");
-    }
-
-    private void ChangeTriangle()
-    {
-        ChangeShape(triangleData);
-        Debug.Log("Triangle");
-    }
-
-    private void ChangeShape(ShapeData data)
-    {
-        changeShapeSkill.SpecifyChangeType(data);
-    }
-
-    private void ChangeDefault()
-    {
-        Debug.Log("Default");
-    }
-
-    private void ChangeGreen()
-    {
-        Debug.Log("Green");
-    }
-
-    private void ChangeRed()
-    {
-        Debug.Log("Red");
-    }
-
-    private void ChangeBlue()
-    {
-        Debug.Log("blue");
     }
 
     private void ZoomIn()

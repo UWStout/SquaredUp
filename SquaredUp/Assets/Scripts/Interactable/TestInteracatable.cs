@@ -32,7 +32,6 @@ public class TestInteracatable : Interactable
     /// </summary>
     public override void Interact()
     {
-        base.Interact();
         if (!isMain)
         {
             meshRendRef.material = mainMat;

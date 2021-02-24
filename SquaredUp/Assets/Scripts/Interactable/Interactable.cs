@@ -1,20 +1,20 @@
 ﻿using UnityEngine;
 
 // Base class for an interactable
-public class Interactable : MonoBehaviour
+public abstract class Interactable : MonoBehaviour
 {
     /// <summary>
     /// Called when the player interacts with the Interactable.
     /// </summary>
-    public virtual void Interact() { Debug.Log("Interact with " + this.name); }
+    public abstract void Interact();
 
     /// <summary>
     /// Called when the player focuses on the Interactable.
     /// </summary>
-    public virtual void DisplayAlert() { }
+    public abstract void DisplayAlert();
 
     /// <summary>
     /// Called when the player stops focusing on the interactable.
     /// </summary>
-    public virtual void HideAlert() { }
+    public abstract void HideAlert();
 }

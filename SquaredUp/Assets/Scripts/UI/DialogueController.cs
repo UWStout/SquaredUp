@@ -6,22 +6,17 @@ public class DialogueController : MonoBehaviour
 {
     // Input References
     // Reference to the player input
-    [SerializeField]
     private PlayerInput playerInputRef = null;
     // Name of the dialogue action map in player input
-    [SerializeField]
-    private string dialogueActionMapName = "Dialogue";
+    [SerializeField] private string dialogueActionMapName = "Dialogue";
     // Name of the player action map in player input
-    [SerializeField]
-    private string playerActionMapName = "Player";
+    [SerializeField] private string playerActionMapName = "Player";
 
     // UI References
     // Object that shows the textbox when active
-    [SerializeField]
-    private GameObject uiComponent = null;
+    [SerializeField] private GameObject uiComponent = null;
     // Type writer to help display text
-    [SerializeField]
-    private TypeWriter typeWriteRef = null;
+    [SerializeField] private TypeWriter typeWriteRef = null;
 
     // The lines that will be written in each text box
     private string[] dialogueLines;
@@ -31,6 +26,17 @@ public class DialogueController : MonoBehaviour
     // If the type writer has finished
     private bool finishedTyping;
 
+
+    // Called 0th
+    // Set references
+    private void Awake()
+    {
+        playerInputRef = FindObjectOfType<PlayerInput>();
+        if (playerInputRef == null)
+        {
+            Debug.LogError("DialogueController could not find PlayerInput");
+        }
+    }
 
     // Called when the script is enabled.
     // Subscribe to events.

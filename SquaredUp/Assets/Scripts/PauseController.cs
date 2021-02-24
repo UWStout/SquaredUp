@@ -1,13 +1,11 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.InputSystem;
 
 public class PauseController : MonoBehaviour
 {
     // Input References
     // Reference to the player input
-    [SerializeField] private PlayerInput playerInputRef = null;
+    private PlayerInput playerInputRef = null;
     // Name of the pause action map in player input
     [SerializeField] private string pauseActionMapName = "Pause";
     // Name of the player action map in player input
@@ -19,6 +17,17 @@ public class PauseController : MonoBehaviour
     public delegate void GameUnpause();
     public static event GameUnpause GameUnpauseEvent;
 
+
+    // Called 0th
+    // Set references
+    private void Awake()
+    {
+        playerInputRef = FindObjectOfType<PlayerInput>();
+        if (playerInputRef == null)
+        {
+            Debug.LogError("PauseController could not find PlayerInput");
+        }
+    }
 
     // Called when the script is enabled.
     // Subscribe to events.
@@ -39,7 +48,7 @@ public class PauseController : MonoBehaviour
     private void OnPause()
     {
         // Pause
-        Time.timeScale = 0;
+        //Time.timeScale = 0;
         playerInputRef.SwitchCurrentActionMap(pauseActionMapName);
         GamePauseEvent?.Invoke();
     }
@@ -47,7 +56,7 @@ public class PauseController : MonoBehaviour
     private void OnUnpause()
     {
         // Unpause
-        Time.timeScale = 1;
+        //Time.timeScale = 1;
         playerInputRef.SwitchCurrentActionMap(playerActionMapName);
         GameUnpauseEvent?.Invoke();
     }
