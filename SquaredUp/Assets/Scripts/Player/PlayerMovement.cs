@@ -23,6 +23,9 @@ public class PlayerMovement : MonoBehaviour
     // Reference to the coroutine of the eyes moving.
     private Coroutine eyeCoroutine = null;
 
+    // If the player is allowed to move
+    private bool allowMove;
+
 
     // Called 0th
     // Set references
@@ -35,13 +38,15 @@ public class PlayerMovement : MonoBehaviour
     // Subscribe to events.
     private void OnEnable()
     {
-        InputEvents.MovementEvent += OnMovement;
+        // Sub to Movement
+        AllowMovement(true);
     }
     // Called when the script is disabled.
     // Unsubscribe from events.
     private void OnDisable()
     {
-        InputEvents.MovementEvent -= OnMovement;
+        // Unsub from Movement
+        AllowMovement(false);
     }
 
     // Start is called before the first frame update
@@ -98,5 +103,27 @@ public class PlayerMovement : MonoBehaviour
             yield return null;
         }
         yield return null;
+    }
+
+    /// <summary>Lets the player move if given true. Keeps the player from moving if given false.
+    /// Subscribes and unsubscribes the movement function from the Movement Input Event</summary>
+    public void AllowMovement(bool shouldAllow)
+    {
+        if (shouldAllow)
+        {
+            if (allowMove == false)
+            {
+                InputEvents.MovementEvent += OnMovement;
+                allowMove = true;
+            }
+        }
+        else
+        {
+            if (allowMove)
+            {
+                InputEvents.MovementEvent -= OnMovement;
+                allowMove = false;
+            }
+        }
     }
 }

@@ -45,6 +45,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   zoomInVal: 12
   zoomOutVal: 36
+  playMove: {fileID: 6257086274663262137}
   zoomSpeed: 0.1
   closeEnoughVal: 0.01
 --- !u!1 &815508983924247115
@@ -1135,7 +1136,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   eyePivot: {fileID: 6257086274558080415}
-  speed: 3
+  speed: 6
   turnSmoothTime: 0.1
 --- !u!1 &6257086274738132776
 GameObject:
@@ -1306,7 +1307,7 @@ Transform:
   m_GameObject: {fileID: 6257086275078037475}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 1.8, y: 1.8, z: 1.8}
   m_Children:
   - {fileID: 6257086275822434843}
   - {fileID: 2257739983853044126}

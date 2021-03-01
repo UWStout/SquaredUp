@@ -11,12 +11,14 @@ public class ChangeZoomSkill : Skill
 
     // Reference to camera whose orthographic size to change.
     private Camera zoomCam = null;
+    // Refernec to the PlayerMovement script
+    [SerializeField] private PlayerMovement playMove = null;
 
     // Lerp speed
     [SerializeField] [Range(0, 1)] private float zoomSpeed = 0.1f;
     [SerializeField] [Min(0)] private float closeEnoughVal = 0.01f;
     // If the zoom coroutine is finished
-    private bool zoomFin = false;
+    private bool zoomFin = true;
     // Current target zoom amount
     private float zoomTarget = 1f;
 
@@ -45,14 +47,16 @@ public class ChangeZoomSkill : Skill
     /// <summary>Handles what should happen on zoom in and zoom out</summary>
     private void ProcessZoom(ZoomLevel zoom)
     {
-        Debug.Log("Process Zoom " + zoom);
         switch (zoom)
         {
             case ZoomLevel.IN:
                 BeginZoom(zoomInVal);
+                playMove.AllowMovement(true);
                 break;
             case ZoomLevel.OUT:
                 BeginZoom(zoomOutVal);
+                // Can't move when zoomed out
+                playMove.AllowMovement(false);
                 break;
             default:
                 Debug.LogError("Unhandled ZoomLevel " + zoom + " in ChangeZoomSkill");

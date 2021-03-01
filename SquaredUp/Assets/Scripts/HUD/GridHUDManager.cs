@@ -1,6 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
 
 /* Grid Design HUD for Squared Up
@@ -11,18 +9,71 @@ using UnityEngine;
 
 public class GridHUDManager : MonoBehaviour
 {
-    // References to skills
+    // Constants
+    private const int AMOUNT_SKILLS = 4;
+    private const int MAX_ROW = AMOUNT_SKILLS - 1;
+    private static readonly int[] MAX_INDICES = { 3, 3, 1, 1 };
+    private const int SHAPE_INDEX = 0;
+    private const int COLOR_INDEX = 1;
+    private const int ZOOM_INDEX = 2;
+    private const int SCALE_INDEX = 3;
+
+    // Reference to the grid HUD's total parent
+    [SerializeField] private Transform gridHUDParent = null;
+    // References to the parents of each skill
+    [SerializeField] private Transform shapeOptionsParent = null;
+    [SerializeField] private Transform colorOptionsParent = null;
+    [SerializeField] private Transform zoomOptionsParent = null;
+    [SerializeField] private Transform scaleOptionsParent = null;
+    // All the parents will be put in this list on start for iteration purposes
+    private Transform[] parentList = null;
+
+    // Reference to skills
     private SkillController skillContRef = null;
 
-    //private GameObjects
-    private List<List<GameObject>> HUD_Icons = new List<List<GameObject>>();
-    //indexing information
-    private int Row;
-    private int[] index=new int[4];
-    //Misc data needed to have both menus use same inputs
+    // Indexing information
+    private int row = 0;
+    private int[] index = new int[AMOUNT_SKILLS] { 0, 0, 0, 0 };
+    // Current maxes to restrict what the player can select for iteration purposes
+    // TODO Remove [SerializeField]s I did that for testing purposes only
+    [SerializeField] private int curMaxRow = 2;
+    [SerializeField]  private int[] curMaxIndices = new int[AMOUNT_SKILLS] { 0, 0, 1, 1 };
 
+    // If the HUD is currently active
     private bool isHUDActive = false;
 
+    // Holds which skills the player has unlocked
+    // TODO Remove [SerializeField]s I did that for testing purposes only
+    [SerializeField] private bool[] shapesUnlocked = { true, false, false, false };
+    [SerializeField] private bool[] colorsUnlocked = { true, false, false, false };
+    [SerializeField] private bool[] zoomUnlocked = { true, true };
+    [SerializeField] private bool[] scaleUnlocked = { false, false };
+    // All the unlock arrays will be put into this list on start
+    private bool[][] unlockedLists = null;
+
+
+    // Called when the script is enabled.
+    // Subscribe to events.
+    private void OnEnable()
+    {
+        // Open HUD when the game pauses and close it when it opens
+        PauseController.GamePauseEvent += OpenHUD;
+        PauseController.GameUnpauseEvent += CloseHUD;
+        // Navigate menu
+        InputEvents.MainAxisEvent += OnHUDAxis;
+
+        // Testing
+        InputEvents.HackerAxisEvent += OnHackerAxis;
+    }
+    // Called when the script is disabled.
+    // Unsubscribe from events.
+    private void OnDisable()
+    {
+        PauseController.GamePauseEvent -= OpenHUD;
+        PauseController.GameUnpauseEvent -= CloseHUD;
+        InputEvents.MainAxisEvent -= OnHUDAxis;
+        InputEvents.HackerAxisEvent -= OnHackerAxis;
+    }
 
     // Called 0th
     // Set references
@@ -35,134 +86,89 @@ public class GridHUDManager : MonoBehaviour
         }
     }
 
-    // Called when the script is enabled.
-    // Subscribe to events.
-    private void OnEnable()
-    {
-        // Open HUD when the game pauses and close it when it opens
-        PauseController.GamePauseEvent += OpenHUD;
-        PauseController.GameUnpauseEvent += CloseHUD;
-        // Navigate menu
-        InputEvents.MainAxisEvent += OnHUDAxis;
-    }
-    // Called when the script is disabled.
-    // Unsubscribe from events.
-    private void OnDisable()
-    {
-        PauseController.GamePauseEvent -= OpenHUD;
-        PauseController.GameUnpauseEvent -= CloseHUD;
-        InputEvents.MainAxisEvent -= OnHUDAxis;
-    }
-
     // Start is called before the first frame update
     private void Start()
-    {  
-        //general startup proceedure
-        //finds all Abilities
-        HUD_Icons.Add(new List<GameObject>());
-        HUD_Icons.Add(new List<GameObject>());
-        HUD_Icons.Add(new List<GameObject>());
-        HUD_Icons.Add(new List<GameObject>());
-        
-        FindObjects();
+    {
+        row = 0;
+        index = new int[AMOUNT_SKILLS];
+        for (int i = 0; i < AMOUNT_SKILLS; ++i) { index[i] = 0; }
+
+        parentList = new Transform[AMOUNT_SKILLS] { shapeOptionsParent, colorOptionsParent, zoomOptionsParent, scaleOptionsParent};
+        unlockedLists = new bool[AMOUNT_SKILLS][] { shapesUnlocked, colorsUnlocked, zoomUnlocked, scaleUnlocked }; 
+
+        // Hide HUD on start
         HUDstatus(false);
-        Row = 0;
     }
 
-    //opens and closes HUD uses timescale to pause game, and know when game is paused
-    public void OnOpenCloseHUD()
-    {
-        if (!isHUDActive)
-        {
-            Time.timeScale = 0;
-            HUDstatus(true);
-        }
-        else
-        {
-            Time.timeScale = 1;
-            CloseHUD();
-        }
-    }
 
-    //activates and deactivates HUD
-    private void HUDstatus(bool status)
-    {
-        foreach(List<GameObject> l in HUD_Icons)
-        {
-            foreach(GameObject g in l)
-            {
-                g.SetActive(status);
-            }
-        }
-        isHUDActive = status;
-    }
-    // Helper method to open HUD
+    ///<summary>Helper method to open HUD</summary>
     private void OpenHUD()
     {
         HUDstatus(true);
     }
-    //helper method
+    /// <summary>Helper method to close HUD and execute the skill calls</summary>
     private void CloseHUD()
     {
         HUDstatus(false);
         ExecuteHUD();
     }
+    ///<summary>Activates or deactivates HUD</summary>
+    private void HUDstatus(bool status)
+    {
+        // Show HUD
+        if (status)
+        {
+            ActivateAllSets();
+        }
+        // Hide HUD
+        else
+        {
+            DeactivateAllSets();
+        }
+        isHUDActive = status;
+    }
+    /// <summary>Turns off the parents of each of the sets</summary>
+    private void DeactivateAllSets()
+    {
+        foreach (Transform parent in parentList)
+        {
+            parent.gameObject.SetActive(false);
+        }
+    }
+    /// <summary>Turns on the unlocked options in each set</summary>
+    private void ActivateAllSets()
+    {
+        int count = 0;
+        foreach (Transform parent in parentList)
+        {
+            ActivateSingleSet(parent, unlockedLists[count]);
+            ++count;
+        }
+    }
+    /// <summary>Helper function for ActivateAllSets to turn on all the sets</summary>
+    private void ActivateSingleSet(Transform setParent, bool[] availBools)
+    {
+        int counter = 0;
+        foreach (Transform child in setParent)
+        {
+            child.gameObject.SetActive(availBools[counter]);
+            ++counter;
+        }
+        setParent.gameObject.SetActive(true);
+    }
 
-    //executes HUD to set character
+    /// <summary>Uses the skills based on what was selected</summary>
     private void ExecuteHUD()
     {
         // Index 0 is shape
-        ChangeShapeSkill.Shape shape = (ChangeShapeSkill.Shape)index[0];
+        ChangeShapeSkill.Shape shape = (ChangeShapeSkill.Shape)index[SHAPE_INDEX];
         // Index 1 is color
-        ChangeColorSkill.ChangeColor color = (ChangeColorSkill.ChangeColor)index[1];
+        ChangeColorSkill.ChangeColor color = (ChangeColorSkill.ChangeColor)index[COLOR_INDEX];
         // Index 2 is zoom
-        ChangeZoomSkill.ZoomLevel zoom = (ChangeZoomSkill.ZoomLevel)index[2];
+        ChangeZoomSkill.ZoomLevel zoom = (ChangeZoomSkill.ZoomLevel)index[ZOOM_INDEX];
 
         // Use the skills
         skillContRef.UseSkills(shape, color, zoom);
-    }
-
-    //code to find all the objects that are child of HUD to be encompassing and easily converted into Prefab
-    private void FindObjects()
-    {
-        ZeroOutIndex();
-        foreach (Transform child in this.transform)
-        {
-            if (child.tag.Equals("HUDshape"))
-            {
-                HUD_Icons[0].Add(child.gameObject);
-                HUD_Icons[0][index[0]].transform.position = new Vector3(0, -150 * index[0],0) + this.transform.position;
-                index[0]++;
-            }
-            else if (child.tag.Equals("HUDcolor"))
-            {
-                HUD_Icons[1].Add(child.gameObject);
-                HUD_Icons[1][index[1]].transform.position = new Vector3 (150, -150 * index[1],0) + this.transform.position;
-                index[1]++;
-            }
-            else if (child.tag.Equals("HUDzoom"))
-            {
-                HUD_Icons[2].Add(child.gameObject);
-                HUD_Icons[2][index[2]].transform.position = new Vector3 (300, -150 * index[2], 0) + this.transform.position;
-                index[2]++;
-            }
-            else if (child.tag.Equals("HUDscale"))
-            {
-                HUD_Icons[3].Add(child.gameObject);
-                HUD_Icons[3][index[3]].transform.position = new Vector3 (450, -150 * index[3], 0) + this.transform.position;
-                index[3]++;
-            }
-        }
-        ZeroOutIndex();
-    }
-
-    private void ZeroOutIndex()
-    {
-        index = new int[index.Length];
-        foreach(int i in index)
-        {
-            index[i] = 0;
-        }
     }
 
     /// <summary>Called when the player uses the HUD navigation</summary>
@@ -191,154 +197,113 @@ public class GridHUDManager : MonoBehaviour
         }
     }
 
-    //code to move the HUD left
-    public void OnHUDLeft()
+    /// <summary>Moves the HUD left</summary>
+    private void OnHUDLeft()
     {
-        if (isHUDActive && Row < 3)
+        if (isHUDActive && row < curMaxRow)
         {
-            Row++;
-            foreach (List<GameObject> l in HUD_Icons)
+            foreach (Transform parent in parentList)
             {
-                foreach (GameObject g in l)
-                {
-                    g.transform.Translate(-150, 0, 0);
-                }
+                parent.Translate(-150, 0, 0);
             }
+            ++row;
         }
     }
-    //code to move the HUD right
-    public void OnHUDRight()
+    /// <summary>Moves the HUD right</summary>
+    private void OnHUDRight()
     {
-        if (isHUDActive && Row > 0)
+        if (isHUDActive && row > 0)
         {
-            Row--;
-            foreach (List<GameObject> l in HUD_Icons)
+            foreach (Transform parent in parentList)
             {
-                foreach (GameObject g in l)
-                {
-                    g.transform.Translate(150, 0, 0);
-                }
+                parent.Translate(150, 0, 0);
             }
+            --row;
         }
     }
-    //code to move one column up
-    public void OnColumnUp()
+    /// <summary>Move one column up</summary>
+    private void OnColumnUp()
     {
         if (isHUDActive)
         {
-            switch (Row)
+            if (index[row] < curMaxIndices[row])
             {
-                case 0:
-                    if (index[0] < 3) {
-                        index[0]++;
-                        foreach (GameObject g in HUD_Icons[0])
-                        {
-                            g.transform.Translate(0, 150, 0);
-                        }
-                    }
-                    break;
-                case 1:
-                    if (index[1] < 3)
-                    {
-                        index[1]++;
-                        foreach (GameObject g in HUD_Icons[1])
-                        {
-                            g.transform.Translate(0, 150, 0);
-                        }
-                    }
-                    break;
-                case 2:
-                    if (index[2] < 1)
-                    {
-                        index[2]++;
-                        foreach (GameObject g in HUD_Icons[2])
-                        {
-                            g.transform.Translate(0, 150, 0);
-                        }
-                    }
-                    break;
-                case 3:
-                    if (index[3] < 1)
-                    {
-                        index[3]++;
-                        foreach (GameObject g in HUD_Icons[3])
-                        {
-                            g.transform.Translate(0, 150, 0);
-                        }
-                    }
-                    break;
+                parentList[row].Translate(0, 150, 0);
+                ++index[row];
             }
         }
     }
-    //code to move on column down
-    public void OnColumnDown()
+    /// <summary>Move on column down</summary>
+    private void OnColumnDown()
     {
         if (isHUDActive)
         {
-            switch (Row)
+            if (index[row] > 0)
             {
-                case 0:
-                    if (index[0] > 0)
-                    {
-                        index[0]--;
-                        foreach (GameObject g in HUD_Icons[0])
-                        {
-                            g.transform.Translate(0, -150, 0);
-                        }
-                    }
-                    break;
-                case 1:
-                    if (index[1] > 0)
-                    {
-                        index[1]--;
-                        foreach (GameObject g in HUD_Icons[1])
-                        {
-                            g.transform.Translate(0, -150, 0);
-                        }
-                    }
-                    break;
-                case 2:
-                    if (index[2] > 0)
-                    {
-                        index[2]--;
-                        foreach (GameObject g in HUD_Icons[2])
-                        {
-                            g.transform.Translate(0, -150, 0);
-                        }
-                    }
-                    break;
-                case 3:
-                    if (index[3] > 0)
-                    {
-                        index[3]--;
-                        foreach (GameObject g in HUD_Icons[3])
-                        {
-                            g.transform.Translate(0, -150, 0);
-                        }
-                    }
-                    break;
-
+                parentList[row].Translate(0, -150, 0);
+                --index[row];
             }
         }
     }
 
-    private void ZoomIn()
+
+    // For testing
+    private void OnHackerAxis(Vector2 rawInputVector)
     {
-        Debug.Log("Zoom In");
+        if (rawInputVector.y > 0)
+        {
+            Debug.Log("Elite Hacker detected. Unlocking hidden memes.");
+            switch (row)
+            {
+                case SHAPE_INDEX:
+                    UnlockNextShape();
+                    break;
+                case COLOR_INDEX:
+                    UnlockNextColor();
+                    break;
+            }
+        }
+
+        if (rawInputVector.x > 0)
+        {
+            Debug.Log("Elite Hacker detected. Expanding meme library.");
+            UnlockScaleAbility();
+        }
+
+        // Update the HUD
+        ActivateAllSets();
     }
 
-    private void ZoomOut()
+    /// <summary>Unlocks the scale ability</summary>
+    public void UnlockScaleAbility()
     {
-        Debug.Log("Zoom Out");
+        if (curMaxRow < MAX_ROW && !scaleUnlocked[0])
+        {
+            ++curMaxRow;
+            scaleUnlocked[0] = true;
+            scaleUnlocked[1] = true;
+        }
     }
 
-    private void ScaleUp()
+    /// <summary>Unlocks the next shape. Shape order of unlock is dictated by ChangeShapeSkill.Shape</summary>
+    public void UnlockNextShape()
     {
-        Debug.Log("Scale Up");
+        UnlockNextThing(SHAPE_INDEX);
     }
 
-    private void ScaleDown()
+    /// <summary>Unlocks the next color. Color order of unlock is dictated by ChangeColorSkill.ChangeColor</summary>
+    public void UnlockNextColor()
     {
-        Debug.Log("Scale Down");
+        UnlockNextThing(COLOR_INDEX);
+    }
+
+    /// <summary>Unlocks the next thing (ex: shape) of a specific skill with the given index</summary>
+    private void UnlockNextThing(int index)
+    {
+        if (curMaxIndices[index] < MAX_INDICES[index])
+        {
+            ++curMaxIndices[index];
+            unlockedLists[index][curMaxIndices[index]] = true;
+        }
     }
 }

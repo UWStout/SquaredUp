@@ -93,4 +93,14 @@ public class InputEvents : MonoBehaviour
         //Debug.Log("OnMainAxis" + rawInpVec);
         MainAxisEvent?.Invoke(rawInpVec);
     }
+
+    // HackerAxis
+    public delegate void HackerAxis(Vector2 rawHackerAxis);
+    public static event HackerAxis HackerAxisEvent;
+    private void OnHackerAxis(InputValue value)
+    {
+        Vector2 rawInpVec = value.Get<Vector2>();
+        //Debug.Log("OnHackerAxis" + rawInpVec);
+        HackerAxisEvent?.Invoke(rawInpVec);
+    }
 }
