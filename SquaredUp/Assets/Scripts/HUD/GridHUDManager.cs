@@ -18,6 +18,10 @@ public class GridHUDManager : MonoBehaviour
     private const int ZOOM_INDEX = 2;
     private const int SCALE_INDEX = 3;
 
+    // Singleton
+    private static GridHUDManager instance;
+    public static GridHUDManager Instance { get { return instance; } }
+
     // Reference to the grid HUD's total parent
     [SerializeField] private Transform gridHUDParent = null;
     // References to the parents of each skill
@@ -79,6 +83,17 @@ public class GridHUDManager : MonoBehaviour
     // Set references
     private void Awake()
     {
+        // Singleton setup
+        if (instance == null)
+        {
+            instance = this;
+        }
+        else
+        {
+            Debug.LogError("Scene should not contian multiple GridHUDManagers");
+            Destroy(this);
+        }
+
         skillContRef = FindObjectOfType<SkillController>();
         if (skillContRef == null)
         {
@@ -283,6 +298,12 @@ public class GridHUDManager : MonoBehaviour
             scaleUnlocked[0] = true;
             scaleUnlocked[1] = true;
         }
+    }
+
+
+    public void UnlockShape(ChangeShapeSkill.Shape shape)
+    {
+
     }
 
     /// <summary>Unlocks the next shape. Shape order of unlock is dictated by ChangeShapeSkill.Shape</summary>
