@@ -2,7 +2,7 @@
 using UnityEngine;
 using TMPro;
 
-// Controls the text on this object to append characters one at a time.
+/// <summary>Controls the text on this object to append characters one at a time</summary>
 [RequireComponent(typeof(TextMeshProUGUI))]
 public class TypeWriter : MonoBehaviour
 {
@@ -28,9 +28,7 @@ public class TypeWriter : MonoBehaviour
         typeText = GetComponent<TextMeshProUGUI>();
     }
 
-    /// <summary>
-    /// Type the current line
-    /// </summary>
+    /// <summary>Type the current line</summary>
     public void TypeLine(string line, FinishWriting onFinish)
     {
         currentLine = line;
@@ -39,9 +37,7 @@ public class TypeWriter : MonoBehaviour
         typeWriteCoroutine = StartCoroutine(TypeLineCoroutine());
     }
 
-    /// <summary>
-    /// Show the whole line before the typewriter is done
-    /// </summary>
+    /// <summary>Show the whole line before the typewriter is done</summary>
     public void PreemptiveLineFinish()
     {
         StopCoroutine(typeWriteCoroutine);
@@ -49,9 +45,7 @@ public class TypeWriter : MonoBehaviour
         FinishTyping();
     }
 
-    /// <summary>
-    /// Coroutine to make the letters appear slowly
-    /// </summary>
+    /// <summary>Coroutine to make the letters appear slowly</summary>
     private IEnumerator TypeLineCoroutine()
     {
         // Indiivually write each character
@@ -65,18 +59,14 @@ public class TypeWriter : MonoBehaviour
         yield return null;
     }
 
-    /// <summary>
-    /// Appends the given letter to the text
-    /// </summary>
+    /// <summary>Appends the given letter to the text</summary>
     /// <param name="c">Character to append</param>
     private void TypeOneLetter(char c)
     {
         typeText.text += c;
     }
 
-    /// <summary>
-    /// Sets finishedTyping to true and calls the OnFinishWriting event.
-    /// </summary>
+    /// <summary>Calls the OnFinishWriting delegate and discards it</summary>
     private void FinishTyping()
     {
         OnFinishWriting?.Invoke();

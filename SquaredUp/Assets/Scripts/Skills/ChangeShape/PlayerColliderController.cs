@@ -1,10 +1,15 @@
 ﻿using System.Collections.Generic;
 using UnityEngine;
 
-// Handles swapping the colliders that the player uses
+/// <summary>Handles swapping the colliders that the player uses</summary>
 public class PlayerColliderController : MonoBehaviour
 {
+    // Constants
     private static readonly Vector2[] TRIANGLE_POINTS = { new Vector2(-0.5f, 0.5f), new Vector2(-0.5f, -0.5f), new Vector2(0.5f, 0) };
+
+    // Singleton
+    private static PlayerColliderController instance = null;
+    public static PlayerColliderController Instance { get { return instance; } }
 
     // References to the gameObjects that hold the colldiers the player needs to change on shape swap
     [SerializeField] private GameObject[] playerColliderObjs = new GameObject[2];
@@ -18,9 +23,18 @@ public class PlayerColliderController : MonoBehaviour
     private List<PolygonCollider2D> polygonColliders = new List<PolygonCollider2D>();
 
     // Called 0th
+    // Set references
     private void Awake()
     {
-        // Get all colliders
+        // Set up singleton
+        if (instance == null) { instance = this; }
+        else
+        {
+            Debug.LogError("There cannot be multiple PlayerColliderControllers in a scene");
+            Destroy(this);
+        }
+
+        // Get references to colliders
         // Box colliders
         GetColliders(boxColliders);
         // Circle colliders

@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using TMPro;
 
 
 /* Grid Design HUD for Squared Up
@@ -6,50 +7,25 @@
  * 
  */
 
-
+/// <summary>Manages the HUD for skills</summary>
 public class GridHUDManager : MonoBehaviour
 {
-    // Constants
-    private const int AMOUNT_SKILLS = 4;
-    private const int MAX_ROW = AMOUNT_SKILLS - 1;
-    private static readonly int[] MAX_INDICES = { 3, 3, 1, 1 };
-    private const int SHAPE_INDEX = 0;
-    private const int COLOR_INDEX = 1;
-    private const int ZOOM_INDEX = 2;
-    private const int SCALE_INDEX = 3;
-
     // Reference to the grid HUD's total parent
     [SerializeField] private Transform gridHUDParent = null;
-    // References to the parents of each skill
-    [SerializeField] private Transform shapeOptionsParent = null;
-    [SerializeField] private Transform colorOptionsParent = null;
-    [SerializeField] private Transform zoomOptionsParent = null;
-    [SerializeField] private Transform scaleOptionsParent = null;
-    // All the parents will be put in this list on start for iteration purposes
-    private Transform[] parentList = null;
 
-    // Reference to skills
-    private SkillController skillContRef = null;
+    // Prefab that will be created to display the states of the skills
+    [SerializeField] private GameObject skillStatePrefab = null;
+
+    // Spacing for how the states should be layed out
+    [SerializeField] private float verticalSpace = 150f;
+    [SerializeField] private float horizontalSpace = 150f;
 
     // Indexing information
     private int row = 0;
-    private int[] index = new int[AMOUNT_SKILLS] { 0, 0, 0, 0 };
-    // Current maxes to restrict what the player can select for iteration purposes
-    // TODO Remove [SerializeField]s I did that for testing purposes only
-    [SerializeField] private int curMaxRow = 2;
-    [SerializeField]  private int[] curMaxIndices = new int[AMOUNT_SKILLS] { 0, 0, 1, 1 };
+    private int[] index = null;
 
     // If the HUD is currently active
     private bool isHUDActive = false;
-
-    // Holds which skills the player has unlocked
-    // TODO Remove [SerializeField]s I did that for testing purposes only
-    [SerializeField] private bool[] shapesUnlocked = { true, false, false, false };
-    [SerializeField] private bool[] colorsUnlocked = { true, false, false, false };
-    [SerializeField] private bool[] zoomUnlocked = { true, true };
-    [SerializeField] private bool[] scaleUnlocked = { false, false };
-    // All the unlock arrays will be put into this list on start
-    private bool[][] unlockedLists = null;
 
 
     // Called when the script is enabled.
@@ -75,29 +51,68 @@ public class GridHUDManager : MonoBehaviour
         InputEvents.HackerAxisEvent -= OnHackerAxis;
     }
 
-    // Called 0th
-    // Set references
-    private void Awake()
-    {
-        skillContRef = FindObjectOfType<SkillController>();
-        if (skillContRef == null)
-        {
-            Debug.LogError("GridHUDManager could not find SkillController");
-        }
-    }
-
-    // Start is called before the first frame update
+    // Called 1st
+    // Initialize
     private void Start()
     {
-        row = 0;
-        index = new int[AMOUNT_SKILLS];
-        for (int i = 0; i < AMOUNT_SKILLS; ++i) { index[i] = 0; }
+        // Create the HUD
+        CreateSkillHUDParents();
+        CreateSkillStatesHUD();
 
-        parentList = new Transform[AMOUNT_SKILLS] { shapeOptionsParent, colorOptionsParent, zoomOptionsParent, scaleOptionsParent};
-        unlockedLists = new bool[AMOUNT_SKILLS][] { shapesUnlocked, colorsUnlocked, zoomUnlocked, scaleUnlocked }; 
+        int amountSkills = SkillController.Instance.GetSkillAmount();
+
+        // Initialize the selection indices
+        row = 0;
+        index = new int[amountSkills];
+        for (int i = 0; i < amountSkills; ++i) { index[i] = 0; }
 
         // Hide HUD on start
         HUDstatus(false);
+    }
+
+    /// <summary>Creates an object for every skill there is. This object will be the parent of the skill's states HUD</summary>
+    private void CreateSkillHUDParents()
+    {
+        // Assumption is that it starts with no children
+        if (gridHUDParent.childCount != 0)
+        {
+            Debug.LogError(gridHUDParent.name + " cannot have children. Please remove them");
+        }
+
+        // Create a parent for each skill to hold the state HUD things
+        int amountSkills = SkillController.Instance.GetSkillAmount();
+        for (int i = 0; i < amountSkills; ++i)
+        {
+            // Create the transform, set its parent, and its local position
+            Transform parent = new GameObject().transform;
+            parent.SetParent(gridHUDParent);
+            parent.localPosition = new Vector3(horizontalSpace * i, 0);
+            // Set its name
+            parent.name = SkillController.Instance.GetSkill(i).ToString() + " HUD Parent";
+        }
+    }
+
+    /// <summary>Creates an object for every states of each skill and childs it under the corresponding parent</summary>
+    private void CreateSkillStatesHUD()
+    {
+        // Create state HUDs for each skill
+        int count = 0;
+        foreach (Transform parent in gridHUDParent)
+        {
+            Skill curSkill = SkillController.Instance.GetSkill(count);
+            for (int i = 0; i < curSkill.GetAmountStates(); ++i)
+            {
+                // Create the transform as a child, set its local position, and give it a good name
+                Transform child = Instantiate(skillStatePrefab, parent).transform;
+                child.transform.localPosition = new Vector3(0, -verticalSpace * i, 0);
+                child.name = curSkill.GetStateName(i);
+
+                // Set text of the prefab
+                TextMeshProUGUI text = child.transform.GetChild(0).GetComponent<TextMeshProUGUI>();
+                text.text = child.name;
+            }
+            ++count;
+        }
     }
 
 
@@ -130,7 +145,7 @@ public class GridHUDManager : MonoBehaviour
     /// <summary>Turns off the parents of each of the sets</summary>
     private void DeactivateAllSets()
     {
-        foreach (Transform parent in parentList)
+        foreach (Transform parent in gridHUDParent)
         {
             parent.gameObject.SetActive(false);
         }
@@ -139,36 +154,32 @@ public class GridHUDManager : MonoBehaviour
     private void ActivateAllSets()
     {
         int count = 0;
-        foreach (Transform parent in parentList)
+        foreach (Transform parent in gridHUDParent)
         {
-            ActivateSingleSet(parent, unlockedLists[count]);
+            Skill curSkill = SkillController.Instance.GetSkill(count);
+            ActivateSingleSet(parent, curSkill);
             ++count;
         }
     }
     /// <summary>Helper function for ActivateAllSets to turn on all the sets</summary>
-    private void ActivateSingleSet(Transform setParent, bool[] availBools)
+    private void ActivateSingleSet(Transform setParent, Skill skillRef)
     {
-        int counter = 0;
+        int count = 0;
+        // Activate the states if they are unlocked
         foreach (Transform child in setParent)
         {
-            child.gameObject.SetActive(availBools[counter]);
-            ++counter;
+            child.gameObject.SetActive(skillRef.IsStateUnlocked(count));
+            ++count;
         }
-        setParent.gameObject.SetActive(true);
+        // Activate the parent if the skill is unlocked
+        setParent.gameObject.SetActive(skillRef.IsSkillUnlocked());
     }
 
     /// <summary>Uses the skills based on what was selected</summary>
     private void ExecuteHUD()
     {
-        // Index 0 is shape
-        ChangeShapeSkill.Shape shape = (ChangeShapeSkill.Shape)index[SHAPE_INDEX];
-        // Index 1 is color
-        ChangeColorSkill.ChangeColor color = (ChangeColorSkill.ChangeColor)index[COLOR_INDEX];
-        // Index 2 is zoom
-        ChangeZoomSkill.ZoomLevel zoom = (ChangeZoomSkill.ZoomLevel)index[ZOOM_INDEX];
-
         // Use the skills
-        skillContRef.UseSkills(shape, color, zoom);
+        SkillController.Instance.UseSkills(index);
     }
 
     /// <summary>Called when the player uses the HUD navigation</summary>
@@ -177,48 +188,51 @@ public class GridHUDManager : MonoBehaviour
         // Only navigate when active
         if (isHUDActive)
         {
-            if (rawInput.x < 0)
-            {
-                OnHUDRight();
-            }
-            else if (rawInput.x > 0)
-            {
-                OnHUDLeft();
-            }
+            // Horizontal movement
+            if (rawInput.x < 0) { OnHUDRight(); }
+            else if (rawInput.x > 0) { OnHUDLeft(); }
 
-            if (rawInput.y < 0)
-            {
-                OnColumnUp();
-            }
-            else if (rawInput.y > 0)
-            {
-                OnColumnDown();
-            }
+            // Vertical movement
+            if (rawInput.y < 0) { OnColumnUp(); }
+            else if (rawInput.y > 0) { OnColumnDown(); }
         }
     }
 
     /// <summary>Moves the HUD left</summary>
     private void OnHUDLeft()
     {
-        if (isHUDActive && row < curMaxRow)
+        if (isHUDActive)
         {
-            foreach (Transform parent in parentList)
+            int maxRow = gridHUDParent.childCount;
+            // If there is another skill to the right
+            if (row + 1 < maxRow)
             {
-                parent.Translate(-150, 0, 0);
+                // If that skill is also unlocked
+                Skill nextSkill = SkillController.Instance.GetSkill(row + 1);
+                if (nextSkill.IsSkillUnlocked())
+                {
+                    foreach (Transform parent in gridHUDParent)
+                    {
+                        parent.Translate(-horizontalSpace, 0, 0);
+                    }
+                    ++row;
+                }
             }
-            ++row;
         }
     }
     /// <summary>Moves the HUD right</summary>
     private void OnHUDRight()
     {
-        if (isHUDActive && row > 0)
+        if (isHUDActive)
         {
-            foreach (Transform parent in parentList)
+            if (row > 0)
             {
-                parent.Translate(150, 0, 0);
+                foreach (Transform parent in gridHUDParent)
+                {
+                    parent.Translate(horizontalSpace, 0, 0);
+                }
+                --row;
             }
-            --row;
         }
     }
     /// <summary>Move one column up</summary>
@@ -226,10 +240,17 @@ public class GridHUDManager : MonoBehaviour
     {
         if (isHUDActive)
         {
-            if (index[row] < curMaxIndices[row])
+            Skill curSkill = SkillController.Instance.GetSkill(row);
+            int totalStates = curSkill.GetAmountStates();
+            // If there is a next state
+            if (index[row] + 1 < totalStates)
             {
-                parentList[row].Translate(0, 150, 0);
-                ++index[row];
+                // And that state is unlocked
+                if (curSkill.IsStateUnlocked(index[row] + 1))
+                {
+                    gridHUDParent.GetChild(row).Translate(0, verticalSpace, 0);
+                    ++index[row];
+                }
             }
         }
     }
@@ -240,7 +261,7 @@ public class GridHUDManager : MonoBehaviour
         {
             if (index[row] > 0)
             {
-                parentList[row].Translate(0, -150, 0);
+                gridHUDParent.GetChild(row).Translate(0, -verticalSpace, 0);
                 --index[row];
             }
         }
@@ -248,62 +269,63 @@ public class GridHUDManager : MonoBehaviour
 
 
     // For testing
+    // TODO Remove this for final build
     private void OnHackerAxis(Vector2 rawInputVector)
     {
         if (rawInputVector.y > 0)
         {
             Debug.Log("Elite Hacker detected. Unlocking hidden memes.");
-            switch (row)
-            {
-                case SHAPE_INDEX:
-                    UnlockNextShape();
-                    break;
-                case COLOR_INDEX:
-                    UnlockNextColor();
-                    break;
-            }
+            UnlockSkillState(row, index[row] + 1);
         }
 
         if (rawInputVector.x > 0)
         {
             Debug.Log("Elite Hacker detected. Expanding meme library.");
-            UnlockScaleAbility();
+            UnlockSkill(row + 1);
         }
 
         // Update the HUD
         ActivateAllSets();
     }
 
-    /// <summary>Unlocks the scale ability</summary>
-    public void UnlockScaleAbility()
+    /// <summary>Unlocks the skill with the given index.
+    /// TODO This should probably go in the SkillController</summary>
+    public void UnlockSkill(int skillIndex)
     {
-        if (curMaxRow < MAX_ROW && !scaleUnlocked[0])
+        if (skillIndex < SkillController.Instance.GetSkillAmount())
         {
-            ++curMaxRow;
-            scaleUnlocked[0] = true;
-            scaleUnlocked[1] = true;
+            Skill skillToUnlock = SkillController.Instance.GetSkill(skillIndex);
+            if (skillToUnlock != null && !skillToUnlock.IsSkillUnlocked())
+            {
+                skillToUnlock.UnlockSkill();
+                // Update the HUD if its currently open
+                if (isHUDActive)
+                {
+                    ActivateAllSets();
+                }
+            }
         }
     }
 
-    /// <summary>Unlocks the next shape. Shape order of unlock is dictated by ChangeShapeSkill.Shape</summary>
-    public void UnlockNextShape()
+    /// <summary>Unlocks the state with the given index for the skill with the given index.
+    /// TODO This should probably go in the SkillController</summary>
+    public void UnlockSkillState(int skillIndex, int stateIndex)
     {
-        UnlockNextThing(SHAPE_INDEX);
-    }
-
-    /// <summary>Unlocks the next color. Color order of unlock is dictated by ChangeColorSkill.ChangeColor</summary>
-    public void UnlockNextColor()
-    {
-        UnlockNextThing(COLOR_INDEX);
-    }
-
-    /// <summary>Unlocks the next thing (ex: shape) of a specific skill with the given index</summary>
-    private void UnlockNextThing(int index)
-    {
-        if (curMaxIndices[index] < MAX_INDICES[index])
+        if (skillIndex < SkillController.Instance.GetSkillAmount())
         {
-            ++curMaxIndices[index];
-            unlockedLists[index][curMaxIndices[index]] = true;
+            Skill skillInContention = SkillController.Instance.GetSkill(skillIndex);
+            if (skillInContention != null)
+            {
+                if (stateIndex < skillInContention.GetAmountStates() && !skillInContention.IsStateUnlocked(stateIndex))
+                {
+                    skillInContention.UnlockState(stateIndex);
+                    // Update the HUD if its currently open
+                    if (isHUDActive)
+                    {
+                        ActivateAllSets();
+                    }
+                }
+            }
         }
     }
 }

@@ -1,18 +1,13 @@
 ﻿using System.Collections;
 using UnityEngine;
 
-public class ChangeZoomSkill : Skill
+/// <summary>Skill that zooms the camera in</summary>
+public class ChangeZoomSkill : SkillBase<ZoomData>
 {
-    public enum ZoomLevel { IN, OUT };
-
-    // Size of zoom in and out for orthographics camera
-    [SerializeField] [Min(0)] private float zoomInVal = 12f;
-    [SerializeField] [Min(0)] private float zoomOutVal = 36f;
-
+    // Reference to the PlayerMovement script
+    [SerializeField] private PlayerMovement playMove = null;
     // Reference to camera whose orthographic size to change.
     private Camera zoomCam = null;
-    // Refernec to the PlayerMovement script
-    [SerializeField] private PlayerMovement playMove = null;
 
     // Lerp speed
     [SerializeField] [Range(0, 1)] private float zoomSpeed = 0.1f;
@@ -34,34 +29,16 @@ public class ChangeZoomSkill : Skill
     // Initialization
     private void Start()
     {
-        zoomTarget = zoomInVal;
-        ProcessZoom(ZoomLevel.IN);
+        zoomTarget = SkillData.GetData(0).ZoomAmount;
+        Use(0);
     }
 
-    /// <summary>Starts to zoom the camera to the position corresponding to the enum</summary>
-    public override void Use(int enumVal)
+    /// <summary>Starts to zoom the camera to the zoom amount of the ZoomData with the corresponding index</summary>
+    public override void Use(int stateIndex)
     {
-        ProcessZoom((ZoomLevel)enumVal);
-    }
-
-    /// <summary>Handles what should happen on zoom in and zoom out</summary>
-    private void ProcessZoom(ZoomLevel zoom)
-    {
-        switch (zoom)
-        {
-            case ZoomLevel.IN:
-                BeginZoom(zoomInVal);
-                playMove.AllowMovement(true);
-                break;
-            case ZoomLevel.OUT:
-                BeginZoom(zoomOutVal);
-                // Can't move when zoomed out
-                playMove.AllowMovement(false);
-                break;
-            default:
-                Debug.LogError("Unhandled ZoomLevel " + zoom + " in ChangeZoomSkill");
-                break;
-        }
+        BeginZoom(SkillData.GetData(stateIndex).ZoomAmount);
+        // Can't move while zoomed out
+        playMove.AllowMovement(stateIndex == 0);
     }
 
     /// <summary>Starts the zoom in/out process to the given orthoSize</summary>

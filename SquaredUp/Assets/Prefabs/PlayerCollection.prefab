@@ -43,8 +43,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e118f71023995ee44acf99e4c0f1250e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  zoomInVal: 12
-  zoomOutVal: 36
+  skillData:
+    states:
+    - isUnlocked: 1
+      data: {fileID: 11400000, guid: ccabbf60a2dfb86498cfe54af1bbcd53, type: 2}
+    - isUnlocked: 1
+      data: {fileID: 11400000, guid: aefaa843490a83944bfb70f0790d5150, type: 2}
+    isUnlocked: 0
   playMove: {fileID: 6257086274663262137}
   zoomSpeed: 0.1
   closeEnoughVal: 0.01
@@ -134,7 +139,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 6257086275671826331}
-  m_RootOrder: 1
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &1937018708140037048
 MonoBehaviour:
@@ -148,16 +153,24 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 520d04c25d2dcb84d840b5a122ce597c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  skillData:
+    states:
+    - isUnlocked: 1
+      data: {fileID: 11400000, guid: f14b249f124e37a4aaa26ea092a4ad52, type: 2}
+    - isUnlocked: 0
+      data: {fileID: 11400000, guid: c9c58f43714d3614f8260fef3b091f4b, type: 2}
+    - isUnlocked: 0
+      data: {fileID: 11400000, guid: ab956c92ac3ead948a7a80d851aaa473, type: 2}
+    - isUnlocked: 0
+      data: {fileID: 11400000, guid: c7e631810acd28841bd3bc42d730ce27, type: 2}
+    isUnlocked: 1
   playerMeshRendRef: {fileID: 6257086274189949309}
-  defaultMat: {fileID: 2100000, guid: daaa8d62d8921be4387d2a42b0f84ec3, type: 2}
-  greenMat: {fileID: 2100000, guid: 6a5d4556428afec40aeaba28f527e55b, type: 2}
-  redMat: {fileID: 2100000, guid: 4ba0f7b59100ec14380546c4858118b6, type: 2}
-  blueMat: {fileID: 2100000, guid: 54cf7ff8d3cced849bd367b8c32728c7, type: 2}
   changeSpeed: 0.03
   closeEnoughVal: 0.001
-  greenWall: {fileID: 815508983924247115}
-  redWall: {fileID: 6593881369109893089}
-  blueWall: {fileID: 8407562376634621229}
+  coloredWallColliders:
+  - {fileID: 815508983924247115}
+  - {fileID: 6593881369109893089}
+  - {fileID: 8407562376634621229}
 --- !u!1 &4211887411272821655
 GameObject:
   m_ObjectHideFlags: 0
@@ -201,6 +214,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7d5d48c729498a24391a5f2e2db2a2de, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  playerInputRef: {fileID: 6257086275822434842}
   pauseActionMapName: Pause
   playerActionMapName: Player
 --- !u!1 &5847830945095955907
@@ -553,6 +567,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   followTarget: {fileID: 6257086274663262138}
+  xAxisFollow: 1
+  yAxisFollow: 1
+  zAxisFollow: 0
+  whenToUpdate: 0
+  startFolowOnStart: 1
 --- !u!1 &6257086274055276616
 GameObject:
   m_ObjectHideFlags: 0
@@ -987,7 +1006,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 6257086275671826331}
-  m_RootOrder: 0
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &6257086274534009294
 MonoBehaviour:
@@ -1001,14 +1020,21 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3c52db57c9b15014da99d9c4d822d9c6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  skillData:
+    states:
+    - isUnlocked: 1
+      data: {fileID: 11400000, guid: 76adf3450f3e7ae42be0774737f7e0fd, type: 2}
+    - isUnlocked: 0
+      data: {fileID: 11400000, guid: 4eaa314a18e291d4288a236c4b26f4b8, type: 2}
+    - isUnlocked: 0
+      data: {fileID: 11400000, guid: 9c22c71124efb5c47a91833e4b8b0b7b, type: 2}
+    - isUnlocked: 0
+      data: {fileID: 11400000, guid: 782475cad22118443b847c7ffc87411e, type: 2}
+    isUnlocked: 1
   playerScalableTrans: {fileID: 6257086274663262138}
   playerMeshFilterRefs:
   - {fileID: 6257086274189949306}
   - {fileID: 6257086274373554982}
-  squareData: {fileID: 11400000, guid: 76adf3450f3e7ae42be0774737f7e0fd, type: 2}
-  rectangleData: {fileID: 11400000, guid: 4eaa314a18e291d4288a236c4b26f4b8, type: 2}
-  circleData: {fileID: 11400000, guid: 9c22c71124efb5c47a91833e4b8b0b7b, type: 2}
-  triangleData: {fileID: 11400000, guid: 782475cad22118443b847c7ffc87411e, type: 2}
 --- !u!1 &6257086274558080414
 GameObject:
   m_ObjectHideFlags: 0
@@ -1775,7 +1801,7 @@ Camera:
   far clip plane: 1000
   field of view: 60
   orthographic: 1
-  orthographic size: 5
+  orthographic size: 12
   m_Depth: -1
   m_CullingMask:
     serializedVersion: 2
@@ -1812,6 +1838,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   followTarget: {fileID: 6257086274663262138}
+  xAxisFollow: 1
+  yAxisFollow: 1
+  zAxisFollow: 0
+  whenToUpdate: 0
+  startFolowOnStart: 1
 --- !u!1 &6257086275590474691
 GameObject:
   m_ObjectHideFlags: 0
@@ -2002,8 +2033,8 @@ Transform:
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
-  - {fileID: 6257086274534009297}
   - {fileID: 8008549867569960349}
+  - {fileID: 6257086274534009297}
   - {fileID: 5701859566469081458}
   m_Father: {fileID: 6257086275170067480}
   m_RootOrder: 2

@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using UnityEngine.InputSystem;
 
-// Manages the dialogue box and typewriter
+/// <summary>Manages the dialogue box and typewriter</summary>
 public class DialogueController : MonoBehaviour
 {
     // Input References
@@ -52,9 +52,7 @@ public class DialogueController : MonoBehaviour
     }
 
 
-    /// <summary>
-    /// Starts the dialogue
-    /// </summary>
+    /// <summary>Starts the dialogue</summary>
     /// <param name="lines">Lines to show in the text box</param>
     public void StartDialogue(string[] lines)
     {
@@ -69,9 +67,7 @@ public class DialogueController : MonoBehaviour
         StartTyping();
     }
 
-    /// <summary>
-    /// Called when player inputs next or AdvanceDialogue
-    /// </summary>
+    /// <summary>Called when player inputs next or AdvanceDialogue</summary>
     public void OnAdvanceDialogue()
     {
         // Type next line if finished typing
@@ -96,27 +92,21 @@ public class DialogueController : MonoBehaviour
         }
     }
 
-    /// <summary>
-    /// Calls the type writer to start typing and sets finishedTyping to false.
-    /// </summary>
+    /// <summary>Calls the type writer to start typing and sets finishedTyping to false</summary>
     private void StartTyping()
     {
         finishedTyping = false;
         typeWriteRef.TypeLine(dialogueLines[curLineIndex], HandleFinishTyping);
     }
 
-    /// <summary>
-    /// Sets finishedTyping to true and increments the line index.
-    /// </summary>
+    /// <summary>Sets finishedTyping to true and increments the line index</summary>
     private void HandleFinishTyping()
     {
         ++curLineIndex;
         finishedTyping = true;
     }
 
-    /// <summary>
-    /// Ends the dialogue
-    /// </summary>
+    /// <summary>Ends the dialogue</summary>
     private void EndDialogue()
     {
         // Reset some variables
@@ -126,6 +116,4 @@ public class DialogueController : MonoBehaviour
         // Swap input map back
         playerInputRef.SwitchCurrentActionMap(playerActionMapName);
     }
-
-    
 }

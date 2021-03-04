@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
-
-// Interactable that lets you talk to an NPC
+ 
+/// <summary>Interactable that lets you talk to an NPC</summary>
 public class NPCTalkInteractable : Interactable
 {
     // Dialogue for the npc
@@ -23,24 +23,21 @@ public class NPCTalkInteractable : Interactable
         }
     }
 
-    /// <summary>
-    /// Starts a dialogue with the NPC.
-    /// </summary>
-    public override void Interact() {
+    /// <summary>Starts a dialogue with the NPC.</summary>
+    public override void Interact()
+    {
         dialogueContRef.StartDialogue(lines);
     }
 
-    /// <summary>
-    /// Show NPC tag
-    /// </summary>
-    public override void DisplayAlert() {
+    /// <summary>Show NPC tag</summary>
+    public override void DisplayAlert()
+    {
         npcAlertObj.SetActive(true);
     }
 
-    /// <summary>
-    /// Hide NPC tag
-    /// </summary>
-    public override void HideAlert() {
+    /// <summary>Hide NPC tag</summary>
+    public override void HideAlert()
+    {
         npcAlertObj.SetActive(false);
     }
 }
