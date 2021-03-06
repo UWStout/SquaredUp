@@ -3,8 +3,11 @@
 /// <summary>Skill to change the player's color</summary>
 public class ChangeColorSkill : SkillBase<ColorData>
 {
+    // References
     // Reference to the mesh renderer whose material will be changed
     [SerializeField] private MeshRenderer playerMeshRendRef = null;
+    // Reference to the color check script
+    [SerializeField] private PlayerInColorCheck playerColorCheckRef = null;
 
     // Coroutine variables for how fast to change the color and when we are close enough
     [SerializeField] private float changeSpeed = 0.03f;
@@ -18,7 +21,7 @@ public class ChangeColorSkill : SkillBase<ColorData>
     /// Index matches what is specified in the editor. If index is unknown, consider using Use(ColorData) instead.</summary>
     public override void Use(int stateIndex)
     {
-        if (!PlayerInColorCheck.Instance.IsInWall)
+        if (!playerColorCheckRef.IsInWall)
         {
             playerMeshRendRef.material = SkillData.GetData(stateIndex).Material;
             AllowColorPassage(stateIndex);
@@ -27,6 +30,21 @@ public class ChangeColorSkill : SkillBase<ColorData>
         {
             Debug.Log("Player cannot change to " + GetStateName(stateIndex) + " here");
         }
+    }
+
+    /// <summary>Returns the index of which wall color the player can walk through currently. If the player
+    /// cannot walk through any colored walls, returns -1.</summary>
+    public int GetPassableWallColorIndex()
+    {
+        for (int i = 0; i < coloredWallColliders.Length; ++i)
+        {
+            GameObject obj = coloredWallColliders[i];
+            if (!obj.activeSelf)
+            {
+                return i;
+            }
+        }
+        return -1;
     }
 
     /// <summary>Turns off the collider that inhbits passage through the given color</summary>

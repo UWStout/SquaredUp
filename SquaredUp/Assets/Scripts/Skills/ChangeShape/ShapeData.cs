@@ -6,6 +6,9 @@ public class ShapeData : SkillStateData
 {
     // Types of 2D colliders
     public enum ColliderType { BOX, CIRCLE, TRIANGLE}
+    // Constants
+    // Points for the types of colliders that are polygonal
+    public static readonly Vector2[] TRIANGLE_POINTS = { new Vector2(-0.5f, 0.5f), new Vector2(-0.5f, -0.5f), new Vector2(0.5f, 0) };
 
     // Mesh that the shape will be changed to
     [SerializeField] private Mesh mesh = null;
@@ -18,4 +21,8 @@ public class ShapeData : SkillStateData
     // Scale of this shape
     [SerializeField] private Vector3 scale = Vector3.one;
     public Vector3 Scale { get { return scale; } }
+
+    // If direction affects the scale
+    [SerializeField] private bool directionAffectsScale = false;
+    public bool DirectionAffectsScale { get { return directionAffectsScale; } }
 }
