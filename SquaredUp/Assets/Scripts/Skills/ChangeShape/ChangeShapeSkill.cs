@@ -3,6 +3,8 @@
 /// <summary>Skill that allows the player to change their shape</summary>
 public class ChangeShapeSkill : SkillBase<ShapeData>
 {
+    // SFX for shape transformation
+    public AudioSource transformShape;
     // References
     // Transform that will be scaled for the player
     [SerializeField] private Transform playerScalableTrans = null;
@@ -42,6 +44,7 @@ public class ChangeShapeSkill : SkillBase<ShapeData>
 
             // Adjust the scale
             playerScalableTrans.localScale = size;
+            transformShape.Play();
         }
     }
 

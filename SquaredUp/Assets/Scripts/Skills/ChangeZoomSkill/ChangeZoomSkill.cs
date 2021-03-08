@@ -4,6 +4,8 @@ using UnityEngine;
 /// <summary>Skill that zooms the camera in</summary>
 public class ChangeZoomSkill : SkillBase<ZoomData>
 {
+    //SFX for zoom ability
+    public AudioSource zoom;
     // Reference to the PlayerMovement script
     [SerializeField] private PlayerMovement playMove = null;
     // Reference to camera whose orthographic size to change.
@@ -37,6 +39,7 @@ public class ChangeZoomSkill : SkillBase<ZoomData>
     public override void Use(int stateIndex)
     {
         BeginZoom(SkillData.GetData(stateIndex).ZoomAmount);
+        zoom.Play();
         // Can't move while zoomed out
         playMove.AllowMovement(stateIndex == 0);
     }

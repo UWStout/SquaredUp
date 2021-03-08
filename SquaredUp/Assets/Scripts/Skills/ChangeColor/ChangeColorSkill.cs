@@ -3,6 +3,8 @@
 /// <summary>Skill to change the player's color</summary>
 public class ChangeColorSkill : SkillBase<ColorData>
 {
+    //SFX for color transformation
+    public AudioSource transformColor;
     // References
     // Reference to the mesh renderer whose material will be changed
     [SerializeField] private MeshRenderer playerMeshRendRef = null;
@@ -25,6 +27,7 @@ public class ChangeColorSkill : SkillBase<ColorData>
         {
             playerMeshRendRef.material = SkillData.GetData(stateIndex).Material;
             AllowColorPassage(stateIndex);
+            transformColor.Play();
         }
         else
         {
