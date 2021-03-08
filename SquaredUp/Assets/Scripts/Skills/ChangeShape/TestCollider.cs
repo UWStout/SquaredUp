@@ -39,30 +39,33 @@ public class TestCollider : MonoBehaviour
         LayerMask colorWallLayerMask = GetCurrentColoredWallLayerMask();
 
         RaycastHit2D hit;
+        Vector2 roundedPos = RoundPositionToHalfInts(transform.position);
+
         // Turn on the test collider of the given type see if there is a collision with a wall
         switch (data.ColliderShape)
         {
             // BoxCollider2D
             case ShapeData.ColliderType.BOX:
-                hit = Physics2D.BoxCast(transform.position, size, transform.eulerAngles.y, transform.up, 0, colorWallLayerMask);
+                hit = Physics2D.BoxCast(roundedPos, size, transform.eulerAngles.y, transform.up, 0, colorWallLayerMask);
                 return hit;
             // CircleCollider2D
             case ShapeData.ColliderType.CIRCLE:
-                hit = Physics2D.CircleCast(transform.position, size.x * 0.5f, transform.up, 0, colorWallLayerMask);
+                hit = Physics2D.CircleCast(roundedPos, size.x * 0.5f, transform.up, 0, colorWallLayerMask);
                 return hit;
             // Triangle needs to be a specific kind of polygon collider
             case ShapeData.ColliderType.TRIANGLE:
-                RaycastHit2D[] hits = PolygonCast(transform.position, size, ShapeData.TRIANGLE_POINTS, colorWallLayerMask);
-                if (hits.Length > 0)
+                RaycastHit2D[] polyhits = PolygonCast(roundedPos, size, ShapeData.TRIANGLE_POINTS, colorWallLayerMask);
+                if (polyhits.Length > 0)
                 {
-                    return hits[0];
+                    hit = polyhits[0];
+                    return hit;
                 }
                 break;
             default:
                 Debug.LogError("Unhandled ColliderType of '" + data.ColliderShape + "' in PlayerColliderController.cs");
-                return false;
+                return true;
         }
-        return false;
+        return true;
     }
 
     /// <summary>Creates a LayerMask based off of what color the player is</summary>
@@ -124,6 +127,38 @@ public class TestCollider : MonoBehaviour
     private Vector2 ApplyTransformToPoint(Vector2 origin, Vector2 size, Vector2 point)
     {
         return new Vector2(origin.x + point.x * size.x, origin.y + point.y * size.y);
+    }
+
+    /// <summary>Rounds the given position's x and y values to the closest half int</summary>
+    private Vector2 RoundPositionToHalfInts(Vector3 position)
+    {
+        float x = RoundToHalfInt(position.x);
+        float y = RoundToHalfInt(position.y);
+        return new Vector2(x, y);
+    }
+
+    /// <summary>Rounds the given number to the closest half int</summary>
+    private float RoundToHalfInt(float value)
+    {
+        int valInt = Mathf.FloorToInt(value);
+        float upper = (valInt + 1) - value;
+        float lower = value - valInt;
+        float middle = Mathf.Abs(value - (valInt + 0.5f));
+        // Closet to upper int (round up/ceil)
+        if (upper < lower && upper < middle)
+        {
+            return valInt + 1;
+        }
+        // Closest to lower int (round down/floor)
+        else if (lower < middle)
+        {
+            return valInt;
+        }
+        // Closest to half int (round to int(value) + 0.5
+        else
+        {
+            return valInt + 0.5f;
+        }
     }
 
     /// <summary>Prints the hierarchy to get to the given child</summary>
