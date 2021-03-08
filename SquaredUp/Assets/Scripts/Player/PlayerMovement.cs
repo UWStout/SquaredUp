@@ -25,6 +25,8 @@ public class PlayerMovement : MonoBehaviour
     // If the player is allowed to move
     private bool allowMove;
 
+    private Vector3 moveVel = Vector3.zero;
+
 
     // Called 0th
     // Set references
@@ -48,6 +50,13 @@ public class PlayerMovement : MonoBehaviour
         AllowMovement(false);
     }
 
+    private void OnCollisionExit2D(Collision2D collision)
+    {
+        // This fixes a bug where if you hold down the movement keys
+        // you continue moving in whatever direction you push off the other thing of
+        rb.velocity = moveVel;
+    }
+
 
     // Called when the player inputs movement.
     public void OnMovement(Vector2 rawInputVector)
@@ -64,13 +73,14 @@ public class PlayerMovement : MonoBehaviour
             }
 
             // Movement
-            rb.velocity = direction * speed;
+            moveVel = direction * speed;
         }
         else
         {
             // Cancel out rigidbody velocity if there is no movement, because the physics system hates player controllers.
-            rb.velocity = Vector3.zero;
+            moveVel = Vector3.zero;
         }
+        rb.velocity = moveVel;
     }
 
 
