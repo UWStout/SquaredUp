@@ -13,15 +13,14 @@ public class PlayerMovement : MonoBehaviour
 
     // Speed of the player.
     [SerializeField] [Min(0.01f)] private float speed = 1f;
-    // Holds the player's input axis values.
-    private Vector2 rawInputMovement;
 
     // Smooths rotation/turn speed of eyes.
     [SerializeField] private float turnSmoothTime = 0.1f;
     private float turnSmoothVelocity = 0f;
 
-    // Reference to the coroutine of the eyes moving.
-    private Coroutine eyeCoroutine = null;
+    // Variables for the MoveEyes coroutine
+    private bool eyeCoroutineActive = false;
+    private float targetAngle = 0;
 
     // If the player is allowed to move
     private bool allowMove;
@@ -49,25 +48,20 @@ public class PlayerMovement : MonoBehaviour
         AllowMovement(false);
     }
 
-    // Start is called before the first frame update
-    private void Start()
-    {
-        rawInputMovement = Vector2.zero;
-    }
 
-    // Update is called once per frame
-    private void Update()
+    // Called when the player inputs movement.
+    public void OnMovement(Vector2 rawInputVector)
     {
-        // Check if there is input.
-        Vector2 direction = rawInputMovement.normalized;
+        // Check for input
+        Vector2 direction = rawInputVector.normalized;
         if (direction.magnitude != 0)
         {
+            targetAngle = Mathf.Atan2(-direction.x, direction.y) * Mathf.Rad2Deg;
             // Rotate the eye to fit the new player input.
-            if (eyeCoroutine != null)
+            if (!eyeCoroutineActive)
             {
-                StopCoroutine(eyeCoroutine);
+                StartCoroutine(MoveEyes());
             }
-            eyeCoroutine = StartCoroutine(MoveEyes(direction));
 
             // Movement
             rb.velocity = direction * speed;
@@ -79,20 +73,15 @@ public class PlayerMovement : MonoBehaviour
         }
     }
 
-    // Called when the player inputs movement.
-    public void OnMovement(Vector2 rawInputVector)
-    {
-        rawInputMovement = rawInputVector;
-    }
 
     /// <summary>
     /// Coroutine to rotate the eyes to which direction the player is moving.
     /// </summary>
     /// <param name="direction">Direction to put the eyes in.</param>
-    private IEnumerator MoveEyes(Vector2 direction)
+    private IEnumerator MoveEyes()
     {
+        eyeCoroutineActive = true;
         // Eye rotation
-        float targetAngle = Mathf.Atan2(-direction.x, direction.y) * Mathf.Rad2Deg;
         while (targetAngle != eyePivot.eulerAngles.z)
         {
             float angle = Mathf.SmoothDampAngle(eyePivot.eulerAngles.z, targetAngle, ref turnSmoothVelocity, turnSmoothTime);
@@ -102,6 +91,7 @@ public class PlayerMovement : MonoBehaviour
 
             yield return null;
         }
+        eyeCoroutineActive = false;
         yield return null;
     }
 
@@ -123,6 +113,35 @@ public class PlayerMovement : MonoBehaviour
             {
                 InputEvents.MovementEvent -= OnMovement;
                 allowMove = false;
+            }
+        }
+    }
+
+    /// <summary>Returns the facing direction of the player</summary>
+    public Vector2Int GetFacingDirection()
+    {
+        Vector2 rawForward = eyePivot.up;
+
+        if (Mathf.Abs(rawForward.x) > Mathf.Abs(rawForward.y))
+        {
+            if (rawForward.x > 0)
+            {
+                return new Vector2Int(1, 0);
+            }
+            else
+            {
+                return new Vector2Int(-1, 0);
+            }
+        }
+        else
+        {
+            if (rawForward.y > 0)
+            {
+                return new Vector2Int(0, 1);
+            }
+            else
+            {
+                return new Vector2Int(0, -1);
             }
         }
     }

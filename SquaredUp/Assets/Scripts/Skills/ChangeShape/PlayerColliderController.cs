@@ -4,13 +4,8 @@ using UnityEngine;
 /// <summary>Handles swapping the colliders that the player uses</summary>
 public class PlayerColliderController : MonoBehaviour
 {
-    // Constants
-    private static readonly Vector2[] TRIANGLE_POINTS = { new Vector2(-0.5f, 0.5f), new Vector2(-0.5f, -0.5f), new Vector2(0.5f, 0) };
-
-    // Singleton
-    private static PlayerColliderController instance = null;
-    public static PlayerColliderController Instance { get { return instance; } }
-
+    // Reference to the TestCollider script
+    [SerializeField] private TestCollider testColliderRef = null;
     // References to the gameObjects that hold the colldiers the player needs to change on shape swap
     [SerializeField] private GameObject[] playerColliderObjs = new GameObject[2];
 
@@ -22,18 +17,11 @@ public class PlayerColliderController : MonoBehaviour
     // List of polygon colliders
     private List<PolygonCollider2D> polygonColliders = new List<PolygonCollider2D>();
 
+
     // Called 0th
     // Set references
     private void Awake()
     {
-        // Set up singleton
-        if (instance == null) { instance = this; }
-        else
-        {
-            Debug.LogError("There cannot be multiple PlayerColliderControllers in a scene");
-            Destroy(this);
-        }
-
         // Get references to colliders
         // Box colliders
         GetColliders(boxColliders);
@@ -43,29 +31,47 @@ public class PlayerColliderController : MonoBehaviour
         GetColliders(polygonColliders);
     }
 
-    /// <summary>Turns on the colliders for the given type</summary>
-    /// <param name="type">Type of colliders to turn on</param>
-    public void ActivateCollider(ShapeData.ColliderType type)
+    /// <summary>Turns on the colliders for the given shape's type.
+    /// Returns true if the player was able to fit in the current location and their colliders were changed.
+    /// Returns False if they cannot fit in their current location and their colliders were not changed.</summary>
+    /// <param name="data">Data of the shape to test</param>
+    /// <param name="size">The actual size of the collider to test</param>
+    public bool ActivateCollider(ShapeData data, Vector3 size)
     {
-        switch (type)
+        bool check = TestColliderChange(data, size);
+        if (check)
         {
-            // BoxCollider2D
-            case ShapeData.ColliderType.BOX:
-                EnableOneColliderType(boxColliders);
-                break;
-            // CircleCollider2D
-            case ShapeData.ColliderType.CIRCLE:
-                EnableOneColliderType(circleColliders);
-                break;
-            // Triangle needs to be a specific kind of polygon collider
-            case ShapeData.ColliderType.TRIANGLE:
-                MorphPolygonToShape(TRIANGLE_POINTS);
-                EnableOneColliderType(polygonColliders);
-                break;
-            default:
-                Debug.LogError("Unhandled ColliderType of '" + type + "' in PlayerColliderController.cs");
-                break;
+            switch (data.ColliderShape)
+            {
+                // BoxCollider2D
+                case ShapeData.ColliderType.BOX:
+                    EnableOneColliderType(boxColliders);
+                    break;
+                // CircleCollider2D
+                case ShapeData.ColliderType.CIRCLE:
+                    EnableOneColliderType(circleColliders);
+                    break;
+                // Triangle needs to be a specific kind of polygon collider
+                case ShapeData.ColliderType.TRIANGLE:
+                    MorphPolygonToShape(ShapeData.TRIANGLE_POINTS);
+                    EnableOneColliderType(polygonColliders);
+                    break;
+                default:
+                    Debug.LogError("Unhandled ColliderType of '" + data.ColliderShape + "' in PlayerColliderController.cs");
+                    break;
+            }
+            return true;
         }
+        return false;
+    }
+
+    /// <summary>Tests if the given type of shape will fit in the player's current position.
+    /// Returns true if the player can fit. False if they cannot</summary>
+    /// <param name="data">Data for the shape of collider to test</param>
+    /// <param name="size">The actual size of the collider to test</param>
+    public bool TestColliderChange(ShapeData data, Vector3 size)
+    {
+        return !testColliderRef.CheckIfColliderWillHitWall(data, size);
     }
 
     /// <summary>Gets the colliders from the player collider objects</summary>
