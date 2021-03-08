@@ -4,6 +4,10 @@ using UnityEngine.InputSystem;
 /// <summary>Manages the dialogue box and typewriter</summary>
 public class DialogueController : MonoBehaviour
 {
+    // Singleton
+    private static DialogueController instance;
+    public static DialogueController Instance { get { return instance; } }
+
     // Input References
     // Reference to the player input
     private PlayerInput playerInputRef = null;
@@ -31,6 +35,17 @@ public class DialogueController : MonoBehaviour
     // Set references
     private void Awake()
     {
+        // Set up singleton
+        if (instance == null)
+        {
+            instance = this;
+        }
+        else
+        {
+            Debug.LogError("Cannot have multiple DialogueControllers");
+            Destroy(this);
+        }
+
         playerInputRef = FindObjectOfType<PlayerInput>();
         if (playerInputRef == null)
         {

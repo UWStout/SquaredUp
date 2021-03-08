@@ -49,7 +49,8 @@ MonoBehaviour:
       data: {fileID: 11400000, guid: ccabbf60a2dfb86498cfe54af1bbcd53, type: 2}
     - isUnlocked: 1
       data: {fileID: 11400000, guid: aefaa843490a83944bfb70f0790d5150, type: 2}
-    isUnlocked: 0
+    isUnlocked: 1
+  zoom: {fileID: 0}
   playMove: {fileID: 6257086274663262137}
   zoomSpeed: 0.1
   closeEnoughVal: 0.01
@@ -164,6 +165,7 @@ MonoBehaviour:
     - isUnlocked: 0
       data: {fileID: 11400000, guid: c7e631810acd28841bd3bc42d730ce27, type: 2}
     isUnlocked: 1
+  transformColor: {fileID: 0}
   playerMeshRendRef: {fileID: 6257086274189949309}
   playerColorCheckRef: {fileID: 7503979376264357203}
   changeSpeed: 0.03
@@ -1064,6 +1066,7 @@ MonoBehaviour:
     - isUnlocked: 0
       data: {fileID: 11400000, guid: 782475cad22118443b847c7ffc87411e, type: 2}
     isUnlocked: 1
+  transformShape: {fileID: 0}
   playerScalableTrans: {fileID: 6257086274663262138}
   playerMeshFilterRefs:
   - {fileID: 6257086274189949306}

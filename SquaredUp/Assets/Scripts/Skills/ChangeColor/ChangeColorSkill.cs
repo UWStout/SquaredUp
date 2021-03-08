@@ -3,6 +3,8 @@
 /// <summary>Skill to change the player's color</summary>
 public class ChangeColorSkill : SkillBase<ColorData>
 {
+    //SFX for color transformation
+    public AudioSource transformColor;
     // References
     // Reference to the mesh renderer whose material will be changed
     [SerializeField] private MeshRenderer playerMeshRendRef = null;
@@ -21,14 +23,18 @@ public class ChangeColorSkill : SkillBase<ColorData>
     /// Index matches what is specified in the editor. If index is unknown, consider using Use(ColorData) instead.</summary>
     public override void Use(int stateIndex)
     {
-        if (!playerColorCheckRef.IsInWall)
+        if (UpdateCurrentState(stateIndex))
         {
-            playerMeshRendRef.material = SkillData.GetData(stateIndex).Material;
-            AllowColorPassage(stateIndex);
-        }
-        else
-        {
-            Debug.Log("Player cannot change to " + GetStateName(stateIndex) + " here");
+            if (!playerColorCheckRef.IsInWall)
+            {
+                playerMeshRendRef.material = SkillData.GetData(stateIndex).Material;
+                AllowColorPassage(stateIndex);
+                transformColor.Play();
+            }
+            else
+            {
+                Debug.Log("Player cannot change to " + GetStateName(stateIndex) + " here");
+            }
         }
     }
 

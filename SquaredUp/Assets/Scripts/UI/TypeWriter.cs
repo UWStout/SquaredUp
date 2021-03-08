@@ -4,8 +4,12 @@ using TMPro;
 
 /// <summary>Controls the text on this object to append characters one at a time</summary>
 [RequireComponent(typeof(TextMeshProUGUI))]
+[RequireComponent(typeof(AudioSource))]
 public class TypeWriter : MonoBehaviour
 {
+    // Sound effect during dialogue
+    public AudioSource dialogue_sfx;
+    
     // Delay between typing characters
     [SerializeField]
     private float delayBetweenLetters = 0.15f;
@@ -52,6 +56,7 @@ public class TypeWriter : MonoBehaviour
         foreach (char c in currentLine)
         {
             TypeOneLetter(c);
+            dialogue_sfx.Play();
             yield return new WaitForSeconds(delayBetweenLetters);
         }
         // Finish Typing.

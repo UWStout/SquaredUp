@@ -3,6 +3,8 @@
 /// <summary>Skill that allows the player to change their shape</summary>
 public class ChangeShapeSkill : SkillBase<ShapeData>
 {
+    // SFX for shape transformation
+    public AudioSource transformShape;
     // References
     // Transform that will be scaled for the player
     [SerializeField] private Transform playerScalableTrans = null;
@@ -15,6 +17,9 @@ public class ChangeShapeSkill : SkillBase<ShapeData>
 
     // Original scale of the player
     private Vector3 originalScale = Vector3.one;
+
+    // The current size of the shape
+    private Vector3 currentSize = Vector3.zero;
 
 
     // Called 1st
@@ -30,18 +35,24 @@ public class ChangeShapeSkill : SkillBase<ShapeData>
     {
         ShapeData data = SkillData.GetData(stateIndex);
         Vector3 size = GetSize(data, originalScale, playerMoveRef.GetFacingDirection());
-        // Swap the colliders
-        // If the colliders couldn't be swapped, ergo could not fit, then do not swap the player's shape
-        if (playerColContRef.ActivateCollider(data, size))
+        // Change shape even if one the current state if the player is trying to adjust their shape as well
+        if (UpdateCurrentState(stateIndex) || currentSize != size)
         {
-            // Change all the meshes
-            foreach (MeshFilter filter in playerMeshFilterRefs)
+            currentSize = size;
+            // Swap the colliders
+            // If the colliders couldn't be swapped, ergo could not fit, then do not swap the player's shape
+            if (playerColContRef.ActivateCollider(data, size))
             {
-                filter.mesh = data.Mesh;
-            }
+                // Change all the meshes
+                foreach (MeshFilter filter in playerMeshFilterRefs)
+                {
+                    filter.mesh = data.Mesh;
+                }
 
-            // Adjust the scale
-            playerScalableTrans.localScale = size;
+                // Adjust the scale
+                playerScalableTrans.localScale = size;
+                transformShape.Play();
+            }
         }
     }
 

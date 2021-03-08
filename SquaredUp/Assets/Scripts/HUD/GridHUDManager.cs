@@ -267,7 +267,6 @@ public class GridHUDManager : MonoBehaviour
         }
     }
 
-
     // For testing
     // TODO Remove this for final build
     private void OnHackerAxis(Vector2 rawInputVector)
@@ -275,57 +274,16 @@ public class GridHUDManager : MonoBehaviour
         if (rawInputVector.y > 0)
         {
             Debug.Log("Elite Hacker detected. Unlocking hidden memes.");
-            UnlockSkillState(row, index[row] + 1);
+            SkillController.Instance.UnlockSkillState(row, index[row] + 1);
         }
 
         if (rawInputVector.x > 0)
         {
             Debug.Log("Elite Hacker detected. Expanding meme library.");
-            UnlockSkill(row + 1);
+            SkillController.Instance.UnlockSkill(row + 1);
         }
 
         // Update the HUD
         ActivateAllSets();
-    }
-
-    /// <summary>Unlocks the skill with the given index.
-    /// TODO This should probably go in the SkillController</summary>
-    public void UnlockSkill(int skillIndex)
-    {
-        if (skillIndex < SkillController.Instance.GetSkillAmount())
-        {
-            Skill skillToUnlock = SkillController.Instance.GetSkill(skillIndex);
-            if (skillToUnlock != null && !skillToUnlock.IsSkillUnlocked())
-            {
-                skillToUnlock.UnlockSkill();
-                // Update the HUD if its currently open
-                if (isHUDActive)
-                {
-                    ActivateAllSets();
-                }
-            }
-        }
-    }
-
-    /// <summary>Unlocks the state with the given index for the skill with the given index.
-    /// TODO This should probably go in the SkillController</summary>
-    public void UnlockSkillState(int skillIndex, int stateIndex)
-    {
-        if (skillIndex < SkillController.Instance.GetSkillAmount())
-        {
-            Skill skillInContention = SkillController.Instance.GetSkill(skillIndex);
-            if (skillInContention != null)
-            {
-                if (stateIndex < skillInContention.GetAmountStates() && !skillInContention.IsStateUnlocked(stateIndex))
-                {
-                    skillInContention.UnlockState(stateIndex);
-                    // Update the HUD if its currently open
-                    if (isHUDActive)
-                    {
-                        ActivateAllSets();
-                    }
-                }
-            }
-        }
     }
 }
