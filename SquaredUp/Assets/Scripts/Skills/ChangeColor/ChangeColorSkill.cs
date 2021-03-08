@@ -23,15 +23,18 @@ public class ChangeColorSkill : SkillBase<ColorData>
     /// Index matches what is specified in the editor. If index is unknown, consider using Use(ColorData) instead.</summary>
     public override void Use(int stateIndex)
     {
-        if (!playerColorCheckRef.IsInWall)
+        if (UpdateCurrentState(stateIndex))
         {
-            playerMeshRendRef.material = SkillData.GetData(stateIndex).Material;
-            AllowColorPassage(stateIndex);
-            transformColor.Play();
-        }
-        else
-        {
-            Debug.Log("Player cannot change to " + GetStateName(stateIndex) + " here");
+            if (!playerColorCheckRef.IsInWall)
+            {
+                playerMeshRendRef.material = SkillData.GetData(stateIndex).Material;
+                AllowColorPassage(stateIndex);
+                transformColor.Play();
+            }
+            else
+            {
+                Debug.Log("Player cannot change to " + GetStateName(stateIndex) + " here");
+            }
         }
     }
 

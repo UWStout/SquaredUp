@@ -7,6 +7,9 @@ public abstract class SkillBase<T> : MonoBehaviour, Skill where T : SkillStateDa
     [SerializeField] private SkillData<T> skillData = null;
     public SkillData<T> SkillData { get { return skillData; } }
 
+    // The current state the skill is on
+    private int curSkillIndex = 0;
+
     /// <summary>Returns the index of the given state data. If it was not found, returns -1</summary>
     public int FindStateIndex(T state) { return skillData.FindStateIndex(state); }
 
@@ -28,7 +31,6 @@ public abstract class SkillBase<T> : MonoBehaviour, Skill where T : SkillStateDa
     /// <summary>Sets the state with the given index to be unlocked</summary>
     public void UnlockState(int stateIndex) { SkillData.GetState(stateIndex).UnlockState(); }
 
-
     /// <summary>Uses the skill and switches to the given state</summary>
     public abstract void Use(int stateIndex);
 
@@ -38,5 +40,17 @@ public abstract class SkillBase<T> : MonoBehaviour, Skill where T : SkillStateDa
         int index = SkillData.FindStateIndex(stateData);
         if (index != -1) { Use(index); }
         else { Debug.LogError(stateData.name + " is not specified as a state of " + ToString()); }
+    }
+
+    /// <summary>If the current state is the given state, returns false. If the current state is not the given
+    /// state, sets the given state as the new current state and returns true</summary>
+    protected bool UpdateCurrentState(int stateIndex)
+    {
+        if (stateIndex != curSkillIndex)
+        {
+            curSkillIndex = stateIndex;
+            return true;
+        }
+        return false;
     }
 }

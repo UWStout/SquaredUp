@@ -38,10 +38,13 @@ public class ChangeZoomSkill : SkillBase<ZoomData>
     /// <summary>Starts to zoom the camera to the zoom amount of the ZoomData with the corresponding index</summary>
     public override void Use(int stateIndex)
     {
-        BeginZoom(SkillData.GetData(stateIndex).ZoomAmount);
-        zoom.Play();
-        // Can't move while zoomed out
-        playMove.AllowMovement(stateIndex == 0);
+        if (UpdateCurrentState(stateIndex))
+        {
+            BeginZoom(SkillData.GetData(stateIndex).ZoomAmount);
+            zoom.Play();
+            // Can't move while zoomed out
+            playMove.AllowMovement(stateIndex == 0);
+        }
     }
 
     /// <summary>Starts the zoom in/out process to the given orthoSize</summary>

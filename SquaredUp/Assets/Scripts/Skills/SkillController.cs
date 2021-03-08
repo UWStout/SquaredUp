@@ -66,6 +66,35 @@ public class SkillController : MonoBehaviour
         }
     }
 
+    /// <summary>Unlocks the skill with the given index</summary>
+    public void UnlockSkill(int skillIndex)
+    {
+        if (skillIndex < GetSkillAmount())
+        {
+            Skill skillToUnlock = GetSkill(skillIndex);
+            if (skillToUnlock != null && !skillToUnlock.IsSkillUnlocked())
+            {
+                skillToUnlock.UnlockSkill();
+            }
+        }
+    }
+
+    /// <summary>Unlocks the state with the given index for the skill with the given index</summary>
+    public void UnlockSkillState(int skillIndex, int stateIndex)
+    {
+        if (skillIndex < GetSkillAmount())
+        {
+            Skill skillInContention = GetSkill(skillIndex);
+            if (skillInContention != null)
+            {
+                if (stateIndex < skillInContention.GetAmountStates() && !skillInContention.IsStateUnlocked(stateIndex))
+                {
+                    skillInContention.UnlockState(stateIndex);
+                }
+            }
+        }
+    }
+
     /// <summary>Gets the skill with the given index</summary>
     public Skill GetSkill(int skillIndex) { return skills[skillIndex]; }
     /// <summary>Gets the amount of skills</summary>
