@@ -1,52 +1,16 @@
-﻿using System.Collections.Generic;
+﻿using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 
-/// <summary>Manages the player's skills.
-/// Skills must each be set up to their own gameobjects and made children of the gameobject
-/// this script is attached to.</summary>
-public class SkillController : MonoBehaviour
+/// <summary>Base class for controlling skills. Has a list of skills and various functions to use and unlock them</summary>
+public class SkillControllerBase : MonoBehaviour
 {
-    // Unkown if this will be needed yet, stayed tuned.
-    // This enum MUST exactly match the hierarchical order of the skills.
-    //public enum SkillEnum { SHAPE, COLOR, ZOOM };
-
-    // Singleton
-    private static SkillController instance = null;
-    public static SkillController Instance { get { return instance; } }
-
     // The skills that were found in the children
-    private List<Skill> skills = new List<Skill>();
-
-    // Called 0th
-    // Set references
-    private void Awake()
-    {
-        // Set up singleton
-        if (instance == null) { instance = this; }
-        else
-        {
-            Debug.LogError("Cannot have multiple SkillControllers in a scene");
-            Destroy(this);
-        }
-
-        // Get references to all the skills
-        GetSkillsFromChildren();
-    }
-
-    /// <summary>Helper Method. Pulls all the skills off the children</summary>
-    private void GetSkillsFromChildren()
-    {
-        skills = new List<Skill>(transform.childCount);
-        foreach (Transform child in transform)
-        {
-            Skill s = child.GetComponent<Skill>();
-            skills.Add(s);
-        }
-    }
+    protected List<Skill> skills = new List<Skill>();
 
     /// <summary>Uses all the unlocked skills</summary>
     /// <param name="values">Array that holds values for the state of each skill that is being used.</param>
-    public void UseSkills(int[] values)
+    public void UseAllSkills(int[] values)
     {
         // Validation
         if (values.Length != skills.Count)
@@ -58,11 +22,26 @@ public class SkillController : MonoBehaviour
         // Use all unlocked skills
         foreach (Skill s in skills)
         {
-            if (s.IsSkillUnlocked())
-            {
-                s.Use(values[count]);
-            }
+            UseSkill(s, values[count]);
             ++count;
+        }
+    }
+
+    /// <summary>Swaps the skill with the given index to the given state</summary>
+    /// <param name="skillIndex">Index of skill to use</param>
+    /// <param name="stateToSwapTo">Index of state of the skill to swap to</param>
+    public void UseSkill(int skillIndex, int stateToSwapTo)
+    {
+        UseSkill(skills[skillIndex], stateToSwapTo);
+    }
+    /// <summary>Swaps the given skill to the given state</summary>
+    /// <param name="skillToUse">Skill to use</param>
+    /// <param name="stateToSwapTo">Index of state of the skill to swap to</param>
+    private void UseSkill(Skill skillToUse, int stateToSwapTo)
+    {
+        if (skillToUse.IsSkillUnlocked())
+        {
+            skillToUse.Use(stateToSwapTo);
         }
     }
 

@@ -30,42 +30,81 @@ public class TestCollider : MonoBehaviour
     }
 
     /// <summary>Checks if the type of type of collider given will hit any unpassable walls if changed to.
-    /// Returns true if a hit is found. False if no hits are found</summary>
+    /// Returns an available spot which holds if a spot was found (True) or not (False) and
+    /// the location the available spot was found</summary>
     /// <param name="data">Shape of collider to turn into</param>
     /// <param name="size">The actual size of the collider</param>
-    public bool CheckIfColliderWillHitWall(ShapeData data, Vector3 size)
+    public AvailableSpot CheckIfColliderWillHitWall(ShapeData data, Vector3 size)
     {
         // Colored wall layer mask
         LayerMask colorWallLayerMask = GetCurrentColoredWallLayerMask();
 
-        RaycastHit2D hit;
+        RaycastHit2D hit = new RaycastHit2D();
         Vector2 roundedPos = RoundPositionToHalfInts(transform.position);
 
-        // Turn on the test collider of the given type see if there is a collision with a wall
-        switch (data.ColliderShape)
+        // Physics casts don't play well with negatives sizes, so fix that
+        size = new Vector3(Mathf.Abs(size.x), Mathf.Abs(size.y), Mathf.Abs(size.z));
+
+        // Test in 5 spots to try and see if the player can be pushed to those spots
+        Vector2 curPos = roundedPos;
+        for (int i = 0; i < 5; ++i)
         {
-            // BoxCollider2D
-            case ShapeData.ColliderType.BOX:
-                hit = Physics2D.BoxCast(roundedPos, size, transform.eulerAngles.y, transform.up, 0, colorWallLayerMask);
-                return hit;
-            // CircleCollider2D
-            case ShapeData.ColliderType.CIRCLE:
-                hit = Physics2D.CircleCast(roundedPos, size.x * 0.5f, transform.up, 0, colorWallLayerMask);
-                return hit;
-            // Triangle needs to be a specific kind of polygon collider
-            case ShapeData.ColliderType.TRIANGLE:
-                RaycastHit2D[] polyhits = PolygonCast(roundedPos, size, ShapeData.TRIANGLE_POINTS, colorWallLayerMask);
-                if (polyhits.Length > 0)
-                {
-                    hit = polyhits[0];
-                    return hit;
-                }
-                break;
-            default:
-                Debug.LogError("Unhandled ColliderType of '" + data.ColliderShape + "' in PlayerColliderController.cs");
-                return true;
+            // Turn on the test collider of the given type see if there is a collision with a wall
+            switch (data.ColliderShape)
+            {
+                // BoxCollider2D
+                case ShapeData.ColliderType.BOX:
+                    // Testing
+                    hit = PhysicsDebugging.BoxCast(curPos, size, 0, transform.up, 0, colorWallLayerMask);
+                    // End Testing
+
+                    //hit = Physics2D.BoxCast(roundedPos, size, 0, transform.up, 0, colorWallLayerMask);
+                    break;
+                // CircleCollider2D
+                case ShapeData.ColliderType.CIRCLE:
+                    hit = Physics2D.CircleCast(curPos, size.x * 0.5f, transform.up, 0, colorWallLayerMask);
+                    break;
+                // Triangle needs to be a specific kind of polygon collider
+                case ShapeData.ColliderType.TRIANGLE:
+                    RaycastHit2D[] polyhits = PolygonCast(curPos, size, ShapeData.TRIANGLE_POINTS, colorWallLayerMask);
+                    if (polyhits.Length > 0)
+                    {
+                        hit = polyhits[0];
+                    }
+                    break;
+                default:
+                    Debug.LogError("Unhandled ColliderType of '" + data.ColliderShape + "' in PlayerColliderController.cs");
+                    return new AvailableSpot(false, Vector2.zero);
+            }
+            // If there was no hit, we found a place the player can be
+            if (!hit)
+            {
+               // Debug.Break();
+                return new AvailableSpot(true, curPos);
+            }
+
+            // Change position based on iteration
+            curPos = roundedPos;
+            switch (i)
+            {
+                case 0:
+                    curPos.x += 0.5f;
+                    break;
+                case 1:
+                    curPos.x -= 0.5f;
+                    break;
+                case 2:
+                    curPos.y += 0.5f;
+                    break;
+                case 3:
+                    curPos.y -= 0.5f;
+                    break;
+               default:
+                    break;
+            }
         }
-        return true;
+        //Debug.Break();
+        return new AvailableSpot(false, Vector2.zero);
     }
 
     /// <summary>Creates a LayerMask based off of what color the player is</summary>

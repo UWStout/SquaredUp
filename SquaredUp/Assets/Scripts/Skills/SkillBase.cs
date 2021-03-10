@@ -46,7 +46,7 @@ public abstract class SkillBase<T> : MonoBehaviour, Skill where T : SkillStateDa
     /// state, sets the given state as the new current state and returns true</summary>
     protected bool UpdateCurrentState(int stateIndex)
     {
-        if (stateIndex != curSkillIndex)
+        if (!stateIndex.Equals(curSkillIndex))
         {
             curSkillIndex = stateIndex;
             return true;

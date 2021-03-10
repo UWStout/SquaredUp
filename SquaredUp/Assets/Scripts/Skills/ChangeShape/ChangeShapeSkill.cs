@@ -18,8 +18,8 @@ public class ChangeShapeSkill : SkillBase<ShapeData>
     // Original scale of the player
     private Vector3 originalScale = Vector3.one;
 
-    // The current size of the shape
-    private Vector3 currentSize = Vector3.zero;
+    // Where the player is currently facing
+    private Vector2Int currentFacing = Vector2Int.up;
 
 
     // Called 1st
@@ -27,6 +27,7 @@ public class ChangeShapeSkill : SkillBase<ShapeData>
     private void Start()
     {
         originalScale = playerScalableTrans.localScale;
+        currentFacing = playerMoveRef.GetFacingDirection();
     }
 
     /// <summary>Changes the player to become the shape corresponding to the given index.
@@ -34,15 +35,21 @@ public class ChangeShapeSkill : SkillBase<ShapeData>
     public override void Use(int stateIndex)
     {
         ShapeData data = SkillData.GetData(stateIndex);
-        Vector3 size = GetSize(data, originalScale, playerMoveRef.GetFacingDirection());
+        Vector2Int newFacing = playerMoveRef.GetFacingDirection();
+        Vector3 size = GetSize(data, originalScale, newFacing);
+        bool upcurstate = UpdateCurrentState(stateIndex);
         // Change shape even if one the current state if the player is trying to adjust their shape as well
-        if (UpdateCurrentState(stateIndex) || currentSize != size)
+        if (upcurstate || currentFacing != newFacing)
         {
-            currentSize = size;
+            currentFacing = newFacing;
             // Swap the colliders
             // If the colliders couldn't be swapped, ergo could not fit, then do not swap the player's shape
-            if (playerColContRef.ActivateCollider(data, size))
+            AvailableSpot availSpot = playerColContRef.ActivateCollider(data, size);
+            if (availSpot.Available)
             {
+                // Update the player's position so they don't get stuck in a wall
+                playerScalableTrans.position = availSpot.Position;
+
                 // Change all the meshes
                 foreach (MeshFilter filter in playerMeshFilterRefs)
                 {

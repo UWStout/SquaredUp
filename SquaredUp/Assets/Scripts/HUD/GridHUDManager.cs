@@ -59,7 +59,7 @@ public class GridHUDManager : MonoBehaviour
         CreateSkillHUDParents();
         CreateSkillStatesHUD();
 
-        int amountSkills = SkillController.Instance.GetSkillAmount();
+        int amountSkills = HUDSkillController.Instance.GetSkillAmount();
 
         // Initialize the selection indices
         row = 0;
@@ -80,7 +80,7 @@ public class GridHUDManager : MonoBehaviour
         }
 
         // Create a parent for each skill to hold the state HUD things
-        int amountSkills = SkillController.Instance.GetSkillAmount();
+        int amountSkills = HUDSkillController.Instance.GetSkillAmount();
         for (int i = 0; i < amountSkills; ++i)
         {
             // Create the transform, set its parent, and its local position
@@ -88,7 +88,7 @@ public class GridHUDManager : MonoBehaviour
             parent.SetParent(gridHUDParent);
             parent.localPosition = new Vector3(horizontalSpace * i, 0);
             // Set its name
-            parent.name = SkillController.Instance.GetSkill(i).ToString() + " HUD Parent";
+            parent.name = HUDSkillController.Instance.GetSkill(i).ToString() + " HUD Parent";
         }
     }
 
@@ -99,7 +99,7 @@ public class GridHUDManager : MonoBehaviour
         int count = 0;
         foreach (Transform parent in gridHUDParent)
         {
-            Skill curSkill = SkillController.Instance.GetSkill(count);
+            Skill curSkill = HUDSkillController.Instance.GetSkill(count);
             for (int i = 0; i < curSkill.GetAmountStates(); ++i)
             {
                 // Create the transform as a child, set its local position, and give it a good name
@@ -156,7 +156,7 @@ public class GridHUDManager : MonoBehaviour
         int count = 0;
         foreach (Transform parent in gridHUDParent)
         {
-            Skill curSkill = SkillController.Instance.GetSkill(count);
+            Skill curSkill = HUDSkillController.Instance.GetSkill(count);
             ActivateSingleSet(parent, curSkill);
             ++count;
         }
@@ -179,7 +179,7 @@ public class GridHUDManager : MonoBehaviour
     private void ExecuteHUD()
     {
         // Use the skills
-        SkillController.Instance.UseSkills(index);
+        HUDSkillController.Instance.UseAllSkills(index);
     }
 
     /// <summary>Called when the player uses the HUD navigation</summary>
@@ -208,7 +208,7 @@ public class GridHUDManager : MonoBehaviour
             if (row + 1 < maxRow)
             {
                 // If that skill is also unlocked
-                Skill nextSkill = SkillController.Instance.GetSkill(row + 1);
+                Skill nextSkill = HUDSkillController.Instance.GetSkill(row + 1);
                 if (nextSkill.IsSkillUnlocked())
                 {
                     foreach (Transform parent in gridHUDParent)
@@ -240,7 +240,7 @@ public class GridHUDManager : MonoBehaviour
     {
         if (isHUDActive)
         {
-            Skill curSkill = SkillController.Instance.GetSkill(row);
+            Skill curSkill = HUDSkillController.Instance.GetSkill(row);
             int totalStates = curSkill.GetAmountStates();
             // If there is a next state
             if (index[row] + 1 < totalStates)
@@ -274,13 +274,13 @@ public class GridHUDManager : MonoBehaviour
         if (rawInputVector.y > 0)
         {
             Debug.Log("Elite Hacker detected. Unlocking hidden memes.");
-            SkillController.Instance.UnlockSkillState(row, index[row] + 1);
+            HUDSkillController.Instance.UnlockSkillState(row, index[row] + 1);
         }
 
         if (rawInputVector.x > 0)
         {
             Debug.Log("Elite Hacker detected. Expanding meme library.");
-            SkillController.Instance.UnlockSkill(row + 1);
+            HUDSkillController.Instance.UnlockSkill(row + 1);
         }
 
         // Update the HUD
