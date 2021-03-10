@@ -200,8 +200,8 @@ MonoBehaviour:
   transformColor: {fileID: 0}
   playerMeshRendRef: {fileID: 6257086274189949309}
   playerColorCheckRef: {fileID: 7503979376264357203}
-  changeSpeed: 0.03
-  closeEnoughVal: 0.001
+  changeSpeed: 0.01
+  closeEnoughVal: 0.03
   coloredWallColliders:
   - {fileID: 815508983924247115}
   - {fileID: 6593881369109893089}

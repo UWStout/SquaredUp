@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System.Collections;
+using UnityEngine;
 
 /// <summary>Skill that allows the player to change their shape</summary>
 public class ChangeShapeSkill : SkillBase<ShapeData>
@@ -14,6 +15,15 @@ public class ChangeShapeSkill : SkillBase<ShapeData>
     [SerializeField] private PlayerColliderController playerColContRef = null;
     // Refernce to the player movement script
     [SerializeField] private PlayerMovement playerMoveRef = null;
+
+    // Coroutine variables for how fast to change the shape and when we are close enough
+    [SerializeField] private float changeSpeed = 0.03f;
+    // Target mesh vertices
+    private Vector3[] targetVertices = new Vector3[0];
+    // If the coroutine is finished
+    private bool changeShapeCoroutFin = true;
+    // Refrence to the coroutine running
+    private Coroutine changeShapeCorout = null;
 
     // Original scale of the player
     private Vector3 originalScale = Vector3.one;
@@ -39,7 +49,7 @@ public class ChangeShapeSkill : SkillBase<ShapeData>
         Vector3 size = GetSize(data, originalScale, newFacing);
         bool upcurstate = UpdateCurrentState(stateIndex);
         // Change shape even if one the current state if the player is trying to adjust their shape as well
-        if (upcurstate || currentFacing != newFacing)
+        if (upcurstate || (currentFacing != newFacing && data.DirectionAffectsScale))
         {
             currentFacing = newFacing;
             // Swap the colliders
@@ -91,5 +101,38 @@ public class ChangeShapeSkill : SkillBase<ShapeData>
         }
 
         return size;
+    }
+
+    private void StartChangeShape(Mesh meshToChangeTo)
+    {
+        targetVertices = meshToChangeTo.vertices;
+        if (!changeShapeCoroutFin)
+        {
+            StopCoroutine(changeShapeCorout);
+        }
+        changeShapeCorout = StartCoroutine(ChangeShapeCoroutine());
+    }
+
+    private IEnumerator ChangeShapeCoroutine()
+    {
+        changeShapeCoroutFin = false;
+        int iterations = (int) (1 / changeSpeed);
+        MeshTransitioner[] transitioners = new MeshTransitioner[playerMeshFilterRefs.Length];
+        for (int i = 0; i < transitioners.Length; ++i)
+        {
+            transitioners[i] = new MeshTransitioner(playerMeshFilterRefs[i].mesh);
+        }
+        for (int i = 0; i < iterations; ++i)
+        {
+            float t = changeSpeed * i;
+            for (int k = 0; k < transitioners.Length; ++k) {
+                Vector3[] vertices = transitioners[k].LerpMeshPoints(targetVertices, t);
+                transitioners[k].ApplyVerticesToMesh(vertices);
+            }
+            yield return null;
+        }
+
+        changeShapeCoroutFin = true;
+        yield return null;
     }
 }
