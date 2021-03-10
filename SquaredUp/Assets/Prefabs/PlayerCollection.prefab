@@ -24,12 +24,12 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 733054507140910895}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
-  m_Father: {fileID: 6257086275671826331}
-  m_RootOrder: 2
+  m_Father: {fileID: 5772396798616580387}
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &8430033778603788828
 MonoBehaviour:
@@ -111,6 +111,38 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 1, y: 1}
   m_EdgeRadius: 0
+--- !u!1 &2532794357441744131
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 6420274319548720154}
+  m_Layer: 0
+  m_Name: SkillControllers
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &6420274319548720154
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2532794357441744131}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children:
+  - {fileID: 6257086275671826331}
+  - {fileID: 5772396798616580387}
+  m_Father: {fileID: 6257086275170067480}
+  m_RootOrder: 2
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &2572493154578285442
 GameObject:
   m_ObjectHideFlags: 0
@@ -168,8 +200,8 @@ MonoBehaviour:
   transformColor: {fileID: 0}
   playerMeshRendRef: {fileID: 6257086274189949309}
   playerColorCheckRef: {fileID: 7503979376264357203}
-  changeSpeed: 0.03
-  closeEnoughVal: 0.001
+  changeSpeed: 0.01
+  closeEnoughVal: 0.03
   coloredWallColliders:
   - {fileID: 815508983924247115}
   - {fileID: 6593881369109893089}
@@ -252,6 +284,50 @@ Transform:
   m_Father: {fileID: 6257086274558080415}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &5813295090885145558
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 5772396798616580387}
+  - component: {fileID: 4321069580186891464}
+  m_Layer: 0
+  m_Name: ToggleSkillController
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &5772396798616580387
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5813295090885145558}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children:
+  - {fileID: 5701859566469081458}
+  m_Father: {fileID: 6420274319548720154}
+  m_RootOrder: 1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &4321069580186891464
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5813295090885145558}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 03310f0e117a65d4d92a150dbaf04d7e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &5847830945095955907
 GameObject:
   m_ObjectHideFlags: 0
@@ -1509,7 +1585,7 @@ Transform:
   m_Children:
   - {fileID: 6257086274663262138}
   - {fileID: 6257086273939944752}
-  - {fileID: 6257086275671826331}
+  - {fileID: 6420274319548720154}
   m_Father: {fileID: 6257086275078037472}
   m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -2071,9 +2147,9 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6257086275671826331}
-  - component: {fileID: 6257086275671826328}
+  - component: {fileID: 4601118448673541881}
   m_Layer: 0
-  m_Name: SkillController
+  m_Name: HUDSkillController
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2092,11 +2168,10 @@ Transform:
   m_Children:
   - {fileID: 8008549867569960349}
   - {fileID: 6257086274534009297}
-  - {fileID: 5701859566469081458}
-  m_Father: {fileID: 6257086275170067480}
-  m_RootOrder: 2
+  m_Father: {fileID: 6420274319548720154}
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &6257086275671826328
+--- !u!114 &4601118448673541881
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -2105,7 +2180,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 6257086275671826330}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4b252611049322f46bee378aea6e2b29, type: 3}
+  m_Script: {fileID: 11500000, guid: 4d24c429ca470c243a35b3e393b1e34e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1 &6257086275735874043

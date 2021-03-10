@@ -103,4 +103,13 @@ public class InputEvents : MonoBehaviour
         //Debug.Log("OnHackerAxis" + rawInpVec);
         HackerAxisEvent?.Invoke(rawInpVec);
     }
+
+    // Zoom
+    public delegate void Zoom();
+    public static event Zoom ZoomEvent;
+    private void OnZoom()
+    {
+        //Debug.Log("OnZoom" + rawInpVec);
+        ZoomEvent?.Invoke();
+    }
 }

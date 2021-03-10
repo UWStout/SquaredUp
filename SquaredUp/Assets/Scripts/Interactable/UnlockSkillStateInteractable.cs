@@ -21,11 +21,11 @@ public class UnlockSkillStateInteractable : NPCTalkInteractable
     {
         foreach (int skillIndex in skillsToUnlock)
         {
-            SkillController.Instance.UnlockSkill(skillIndex);
+            HUDSkillController.Instance.UnlockSkill(skillIndex);
         }
         foreach (StateOfSkill state in statesToUnlock)
         {
-            SkillController.Instance.UnlockSkillState(state.SkillIndex, state.StateIndex);
+            HUDSkillController.Instance.UnlockSkillState(state.SkillIndex, state.StateIndex);
         }
 
         // Let the text display

@@ -123,6 +123,8 @@ public class PlayerMovement : MonoBehaviour
             {
                 InputEvents.MovementEvent -= OnMovement;
                 allowMove = false;
+                // Stop the player's current movement
+                rb.velocity = Vector2.zero;
             }
         }
     }
