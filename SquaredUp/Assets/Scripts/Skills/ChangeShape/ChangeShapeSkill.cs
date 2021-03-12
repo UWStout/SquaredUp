@@ -18,8 +18,8 @@ public class ChangeShapeSkill : SkillBase<ShapeData>
 
     // Coroutine variables for how fast to change the shape and when we are close enough
     [SerializeField] private float changeSpeed = 0.03f;
-    // Target mesh vertices
-    private Vector3[] targetVertices = new Vector3[0];
+    // Target mesh
+    private Vector3[] targetVertices = null;
     // If the coroutine is finished
     private bool changeShapeCoroutFin = true;
     // Refrence to the coroutine running
@@ -38,6 +38,24 @@ public class ChangeShapeSkill : SkillBase<ShapeData>
     {
         originalScale = playerScalableTrans.localScale;
         currentFacing = playerMoveRef.GetFacingDirection();
+        Initialize();
+        // Start off as a square
+        ShapeData squareData = SkillData.GetData(0);
+        foreach (MeshFilter filter in playerMeshFilterRefs)
+        {
+            filter.mesh.vertices = squareData.ShapeVertices;
+        }
+    }
+
+
+    /// <summary>Initializes each ShapeData state</summary>
+    private void Initialize()
+    {
+        for (int i = 0; i < SkillData.GetAmountStates(); ++i)
+        {
+            ShapeData shapeData = SkillData.GetData(i);
+            shapeData.Initialize();
+        }
     }
 
     /// <summary>Changes the player to become the shape corresponding to the given index.
@@ -46,30 +64,35 @@ public class ChangeShapeSkill : SkillBase<ShapeData>
     {
         ShapeData data = SkillData.GetData(stateIndex);
         Vector2Int newFacing = playerMoveRef.GetFacingDirection();
-        Vector3 size = GetSize(data, originalScale, newFacing);
         bool upcurstate = UpdateCurrentState(stateIndex);
         // Change shape even if one the current state if the player is trying to adjust their shape as well
         if (upcurstate || (currentFacing != newFacing && data.DirectionAffectsScale))
         {
-            currentFacing = newFacing;
-            // Swap the colliders
-            // If the colliders couldn't be swapped, ergo could not fit, then do not swap the player's shape
-            AvailableSpot availSpot = playerColContRef.ActivateCollider(data, size);
-            if (availSpot.Available)
-            {
-                // Update the player's position so they don't get stuck in a wall
-                playerScalableTrans.position = availSpot.Position;
+            ActivateChangeShape(stateIndex);
+        }
+    }
 
-                // Change all the meshes
-                foreach (MeshFilter filter in playerMeshFilterRefs)
-                {
-                    filter.mesh = data.Mesh;
-                }
+    /// <summary>Activates the shape change to the given state</summary>
+    private void ActivateChangeShape(int stateIndex)
+    {
+        ShapeData data = SkillData.GetData(stateIndex);
+        Vector2Int newFacing = playerMoveRef.GetFacingDirection();
+        Vector3 size = GetSize(data, originalScale, newFacing);
 
-                // Adjust the scale
-                playerScalableTrans.localScale = size;
-                transformShape.Play();
-            }
+        currentFacing = newFacing;
+        // Swap the colliders
+        // If the colliders couldn't be swapped, ergo could not fit, then do not swap the player's shape
+        AvailableSpot availSpot = playerColContRef.ActivateCollider(data, size);
+        if (availSpot.Available)
+        {
+            // Update the player's position so they don't get stuck in a wall
+            playerScalableTrans.position = availSpot.Position;
+
+            StartChangeShape(data.ShapeVertices);
+
+            // Adjust the scale
+            playerScalableTrans.localScale = size;
+            transformShape.Play();
         }
     }
 
@@ -103,31 +126,41 @@ public class ChangeShapeSkill : SkillBase<ShapeData>
         return size;
     }
 
-    private void StartChangeShape(Mesh meshToChangeTo)
+    /// <summary>Starts smoothly changing the shape of the mesh to have the given vertices</summary>
+    /// <param name="vertices">Target vertices</param>
+    private void StartChangeShape(Vector3[] vertices)
     {
-        targetVertices = meshToChangeTo.vertices;
+        // Set target vertices
+        targetVertices = vertices;
+        // If there is an ongoing coroutine, stop it
         if (!changeShapeCoroutFin)
         {
             StopCoroutine(changeShapeCorout);
         }
+        // Start a new coroutine
         changeShapeCorout = StartCoroutine(ChangeShapeCoroutine());
     }
 
+    /// <summary>Coroutine to smoothly change the shape of the mesh</summary>
     private IEnumerator ChangeShapeCoroutine()
     {
         changeShapeCoroutFin = false;
+
+        // The amount of lerps that will be done
         int iterations = (int) (1 / changeSpeed);
+        // Create transition helpers for each mesh
         MeshTransitioner[] transitioners = new MeshTransitioner[playerMeshFilterRefs.Length];
         for (int i = 0; i < transitioners.Length; ++i)
         {
-            transitioners[i] = new MeshTransitioner(playerMeshFilterRefs[i].mesh);
+            transitioners[i] = new MeshTransitioner(playerMeshFilterRefs[i].mesh.vertices);
         }
+        // Lerp for the transition for each mesh
         for (int i = 0; i < iterations; ++i)
         {
             float t = changeSpeed * i;
             for (int k = 0; k < transitioners.Length; ++k) {
                 Vector3[] vertices = transitioners[k].LerpMeshPoints(targetVertices, t);
-                transitioners[k].ApplyVerticesToMesh(vertices);
+                playerMeshFilterRefs[k].mesh.vertices = vertices;
             }
             yield return null;
         }
