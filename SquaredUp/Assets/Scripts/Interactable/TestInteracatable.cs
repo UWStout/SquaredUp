@@ -14,10 +14,6 @@ public class TestInteracatable : Interactable
     [SerializeField]
     private Material otherMat = null;
 
-    // Reference to name object
-    [SerializeField]
-    private GameObject interAlertObj = null;
-
     // If the current material is hte main material.
     private bool isMain;
 
@@ -40,21 +36,5 @@ public class TestInteracatable : Interactable
             meshRendRef.material = otherMat;
         }
         isMain = !isMain;
-    }
-
-    /// <summary>
-    /// Show Name tag
-    /// </summary>
-    public override void DisplayAlert()
-    {
-        interAlertObj.SetActive(true);
-    }
-
-    /// <summary>
-    /// Hide Name tag
-    /// </summary>
-    public override void HideAlert()
-    {
-        interAlertObj.SetActive(false);
     }
 }

@@ -35,14 +35,14 @@ public class PlayerColliderController : MonoBehaviour
     /// Returns an AvailableSpot to hold if the player was able to fit in the current location and what location the spot was found.
     /// If a spot was found, the colliders were updated.
     /// If a spot was not found, they cannot fit in their current location and their colliders were not changed.</summary>
-    /// <param name="data">Data of the shape to test</param>
+    /// <param name="colliderType">Type of collider to activate</param>
     /// <param name="size">The actual size of the collider to test</param>
-    public AvailableSpot ActivateCollider(ShapeData data, Vector3 size)
+    public AvailableSpot ActivateCollider(ShapeData.ColliderType colliderType, Vector3 size)
     {
-        AvailableSpot availSpot = TestColliderChange(data, size);
+        AvailableSpot availSpot = TestColliderChange(colliderType, size);
         if (availSpot.Available)
         {
-            switch (data.ColliderShape)
+            switch (colliderType)
             {
                 // BoxCollider2D
                 case ShapeData.ColliderType.BOX:
@@ -58,7 +58,7 @@ public class PlayerColliderController : MonoBehaviour
                     EnableOneColliderType(polygonColliders);
                     break;
                 default:
-                    Debug.LogError("Unhandled ColliderType of '" + data.ColliderShape + "' in PlayerColliderController.cs");
+                    Debug.LogError("Unhandled ColliderType of '" + colliderType + "' in PlayerColliderController.cs");
                     break;
             }
         }
@@ -68,11 +68,11 @@ public class PlayerColliderController : MonoBehaviour
     /// <summary>Tests if the given type of shape will fit in the player's current position.
     /// Returns an AvailableSpot to hold if a spot was found (player can fit) and
     /// where that spot is</summary>
-    /// <param name="data">Data for the shape of collider to test</param>
+    /// <param name="colliderType">Shape of the collider to test</param>
     /// <param name="size">The actual size of the collider to test</param>
-    public AvailableSpot TestColliderChange(ShapeData data, Vector3 size)
+    public AvailableSpot TestColliderChange(ShapeData.ColliderType colliderType, Vector3 size)
     {
-        return testColliderRef.CheckIfColliderWillHitWall(data, size);
+        return testColliderRef.CheckIfColliderWillHitWall(colliderType, size);
     }
 
     /// <summary>Gets the colliders from the player collider objects</summary>

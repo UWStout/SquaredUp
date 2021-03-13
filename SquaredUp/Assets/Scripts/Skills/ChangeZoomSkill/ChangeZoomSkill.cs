@@ -12,7 +12,7 @@ public class ChangeZoomSkill : SkillBase<ZoomData>
     private Camera zoomCam = null;
 
     // Lerp speed
-    [SerializeField] [Range(0, 1)] private float zoomSpeed = 0.1f;
+    [SerializeField] [Range(0.0001f, 1)] private float zoomSpeed = 0.1f;
     [SerializeField] [Min(0)] private float closeEnoughVal = 0.01f;
     // If the zoom coroutine is finished
     private bool zoomFin = true;

@@ -15,13 +15,11 @@ public class ChangeColorSkill : SkillBase<ColorData>
     [SerializeField] private PlayerInColorCheck playerColorCheckRef = null;
 
     // Coroutine variables for how fast to change the color and when we are close enough
-    [SerializeField] private float changeSpeed = 0.03f;
-    [SerializeField] private float closeEnoughVal = 0.01f;
+    [SerializeField] private float changeSpeed = 0.01f;
     // If the coroutine is finished
     private bool changeColorCoroutFin = true;
-    // Variable to hold the target material and state index to change to
-    private Material targetMat;
-    private int curStateIndex = 0;
+    // Refrence to the coroutine running
+    private Coroutine changeColorCorout = null;
 
     // References to the gameobjects on the player that have the wall colliders on them
     // The order of the walls MUST match the enum
@@ -86,16 +84,17 @@ public class ChangeColorSkill : SkillBase<ColorData>
     /// <param name="stateIndex">Index of the state/material to change the player to/param>
     private void StartColorChange(int stateIndex)
     {
-        targetMat = SkillData.GetData(stateIndex).Material;
-        curStateIndex = stateIndex;
-        if (changeColorCoroutFin)
+        Material targetMat = SkillData.GetData(stateIndex).Material;
+        // If a coroutine is currently going, stop it and start a new one
+        if (!changeColorCoroutFin)
         {
-            StartCoroutine(ColorChangeCoroutine());
+            StopCoroutine(changeColorCorout);
         }
+        changeColorCorout = StartCoroutine(ColorChangeCoroutine(stateIndex, targetMat));
     }
 
     /// <summary>Coroutine to smoothly change the player's material/color to the target material</summary>
-    private IEnumerator ColorChangeCoroutine()
+    private IEnumerator ColorChangeCoroutine(int stateIndex, Material targetMat)
     {
         changeColorCoroutFin = false;
 
@@ -108,16 +107,18 @@ public class ChangeColorSkill : SkillBase<ColorData>
         // Start changing the colors
         Color dupEmCol = dupMat.GetColor(EMISSION_COLOR_VAR_NAME);
         Color changeEmCol = targetMat.GetColor(EMISSION_COLOR_VAR_NAME);
-        while (ColorDistance(dupMat.color, targetMat.color) > closeEnoughVal || 
-            ColorDistance(dupEmCol, changeEmCol) > closeEnoughVal)
+        // The amount of lerps that will be done
+        int iterations = (int)(1 / changeSpeed);
+        for (int i = 0; i < iterations; ++i)
         {
+            // Step
+            float t = changeSpeed * i;
+
             // Lerp albedo color
-            dupMat.color = Color.Lerp(dupMat.color, targetMat.color, changeSpeed);
+            dupMat.color = Color.Lerp(dupMat.color, targetMat.color, t);
             // Lerp emission color
-            dupMat.SetColor("_EmissionColor", Color.Lerp(dupEmCol, changeEmCol, changeSpeed));
-            // Update the emissions colors
-            dupEmCol = dupMat.GetColor(EMISSION_COLOR_VAR_NAME);
-            changeEmCol = targetMat.GetColor(EMISSION_COLOR_VAR_NAME);
+            dupMat.SetColor("_EmissionColor", Color.Lerp(dupEmCol, changeEmCol, t));
+
             yield return null;
         }
         playerMeshRendRef.material = targetMat;
@@ -125,16 +126,10 @@ public class ChangeColorSkill : SkillBase<ColorData>
         // Do away with the temp mat
         Destroy(dupMat);
         // Let the player pass through the corresponding colored area
-        AllowColorPassage(curStateIndex);
+        AllowColorPassage(stateIndex);
         // Mark coroutine as finished
         changeColorCoroutFin = true;
 
         yield return null;
-    }
-
-    /// <summary>Calculates distance between the two given colors</summary>
-    private float ColorDistance(Color first, Color second)
-    {
-        return Mathf.Abs(first.r - second.r) + Mathf.Abs(first.g - second.g) + Mathf.Abs(first.b - second.b) + Mathf.Abs(first.a - second.a);
     }
 }

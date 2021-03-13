@@ -3,6 +3,12 @@ using UnityEngine;
 
 public class TestCollider : MonoBehaviour
 {
+    // Constants
+    // Amount to increment for testing position
+    private const float INCR_VAL = 0.25f;
+    // Amount of times to iterate for testing position
+    private const int ITERATIONS = 16;
+
     // Reference to the ChangeColorSkill
     [SerializeField] private ChangeColorSkill changeColorSkillRef = null;
     // Wall sorting layers names
@@ -32,9 +38,9 @@ public class TestCollider : MonoBehaviour
     /// <summary>Checks if the type of type of collider given will hit any unpassable walls if changed to.
     /// Returns an available spot which holds if a spot was found (True) or not (False) and
     /// the location the available spot was found</summary>
-    /// <param name="data">Shape of collider to turn into</param>
+    /// <param name="colliderType">Shape of collider to turn into</param>
     /// <param name="size">The actual size of the collider</param>
-    public AvailableSpot CheckIfColliderWillHitWall(ShapeData data, Vector3 size)
+    public AvailableSpot CheckIfColliderWillHitWall(ShapeData.ColliderType colliderType, Vector3 size)
     {
         // Colored wall layer mask
         LayerMask colorWallLayerMask = GetCurrentColoredWallLayerMask();
@@ -47,18 +53,19 @@ public class TestCollider : MonoBehaviour
 
         // Test in 5 spots to try and see if the player can be pushed to those spots
         Vector2 curPos = roundedPos;
-        for (int i = 0; i < 5; ++i)
+        int curIter = 0;
+        for (int i = 0; i < 8 * ITERATIONS + 1; ++i)
         {
             // Turn on the test collider of the given type see if there is a collision with a wall
-            switch (data.ColliderShape)
+            switch (colliderType)
             {
                 // BoxCollider2D
                 case ShapeData.ColliderType.BOX:
                     // Testing
-                    hit = PhysicsDebugging.BoxCast(curPos, size, 0, transform.up, 0, colorWallLayerMask);
+                    //hit = PhysicsDebugging.BoxCast(curPos, size, 0, transform.up, 0, colorWallLayerMask);
                     // End Testing
+                    hit = Physics2D.BoxCast(curPos, size, 0, transform.up, 0, colorWallLayerMask);
 
-                    //hit = Physics2D.BoxCast(roundedPos, size, 0, transform.up, 0, colorWallLayerMask);
                     break;
                 // CircleCollider2D
                 case ShapeData.ColliderType.CIRCLE:
@@ -73,35 +80,24 @@ public class TestCollider : MonoBehaviour
                     }
                     break;
                 default:
-                    Debug.LogError("Unhandled ColliderType of '" + data.ColliderShape + "' in PlayerColliderController.cs");
+                    Debug.LogError("Unhandled ColliderType of '" + colliderType + "' in PlayerColliderController.cs");
                     return new AvailableSpot(false, Vector2.zero);
             }
             // If there was no hit, we found a place the player can be
             if (!hit)
             {
-               // Debug.Break();
+                //Debug.Break();
                 return new AvailableSpot(true, curPos);
             }
 
             // Change position based on iteration
-            curPos = roundedPos;
-            switch (i)
+            int stateTracking = i % ITERATIONS;
+            if (stateTracking == 0)
             {
-                case 0:
-                    curPos.x += 0.5f;
-                    break;
-                case 1:
-                    curPos.x -= 0.5f;
-                    break;
-                case 2:
-                    curPos.y += 0.5f;
-                    break;
-                case 3:
-                    curPos.y -= 0.5f;
-                    break;
-               default:
-                    break;
+                ++curIter;
             }
+            float incAm = INCR_VAL * curIter;
+            curPos = ChangeTestPosition(roundedPos, stateTracking, incAm);
         }
         //Debug.Break();
         return new AvailableSpot(false, Vector2.zero);
@@ -198,6 +194,53 @@ public class TestCollider : MonoBehaviour
         {
             return valInt + 0.5f;
         }
+    }
+
+    /// <summary>Changes the given position to a different position based on the state</summary>
+    /// <param name="originalPos">Origin position</param>
+    /// <param name="stateTracking">State of the iteration</param>
+    /// <param name="incrementAmount">Amount to increment the x/y by</param>
+    /// <returns></returns>
+    private Vector2 ChangeTestPosition(Vector2 originalPos, int stateTracking, float incrementAmount)
+    {
+        Vector2 curPos = originalPos;
+        if (stateTracking == 0)
+        {
+            curPos.x += incrementAmount;
+        }
+        else if (stateTracking == 1)
+        {
+            curPos.x -= incrementAmount;
+        }
+        else if (stateTracking == 2)
+        {
+            curPos.y += incrementAmount;
+        }
+        else if (stateTracking == 3)
+        {
+            curPos.y -= incrementAmount;
+        }
+        else if (stateTracking == 4)
+        {
+            curPos.x += incrementAmount;
+            curPos.y += incrementAmount;
+        }
+        else if (stateTracking == 5)
+        {
+            curPos.x += incrementAmount;
+            curPos.y -= incrementAmount;
+        }
+        else if (stateTracking == 6)
+        {
+            curPos.x -= incrementAmount;
+            curPos.y += incrementAmount;
+        }
+        else if (stateTracking == 7)
+        {
+            curPos.x -= incrementAmount;
+            curPos.y -= incrementAmount;
+        }
+        return curPos;
     }
 
     /// <summary>Prints the hierarchy to get to the given child</summary>

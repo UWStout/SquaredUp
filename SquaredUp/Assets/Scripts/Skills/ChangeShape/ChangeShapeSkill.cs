@@ -4,39 +4,33 @@ using UnityEngine;
 /// <summary>Skill that allows the player to change their shape</summary>
 public class ChangeShapeSkill : SkillBase<ShapeData>
 {
-    // SFX for shape transformation
-    public AudioSource transformShape;
     // References
-    // Transform that will be scaled for the player
-    [SerializeField] private Transform playerScalableTrans = null;
+    // Controller for changing the player's form
+    [SerializeField] private ChangeFormController changeFormCont = null;
     // Mesh Filters that will have their mesh changed to the shape being changed to
     [SerializeField] private MeshFilter[] playerMeshFilterRefs = null;
-    // Reference to the player collider controller
-    [SerializeField] private PlayerColliderController playerColContRef = null;
     // Refernce to the player movement script
     [SerializeField] private PlayerMovement playerMoveRef = null;
+    // SFX for shape transformation
+    [SerializeField] private AudioSource transformShapeSound;
 
     // Coroutine variables for how fast to change the shape and when we are close enough
-    [SerializeField] private float changeSpeed = 0.03f;
-    // Target mesh
-    private Vector3[] targetVertices = null;
+    [SerializeField] private float changeSpeed = 0.01f;
     // If the coroutine is finished
     private bool changeShapeCoroutFin = true;
     // Refrence to the coroutine running
     private Coroutine changeShapeCorout = null;
 
-    // Original scale of the player
-    private Vector3 originalScale = Vector3.one;
-
     // Where the player is currently facing
     private Vector2Int currentFacing = Vector2Int.up;
+    // Current state
+    private int curStateIndex;
 
 
     // Called 1st
     // Initialize
     private void Start()
     {
-        originalScale = playerScalableTrans.localScale;
         currentFacing = playerMoveRef.GetFacingDirection();
         Initialize();
         // Start off as a square
@@ -45,6 +39,19 @@ public class ChangeShapeSkill : SkillBase<ShapeData>
         {
             filter.mesh.vertices = squareData.ShapeVertices;
         }
+    }
+    // Called when this is enabled
+    // Subscribe to event
+    private void OnEnable()
+    {
+        ChangeFormController.OnAvailableSpotFound += OnAvailableSpotFound;
+    }
+
+    // Called when this is disabled
+    // Unsubscribe from events
+    private void OnDisable()
+    {
+        ChangeFormController.OnAvailableSpotFound -= OnAvailableSpotFound;
     }
 
 
@@ -62,108 +69,85 @@ public class ChangeShapeSkill : SkillBase<ShapeData>
     /// Index matches what is specified in the editor. If index is unknown, consider using Use(ShapeData) instead.</summary>
     public override void Use(int stateIndex)
     {
-        ShapeData data = SkillData.GetData(stateIndex);
-        Vector2Int newFacing = playerMoveRef.GetFacingDirection();
-        bool upcurstate = UpdateCurrentState(stateIndex);
-        // Change shape even if one the current state if the player is trying to adjust their shape as well
-        if (upcurstate || (currentFacing != newFacing && data.DirectionAffectsScale))
-        {
-            ActivateChangeShape(stateIndex);
-        }
+        ActivateChangeShape(stateIndex);
     }
 
     /// <summary>Activates the shape change to the given state</summary>
     private void ActivateChangeShape(int stateIndex)
     {
         ShapeData data = SkillData.GetData(stateIndex);
-        Vector2Int newFacing = playerMoveRef.GetFacingDirection();
-        Vector3 size = GetSize(data, originalScale, newFacing);
-
-        currentFacing = newFacing;
-        // Swap the colliders
-        // If the colliders couldn't be swapped, ergo could not fit, then do not swap the player's shape
-        AvailableSpot availSpot = playerColContRef.ActivateCollider(data, size);
-        if (availSpot.Available)
-        {
-            // Update the player's position so they don't get stuck in a wall
-            playerScalableTrans.position = availSpot.Position;
-
-            StartChangeShape(data.ShapeVertices);
-
-            // Adjust the scale
-            playerScalableTrans.localScale = size;
-            transformShape.Play();
-        }
+        curStateIndex = stateIndex;
+        changeFormCont.CurShapeData = data;
     }
 
-    /// <summary>Gets the size of the shape given by the data</summary>
-    /// <param name="data">Shape of collider to turn into</param>
-    /// <param name="originalScale">The original scale of the player</param>
-    /// <param name="playerFacingDirection">The direction the player is facing</param>
-    private Vector3 GetSize(ShapeData data, Vector3 originalScale, Vector2Int playerFacingDirection)
+    /// <summary>Called when an avaible spot is found in change form controller.
+    /// Updates the state and plays the sound.
+    /// Starts chaning the mesh</summary>
+    private void OnAvailableSpotFound()
     {
-        Vector3 size = Vector3.Scale(data.Scale, originalScale);
-        if (data.DirectionAffectsScale)
-        {
-            if (playerFacingDirection.y < 0)
-            {
-                size.y = -size.y;
-            }
-            else if (playerFacingDirection.x > 0)
-            {
-                float temp = size.x;
-                size.x = size.y;
-                size.y = temp;
-            }
-            else if (playerFacingDirection.x < 0)
-            {
-                float temp = size.x;
-                size.x = -size.y;
-                size.y = temp;
-            }
-        }
+        ShapeData data = SkillData.GetData(curStateIndex);
+        Vector2Int newFacing = playerMoveRef.GetFacingDirection();
+        newFacing = new Vector2Int(Mathf.Abs(newFacing.x), Mathf.Abs(newFacing.y));
 
-        return size;
+        if ((currentFacing != newFacing && data.DirectionAffectsScale) || !IsCurrentState(curStateIndex))
+        {
+            // Update the state
+            UpdateCurrentState(curStateIndex);
+            // Play sound
+            transformShapeSound.Play();
+
+            // Update the player's facing direction
+            currentFacing = playerMoveRef.GetFacingDirection();
+
+            // Start changing mesh
+            StartChangeShape(data.ShapeVertices);
+        }
     }
 
     /// <summary>Starts smoothly changing the shape of the mesh to have the given vertices</summary>
-    /// <param name="vertices">Target vertices</param>
-    private void StartChangeShape(Vector3[] vertices)
+    /// <param name="targetVertices">Target vertices</param>
+    private void StartChangeShape(Vector3[] targetVertices)
     {
-        // Set target vertices
-        targetVertices = vertices;
         // If there is an ongoing coroutine, stop it
         if (!changeShapeCoroutFin)
         {
             StopCoroutine(changeShapeCorout);
         }
         // Start a new coroutine
-        changeShapeCorout = StartCoroutine(ChangeShapeCoroutine());
+        changeShapeCorout = StartCoroutine(ChangeShapeCoroutine(targetVertices));
     }
 
     /// <summary>Coroutine to smoothly change the shape of the mesh</summary>
-    private IEnumerator ChangeShapeCoroutine()
+    /// <param name="targetVertices">Vertices to transition mesh towards</param>
+    private IEnumerator ChangeShapeCoroutine(Vector3[] targetVertices)
     {
         changeShapeCoroutFin = false;
 
         // The amount of lerps that will be done
         int iterations = (int) (1 / changeSpeed);
-        // Create transition helpers for each mesh
-        MeshTransitioner[] transitioners = new MeshTransitioner[playerMeshFilterRefs.Length];
-        for (int i = 0; i < transitioners.Length; ++i)
-        {
-            transitioners[i] = new MeshTransitioner(playerMeshFilterRefs[i].mesh.vertices);
-        }
-        // Lerp for the transition for each mesh
+        // Create a transition helper for changing the meshes
+        MeshTransitioner transitioner = new MeshTransitioner(playerMeshFilterRefs[0].mesh.vertices);
         for (int i = 0; i < iterations; ++i)
         {
+            // Step
             float t = changeSpeed * i;
-            for (int k = 0; k < transitioners.Length; ++k) {
-                Vector3[] vertices = transitioners[k].LerpMeshPoints(targetVertices, t);
+
+            // Lerp for the transition for each mesh
+            for (int k = 0; k < playerMeshFilterRefs.Length; ++k) {
+                Vector3[] vertices = transitioner.LerpMeshPoints(targetVertices, t);
                 playerMeshFilterRefs[k].mesh.vertices = vertices;
             }
+
             yield return null;
         }
+        // Set the variables without lerping now that we are done
+        for (int k = 0; k < playerMeshFilterRefs.Length; ++k)
+        {
+            playerMeshFilterRefs[k].mesh.vertices = targetVertices;
+        }
+
+        // Let the player move again
+        playerMoveRef.AllowMovement(true);
 
         changeShapeCoroutFin = true;
         yield return null;

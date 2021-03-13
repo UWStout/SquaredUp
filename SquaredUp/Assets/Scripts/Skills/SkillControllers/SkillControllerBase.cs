@@ -39,10 +39,7 @@ public class SkillControllerBase : MonoBehaviour
     /// <param name="stateToSwapTo">Index of state of the skill to swap to</param>
     private void UseSkill(Skill skillToUse, int stateToSwapTo)
     {
-        if (skillToUse.IsSkillUnlocked())
-        {
-            skillToUse.Use(stateToSwapTo);
-        }
+        skillToUse.Use(stateToSwapTo);
     }
 
     /// <summary>Unlocks the skill with the given index</summary>
