@@ -10,7 +10,7 @@ public class ChangeSizeSkill : SkillBase<SizeData>
     [SerializeField] private AudioSource transformSizeSound;
 
     // Current state
-    private int curStateIndex;
+    private int curAttemptedStateIndex;
 
 
     // Called when this is enabled
@@ -32,7 +32,7 @@ public class ChangeSizeSkill : SkillBase<SizeData>
     public override void Use(int stateIndex)
     {
         // Update current attempted state
-        curStateIndex = stateIndex;
+        curAttemptedStateIndex = stateIndex;
 
         // Set the data in the form changer
         SizeData data = SkillData.GetData(stateIndex);
@@ -47,10 +47,10 @@ public class ChangeSizeSkill : SkillBase<SizeData>
     private void OnAvailableSpotFound()
     {
         // If it is not the current state
-        if (!IsCurrentState(curStateIndex))
+        if (!IsCurrentState(curAttemptedStateIndex))
         {
             // Update the state
-            UpdateCurrentState(curStateIndex);
+            UpdateCurrentState(curAttemptedStateIndex);
             // Play sound
             transformSizeSound.Play();
         }

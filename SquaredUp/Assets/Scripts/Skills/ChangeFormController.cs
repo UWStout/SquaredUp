@@ -22,12 +22,27 @@ public class ChangeFormController : MonoBehaviour
     // Refrence to the coroutine running
     private Coroutine changeFormCorout = null;
 
+    // If the shape data has been changed since last time
+    private bool wasShapeChanged = false;
     // Current shape data to change to
     private ShapeData curShapeData = null;
-    public ShapeData CurShapeData { set { curShapeData = value; } }
+    public ShapeData CurShapeData {
+        set {
+            wasShapeChanged = curShapeData != value;
+            curShapeData = value;
+        }
+    }
+
+    // If the size data has been changed since last time
+    private bool wasSizeChanged = false;
     // Current size to change to
     private SizeData curSizeData = null;
-    public SizeData CurSizeData { set { curSizeData = value; } }
+    public SizeData CurSizeData {
+        set {
+            wasSizeChanged = curSizeData != value;
+            curSizeData = value;
+        }
+    }
 
     // Events
     // Event for when an available spot is found
@@ -48,15 +63,30 @@ public class ChangeFormController : MonoBehaviour
             size = facingSize * curSizeData.Size;
         }
 
-        // Swap the colliders
-        // If the colliders couldn't be swapped, ergo could not fit, then do not swap the player's shape
-        AvailableSpot availSpot = playerColContRef.ActivateCollider(curShapeData.ColliderShape, size);
-        if (availSpot.Available)
+        /*
+        Debug.Log("Was Size Changed: " + wasShapeChanged);
+        Debug.Log("Was Shape Changed: " + wasShapeChanged);
+        Debug.Log("CurShapeData: " + curShapeData);
+        Debug.Log("Does direciton affect scale: " + curShapeData.DirectionAffectsScale);
+        Debug.Log("Target Size: " + size);
+        Debug.Log("Current Size: " + playerScaleCont.ShapeScale);
+        Debug.Log("Target=Size? " + (size != playerScaleCont.ShapeScale));
+        */
+        // Change if size or shape was changed or
+        // if the shape's direction affects scale and the scale has changed
+        if (wasSizeChanged || wasShapeChanged ||
+            (curShapeData != null && curShapeData.DirectionAffectsScale && size != playerScaleCont.ShapeScale))
         {
-            // Call the available spot found event
-            OnAvailableSpotFound?.Invoke();
-            // Start changing form
-            StartChangeForm(size, availSpot.Position);
+            // Swap the colliders
+            // If the colliders couldn't be swapped, ergo could not fit, then do not swap the player's shape
+            AvailableSpot availSpot = playerColContRef.ActivateCollider(curShapeData.ColliderShape, size);
+            if (availSpot.Available)
+            {
+                // Call the available spot found event
+                OnAvailableSpotFound?.Invoke();
+                // Start changing form
+                StartChangeForm(size, availSpot.Position);
+            }
         }
     }
 
@@ -89,6 +119,7 @@ public class ChangeFormController : MonoBehaviour
     /// <param name="availSpot">Position that was close enough to allow for form changing</param>
     private void StartChangeForm(Vector3 targetSize, Vector3 availSpot)
     {
+        Debug.Log("StartChangeForm");
         // Don't let the player move while changing form
         playerMoveRef.AllowMovement(false);
 

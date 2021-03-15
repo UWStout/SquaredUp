@@ -54,7 +54,7 @@ MonoBehaviour:
   zoom: {fileID: 215724763783157633}
   playMove: {fileID: 6257086274663262137}
   zoomSpeed: 0.005
-  closeEnoughVal: 0.01
+  closeEnoughVal: 0.005
 --- !u!82 &215724763783157633
 AudioSource:
   m_ObjectHideFlags: 0
