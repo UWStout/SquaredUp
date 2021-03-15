@@ -1,7 +1,6 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
+/// <summary>Helper for the shape change skill to quickly update the direction of the shape</summary>
 [RequireComponent(typeof(ChangeShapeSkill))]
 public class UpdateShapeDirection : MonoBehaviour
 {
