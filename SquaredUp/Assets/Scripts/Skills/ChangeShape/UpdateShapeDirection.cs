@@ -34,8 +34,12 @@ public class UpdateShapeDirection : MonoBehaviour
     // Called when the player tries to update the direction of their shape
     private void UpdateShapeSkill()
     {
-        // Use the shape and activate the form change
-        shapeSkill.Use(shapeSkill.CurrentStateIndex);
-        changeFormCont.ActivateFormChange();
+        // Only update if the current state has directio affect scale
+        if (shapeSkill.GetCurrentState().DirectionAffectsScale)
+        {
+            // Use the shape and activate the form change
+            shapeSkill.Use(shapeSkill.GetCurrentStateIndex());
+            changeFormCont.ActivateFormChange();
+        }
     }
 }

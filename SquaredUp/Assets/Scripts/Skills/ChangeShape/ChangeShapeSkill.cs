@@ -24,8 +24,7 @@ public class ChangeShapeSkill : SkillBase<ShapeData>
     // Where the player is currently facing
     private Vector2Int currentFacing = Vector2Int.up;
     // Current state
-    private int curStateIndex;
-    public int CurrentStateIndex { get { return curStateIndex; } }
+    private int curAttemptedStateIndex;
 
 
     // Called 1st
@@ -77,7 +76,7 @@ public class ChangeShapeSkill : SkillBase<ShapeData>
     private void ActivateChangeShape(int stateIndex)
     {
         ShapeData data = SkillData.GetData(stateIndex);
-        curStateIndex = stateIndex;
+        curAttemptedStateIndex = stateIndex;
         changeFormCont.CurShapeData = data;
     }
 
@@ -86,14 +85,14 @@ public class ChangeShapeSkill : SkillBase<ShapeData>
     /// Starts chaning the mesh</summary>
     private void OnAvailableSpotFound()
     {
-        ShapeData data = SkillData.GetData(curStateIndex);
+        ShapeData data = SkillData.GetData(curAttemptedStateIndex);
         Vector2Int newFacing = playerMoveRef.GetFacingDirection();
         newFacing = new Vector2Int(Mathf.Abs(newFacing.x), Mathf.Abs(newFacing.y));
 
-        if ((currentFacing != newFacing && data.DirectionAffectsScale) || !IsCurrentState(curStateIndex))
+        if ((currentFacing != newFacing && data.DirectionAffectsScale) || !IsCurrentState(curAttemptedStateIndex))
         {
             // Update the state
-            UpdateCurrentState(curStateIndex);
+            UpdateCurrentState(curAttemptedStateIndex);
             // Play sound
             transformShapeSound.Play();
 
@@ -109,6 +108,7 @@ public class ChangeShapeSkill : SkillBase<ShapeData>
     /// <param name="targetVertices">Target vertices</param>
     private void StartChangeShape(Vector3[] targetVertices)
     {
+        Debug.Log("StartChangeShape");
         // If there is an ongoing coroutine, stop it
         if (!changeShapeCoroutFin)
         {

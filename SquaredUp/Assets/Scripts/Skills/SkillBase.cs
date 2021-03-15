@@ -59,4 +59,10 @@ public abstract class SkillBase<T> : MonoBehaviour, Skill where T : SkillStateDa
     {
         return stateIndex.Equals(curSkillIndex);
     }
+
+    /// <summary>Returns index of the current state</summary>
+    public int GetCurrentStateIndex() { return curSkillIndex; }
+
+    /// <summary>Returns the data for the current state</summary>
+    public T GetCurrentState() { return SkillData.GetData(curSkillIndex); }
 }
