@@ -25,6 +25,7 @@ public class ChangeShapeSkill : SkillBase<ShapeData>
     private Vector2Int currentFacing = Vector2Int.up;
     // Current state
     private int curStateIndex;
+    public int CurrentStateIndex { get { return curStateIndex; } }
 
 
     // Called 1st

@@ -1,7 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-
+﻿
 public class ToggleSkillController : SkillControllerParent
 {
     private const int ZOOM_INDEX = 0;

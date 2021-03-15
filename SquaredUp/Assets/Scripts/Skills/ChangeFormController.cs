@@ -41,7 +41,12 @@ public class ChangeFormController : MonoBehaviour
     {
         Vector2Int newFacing = playerMoveRef.GetFacingDirection();
         Vector3 facingSize = GetSize(curShapeData, newFacing);
-        Vector3 size = facingSize * curSizeData.Size;
+        // Set size using facing size and size data
+        Vector3 size = facingSize;
+        if (curSizeData != null)
+        { 
+            size = facingSize * curSizeData.Size;
+        }
 
         // Swap the colliders
         // If the colliders couldn't be swapped, ergo could not fit, then do not swap the player's shape
@@ -60,15 +65,19 @@ public class ChangeFormController : MonoBehaviour
     /// <param name="playerFacingDirection">The direction the player is facing</param>
     private Vector3 GetSize(ShapeData data, Vector2Int playerFacingDirection)
     {
-        Vector3 size = data.Scale;
-        if (data.DirectionAffectsScale)
+        Vector3 size = Vector3.one;
+        if (data != null)
         {
-            // If facing left or right, swap x and y
-            if (playerFacingDirection.x > 0 || playerFacingDirection.x < 0)
+            size = data.Scale;
+            if (data.DirectionAffectsScale)
             {
-                float temp = size.x;
-                size.x = size.y;
-                size.y = temp;
+                // If facing left or right, swap x and y
+                if (playerFacingDirection.x > 0 || playerFacingDirection.x < 0)
+                {
+                    float temp = size.x;
+                    size.x = size.y;
+                    size.y = temp;
+                }
             }
         }
 

@@ -1309,6 +1309,7 @@ GameObject:
   m_Component:
   - component: {fileID: 6257086274534009297}
   - component: {fileID: 6257086274534009294}
+  - component: {fileID: 9168758476756505908}
   - component: {fileID: 2742885915440850332}
   m_Layer: 0
   m_Name: ChangeShapeSkill
@@ -1361,6 +1362,19 @@ MonoBehaviour:
   playerMoveRef: {fileID: 6257086274663262137}
   transformShapeSound: {fileID: 2742885915440850332}
   changeSpeed: 0.005
+--- !u!114 &9168758476756505908
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6257086274534009296}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6b52fe94b8f2b734192a465ce0b9de41, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  changeFormCont: {fileID: 5669019019337796142}
 --- !u!82 &2742885915440850332
 AudioSource:
   m_ObjectHideFlags: 0

@@ -112,4 +112,13 @@ public class InputEvents : MonoBehaviour
         //Debug.Log("OnZoom" + rawInpVec);
         ZoomEvent?.Invoke();
     }
+
+    // ShapeUpdate
+    public delegate void ShapeUpdate();
+    public static event ShapeUpdate ShapeUpdateEvent;
+    private void OnShapeUpdate()
+    {
+        //Debug.Log("OnShapeUpdate" + rawInpVec);
+        ShapeUpdateEvent?.Invoke();
+    }
 }
