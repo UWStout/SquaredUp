@@ -25,6 +25,7 @@ public class PauseController : MonoBehaviour
     {
         InputEvents.PauseEvent += OnPause;
         InputEvents.UnpauseEvent += OnUnpause;
+        InputEvents.RevertEvent += OnUnpause;
     }
     // Called when the script is disabled.
     // Unsubscribe from events.
@@ -32,6 +33,7 @@ public class PauseController : MonoBehaviour
     {
         InputEvents.PauseEvent -= OnPause;
         InputEvents.UnpauseEvent -= OnUnpause;
+        InputEvents.RevertEvent -= OnUnpause;
     }
 
     /// <summary>Called when the player wants to pause. Invokes GamePauseEvent.</summary>

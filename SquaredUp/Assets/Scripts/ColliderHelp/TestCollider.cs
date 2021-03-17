@@ -5,17 +5,19 @@ public class TestCollider : MonoBehaviour
 {
     // Constants
     // Amount to increment for testing position
-    private const float INCR_VAL = 0.25f;
+    private const float INCR_VAL = 0.125f;
     // Amount of times to iterate for testing position
-    private const int ITERATIONS = 16;
+    private const int ITERATIONS = 6;
 
     // Reference to the ChangeColorSkill
     [SerializeField] private ChangeColorSkill changeColorSkillRef = null;
     // Wall sorting layers names
     [SerializeField] private string wallLayerName = "Wall";
+    [SerializeField] private string pushableLayerName = "Push";
     [SerializeField] private string[] coloredWallLayerNames = new string[0];
     // Values of the layer masks
     private int wallLayerValue = 0;
+    private int pushLayerValue = 0;
     private int[] coloredWallLayerValues = new int[0];
 
 
@@ -25,6 +27,7 @@ public class TestCollider : MonoBehaviour
     {
         // Convert the given names to layer
         wallLayerValue = 1 << LayerMask.NameToLayer(wallLayerName);
+        pushLayerValue = 1 << LayerMask.NameToLayer(pushableLayerName);
 
         coloredWallLayerValues = new int[coloredWallLayerNames.Length];
         int count = 0;
@@ -62,9 +65,9 @@ public class TestCollider : MonoBehaviour
                 // BoxCollider2D
                 case ShapeData.ColliderType.BOX:
                     // Testing
-                    //hit = PhysicsDebugging.BoxCast(curPos, size, 0, transform.up, 0, colorWallLayerMask);
+                    hit = PhysicsDebugging.BoxCast(curPos, size, 0, transform.up, 0, colorWallLayerMask);
                     // End Testing
-                    hit = Physics2D.BoxCast(curPos, size, 0, transform.up, 0, colorWallLayerMask);
+                    //hit = Physics2D.BoxCast(curPos, size, 0, transform.up, 0, colorWallLayerMask);
                     break;
                 // CircleCollider2D
                 case ShapeData.ColliderType.CIRCLE:
@@ -88,20 +91,23 @@ public class TestCollider : MonoBehaviour
             // If there was no hit, we found a place the player can be
             if (!hit)
             {
-                //Debug.Break();
+                Debug.Break();
                 return new AvailableSpot(true, curPos);
             }
 
+            float incAm = INCR_VAL * ((i / 8) + 1);
+            curPos = ChangeTestPosition(roundedPos, curIter, incAm);
             // Change position based on iteration
             int stateTracking = i % ITERATIONS;
             if (stateTracking == 0)
             {
                 ++curIter;
             }
-            float incAm = INCR_VAL * curIter;
-            curPos = ChangeTestPosition(roundedPos, stateTracking, incAm);
+            Debug.Log("incAm: " + incAm);
+            Debug.Log("curIter: " + curIter);
+            Debug.Log("curPos: " + curPos);
         }
-        //Debug.Break();
+        Debug.Break();
         return new AvailableSpot(false, Vector2.zero);
     }
 
@@ -122,7 +128,7 @@ public class TestCollider : MonoBehaviour
     /// <summary>Creates a LayerMask based off of what color the player is</summary>
     private LayerMask GetCurrentColoredWallLayerMask()
     {
-        int layerMaskVal = wallLayerValue;
+        int layerMaskVal = wallLayerValue | pushLayerValue;
         int passableIndex = changeColorSkillRef.GetPassableWallColorIndex();
 
         for (int i = 0; i < coloredWallLayerValues.Length; ++i)

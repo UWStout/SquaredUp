@@ -4,8 +4,6 @@ using UnityEngine;
 /// <summary>Skill to change the player's color</summary>
 public class ChangeColorSkill : SkillBase<ColorData>
 {
-    private const string EMISSION_COLOR_VAR_NAME = "_EmissionColor";
-
     //SFX for color transformation
     public AudioSource transformColor;
     // References

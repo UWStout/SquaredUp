@@ -37,6 +37,7 @@ public class GridHUDManager : MonoBehaviour
         PauseController.GameUnpauseEvent += CloseHUD;
         // Navigate menu
         InputEvents.MainAxisEvent += OnHUDAxis;
+        InputEvents.RevertEvent += OnRevert;
 
         // Testing
         InputEvents.HackerAxisEvent += OnHackerAxis;
@@ -49,6 +50,7 @@ public class GridHUDManager : MonoBehaviour
         PauseController.GameUnpauseEvent -= CloseHUD;
         InputEvents.MainAxisEvent -= OnHUDAxis;
         InputEvents.HackerAxisEvent -= OnHackerAxis;
+        InputEvents.RevertEvent -= OnRevert;
     }
 
     // Called 1st
@@ -285,5 +287,12 @@ public class GridHUDManager : MonoBehaviour
 
         // Update the HUD
         ActivateAllSets();
+    }
+
+    // Called when the player hits escape
+    // Close the hud without using the skills
+    private void OnRevert()
+    {
+        HUDstatus(false);
     }
 }

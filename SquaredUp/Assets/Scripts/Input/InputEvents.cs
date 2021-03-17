@@ -121,4 +121,13 @@ public class InputEvents : MonoBehaviour
         //Debug.Log("OnShapeUpdate" + rawInpVec);
         ShapeUpdateEvent?.Invoke();
     }
+
+    // Revert
+    public delegate void Revert();
+    public static event Revert RevertEvent;
+    private void OnRevert()
+    {
+        //Debug.Log("OnRevert" + rawInpVec);
+        RevertEvent?.Invoke();
+    }
 }
