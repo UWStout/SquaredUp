@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 13312, guid: 0000000000000000e000000000000000, type: 0}
   m_Name: GrayBG
   m_EditorClassIdentifier: 
-  m_Sprite: {fileID: 21300000, guid: 98ce617a9eab439479b4c7a4774baea6, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 2617e6477d4c0de4b82ec54bdf8c6445, type: 3}
   m_Color: {r: 0.7075472, g: 0.7075472, b: 0.7075472, a: 1}
   m_Transform:
     e00: 1
