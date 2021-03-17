@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: BlackWall
   m_EditorClassIdentifier: 
   m_Sprite: {fileID: 21300000, guid: 4218f4c924d1575428db2801de9fa0a9, type: 3}
-  m_Color: {r: 0.49056602, g: 0.32799184, b: 0, a: 1}
+  m_Color: {r: 0.4433962, g: 0.31511247, b: 0.05228728, a: 1}
   m_Transform:
     e00: 1
     e01: 0
