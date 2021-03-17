@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: RedDots
   m_EditorClassIdentifier: 
   m_Sprite: {fileID: 21300000, guid: 1a2803e9d6dd9f34db1d578127afa437, type: 3}
-  m_Color: {r: 1, g: 0.19496846, b: 0.19496846, a: 1}
+  m_Color: {r: 1, g: 0.4, b: 0.3882353, a: 1}
   m_Transform:
     e00: 1
     e01: 0

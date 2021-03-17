@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: BlueLines
   m_EditorClassIdentifier: 
   m_Sprite: {fileID: 21300000, guid: 36dd55fcbafd11c4287043d0bd27e3e9, type: 3}
-  m_Color: {r: 0.25157225, g: 0.5315928, b: 1, a: 1}
+  m_Color: {r: 0.043137256, g: 0.22352941, b: 0.32941177, a: 1}
   m_Transform:
     e00: 1
     e01: 0

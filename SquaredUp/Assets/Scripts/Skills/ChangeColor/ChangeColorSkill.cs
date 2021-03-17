@@ -103,21 +103,19 @@ public class ChangeColorSkill : SkillBase<ColorData>
         dupMat.CopyPropertiesFromMaterial(playerMeshRendRef.material);
         // Swap the copy for the original
         playerMeshRendRef.material = dupMat;
+        // Start color
+        Color startCol = dupMat.color;
 
-        // Start changing the colors
-        Color dupEmCol = dupMat.GetColor(EMISSION_COLOR_VAR_NAME);
-        Color changeEmCol = targetMat.GetColor(EMISSION_COLOR_VAR_NAME);
-        // The amount of lerps that will be done
+        // The amount of lerps that will be done    
         int iterations = (int)(1 / changeSpeed);
+        // Start changing the colors
         for (int i = 0; i < iterations; ++i)
         {
             // Step
             float t = changeSpeed * i;
 
             // Lerp albedo color
-            dupMat.color = Color.Lerp(dupMat.color, targetMat.color, t);
-            // Lerp emission color
-            dupMat.SetColor("_EmissionColor", Color.Lerp(dupEmCol, changeEmCol, t));
+            dupMat.color = Color.Lerp(startCol, targetMat.color, t);
 
             yield return null;
         }
