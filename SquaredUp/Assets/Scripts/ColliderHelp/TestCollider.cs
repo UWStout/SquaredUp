@@ -65,10 +65,12 @@ public class TestCollider : MonoBehaviour
                     //hit = PhysicsDebugging.BoxCast(curPos, size, 0, transform.up, 0, colorWallLayerMask);
                     // End Testing
                     hit = Physics2D.BoxCast(curPos, size, 0, transform.up, 0, colorWallLayerMask);
-
                     break;
                 // CircleCollider2D
                 case ShapeData.ColliderType.CIRCLE:
+                    // Testing
+                    //hit = PhysicsDebugging.CircleCast(curPos, size.x * 0.5f, transform.up, 0, colorWallLayerMask);
+                    // End Testing
                     hit = Physics2D.CircleCast(curPos, size.x * 0.5f, transform.up, 0, colorWallLayerMask);
                     break;
                 // Triangle needs to be a specific kind of polygon collider
@@ -101,6 +103,20 @@ public class TestCollider : MonoBehaviour
         }
         //Debug.Break();
         return new AvailableSpot(false, Vector2.zero);
+    }
+
+    /// <summary>Checks if there is a wall or non-passable colored wall in a straight line from start to end.</summary>
+    /// <param name="startPos">Start position of the line.</param>
+    /// <param name="endPos">End position of the line.</param>
+    /// <returns></returns>
+    public bool CheckIfLineWillHitWall(Vector3 startPos, Vector3 endPos)
+    {
+        // Colored wall layer mask
+        LayerMask colorWallLayerMask = GetCurrentColoredWallLayerMask();
+
+        RaycastHit2D hit = Physics2D.Linecast(startPos, endPos, colorWallLayerMask);
+
+        return hit;
     }
 
     /// <summary>Creates a LayerMask based off of what color the player is</summary>

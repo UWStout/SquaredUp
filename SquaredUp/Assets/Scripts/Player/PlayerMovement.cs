@@ -57,7 +57,10 @@ public class PlayerMovement : MonoBehaviour
     {
         // This fixes a bug where if you hold down the movement keys
         // you continue moving in whatever direction you push off the other thing of
-        rb.velocity = moveVel;
+        if (allowMove)
+        {
+            rb.velocity = moveVel;
+        }
     }
 
     /* This was an attempt to make you not get stuck on stuff as much
@@ -139,10 +142,10 @@ public class PlayerMovement : MonoBehaviour
             {
                 InputEvents.MovementEvent -= OnMovement;
                 allowMove = false;
-                // Stop the player's current movement
-                rb.velocity = Vector2.zero;
             }
         }
+        // Clear velocity to be safe
+        rb.velocity = Vector2.zero;
     }
 
     /// <summary>Returns the facing direction of the player</summary>

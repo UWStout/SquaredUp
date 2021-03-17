@@ -108,7 +108,6 @@ public class ChangeShapeSkill : SkillBase<ShapeData>
     /// <param name="targetVertices">Target vertices</param>
     private void StartChangeShape(Vector3[] targetVertices)
     {
-        Debug.Log("StartChangeShape");
         // If there is an ongoing coroutine, stop it
         if (!changeShapeCoroutFin)
         {
@@ -147,8 +146,9 @@ public class ChangeShapeSkill : SkillBase<ShapeData>
             playerMeshFilterRefs[k].mesh.vertices = targetVertices;
         }
 
+        // We no longer do this here, we do it in change form controller
         // Let the player move again
-        playerMoveRef.AllowMovement(true);
+        //playerMoveRef.AllowMovement(true);
 
         changeShapeCoroutFin = true;
         yield return null;

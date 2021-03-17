@@ -67,4 +67,56 @@ public static class PhysicsDebugging
 
         return hit;
     }
+
+    /// <summary>Returns the result of a Physics2D CircleCast and draws lines in the editor for it.
+    /// To view these lines, call Debug.Break() after calling this function as lines are discarded the frame
+    /// after they are drawn.</summary>
+    /// <param name="origin">The point in 2D space where the circle originates.</param>
+    /// <param name="radius">The radius of the circle.</param>
+    /// <param name="direction">A vector representing the direction of the circle.</param>
+    /// <param name="distance">The maximum distance over which to cast the circle.</param>
+    /// <param name="layerMask">Filter to detect Colliders only on certain layers.</param>
+    /// <param name="minDepth">Only include objects with a Z coordinate (depth) greater than or equal to this value.</param>
+    /// <param name="maxDepth">Only include objects with a Z coordinate (depth) less than or equal to this value.</param>
+    /// <returns>RaycastHit2D The cast results returned.</returns>
+    static public RaycastHit2D CircleCast(Vector2 origin, float radius, Vector2 direction, float distance = Mathf.Infinity, int layerMask = Physics.DefaultRaycastLayers,
+        float minDepth = -Mathf.Infinity, float maxDepth = Mathf.Infinity)
+    {
+        RaycastHit2D hit = Physics2D.CircleCast(origin, radius, direction, distance, layerMask, minDepth, maxDepth);
+
+        // Drawing the cast
+        Color castColor = hit ? Color.red : Color.green;
+        DrawCircle(origin, radius, castColor);
+        if (hit)
+        {
+            Debug.DrawLine(hit.point, hit.point + hit.normal.normalized * 0.2f, Color.yellow);
+        }
+
+        return hit;
+    }
+
+    /// <summary>Draws a circle using Debug.DrawLine() calls.</summary>
+    /// <param name="origin">The point in 2D space where the circle originates.</param>
+    /// <param name="radius">The radius of the circle.</param>
+    /// <param name="color">Color of the lines</param>
+    /// <param name="detailLevel">Optional value that can increase the curvature of the circle</param>
+    static public void DrawCircle(Vector2 origin, float radius, Color color, int detailLevel = 16)
+    {
+        float curRad = 0;
+        float incrAm = 2 * Mathf.PI / detailLevel;
+        for (int i = 0; i < detailLevel; ++i)
+        {
+            float xP1 = radius * Mathf.Cos(curRad);
+            float yP1 = radius * Mathf.Sin(curRad);
+            Vector2 p1 = origin + new Vector2(xP1, yP1);
+
+            curRad += incrAm;
+
+            float xP2 = radius * Mathf.Cos(curRad);
+            float yP2 = radius * Mathf.Sin(curRad);
+            Vector2 p2 = origin + new Vector2(xP2, yP2);
+
+            Debug.DrawLine(p1, p2, color);
+        }
+    }
 }

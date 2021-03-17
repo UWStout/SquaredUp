@@ -37,9 +37,6 @@ public class ChangeSizeSkill : SkillBase<SizeData>
         // Set the data in the form changer
         SizeData data = SkillData.GetData(stateIndex);
         changeFormCont.CurSizeData = data;
-
-        // This is the last skill to be called that has to do with forms. Activate the form change
-        changeFormCont.ActivateFormChange();
     }
 
     /// <summary>Called when an avaible spot is found in change form controller.
