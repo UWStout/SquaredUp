@@ -65,9 +65,9 @@ public class TestCollider : MonoBehaviour
                 // BoxCollider2D
                 case ShapeData.ColliderType.BOX:
                     // Testing
-                    hit = PhysicsDebugging.BoxCast(curPos, size, 0, transform.up, 0, colorWallLayerMask);
+                    //hit = PhysicsDebugging.BoxCast(curPos, size, 0, transform.up, 0, colorWallLayerMask);
                     // End Testing
-                    //hit = Physics2D.BoxCast(curPos, size, 0, transform.up, 0, colorWallLayerMask);
+                    hit = Physics2D.BoxCast(curPos, size, 0, transform.up, 0, colorWallLayerMask);
                     break;
                 // CircleCollider2D
                 case ShapeData.ColliderType.CIRCLE:
@@ -91,7 +91,7 @@ public class TestCollider : MonoBehaviour
             // If there was no hit, we found a place the player can be
             if (!hit)
             {
-                Debug.Break();
+                //Debug.Break();
                 return new AvailableSpot(true, curPos);
             }
 
@@ -103,11 +103,8 @@ public class TestCollider : MonoBehaviour
             {
                 ++curIter;
             }
-            Debug.Log("incAm: " + incAm);
-            Debug.Log("curIter: " + curIter);
-            Debug.Log("curPos: " + curPos);
         }
-        Debug.Break();
+        //Debug.Break();
         return new AvailableSpot(false, Vector2.zero);
     }
 
