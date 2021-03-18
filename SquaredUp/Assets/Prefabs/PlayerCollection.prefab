@@ -1357,6 +1357,7 @@ GameObject:
   m_Component:
   - component: {fileID: 6257086274534009297}
   - component: {fileID: 6257086274534009294}
+  - component: {fileID: 2805875161544513333}
   - component: {fileID: 9168758476756505908}
   - component: {fileID: 2742885915440850332}
   m_Layer: 0
@@ -1404,11 +1405,24 @@ MonoBehaviour:
       data: {fileID: 11400000, guid: 782475cad22118443b847c7ffc87411e, type: 2}
     isUnlocked: 1
   changeFormCont: {fileID: 5669019019337796142}
-  playerMeshFilterRefs:
-  - {fileID: 6257086274189949306}
-  - {fileID: 6257086274373554982}
   playerMoveRef: {fileID: 6257086274663262137}
   transformShapeSound: {fileID: 2742885915440850332}
+  meshTransitioner: {fileID: 2805875161544513333}
+--- !u!114 &2805875161544513333
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6257086274534009296}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6a32327d595dff14a8c4294b4f9b8bc6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  targetMeshes:
+  - {fileID: 6257086274189949306}
+  - {fileID: 6257086274373554982}
   changeSpeed: 0.005
 --- !u!114 &9168758476756505908
 MonoBehaviour:
