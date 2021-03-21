@@ -43,7 +43,7 @@ public class TestCollider : MonoBehaviour
     /// the location the available spot was found</summary>
     /// <param name="colliderType">Shape of collider to turn into</param>
     /// <param name="size">The actual size of the collider</param>
-    public AvailableSpot CheckIfColliderWillHitWall(ShapeData.ColliderType colliderType, Vector3 size)
+    public AvailableSpot CheckIfColliderWillHitWall(ShapeData.ShapeType colliderType, Vector3 size)
     {
         // Colored wall layer mask
         LayerMask colorWallLayerMask = GetCurrentColoredWallLayerMask();
@@ -63,21 +63,21 @@ public class TestCollider : MonoBehaviour
             switch (colliderType)
             {
                 // BoxCollider2D
-                case ShapeData.ColliderType.BOX:
+                case ShapeData.ShapeType.BOX:
                     // Testing
                     //hit = PhysicsDebugging.BoxCast(curPos, size, 0, transform.up, 0, colorWallLayerMask);
                     // End Testing
                     hit = Physics2D.BoxCast(curPos, size, 0, transform.up, 0, colorWallLayerMask);
                     break;
                 // CircleCollider2D
-                case ShapeData.ColliderType.CIRCLE:
+                case ShapeData.ShapeType.CIRCLE:
                     // Testing
                     //hit = PhysicsDebugging.CircleCast(curPos, size.x * 0.5f, transform.up, 0, colorWallLayerMask);
                     // End Testing
                     hit = Physics2D.CircleCast(curPos, size.x * 0.5f, transform.up, 0, colorWallLayerMask);
                     break;
                 // Triangle needs to be a specific kind of polygon collider
-                case ShapeData.ColliderType.TRIANGLE:
+                case ShapeData.ShapeType.TRIANGLE:
                     RaycastHit2D[] polyhits = PolygonCast(curPos, size, ShapeData.TRIANGLE_POINTS, colorWallLayerMask);
                     if (polyhits.Length > 0)
                     {

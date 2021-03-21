@@ -8,7 +8,7 @@ public class ChangeColorSkill : SkillBase<ColorData>
     public AudioSource transformColor;
     // References
     // Reference to the mesh renderer whose material will be changed
-    [SerializeField] private MeshRenderer playerMeshRendRef = null;
+    [SerializeField] private SkinnedMeshRenderer playerMeshRendRef = null;
     // Reference to the color check script
     [SerializeField] private PlayerInColorCheck playerColorCheckRef = null;
 

@@ -1,5 +1,4 @@
-﻿using System.Collections;
-using UnityEngine;
+﻿using UnityEngine;
 
 /// <summary>Skill that allows the player to change their shape</summary>
 public class ChangeShapeSkill : SkillBase<ShapeData>
@@ -12,23 +11,21 @@ public class ChangeShapeSkill : SkillBase<ShapeData>
     // SFX for shape transformation
     [SerializeField] private AudioSource transformShapeSound;
     // Mesh transitioner to change the meshes shapes
-    [SerializeField] private MeshTransitioner meshTransitioner = null;
+    [SerializeField] private BlendTransitioner meshTransitioner = null;
 
     // Where the player is currently facing
     private Vector2Int currentFacing = Vector2Int.up;
     // Current state
     private int curAttemptedStateIndex;
+    // Current shape
+    private ShapeData.ShapeType curShape = ShapeData.ShapeType.BOX;
 
 
     // Called 1st
     // Initialize
     private void Start()
     {
-        currentFacing = playerMoveRef.GetFacingDirection();
-        Initialize();
-        // Start off as a square
-        ShapeData squareData = SkillData.GetData(0);
-        meshTransitioner.SetMeshVertices(squareData.ShapeVertices);
+        currentFacing = playerMoveRef.GetFacingDirection(); 
     }
     // Called when this is enabled
     // Subscribe to event
@@ -42,17 +39,6 @@ public class ChangeShapeSkill : SkillBase<ShapeData>
     private void OnDisable()
     {
         ChangeFormController.OnAvailableSpotFound -= OnAvailableSpotFound;
-    }
-
-
-    /// <summary>Initializes each ShapeData state</summary>
-    private void Initialize()
-    {
-        for (int i = 0; i < SkillData.GetAmountStates(); ++i)
-        {
-            ShapeData shapeData = SkillData.GetData(i);
-            shapeData.Initialize();
-        }
     }
 
     /// <summary>Changes the player to become the shape corresponding to the given index.
@@ -89,8 +75,13 @@ public class ChangeShapeSkill : SkillBase<ShapeData>
             // Update the player's facing direction
             currentFacing = playerMoveRef.GetFacingDirection();
 
-            // Start changing mesh
-            meshTransitioner.StartChangeMesh(data.ShapeVertices);
+            // Start changing shape if we need to
+            if (data.TypeOfShape != curShape)
+            {
+                meshTransitioner.StartChangeShape(data.TypeOfShape);
+            }
+            // Set the current shape to the new one
+            curShape = data.TypeOfShape;
         }
     }
 }

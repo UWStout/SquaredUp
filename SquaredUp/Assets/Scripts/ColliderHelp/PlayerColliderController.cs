@@ -37,7 +37,7 @@ public class PlayerColliderController : MonoBehaviour
     /// If a spot was not found, they cannot fit in their current location and their colliders were not changed.</summary>
     /// <param name="colliderType">Type of collider to activate</param>
     /// <param name="size">The actual size of the collider to test</param>
-    public AvailableSpot ActivateCollider(ShapeData.ColliderType colliderType, Vector3 size)
+    public AvailableSpot ActivateCollider(ShapeData.ShapeType colliderType, Vector3 size)
     {
         AvailableSpot availSpot = TestColliderChange(colliderType, size);
         if (availSpot.Available)
@@ -45,15 +45,15 @@ public class PlayerColliderController : MonoBehaviour
             switch (colliderType)
             {
                 // BoxCollider2D
-                case ShapeData.ColliderType.BOX:
+                case ShapeData.ShapeType.BOX:
                     EnableOneColliderType(boxColliders);
                     break;
                 // CircleCollider2D
-                case ShapeData.ColliderType.CIRCLE:
+                case ShapeData.ShapeType.CIRCLE:
                     EnableOneColliderType(circleColliders);
                     break;
                 // Triangle needs to be a specific kind of polygon collider
-                case ShapeData.ColliderType.TRIANGLE:
+                case ShapeData.ShapeType.TRIANGLE:
                     MorphPolygonToShape(ShapeData.TRIANGLE_POINTS);
                     EnableOneColliderType(polygonColliders);
                     break;
@@ -70,7 +70,7 @@ public class PlayerColliderController : MonoBehaviour
     /// where that spot is</summary>
     /// <param name="colliderType">Shape of the collider to test</param>
     /// <param name="size">The actual size of the collider to test</param>
-    public AvailableSpot TestColliderChange(ShapeData.ColliderType colliderType, Vector3 size)
+    public AvailableSpot TestColliderChange(ShapeData.ShapeType colliderType, Vector3 size)
     {
         return testColliderRef.CheckIfColliderWillHitWall(colliderType, size);
     }
