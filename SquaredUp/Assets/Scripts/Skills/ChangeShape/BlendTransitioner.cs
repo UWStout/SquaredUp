@@ -10,7 +10,7 @@ public class BlendTransitioner : MonoBehaviour
     [SerializeField] private SkinnedMeshRenderer[] targetRenderers;
 
     // Coroutine variables for how fast to change the shape and when we are close enough
-    [SerializeField] private float changeSpeed = 0.005f;
+    [SerializeField] [Min(0.0001f)] private float changeSpeed = 1f;
     // If the coroutine is finished
     private bool changeMeshCoroutFin = true;
     // Reference to the coroutine running
@@ -48,13 +48,13 @@ public class BlendTransitioner : MonoBehaviour
         int targetBlendIndex = GetBlendIndexFromShape(shapeType);
 
         // The amount of lerps that will be done
-        int iterations = (int)(1 / changeSpeed);
-        for (int i = 0; i < iterations; ++i)
+        float t = 0;
+        while (t < 1)
         {
-            // Step
-            float t = changeSpeed * i;
             // Lerp it
             LerpRenderers(targetBlendIndex, startBlendShapes, t);
+            // Step
+            t += changeSpeed * Time.deltaTime;
 
             yield return null;
         }

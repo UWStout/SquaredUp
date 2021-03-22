@@ -18,7 +18,7 @@ public class ChangeFormController : MonoBehaviour
     [SerializeField] private TestCollider colliderTest = null;
 
     // Coroutine variables for how fast to change the shape and when we are close enough
-    [SerializeField] private float changeSpeed = 0.01f;
+    [SerializeField] [Min(0.0001f)] private float changeSpeed = 1f;
     // If the coroutine is finished
     private bool changeFormCoroutFin = true;
     // Refrence to the coroutine running
@@ -192,26 +192,25 @@ public class ChangeFormController : MonoBehaviour
             areGrowing = !areShrinking;
         }
 
-        // Determine the amount of iterations each coroutine should do
+        // Determine the speed of lerping for each coroutine
         // Assume we are not shrinking or not growing
-        int iterations = (int)(1 / changeSpeed) / 2;
+        float lerpSpeed = changeSpeed / 2;
         // If we are both growing and shrinking, then recalculate the amount of iterations
         if (areShrinking && areGrowing)
         {
-            iterations = (int)(1 / changeSpeed) / 3;
+            lerpSpeed = changeSpeed / 3;
         }
 
         // Only do this transition if we are shrinking
         if (areShrinking)
         {
-            float incAm = 1f / iterations;
             float t = 0;
-            for (int i = 0; i < iterations; ++i)
+            while (t < 1)
             {
                 // Change the size
                 playerScaleCont.ShapeScale = Vector3.Lerp(startSize, shrinkTargetSize, t);
                 // Step
-                t += incAm;
+                t += lerpSpeed * Time.deltaTime;
 
                 yield return null;
             }
@@ -219,7 +218,7 @@ public class ChangeFormController : MonoBehaviour
         }
 
         // Call the second part of the transition
-        changeFormCorout = StartCoroutine(ChangePositionCoroutine(targetSize, availSpot, areGrowing, iterations));
+        changeFormCorout = StartCoroutine(ChangePositionCoroutine(targetSize, availSpot, areGrowing, lerpSpeed));
 
         yield return null;
     }
@@ -228,15 +227,14 @@ public class ChangeFormController : MonoBehaviour
     /// <param name="targetSize">Size to lerp towards</param>
     /// <param name="availSpot">Position that was close enough to allow for form changing</param>
     /// <param name="shouldGrow">If the form will also grow</param>
-    /// <param name="iterations">The amount of lerps that should be done to change position.</param>
-    private IEnumerator ChangePositionCoroutine(Vector3 targetSize, Vector3 availSpot, bool shouldGrow, int iterations)
+    /// <param name="lerpSpeed">The speed of the lerps to be done that change position.</param>
+    private IEnumerator ChangePositionCoroutine(Vector3 targetSize, Vector3 availSpot, bool shouldGrow, float lerpSpeed)
     {
         // Starting position
         Vector3 startPos = playerMoveTrans.position;
 
         // Iteration information
-        int changePosIterations = iterations;
-        float incAm;
+        float changePosSpeed = lerpSpeed;
         float t;
         
         // If there is a wall in the way from the start to the target spot, use a midpoint to avoid the wall.
@@ -245,16 +243,15 @@ public class ChangeFormController : MonoBehaviour
         {
             // Since there was a wall in the way, we have to go towards the midpoint first
             // We will also have to half the iterations to make up for the extra movement
-            changePosIterations /= 2;
+            changePosSpeed /= 2;
             // Step initialization
-            incAm = 1f / changePosIterations;
             t = 0;
-            for (int i = 0; i < changePosIterations; ++i)
+            while (t < 1)
             {
                 // Lerp towards the mid point
                 playerMoveTrans.position = Vector3.Lerp(startPos, wallInWay.Midpoint, t);
                 // Step
-                t += incAm;
+                t += changePosSpeed * Time.deltaTime;
 
                 yield return null;
             }
@@ -263,22 +260,20 @@ public class ChangeFormController : MonoBehaviour
 
         // Update the start position in case the player moved due to a wall
         startPos = playerMoveTrans.position;
-        // Step initialization
-        incAm = 1f / changePosIterations;
         t = 0;
-        for (int i = 0; i < changePosIterations; ++i)
+        while (t < 0)
         {
             // Lerp towards the available spot
             playerMoveTrans.position = Vector3.Lerp(startPos, availSpot, t);
             // Step
-            t += incAm;
+            t += changePosSpeed * Time.deltaTime;
 
             yield return null;
         }
         playerMoveTrans.position = availSpot;
 
         // Call the last part of the transition
-        changeFormCorout = StartCoroutine(GrowCoroutine(targetSize, shouldGrow, iterations));
+        changeFormCorout = StartCoroutine(GrowCoroutine(targetSize, shouldGrow, lerpSpeed));
 
         yield return null;
     }
@@ -286,22 +281,21 @@ public class ChangeFormController : MonoBehaviour
     /// <summary>Coroutine to smoothly raise the scale of the player. Last coroutine for changing form</summary>
     /// <param name="targetSize">Size to lerp towards</param>
     /// <param name="shouldGrow">If we should grow the player</param>
-    /// <param name="iterations">The amount of lerps that should be done to grow.</param>
-    private IEnumerator GrowCoroutine(Vector3 targetSize, bool shouldGrow, int iterations)
+    /// <param name="lerpSpeed">The speed of the lerps done to grow.</param>
+    private IEnumerator GrowCoroutine(Vector3 targetSize, bool shouldGrow, float lerpSpeed)
     {
         // Save the current size
         Vector3 startSize = playerScaleCont.ShapeScale;
 
         if (shouldGrow)
         {
-            float incAm = 1f / iterations;
             float t = 0;
-            for (int i = 0; i < iterations; ++i)
+            while (t < 1)
             {
                 // Change the size
                 playerScaleCont.ShapeScale = Vector3.Lerp(startSize, targetSize, t);
                 // Step
-                t += incAm;
+                t += lerpSpeed * Time.deltaTime;
 
                 yield return null;
             }

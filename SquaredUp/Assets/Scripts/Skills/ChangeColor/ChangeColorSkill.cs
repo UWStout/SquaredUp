@@ -13,7 +13,7 @@ public class ChangeColorSkill : SkillBase<ColorData>
     [SerializeField] private PlayerInColorCheck playerColorCheckRef = null;
 
     // Coroutine variables for how fast to change the color and when we are close enough
-    [SerializeField] private float changeSpeed = 0.01f;
+    [SerializeField] [Min(0.0001f)] private float changeSpeed = 1f;
     // If the coroutine is finished
     private bool changeColorCoroutFin = true;
     // Refrence to the coroutine running
@@ -104,16 +104,15 @@ public class ChangeColorSkill : SkillBase<ColorData>
         // Start color
         Color startCol = dupMat.color;
 
-        // The amount of lerps that will be done    
-        int iterations = (int)(1 / changeSpeed);
+        float t = 0;
         // Start changing the colors
-        for (int i = 0; i < iterations; ++i)
+        while (t < 1)
         {
-            // Step
-            float t = changeSpeed * i;
-
             // Lerp albedo color
             dupMat.color = Color.Lerp(startCol, targetMat.color, t);
+
+            // Step
+            t += changeSpeed * Time.deltaTime;
 
             yield return null;
         }

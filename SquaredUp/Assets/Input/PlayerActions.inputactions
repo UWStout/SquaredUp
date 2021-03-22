@@ -376,6 +376,33 @@
                     "isPartOfComposite": false
                 }
             ]
+        },
+        {
+            "name": "ZoomedOut",
+            "id": "caff4e0d-9de7-4d82-80dd-134315ac3d2d",
+            "actions": [
+                {
+                    "name": "Zoom",
+                    "type": "Button",
+                    "id": "5b078b6d-54c5-4460-b901-1bf32cdb6607",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": ""
+                }
+            ],
+            "bindings": [
+                {
+                    "name": "",
+                    "id": "0c57d1d9-d0ab-4935-8bfd-d42fa1cfb773",
+                    "path": "<Keyboard>/f",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Zoom",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                }
+            ]
         }
     ],
     "controlSchemes": []

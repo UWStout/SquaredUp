@@ -1,18 +1,23 @@
 ﻿using System.Collections;
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 /// <summary>Skill that zooms the camera in</summary>
 public class ChangeZoomSkill : SkillBase<ZoomData>
 {
     //SFX for zoom ability
     public AudioSource zoom;
-    // Reference to the PlayerMovement script
-    [SerializeField] private PlayerMovement playMove = null;
+    // Reference to the PlayerInput to swap maps
+    [SerializeField] private PlayerInput playerInp = null;
+    // Name of the zoomed out action map in player input
+    [SerializeField] private string zoomActionMapName = "ZoomedOut";
+    // Name of the player action map in player input
+    [SerializeField] private string playerActionMapName = "Player";
     // Reference to camera whose orthographic size to change.
     private Camera zoomCam = null;
 
     // Lerp speed
-    [SerializeField] [Range(0.0001f, 1)] private float zoomSpeed = 0.1f;
+    [SerializeField] [Min(0.0001f)] private float zoomSpeed = 1f;
     [SerializeField] [Min(0)] private float closeEnoughVal = 0.01f;
     // If the zoom coroutine is finished
     private bool zoomFin = true;
@@ -42,8 +47,17 @@ public class ChangeZoomSkill : SkillBase<ZoomData>
         {
             BeginZoom(SkillData.GetData(stateIndex).ZoomAmount);
             zoom.Play();
-            // Can't move while zoomed out
-            playMove.AllowMovement(stateIndex == 0);
+            // We are zooming out
+            if (stateIndex != 0)
+            {
+                // Can't move while zoomed out
+                playerInp.SwitchCurrentActionMap(zoomActionMapName);
+            }
+            // We are zooming in
+            else
+            {
+                playerInp.SwitchCurrentActionMap(playerActionMapName);
+            }
         }
     }
 
@@ -63,7 +77,7 @@ public class ChangeZoomSkill : SkillBase<ZoomData>
         zoomFin = false;
         while (Mathf.Abs(zoomCam.orthographicSize - zoomTarget) > closeEnoughVal)
         {
-            zoomCam.orthographicSize = Mathf.Lerp(zoomCam.orthographicSize, zoomTarget, zoomSpeed);
+            zoomCam.orthographicSize = Mathf.Lerp(zoomCam.orthographicSize, zoomTarget, zoomSpeed * Time.deltaTime);
             yield return null;
         }
         zoomCam.orthographicSize = zoomTarget;

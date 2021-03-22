@@ -52,9 +52,11 @@ MonoBehaviour:
       data: {fileID: 11400000, guid: aefaa843490a83944bfb70f0790d5150, type: 2}
     isUnlocked: 1
   zoom: {fileID: 215724763783157633}
-  playMove: {fileID: 6257086274663262137}
-  zoomSpeed: 0.005
-  closeEnoughVal: 0.005
+  playerInp: {fileID: 6257086275822434842}
+  zoomActionMapName: ZoomedOut
+  playerActionMapName: Player
+  zoomSpeed: 0.5
+  closeEnoughVal: 6
 --- !u!82 &215724763783157633
 AudioSource:
   m_ObjectHideFlags: 0
@@ -258,7 +260,7 @@ MonoBehaviour:
   playerMoveRef: {fileID: 6257086274663262137}
   playerMoveTrans: {fileID: 6257086274663262138}
   colliderTest: {fileID: 9177552967270623550}
-  changeSpeed: 0.005
+  changeSpeed: 18
 --- !u!1 &2572493154578285442
 GameObject:
   m_ObjectHideFlags: 0
@@ -317,7 +319,7 @@ MonoBehaviour:
   transformColor: {fileID: 4380345195031301519}
   playerMeshRendRef: {fileID: 3772082658385108022}
   playerColorCheckRef: {fileID: 7503979376264357203}
-  changeSpeed: 0.005
+  changeSpeed: 6
   coloredWallColliders:
   - {fileID: 815508983924247115}
   - {fileID: 6593881369109893089}
@@ -937,7 +939,7 @@ MonoBehaviour:
   targetRenderers:
   - {fileID: 3772082658385108022}
   - {fileID: 493368710166738429}
-  changeSpeed: 0.005
+  changeSpeed: 6
 --- !u!114 &9168758476756505908
 MonoBehaviour:
   m_ObjectHideFlags: 0
