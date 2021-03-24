@@ -31,23 +31,42 @@ public class NPC_Movement : MonoBehaviour
         stopCounter = stopTime;
         walkingCounter = walkingTime;
         numSpot = 0;
-        position = 0;
-        newLength = paths.Length * 2 - 1;
+        newLength = paths.Length * 2;
         route = new int[newLength];
+        Debug.Log(route.Length);
 
-        for(int i = 0;i <= paths.Length; i++)
+
+        for (int i = 0;i < paths.Length; i++)
         {
-            Debug.Log();
             route[numSpot] = paths[i];
             numSpot++;
         }
 
-        for (int j = paths.Length - 2;j > 0; j--)
+        for (int j = paths.Length - 1;j >= 0; j--)
         {
-            route[numSpot] = paths[j];
+            Debug.Log(numSpot);
+            switch (paths[j])
+            {
+                case 0:
+                    route[numSpot] = 2;
+                    break;
+                case 1:
+                    route[numSpot] = 3;
+                    break;
+                case 2:
+                    route[numSpot] = 0;
+                    break;
+                case 3:
+                    route[numSpot] = 1;
+                    break;
+            }
+
             numSpot++;
             
         }
+        Debug.Log(numSpot);
+        numSpot = 0;
+        Debug.Log(numSpot);
     }
 
     // Update is called once per frame
@@ -77,8 +96,8 @@ public class NPC_Movement : MonoBehaviour
             {
                 isWalking = false;
                 stopCounter = stopTime;
-                position++;
-                Debug.Log(position);
+                numSpot++;
+                Debug.Log(numSpot);
             }
         }
         else
@@ -90,15 +109,15 @@ public class NPC_Movement : MonoBehaviour
 
             if (stopCounter < 0)
             {
-                if (position > numSpot)
+                if (numSpot <= route.Length - 1)
                 {
-                    walkDirection = route[position];
+                    walkDirection = route[numSpot];
                     isWalking = true;
                     walkingCounter = walkingTime;
                 } else
                 {
-                    position = 0;
-                    walkDirection = route[position];
+                    numSpot = 0;
+                    walkDirection = route[numSpot];
                     isWalking = true;
                     walkingCounter = walkingTime;
                 }

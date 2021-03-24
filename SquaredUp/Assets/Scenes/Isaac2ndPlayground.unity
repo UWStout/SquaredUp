@@ -3198,9 +3198,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   movementSpeed: 2
   isWalking: 0
-  walkTime: 1
-  waitTime: 3
-  paths: 000000000100000002000000
+  walkingTime: 1
+  stopTime: 3
+  paths: 00000000010000000200000002000000
 --- !u!50 &1727380679
 Rigidbody2D:
   serializedVersion: 4
