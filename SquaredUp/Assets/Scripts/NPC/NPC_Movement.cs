@@ -37,7 +37,7 @@ public class NPC_Movement : MonoBehaviour
 
         for(int i = 0;i <= paths.Length; i++)
         {
-            Debug.Log();
+            //Debug.Log();
             route[numSpot] = paths[i];
             numSpot++;
         }

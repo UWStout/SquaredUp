@@ -6,6 +6,7 @@ public class DoorState : MonoBehaviour
 {
     //variables on the door
     private int targetedBy=0;
+    [SerializeField]
     private GameObject doorAttributes;
 
 
