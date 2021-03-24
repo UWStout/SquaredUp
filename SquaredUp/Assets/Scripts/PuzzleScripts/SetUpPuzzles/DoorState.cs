@@ -4,28 +4,14 @@ using UnityEngine;
 
 public class DoorState : MonoBehaviour
 {
+    //variables on the door
     private int targetedBy=0;
-    [SerializeField]
-    private Sprite Closed;
-    [SerializeField]
-    private Sprite Open;
-    [SerializeField]
     private GameObject doorAttributes;
 
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
 
     public void WithinSight()
     {
+        //increment the number of targets
         targetedBy++;
         //disable wall
          doorAttributes.SetActive(false);
@@ -33,7 +19,9 @@ public class DoorState : MonoBehaviour
 
     public void OutOfSight()
     {
+        //decrement the number of targets
         targetedBy--;
+        //if wall is not targeted activate wall
         if (targetedBy == 0){
             //enable wall
             doorAttributes.SetActive(true);
