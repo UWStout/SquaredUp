@@ -12,6 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a137f655aaf658f4aa3602f44cabca63, type: 3}
   m_Name: Triangle
   m_EditorClassIdentifier: 
+  uiElement: {fileID: 9203763147008845070, guid: f8500d6ff5d8b8c43926e31900ae0d56, type: 3}
   typeOfShape: 2
   scale: {x: 1, y: 1, z: 1}
   directionAffectsScale: 0

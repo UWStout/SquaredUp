@@ -1,4 +1,6 @@
-﻿/// <summary>Interface for a Skill. Used by the SkillBase class.
+﻿using UnityEngine;
+
+/// <summary>Interface for a Skill. Used by the SkillBase class.
 /// This is what you should use to get skill information off of a gameobject with GetComponent</summary>
 public interface Skill
 {
@@ -14,6 +16,8 @@ public interface Skill
     bool IsStateUnlocked(int stateIndex);
     /// <summary>Sets the state with the given index to be unlocked</summary>
     void UnlockState(int stateIndex);
+    /// <summary>Gets the ui element prefab associated with the skill with the given index</summary>
+    GameObject GetStateUIElement(int stateIndex);
     /// <summary>Activation of the skill</summary>
     void Use(int stateIndex);
 }

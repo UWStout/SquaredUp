@@ -10,6 +10,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 1fca76e869a4e3e4780c451321a13178, type: 3}
-  m_Name: Default
+  m_Name: RedColor
   m_EditorClassIdentifier: 
-  mat: {fileID: 2100000, guid: daaa8d62d8921be4387d2a42b0f84ec3, type: 2}
+  uiElement: {fileID: 9203763147008845070, guid: b6aaf63661c4fea43b4892d3ee55f072, type: 3}
+  mat: {fileID: 2100000, guid: 4ba0f7b59100ec14380546c4858118b6, type: 2}

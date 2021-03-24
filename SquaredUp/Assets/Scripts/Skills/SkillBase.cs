@@ -34,6 +34,9 @@ public abstract class SkillBase<T> : MonoBehaviour, Skill where T : SkillStateDa
     /// <summary>Uses the skill and switches to the given state</summary>
     public abstract void Use(int stateIndex);
 
+    /// <summary>Gets the ui element prefab associated with the skill with the given index</summary>
+    public GameObject GetStateUIElement(int stateIndex) { return SkillData.GetState(stateIndex).Data.UIElement; }
+
     /// <summary>Uses the skill and tries to swap to the state corresponding to the given data</summary>
     public void Use(T stateData)
     {

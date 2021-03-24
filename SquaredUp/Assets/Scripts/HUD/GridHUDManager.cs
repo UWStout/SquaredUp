@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using UnityEngine.UI;
 using TMPro;
 
 
@@ -104,17 +105,66 @@ public class GridHUDManager : MonoBehaviour
             Skill curSkill = HUDSkillController.Instance.GetSkill(count);
             for (int i = 0; i < curSkill.GetAmountStates(); ++i)
             {
-                // Create the transform as a child, set its local position, and give it a good name
-                Transform child = Instantiate(skillStatePrefab, parent).transform;
-                child.transform.localPosition = new Vector3(0, -verticalSpace * i, 0);
-                child.name = curSkill.GetStateName(i);
-
-                // Set text of the prefab
-                TextMeshProUGUI text = child.transform.GetChild(0).GetComponent<TextMeshProUGUI>();
-                text.text = child.name;
+                CreateSingleStateUI(parent, curSkill, i);
             }
             ++count;
         }
+    }
+
+    /// <summary>Helper function for CreateSkillStatesHUD. Create the UI object for the current skill.</summary>
+    /// <param name="parent">Transform that will be the parent of the single UI element.</param>
+    /// <param name="curSkill">Current skill whose state the UI is generated from.</param>
+    /// <param name="index">Index of the current state of the skill.</param>
+    private void CreateSingleStateUI(Transform parent, Skill curSkill, int index)
+    {
+        // Create the transform as a child, set its local position, and give it a good name
+        Transform child = Instantiate(skillStatePrefab, parent).transform;
+        child.transform.localPosition = new Vector3(0, -verticalSpace * index, 0);
+        child.name = curSkill.GetStateName(index);
+
+        // Try to pull a UI element off the skill
+        try
+        {
+            AddSpecificUIFromState(child, curSkill, index);
+        }
+        // If we failed to get the prefab, just slap some text on it
+        catch
+        {
+            AddDefaultTextToState(child);
+        }
+    }
+
+    /// <summary>Helper function for CreateSingleStateUI. Create and initialize a UI element from the current state of the current skill.</summary>
+    /// <param name="skillTransform">Transform of the state UI element.</param>
+    /// <param name="curSkill">Current skill whose state the UI is generated from.</param>
+    /// <param name="index">Index of the current state of the skill.</param>
+    private void AddSpecificUIFromState(Transform skillTransform, Skill curSkill, int index)
+    {
+        GameObject stateUIPref = curSkill.GetStateUIElement(index);
+        // Set the prefab as a child of the newley created object
+        GameObject stateUIInstance = Instantiate(stateUIPref, skillTransform);
+        // Try to pull the state ui behavior off the state instance to initialize it
+        try
+        {
+            StateUIBehavior stateUIBev = stateUIInstance.GetComponent<StateUIBehavior>();
+            stateUIBev.Initialize(this);
+        }
+        // Some won't have behaviors and that's okay
+        catch { }
+    }
+
+    /// <summary>Helper function for CreateSingleStateUI. Create a text element on the UI that just says the name of the skill.</summary>
+    /// <param name="skillTransform">Transform of the skill's UI.</param>
+    private void AddDefaultTextToState(Transform skillTransform)
+    {
+        // Add a child to house text
+        GameObject grandchild = new GameObject("State Text");
+        grandchild.transform.SetParent(skillTransform);
+        grandchild.transform.localPosition = Vector3.zero;
+        grandchild.transform.localScale = Vector3.one;
+        // Add text and set it to say the state's name
+        TextMeshProUGUI text = grandchild.AddComponent<TextMeshProUGUI>();
+        text.text = skillTransform.name;
     }
 
 
@@ -294,5 +344,13 @@ public class GridHUDManager : MonoBehaviour
     private void OnRevert()
     {
         HUDstatus(false);
+    }
+
+
+    /// <summary>Gets the index of the current state of the selected skill.</summary>
+    /// <param name="skillIndex">Index of the skill to check the state of.</param>
+    public int GetStateIndexOfSkill(int skillIndex)
+    {
+        return index[skillIndex];
     }
 }

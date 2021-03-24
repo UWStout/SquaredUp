@@ -28,6 +28,7 @@ public class SkillData<T> where T : SkillStateData
     [SerializeField] private bool isUnlocked = false;
     public bool Unlocked { get { return isUnlocked; } }
 
+
     /// <summary>Gets the state(data and isUnlock) with the given index</summary>
     public LockableState GetState(int index) { return states[index]; }
     /// <summary>Gets the data with the given index</summary>

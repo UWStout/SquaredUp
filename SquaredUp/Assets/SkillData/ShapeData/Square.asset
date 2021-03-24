@@ -12,8 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a137f655aaf658f4aa3602f44cabca63, type: 3}
   m_Name: Square
   m_EditorClassIdentifier: 
-  mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
-  sphereMesh: {fileID: 10207, guid: 0000000000000000e000000000000000, type: 0}
-  colliderShape: 0
+  uiElement: {fileID: 9203763147008845070, guid: 0c55273c4cd5a634fa3962948a449174, type: 3}
+  typeOfShape: 0
   scale: {x: 1, y: 1, z: 1}
   directionAffectsScale: 0
