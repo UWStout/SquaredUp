@@ -20,6 +20,7 @@ public class InstantiatePuzzleTwo : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        //formating gameobjects when game starts
         puzzleTwoDoors = new GameObject();
         puzzleTwoControllers = new GameObject();
         puzzleTwoTilemapControllers = new GameObject();
