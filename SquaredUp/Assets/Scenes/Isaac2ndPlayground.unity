@@ -3134,7 +3134,7 @@ Camera:
   far clip plane: 1000
   field of view: 60
   orthographic: 1
-  orthographic size: 5
+  orthographic size: 10.397358
   m_Depth: -1
   m_CullingMask:
     serializedVersion: 2
@@ -3159,7 +3159,7 @@ Transform:
   m_GameObject: {fileID: 1676245807}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 2.97, y: 1.73, z: -10.86}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 1, y: 0.87517, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
@@ -3197,10 +3197,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   isWalking: 0
-  walkingSpeed: 2
+  walkingSpeed: 3
   stopTime: 1
-  paths: 00000000010000000200000003000000
-  movementTime: 05000000030000000100000005000000
+  paths: 00000000010000000200000002000000
+  movementTime:
+  - 1.58
+  - 1.79
+  - 0.27
+  - 2.05
 --- !u!50 &1727380679
 Rigidbody2D:
   serializedVersion: 4
