@@ -11,8 +11,9 @@ public class TypeWriter : MonoBehaviour
     public AudioSource dialogue_sfx;
     
     // Delay between typing characters
-    [SerializeField]
-    private float delayBetweenLetters = 0.15f;
+    [SerializeField] private float delayBetweenLetters = 0.15f;
+    // Size not to grow larger than
+    [SerializeField] private float maxSentenceSize = 1f;
 
     // Text to write to
     private TextMeshProUGUI typeText;
@@ -53,8 +54,10 @@ public class TypeWriter : MonoBehaviour
     private IEnumerator TypeLineCoroutine()
     {
         // Indiivually write each character
-        foreach (char c in currentLine)
+        for (int i = 0; i < currentLine.Length; ++i)
         {
+            char c = currentLine[i];
+            //HandleIfNextCharacterIsSpace(c, i);
             TypeOneLetter(c);
             dialogue_sfx.Play();
             yield return new WaitForSeconds(delayBetweenLetters);
@@ -62,6 +65,52 @@ public class TypeWriter : MonoBehaviour
         // Finish Typing.
         FinishTyping();
         yield return null;
+    }
+
+    /// <summary>If the next character is space, it checks if the next word is too long to be on the current line.
+    /// If the word is too long, it starts the next line.</summary>
+    /// <param name="c">Next character of the current line to test if its a space.</param>
+    /// <param name="index"></param>
+    private void HandleIfNextCharacterIsSpace(char c, int index)
+    {
+        if (c == ' ')
+        {
+            // Get the next word
+            string nextWord = GetNextWordFromCurrentLine(index);
+            // Start the next line if the word would make us start a new line
+            StartNextLineIfNextWordTooLong(nextWord);
+        }
+    }
+
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="startIndex"></param>
+    /// <returns></returns>
+    private string GetNextWordFromCurrentLine(int startIndex)
+    {
+        string rtnStr = "";
+        int curIndex = startIndex;
+        while (curIndex < currentLine.Length && currentLine[curIndex] == ' ')
+        {
+            ++curIndex;
+        }
+        while (curIndex < currentLine.Length && currentLine[curIndex] != ' ')
+        {
+            rtnStr += currentLine[curIndex];
+            ++curIndex;
+        }
+        return rtnStr;
+    }
+
+    private void StartNextLineIfNextWordTooLong(string nextWord)
+    {
+        string curText = typeText.text;
+        typeText.text = nextWord;
+        if (typeText.bounds.size.x > maxSentenceSize)
+        {
+            typeText.text = curText + "\n";
+        }
     }
 
     /// <summary>Appends the given letter to the text</summary>

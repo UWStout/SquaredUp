@@ -101,8 +101,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 802ff49e0939e854dbd52112635fdc69, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Closed: {fileID: 0}
-  Open: {fileID: 0}
   doorAttributes: {fileID: 8871345487254197276}
 --- !u!65 &8871345486272240885
 BoxCollider:
