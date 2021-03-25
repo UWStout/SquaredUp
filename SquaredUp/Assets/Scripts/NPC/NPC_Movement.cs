@@ -101,7 +101,6 @@ public class NPC_Movement : MonoBehaviour
                 {
                     numSpot = 0;
                 }
-                Debug.Log(numSpot);
                 walkDirection = route[numSpot];
                 isWalking = true;
                 walkingCounter = movementList[numSpot];
