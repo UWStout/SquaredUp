@@ -8,6 +8,7 @@ public class MusicTrigger : MonoBehaviour
     public AudioSource entering; // The track for the zone the player is entering
     public AudioSource exiting; // The track for the zone the player is exiting
     private bool isIn = false; // Boolean for checking if the player is in the trigger
+    private bool triggered = false; // Boolean for checking if the trigger has been triggered yet (for the spawn music trigger)
     public GameObject other;
     // Start is called before the first frame update
     void Start()
@@ -21,14 +22,26 @@ public class MusicTrigger : MonoBehaviour
         // Check if player is still inside the trigger, if not set isIn to true, stop exiting music track, play entering music track
         if (!isIn)
         {
-            isIn = true;
-            exiting.Stop();
-            // Check that the music for the next zone isn't already playing (avoids restarting track when returning through trigger)
-            if (!entering.isPlaying)
+            // As with spawn, if entering and exiting tracks are the same, use triggered to detect that the trigger has been used
+            if (entering == exiting && triggered == false)
             {
+                isIn = true;
+                triggered = true;
                 entering.Play();
+                Debug.Log("spawn trigger");
             }
-            // Debug.Log("entering trigger");
+            // Otherwise, retriggering is not an issue
+            else if (entering != exiting)
+            {
+                isIn = true;
+                exiting.Stop();
+                // Check that the music for the next zone isn't already playing (avoids restarting track when returning through trigger)
+                if (!entering.isPlaying)
+                {
+                    entering.Play();
+                }
+                // Debug.Log("entering trigger");
+            }
         }
     }
     private void OnTriggerExit2D(Collider2D collision)

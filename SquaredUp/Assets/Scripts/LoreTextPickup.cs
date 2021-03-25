@@ -1,12 +1,13 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 
 public class LoreTextPickup : MonoBehaviour
 {
-    public AudioSource pickup; // The SFX for picking up the item
-    public GameObject other; // The player game object which is being collided with
-    public UnityEngine.UI.Text textBox; // The Text object containing the lore entry
+    [SerializeField] private AudioSource pickup; // The SFX for picking up the item
+    [SerializeField] private GameObject other; // The player game object which is being collided with
+    [SerializeField] private TextMeshProUGUI textBox; // The TextMeshProGUI object containing the lore entry
     private bool isCollected = false; // Boolean storing whether the pickup has been collected
 
     // Start is called before the first frame update
@@ -14,7 +15,7 @@ public class LoreTextPickup : MonoBehaviour
     {
         // Initialize other as the Player object for detecting collision
         other = GameObject.FindGameObjectWithTag("Player");
-        textBox.enabled = false;
+        textBox.gameObject.SetActive(false);
     }
 
     // Implementation in which the pickup persists after collection
@@ -23,19 +24,26 @@ public class LoreTextPickup : MonoBehaviour
     {
         if (!isCollected)
         {
-            textBox.enabled = true;
+            textBox.gameObject.SetActive(true);
             isCollected = true;
             pickup.Play();
         }
         else
         {
-            textBox.enabled = true;
+            textBox.gameObject.SetActive(true);
         }
     }
 
     private void OnTriggerExit2D(Collider2D collision)
     {
-        textBox.enabled = false;
+        textBox.gameObject.SetActive(false);
         textBox.text = "You have already collected this text!";
     }
+
+    // Simple getter for isCollected boolean (used to check for collected lore in LoreMenu)
+    public bool GetCollected()
+    {
+        return this.isCollected;
+    }
+
 }
