@@ -64,7 +64,11 @@ public class PlayerMovement : MonoBehaviour
     }
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        rb.velocity = new Vector3(Mathf.Round(rb.velocity.x), Mathf.Round(rb.velocity.y));
+        //rb.velocity = new Vector3(Mathf.Round(rb.velocity.x), Mathf.Round(rb.velocity.y));
+    }
+    private void OnCollisionStay2D(Collision2D collision)
+    {
+        rb.velocity = moveVel;
     }
 
     /* This was an attempt to make you not get stuck on stuff as much
