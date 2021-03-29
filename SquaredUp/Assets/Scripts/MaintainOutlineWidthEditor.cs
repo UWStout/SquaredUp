@@ -2,7 +2,7 @@
 
 /// <summary>Maintains the outline width of things with outlines in the editor.</summary>
 [ExecuteInEditMode]
-public class MaintainOutlineWidth : MonoBehaviour
+public class MaintainOutlineWidthEditor : MonoBehaviour
 {
     // Non outline part of the thing.
     [SerializeField] private Transform body = null;
