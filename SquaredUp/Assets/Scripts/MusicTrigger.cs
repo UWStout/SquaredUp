@@ -28,7 +28,7 @@ public class MusicTrigger : MonoBehaviour
                 isIn = true;
                 triggered = true;
                 entering.Play();
-                Debug.Log("spawn trigger");
+                //Debug.Log("spawn trigger");
             }
             // Otherwise, retriggering is not an issue
             else if (entering != exiting)
