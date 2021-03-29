@@ -1,35 +1,29 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
+/// <summary>Maintains the outline width of things with outlines in the editor.</summary>
+[ExecuteInEditMode]
 public class MaintainOutlineWidth : MonoBehaviour
 {
+    // Non outline part of the thing.
     [SerializeField] private Transform body = null;
+    // Outline of the thing.
     [SerializeField] private Transform outline = null;
-    [SerializeField] private float outlineWidth = 0.2f;
+    // Thickness of the outline.
+    [SerializeField] [Min(0)] private float outlineWidth = 0.2f;
 
-    // Start is called before the first frame update
-    private void Start()
+
+    // Called when something is changed in the editor.
+    private void Update()
     {
-        Vector3 bodyTotalScale = GetTotalScale(body);
-        Vector3 outlineTotalScale = GetTotalScale(outline);
+        SetGlobalScale(body, outline.lossyScale - new Vector3(outlineWidth, outlineWidth, outlineWidth));
     }
 
-    private Vector3 GetTotalScale(Transform startTrans)
+    /// <summary>Sets the global scale of the given transform to the given scale.</summary>
+    /// <param name="transform">Transform to set scale of.</param>
+    /// <param name="globalScale">Global scale to set transform to.</param>
+    public void SetGlobalScale(Transform transform, Vector3 globalScale)
     {
-        Vector3 totalScale = outline.localScale;
-        Transform nextParent = body.parent;
-        while (nextParent != null)
-        {
-            totalScale = Vector3.Scale(totalScale, nextParent.localScale);
-            nextParent = nextParent.parent;
-        }
-        return totalScale;
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
+        transform.localScale = Vector3.one;
+        transform.localScale = new Vector3(globalScale.x / transform.lossyScale.x, globalScale.y / transform.lossyScale.y, globalScale.z / transform.lossyScale.z);
     }
 }
