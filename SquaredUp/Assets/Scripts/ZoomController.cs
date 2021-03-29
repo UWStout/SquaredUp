@@ -64,6 +64,7 @@ public class ZoomController : MonoBehaviour
     /// <summary>Toggles if the camera is zoomed in or out.</summary>
     private void ToggleZoom()
     {
+        zoomAudioSource.Play();
         // Zoom out if we are zoomed in
         if (areZoomedIn)
         {

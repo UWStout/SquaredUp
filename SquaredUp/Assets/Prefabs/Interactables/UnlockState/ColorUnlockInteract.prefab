@@ -1,5 +1,20 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!114 &1206071910979384238
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3750216638967123589}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e360a3bb28bcd454c9c91a9e59118151, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  randomOrder: 1
+  waitTime: 0.2
+  shapeTypes: 000000000100000002000000
 --- !u!114 &6060332607970903974
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -15,7 +30,7 @@ MonoBehaviour:
   targetRenderers:
   - {fileID: 2168291498461942416}
   - {fileID: 2168291497572098690}
-  changeSpeed: 6
+  changeSpeed: 2
 --- !u!58 &6060332608473651063
 CircleCollider2D:
   m_ObjectHideFlags: 0
