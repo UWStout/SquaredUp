@@ -167,11 +167,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1 &430586487 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 6257086275078037475, guid: 699c614f6a1e7e64a963556354ee38c3, type: 3}
-  m_PrefabInstance: {fileID: 1971389683}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &1272231698
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -3183,6 +3178,11 @@ Tilemap:
     e31: 0
     e32: 0
     e33: 1
+--- !u!1 &1720572824 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 6257086274663262141, guid: 699c614f6a1e7e64a963556354ee38c3, type: 3}
+  m_PrefabInstance: {fileID: 1971389683}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1727380677
 GameObject:
   m_ObjectHideFlags: 0
@@ -3196,6 +3196,7 @@ GameObject:
   - component: {fileID: 1727380680}
   - component: {fileID: 1727380679}
   - component: {fileID: 1727380678}
+  - component: {fileID: 1727380683}
   m_Layer: 0
   m_Name: NPCGaurd
   m_TagString: Untagged
@@ -3256,12 +3257,12 @@ CircleCollider2D:
   m_Enabled: 1
   m_Density: 1
   m_Material: {fileID: 0}
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: 0}
   serializedVersion: 2
-  m_Radius: 0.5
+  m_Radius: 0.59
 --- !u!212 &1727380681
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -3328,6 +3329,21 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1727380683
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1727380677}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 03db969d466990f46896399decfab151, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Player: {fileID: 1720572824}
+  prisonX: -10
+  prisonY: 1
 --- !u!1 &1818627189
 GameObject:
   m_ObjectHideFlags: 0
@@ -3448,7 +3464,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 03db969d466990f46896399decfab151, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Player: {fileID: 430586487}
+  Player: {fileID: 1720572824}
   prisonX: -10
   prisonY: 1
 --- !u!1001 &1971389683
@@ -3458,6 +3474,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 6257086274663262141, guid: 699c614f6a1e7e64a963556354ee38c3, type: 3}
+      propertyPath: m_TagString
+      value: Player
+      objectReference: {fileID: 0}
     - target: {fileID: 6257086275078037472, guid: 699c614f6a1e7e64a963556354ee38c3, type: 3}
       propertyPath: m_LocalPosition.x
       value: 2.18
