@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 13312, guid: 0000000000000000e000000000000000, type: 0}
   m_Name: RoyalFloor
   m_EditorClassIdentifier: 
-  m_Sprite: {fileID: 21300000, guid: d2f49d4b83f433a41babbfce28e32243, type: 3}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_Sprite: {fileID: 21300000, guid: 5506f1ad5954e7f44bbc0b574482a7a7, type: 3}
+  m_Color: {r: 0.7647059, g: 0.52333844, b: 0.5207647, a: 1}
   m_Transform:
     e00: 1
     e01: 0
