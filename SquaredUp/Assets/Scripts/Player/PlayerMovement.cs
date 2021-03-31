@@ -27,10 +27,8 @@ public class PlayerMovement : MonoBehaviour
 
     // If the player is allowed to move
     private bool allowMove;
-
     private Vector3 moveVel = Vector3.zero;
-
-
+    
     // Called 0th
     // Set references
     private void Awake()
@@ -59,16 +57,16 @@ public class PlayerMovement : MonoBehaviour
         // you continue moving in whatever direction you push off the other thing of
         if (allowMove)
         {
-            rb.velocity = moveVel;
+           rb.velocity = moveVel;
         }
     }
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        //rb.velocity = new Vector3(Mathf.Round(rb.velocity.x), Mathf.Round(rb.velocity.y));
+       rb.velocity = new Vector2(Mathf.Round(rb.velocity.x), Mathf.Round(rb.velocity.y));
     }
     private void OnCollisionStay2D(Collision2D collision)
     {
-        rb.velocity = moveVel;
+      rb.velocity = moveVel;
     }
 
     /* This was an attempt to make you not get stuck on stuff as much
