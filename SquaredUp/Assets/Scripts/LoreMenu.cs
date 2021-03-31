@@ -10,6 +10,7 @@ public class LoreMenu : MonoBehaviour
     [SerializeField] private Canvas loreCanvas; // Canvas on which the lore and menu is displayed
     [SerializeField] private LoreTextPickup[] texts = new LoreTextPickup[3];
     [SerializeField] private UnityEngine.UI.Button[] loreButtons = new UnityEngine.UI.Button[3];
+    [SerializeField] private TextMeshProUGUI[] textBoxes = new TextMeshProUGUI[3];
 
     private void Update()
     {
@@ -37,6 +38,10 @@ public class LoreMenu : MonoBehaviour
         // If the lore menu is up and escape is pressed, disable the Canvas and renable player movement
         if(loreCanvas.enabled && Input.GetKeyDown(KeyCode.Backspace))
         {
+            for(int i=0; i<texts.Length; ++i)
+            {
+                textBoxes[i].gameObject.SetActive(false);
+            }
             loreCanvas.gameObject.SetActive(false);
             movement.AllowMovement(true);
         }

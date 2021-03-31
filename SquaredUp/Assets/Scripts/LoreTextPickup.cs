@@ -46,4 +46,9 @@ public class LoreTextPickup : MonoBehaviour
         return this.isCollected;
     }
 
+    public TextMeshProUGUI GetTextBox()
+    {
+        return this.textBox;
+    }
+
 }
