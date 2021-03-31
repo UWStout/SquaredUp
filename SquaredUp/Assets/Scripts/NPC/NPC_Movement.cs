@@ -60,22 +60,22 @@ public class NPC_Movement : MonoBehaviour
             switch (walkDirection)
             {
                 case 0:
-                    Vision.transform.localPosition = new Vector2(0, 2);
+                    Vision.transform.localPosition = new Vector2(0, 4);
                     Vision.transform.rotation = Quaternion.Euler(0,0,180);
                     NPCRigidBody.velocity = new Vector2(0, walkingSpeed);
                     break;
                 case 1:
-                    Vision.transform.localPosition = new Vector2(2, 0);
+                    Vision.transform.localPosition = new Vector2(4, 0);
                     Vision.transform.rotation = Quaternion.Euler(0, 0, 90);
                     NPCRigidBody.velocity = new Vector2(walkingSpeed, 0);
                     break;
                 case 2:
-                    Vision.transform.localPosition = new Vector2(0, -2);
+                    Vision.transform.localPosition = new Vector2(0, -4);
                     Vision.transform.rotation = Quaternion.Euler(0, 0, 0);
                     NPCRigidBody.velocity = new Vector2(0, -walkingSpeed);
                     break;
                 case 3:
-                    Vision.transform.localPosition = new Vector2(-2, 0);
+                    Vision.transform.localPosition = new Vector2(-4, 0);
                     Vision.transform.rotation = Quaternion.Euler(0, 0, 270);
                     NPCRigidBody.velocity = new Vector2(-walkingSpeed, 0);
                     break;
