@@ -29,8 +29,8 @@ TagManager:
   - RedWallCheck
   - BlueWallCheck
   - PuzzleDoorLayer
-  - 
-  - 
+  - PrisonCheck
+  - PrisonGuard
   - 
   - 
   - 
