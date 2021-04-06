@@ -8,25 +8,15 @@ public class ChangeShapeSkill : SkillBase<ShapeData>
     [SerializeField] private ChangeFormController changeFormCont = null;
     // Refernce to the player movement script
     [SerializeField] private PlayerMovement playerMoveRef = null;
-    // SFX for shape transformation
-    [SerializeField] private AudioSource transformShapeSound;
     // Mesh transitioner to change the meshes shapes
     [SerializeField] private BlendTransitioner meshTransitioner = null;
 
-    // Where the player is currently facing
-    private Vector2Int currentFacing = Vector2Int.up;
     // Current state
     private int curAttemptedStateIndex;
     // Current shape
     private ShapeData.ShapeType curShape = ShapeData.ShapeType.BOX;
 
 
-    // Called 1st
-    // Initialize
-    private void Start()
-    {
-        currentFacing = playerMoveRef.GetFacingDirection(); 
-    }
     // Called when this is enabled
     // Subscribe to event
     private void OnEnable()
@@ -62,18 +52,12 @@ public class ChangeShapeSkill : SkillBase<ShapeData>
     private void OnAvailableSpotFound()
     {
         ShapeData data = SkillData.GetData(curAttemptedStateIndex);
-        Vector2Int newFacing = playerMoveRef.GetFacingDirection();
-        newFacing = new Vector2Int(Mathf.Abs(newFacing.x), Mathf.Abs(newFacing.y));
 
-        if ((currentFacing != newFacing && data.DirectionAffectsScale) || !IsCurrentState(curAttemptedStateIndex))
+        // If the direction affects how the shape scales or we are swapping to a new state
+        if (data.DirectionAffectsScale || !IsCurrentState(curAttemptedStateIndex))
         {
             // Update the state
             UpdateCurrentState(curAttemptedStateIndex);
-            // Play sound
-            transformShapeSound.Play();
-
-            // Update the player's facing direction
-            currentFacing = playerMoveRef.GetFacingDirection();
 
             // Start changing shape if we need to
             if (data.TypeOfShape != curShape)

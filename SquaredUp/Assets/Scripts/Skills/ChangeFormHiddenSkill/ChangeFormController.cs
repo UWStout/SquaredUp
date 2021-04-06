@@ -16,6 +16,8 @@ public class ChangeFormController : MonoBehaviour
     [SerializeField] private Transform playerMoveTrans = null;
     // Reference tot he test collider script for checking for walls in the way
     [SerializeField] private TestCollider colliderTest = null;
+    // SFX for size transformation
+    [SerializeField] private AudioSource transformSizeSound;
 
     // Coroutine variables for how fast to change the shape and when we are close enough
     [SerializeField] [Min(0.0001f)] private float changeSpeed = 1f;
@@ -32,14 +34,8 @@ public class ChangeFormController : MonoBehaviour
         set {
             wasShapeChanged = curShapeData != value;
             curShapeData = value;
-            if (wasShapeChanged)
-            {
-                shapeWasChangedTo = false;
-            }
         }
     }
-    // If the current shape data has actually been applied
-    private bool shapeWasChangedTo = true;
 
     // If the size data has been changed since last time
     private bool wasSizeChanged = false;
@@ -49,14 +45,8 @@ public class ChangeFormController : MonoBehaviour
         set {
             wasSizeChanged = curSizeData != value;
             curSizeData = value;
-            if (wasSizeChanged)
-            {
-                sizeWasChangedTo = false;
-            }
         }
     }
-    // If the current size data has actually been applied
-    private bool sizeWasChangedTo = true;
 
     // Events
     // Event for when an available spot is found
@@ -71,13 +61,13 @@ public class ChangeFormController : MonoBehaviour
     /// Changes shape and size to be the specified size and shape</summary>
     public void ActivateFormChange()
     {
-        Vector2Int newFacing = playerMoveRef.GetFacingDirection();
-        Vector3 facingSize = GetSize(curShapeData, newFacing);
+        Vector2Int facingDir = playerMoveRef.GetFacingDirection();
+        Vector3 shapeDirectionalSize = GetSize(curShapeData, facingDir, playerScaleCont.ShapeScale, wasShapeChanged);
         // Set size using facing size and size data
-        Vector3 size = facingSize;
+        Vector3 size = shapeDirectionalSize;
         if (curSizeData != null)
         { 
-            size = facingSize * curSizeData.Size;
+            size = shapeDirectionalSize * curSizeData.Size;
         }
 
         /*
@@ -92,8 +82,8 @@ public class ChangeFormController : MonoBehaviour
 
         // Change if size or shape was changed or
         // if the shape's direction affects scale and the scale has changed
-        if ((wasSizeChanged || sizeWasChangedTo) || (wasShapeChanged || shapeWasChangedTo) ||
-            (curShapeData != null && curShapeData.DirectionAffectsScale && size != playerScaleCont.ShapeScale))
+        if (wasSizeChanged || wasShapeChanged ||
+            (curShapeData != null && size != playerScaleCont.ShapeScale))
         {
             // Swap the colliders
             // If the colliders couldn't be swapped, ergo could not fit, then do not swap the player's shape
@@ -105,30 +95,40 @@ public class ChangeFormController : MonoBehaviour
                 // Start changing form
                 StartChangeForm(size, availSpot.Position);
             }
-
-            // The size and shape were now updated
-            sizeWasChangedTo = true;
-            shapeWasChangedTo = true;
         }
     }
 
     /// <summary>Gets the size of the shape given by the data</summary>
     /// <param name="data">Shape of collider to turn into</param>
     /// <param name="playerFacingDirection">The direction the player is facing</param>
-    private Vector3 GetSize(ShapeData data, Vector2Int playerFacingDirection)
+    /// <param name="previousShapeScale">Shape of the previous shape</param>
+    /// <param name="isDifferentShape">If the shape has changed from last time</param>
+    private Vector3 GetSize(ShapeData data, Vector2Int playerFacingDirection, Vector2 previousShapeScale, bool isDifferentShape)
     {
         Vector3 size = Vector3.one;
         if (data != null)
         {
             size = data.Scale;
+            // If the direciton affects scale
             if (data.DirectionAffectsScale)
             {
-                // If facing left or right, swap x and y
-                if (playerFacingDirection.x > 0 || playerFacingDirection.x < 0)
+                // If this is the first time we are swapping to this shape,
+                // then base the player's scale on their facing direction.
+                if (isDifferentShape)
                 {
-                    float temp = size.x;
-                    size.x = size.y;
-                    size.y = temp;
+                    // If facing left or right, swap x and y
+                    if (playerFacingDirection.x != 0)
+                    {
+                        float temp = size.x;
+                        size.x = size.y;
+                        size.y = temp;
+                    }
+                }
+                // If we are just updating the current scale, just set the x and y to be opposite
+                else
+                {
+                    size.x = previousShapeScale.y;
+                    size.y = previousShapeScale.x;
                 }
             }
         }
@@ -144,6 +144,8 @@ public class ChangeFormController : MonoBehaviour
         //Debug.Log("StartChangeForm");
         // Don't let the player move while changing form
         playerMoveRef.AllowMovement(false);
+        // Play the sfx
+        transformSizeSound.Play();
 
         // If there is an ongoing coroutine, stop it
         if (!changeFormCoroutFin)

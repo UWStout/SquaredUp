@@ -6,8 +6,6 @@ public class ChangeSizeSkill : SkillBase<SizeData>
     // References
     // Controller for changing the player's form
     [SerializeField] private ChangeFormController changeFormCont = null;
-    // SFX for size transformation
-    [SerializeField] private AudioSource transformSizeSound;
 
     // Current state
     private int curAttemptedStateIndex;
@@ -48,8 +46,6 @@ public class ChangeSizeSkill : SkillBase<SizeData>
         {
             // Update the state
             UpdateCurrentState(curAttemptedStateIndex);
-            // Play sound
-            transformSizeSound.Play();
         }
     }
 }
