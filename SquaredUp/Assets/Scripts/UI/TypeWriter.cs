@@ -53,12 +53,32 @@ public class TypeWriter : MonoBehaviour
     /// <summary>Coroutine to make the letters appear slowly</summary>
     private IEnumerator TypeLineCoroutine()
     {
-        // Indiivually write each character
+        // Individually write each character
         for (int i = 0; i < currentLine.Length; ++i)
         {
             char c = currentLine[i];
-            //HandleIfNextCharacterIsSpace(c, i);
-            TypeOneLetter(c);
+            // If the next character is a space, check if the next word would make us start a new line.
+            if (c == ' ')
+            {
+                // Get the next word
+                string nextWord = GetNextWordFromCurrentLine(i);
+                // Start the next line if the word would make us start a new line
+                if (WillNextWordStartNewLine(nextWord))
+                {
+                    TypeOneLetter('\n');
+                }
+                // Otherwise, type the space normally
+                else
+                {
+                    TypeOneLetter(c);
+                }
+            }
+            // Otherwise, type the next letter normally
+            else
+            {
+                TypeOneLetter(c);
+            }
+            
             dialogue_sfx.Play();
             yield return new WaitForSeconds(delayBetweenLetters);
         }
@@ -67,34 +87,20 @@ public class TypeWriter : MonoBehaviour
         yield return null;
     }
 
-    /// <summary>If the next character is space, it checks if the next word is too long to be on the current line.
-    /// If the word is too long, it starts the next line.</summary>
-    /// <param name="c">Next character of the current line to test if its a space.</param>
-    /// <param name="index"></param>
-    private void HandleIfNextCharacterIsSpace(char c, int index)
-    {
-        if (c == ' ')
-        {
-            // Get the next word
-            string nextWord = GetNextWordFromCurrentLine(index);
-            // Start the next line if the word would make us start a new line
-            StartNextLineIfNextWordTooLong(nextWord);
-        }
-    }
-
-    /// <summary>
-    /// 
-    /// </summary>
-    /// <param name="startIndex"></param>
-    /// <returns></returns>
+    /// <summary>Gets the next word after the start index from the current line.
+    /// Only works if the index is the index of the first letter of the next word or a space.</summary>
+    /// <param name="startIndex">Pulls the first word after this index.</param>
+    /// <returns>string. Next word from the line.</returns>
     private string GetNextWordFromCurrentLine(int startIndex)
     {
         string rtnStr = "";
         int curIndex = startIndex;
+        // Skip over any spaces at the start
         while (curIndex < currentLine.Length && currentLine[curIndex] == ' ')
         {
             ++curIndex;
         }
+        // Append the characters until we reach a spaces
         while (curIndex < currentLine.Length && currentLine[curIndex] != ' ')
         {
             rtnStr += currentLine[curIndex];
@@ -103,14 +109,24 @@ public class TypeWriter : MonoBehaviour
         return rtnStr;
     }
 
-    private void StartNextLineIfNextWordTooLong(string nextWord)
+    /// <summary>Returns true if the given word will cause a new line to start. False otherwise.</summary>
+    /// <param name="nextWord">Next word that might cause a new line to start.</param>
+    /// <returns>bool - True if the next word will cause a new line. False otherwise.</returns>
+    private bool WillNextWordStartNewLine(string nextWord)
     {
+        // Get the amount of lines and text before we add anything to it
+        int startLineAmount = typeText.textInfo.lineCount;
         string curText = typeText.text;
-        typeText.text = nextWord;
-        if (typeText.bounds.size.x > maxSentenceSize)
-        {
-            typeText.text = curText + "\n";
-        }
+        // Add the next word to the text (and a w for good measure)
+        typeText.text += nextWord + "w";
+        // Force the mesh update to reflect the word append in the line count
+        typeText.ForceMeshUpdate();
+        int newLineAmount = typeText.textInfo.lineCount;
+        // Reset the text to what it was before
+        typeText.text = curText;
+
+        // If a new line was created to hold the new word, return true
+        return newLineAmount > startLineAmount;
     }
 
     /// <summary>Appends the given letter to the text</summary>
