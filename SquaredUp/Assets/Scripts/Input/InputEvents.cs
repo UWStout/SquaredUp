@@ -84,6 +84,24 @@ public class InputEvents : MonoBehaviour
         UnpauseEvent?.Invoke();
     }
 
+    // PauseGame
+    public delegate void PauseGame();
+    public static event PauseGame PauseGameEvent;
+    private void OnPauseGame()
+    {
+        //Debug.Log("OnPauseGame");
+        PauseGameEvent?.Invoke();
+    }
+
+    public delegate void UnpauseGame();
+    public static event UnpauseGame UnpauseGameEvent;
+    private void OnUnpauseGame()
+    {
+        //Debug.Log("OnPauseGame");
+        UnpauseGameEvent?.Invoke();
+    }
+
+
     // MainAxis
     public delegate void MainAxis(Vector2 rawMainAxis);
     public static event MainAxis MainAxisEvent;
