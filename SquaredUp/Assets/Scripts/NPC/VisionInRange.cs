@@ -6,16 +6,16 @@ public class VisionInRange : MonoBehaviour
 {
 
     public GameObject player;
-    public GameObject playerMovementReset;
-    public float prisonX;
-    public float prisonY;
+    // public GameObject playerMovementReset;
+
+    [SerializeField] private Transform jailCellLocation;
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
        
         Debug.Log("change");
-        playerMovementReset.transform.localPosition = new Vector2(0, 0);
-        player.transform.position = new Vector2(prisonX, prisonY);
+        // playerMovementReset.transform.localPosition = new Vector2(0, 0);
+        player.transform.position = jailCellLocation.position;
         
     }
 }
