@@ -1,33 +1,93 @@
 ﻿using System.Collections;
 using UnityEngine;
-[RequireComponent(typeof(TileMovement))]
+
+// For Player Movement
+[RequireComponent(typeof(Rigidbody2D))]
 public class PlayerMovement : MonoBehaviour
 {
+    // Constants
+    private const int MOVE_INCREMENT_AMOUNT = 4;
+
     // References
     // Reference to the pivot of the player's eyes.
     [SerializeField] private Transform eyePivot = null;
+    // Reference to the player's rigibbody.
+    private Rigidbody2D rb = null;
+
+    // Speed of the player.
+    [SerializeField] [Min(0.01f)] private float speed = 1f;
+
     // Smooths rotation/turn speed of eyes.
     [SerializeField] private float turnSmoothTime = 0.1f;
     private float turnSmoothVelocity = 0f;
-    // Reference for TileMovement
-    private TileMovement tm;
+
     // Variables for the MoveEyes coroutine
     private bool eyeCoroutineActive = false;
     private float targetAngle = 0;
-    // Input from player
-    private Vector2 inputDirection;
 
+    // If the player is allowed to move
+    private bool allowMove;
+    private Vector3 moveVel = Vector3.zero;
+    
     // Called 0th
     // Set references
-
     private void Awake()
     {
-        tm = GetComponent<TileMovement>();
+        rb = GetComponent<Rigidbody2D>();
     }
-    private void GetMovement(Vector2 Input)
+
+    // Called when the script is enabled.
+    // Subscribe to events.
+    private void OnEnable()
+    {
+        // Sub to Movement
+        AllowMovement(true);
+    }
+    // Called when the script is disabled.
+    // Unsubscribe from events.
+    private void OnDisable()
+    {
+        // Unsub from Movement
+        AllowMovement(false);
+    }
+
+    private void OnCollisionExit2D(Collision2D collision)
+    {
+        // This fixes a bug where if you hold down the movement keys
+        // you continue moving in whatever direction you push off the other thing of
+        if (allowMove)
+        {
+           rb.velocity = moveVel;
+        }
+    }
+    private void OnCollisionEnter2D(Collision2D collision)
+    {
+       rb.velocity = new Vector2(Mathf.Round(rb.velocity.x), Mathf.Round(rb.velocity.y));
+    }
+    private void OnCollisionStay2D(Collision2D collision)
+    {
+      rb.velocity = moveVel;
+    }
+
+    /* This was an attempt to make you not get stuck on stuff as much
+    private void FixedUpdate()
+    {
+        transform.position = CastPositionToIncrement(transform.position);
+    }
+    private Vector3 CastPositionToIncrement(Vector3 position)
+    {
+        float x = Mathf.Round(position.x * MOVE_INCREMENT_AMOUNT) / MOVE_INCREMENT_AMOUNT;
+        float y = Mathf.Round(position.y * MOVE_INCREMENT_AMOUNT) / MOVE_INCREMENT_AMOUNT;
+        return new Vector3(x, y);
+    }
+    */
+
+
+    // Called when the player inputs movement.
+    public void OnMovement(Vector2 rawInputVector)
     {
         // Check for input
-        Vector2 direction = Input.normalized;
+        Vector2 direction = rawInputVector.normalized;
         if (direction.magnitude != 0)
         {
             targetAngle = Mathf.Atan2(-direction.x, direction.y) * Mathf.Rad2Deg;
@@ -36,38 +96,18 @@ public class PlayerMovement : MonoBehaviour
             {
                 StartCoroutine(MoveEyes());
             }
+
+            // Movement
+            moveVel = direction * Mathf.Round(speed);
         }
-        inputDirection = direction;
-        if(inputDirection.x != 0)
+        else
         {
-            inputDirection.y = 0;
+            // Cancel out rigidbody velocity if there is no movement, because the physics system hates player controllers.
+            moveVel = Vector3.zero;
         }
-        HandlePlayerMovement();
-        
-    }
-    // Called when the script is enabled.
-    // Subscribe to events.
-    private void OnEnable()
-    {  
-        InputEvents.MovementEvent += GetMovement;
-    }
-    
-    // Called when the script is disabled.
-    // Unsubscribe from events.
-    private void OnDisable()
-    {
-        InputEvents.MovementEvent -= GetMovement;
+        rb.velocity = moveVel;
     }
 
-    private void HandlePlayerMovement()
-    {
-        tm.SetProjectedDirection(inputDirection);
-    }
-
-    public void AllowMovement(bool shouldAllow)
-    {
-        tm.AllowMovement(shouldAllow);
-    }
 
     /// <summary>
     /// Coroutine to rotate the eyes to which direction the player is moving.
@@ -92,7 +132,27 @@ public class PlayerMovement : MonoBehaviour
 
     /// <summary>Lets the player move if given true. Keeps the player from moving if given false.
     /// Subscribes and unsubscribes the movement function from the Movement Input Event</summary>
-   
+    public void AllowMovement(bool shouldAllow)
+    {
+        if (shouldAllow)
+        {
+            if (allowMove == false)
+            {
+                InputEvents.MovementEvent += OnMovement;
+                allowMove = true;
+            }
+        }
+        else
+        {
+            if (allowMove)
+            {
+                InputEvents.MovementEvent -= OnMovement;
+                allowMove = false;
+            }
+        }
+        // Clear velocity to be safe
+        rb.velocity = Vector2.zero;
+    }
 
     /// <summary>Returns the facing direction of the player</summary>
     public Vector2Int GetFacingDirection()
