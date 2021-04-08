@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: RoyalFloor
   m_EditorClassIdentifier: 
   m_Sprite: {fileID: 21300000, guid: 5506f1ad5954e7f44bbc0b574482a7a7, type: 3}
-  m_Color: {r: 0.7647059, g: 0.52333844, b: 0.5207647, a: 1}
+  m_Color: {r: 0.6509434, g: 0.58646315, b: 0.58646315, a: 1}
   m_Transform:
     e00: 1
     e01: 0
