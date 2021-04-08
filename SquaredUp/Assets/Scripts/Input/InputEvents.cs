@@ -66,22 +66,22 @@ public class InputEvents : MonoBehaviour
         AdvanceDialogueEvent?.Invoke();
     }
 
-    // Pause
-    public delegate void Pause();
-    public static event Pause PauseEvent;
-    private void OnPause()
+    // OpenSkillMenu
+    public delegate void OpenSkillMenu();
+    public static event OpenSkillMenu OpenSkillMenuEvent;
+    private void OnOpenSkillMenu()
     {
-        //Debug.Log("OnPause");
-        PauseEvent?.Invoke();
+        //Debug.Log("OnOpenSkillMenu");
+        OpenSkillMenuEvent?.Invoke();
     }
 
-    // Unpause
-    public delegate void Unpause();
-    public static event Unpause UnpauseEvent;
-    private void OnUnpause()
+    // CloseSkillMenu
+    public delegate void CloseSkillMenu();
+    public static event CloseSkillMenu CloseSkillMenuEvent;
+    private void OnCloseSkillMenu()
     {
-        //Debug.Log("OnUnpause");
-        UnpauseEvent?.Invoke();
+        //Debug.Log("OnCloseSkillMenu");
+        CloseSkillMenuEvent?.Invoke();
     }
 
     // PauseGame

@@ -30,7 +30,7 @@
                     "interactions": ""
                 },
                 {
-                    "name": "Pause",
+                    "name": "OpenSkillMenu",
                     "type": "Button",
                     "id": "7e453076-e923-4981-89fe-f69f97213016",
                     "expectedControlType": "Button",
@@ -147,7 +147,7 @@
                     "interactions": "",
                     "processors": "",
                     "groups": "",
-                    "action": "Pause",
+                    "action": "OpenSkillMenu",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },
@@ -225,11 +225,11 @@
             ]
         },
         {
-            "name": "Pause",
+            "name": "SkillMenu",
             "id": "2d8a5a1d-c047-4a5a-b32b-461aed72a298",
             "actions": [
                 {
-                    "name": "Unpause",
+                    "name": "CloseSkillMenu",
                     "type": "Button",
                     "id": "27071d54-0b88-43b2-adfb-22f0a4ccdf8d",
                     "expectedControlType": "Button",
@@ -269,7 +269,7 @@
                     "interactions": "Press",
                     "processors": "",
                     "groups": "",
-                    "action": "Unpause",
+                    "action": "CloseSkillMenu",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },

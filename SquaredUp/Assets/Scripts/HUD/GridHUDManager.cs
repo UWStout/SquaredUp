@@ -34,8 +34,8 @@ public class GridHUDManager : MonoBehaviour
     private void OnEnable()
     {
         // Open HUD when the game pauses and close it when it opens
-        PauseController.GamePauseEvent += OpenHUD;
-        PauseController.GameUnpauseEvent += CloseHUD;
+        SkillMenuController.OpenSkillMenuEvent += OpenHUD;
+        SkillMenuController.CloseSkillMenuEvent += CloseHUD;
         // Navigate menu
         InputEvents.MainAxisEvent += OnHUDAxis;
         InputEvents.RevertEvent += OnRevert;
@@ -47,8 +47,8 @@ public class GridHUDManager : MonoBehaviour
     // Unsubscribe from events.
     private void OnDisable()
     {
-        PauseController.GamePauseEvent -= OpenHUD;
-        PauseController.GameUnpauseEvent -= CloseHUD;
+        SkillMenuController.OpenSkillMenuEvent -= OpenHUD;
+        SkillMenuController.CloseSkillMenuEvent -= CloseHUD;
         InputEvents.MainAxisEvent -= OnHUDAxis;
         InputEvents.HackerAxisEvent -= OnHackerAxis;
         InputEvents.RevertEvent -= OnRevert;

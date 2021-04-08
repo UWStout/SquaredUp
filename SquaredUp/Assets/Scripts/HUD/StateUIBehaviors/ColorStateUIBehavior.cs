@@ -19,14 +19,14 @@ public class ColorStateUIBehavior : StateUIBehavior
     private void OnEnable()
     {
         InputEvents.MainAxisEvent += UpdateShapeImageVector2;
-        InputEvents.PauseEvent += UpdateShapeImage;
+        InputEvents.OpenSkillMenuEvent += UpdateShapeImage;
     }
     // Called when this component is disabled.
     // Unsubscribe from events.
     private void OnDisable()
     {
         InputEvents.MainAxisEvent -= UpdateShapeImageVector2;
-        InputEvents.PauseEvent -= UpdateShapeImage;
+        InputEvents.OpenSkillMenuEvent -= UpdateShapeImage;
     }
 
     // Called 0th.
