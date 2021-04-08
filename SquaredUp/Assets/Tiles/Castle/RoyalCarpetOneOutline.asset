@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: RoyalCarpetOneOutline
   m_EditorClassIdentifier: 
   m_Sprite: {fileID: 21300000, guid: be592a8070a4628459d2ffb69557ace4, type: 3}
-  m_Color: {r: 0.754717, g: 0.09611962, b: 0.09611962, a: 1}
+  m_Color: {r: 0.754717, g: 0.08899963, b: 0.08899963, a: 1}
   m_Transform:
     e00: 1
     e01: 0
