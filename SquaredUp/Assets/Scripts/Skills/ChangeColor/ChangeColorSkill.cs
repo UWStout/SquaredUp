@@ -9,6 +9,8 @@ public class ChangeColorSkill : SkillBase<ColorData>
     // References
     // Reference to the mesh renderer whose material will be changed
     [SerializeField] private SkinnedMeshRenderer playerMeshRendRef = null;
+    // Reference to the sprite whose color will be changed as well
+    [SerializeField] private SpriteRenderer playerPointerSprRef = null;
     // Reference to the color check script
     [SerializeField] private PlayerInColorCheck playerColorCheckRef = null;
 
@@ -110,6 +112,7 @@ public class ChangeColorSkill : SkillBase<ColorData>
         {
             // Lerp albedo color
             dupMat.color = Color.Lerp(startCol, targetMat.color, t);
+            playerPointerSprRef.color = dupMat.color;
 
             // Step
             t += changeSpeed * Time.deltaTime;
@@ -117,6 +120,7 @@ public class ChangeColorSkill : SkillBase<ColorData>
             yield return null;
         }
         playerMeshRendRef.material = targetMat;
+        playerPointerSprRef.color = targetMat.color;
 
         // Do away with the temp mat
         Destroy(dupMat);
