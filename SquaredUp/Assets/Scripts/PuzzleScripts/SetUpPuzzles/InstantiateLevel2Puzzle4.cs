@@ -40,7 +40,7 @@ public class InstantiateLevel2Puzzle4 : MonoBehaviour
             //instantiate
             GameObject temp = Instantiate(doorPrefab, UPI.prefabLoc, Quaternion.Euler(0, 0, UPI.prefabRot));
             //scale
-            temp.transform.localScale = UPI.prefabScale;
+            temp.transform.localScale = new Vector3(UPI.prefabScale.x, UPI.prefabScale.y, 1);
             //parent the object
             temp.transform.parent = puzzleTwoDoors.transform;
         }
@@ -51,7 +51,7 @@ public class InstantiateLevel2Puzzle4 : MonoBehaviour
             //instantiate
             GameObject temp = Instantiate(doorControllerPrefab, UPI.prefabLoc, Quaternion.Euler(0, 0, UPI.prefabRot));
             //scale
-            temp.transform.localScale = UPI.prefabScale;
+            temp.transform.localScale = new Vector3(UPI.prefabScale.x, UPI.prefabScale.y, 1);
             //parent the object
             temp.transform.parent = puzzleTwoControllers.transform;
         }
@@ -79,7 +79,7 @@ public class InstantiateLevel2Puzzle4 : MonoBehaviour
             //instantiate
             GameObject temp = Instantiate(tilemapControllerPrefab, UPI.prefabLoc, Quaternion.Euler(0, 0, UPI.prefabRot));
             //scale
-            temp.transform.localScale = UPI.prefabScale;
+            temp.transform.localScale = new Vector3(UPI.prefabScale.x, UPI.prefabScale.y, 1);
             //parent the object
             temp.transform.parent = puzzleTwoTilemapControllers.transform;
 
@@ -105,7 +105,7 @@ public class InstantiateLevel2Puzzle4 : MonoBehaviour
             //instantiate
             GameObject temp = Instantiate(colorChangerPrefab, UPI.prefabLoc, Quaternion.Euler(0, 0, UPI.prefabRot));
             //scale
-            temp.transform.localScale = UPI.prefabScale;
+            temp.transform.localScale = new Vector3(UPI.prefabScale.x, UPI.prefabScale.y, 1);
             //parent the object
             temp.transform.parent = puzzleTwoColorChanger.transform;
 
