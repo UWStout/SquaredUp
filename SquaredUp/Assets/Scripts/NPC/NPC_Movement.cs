@@ -28,6 +28,8 @@ public class NPC_Movement : MonoBehaviour
 
     public GameObject Vision;
 
+    bool gaurdStop = false;
+
     void Start()
     {
         NPCRigidBody = GetComponent<Rigidbody2D>();
@@ -53,62 +55,72 @@ public class NPC_Movement : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-
-        if (isWalking)
-        {
-            walkingCounter -= Time.deltaTime;
-            switch (walkDirection)
+        if (!gaurdStop) {
+            if (isWalking)
             {
-                case 0:
-                    Vision.transform.localPosition = new Vector2(0, 4);
-                    Vision.transform.rotation = Quaternion.Euler(0,0,180);
-                    NPCRigidBody.velocity = new Vector2(0, walkingSpeed);
-                    break;
-                case 1:
-                    Vision.transform.localPosition = new Vector2(4, 0);
-                    Vision.transform.rotation = Quaternion.Euler(0, 0, 90);
-                    NPCRigidBody.velocity = new Vector2(walkingSpeed, 0);
-                    break;
-                case 2:
-                    Vision.transform.localPosition = new Vector2(0, -4);
-                    Vision.transform.rotation = Quaternion.Euler(0, 0, 0);
-                    NPCRigidBody.velocity = new Vector2(0, -walkingSpeed);
-                    break;
-                case 3:
-                    Vision.transform.localPosition = new Vector2(-4, 0);
-                    Vision.transform.rotation = Quaternion.Euler(0, 0, 270);
-                    NPCRigidBody.velocity = new Vector2(-walkingSpeed, 0);
-                    break;
-            }
-            if (walkingCounter < 0)
-            {
-                isWalking = false;
-                stopCounter = stopTime;
-                numSpot++;
-                //Debug.Log(numSpot);
-            }
-        }
-        else
-        {
-
-            stopCounter -= Time.deltaTime;
-
-            NPCRigidBody.velocity = Vector2.zero;
-
-            if (stopCounter < 0)
-            {
-                if (numSpot > route.Length - 1)
+                walkingCounter -= Time.deltaTime;
+                switch (walkDirection)
                 {
-                    numSpot = 0;
+                    case 0:
+                        Vision.transform.localPosition = new Vector2(0, 4);
+                        Vision.transform.rotation = Quaternion.Euler(0, 0, 180);
+                        NPCRigidBody.velocity = new Vector2(0, walkingSpeed);
+                        break;
+                    case 1:
+                        Vision.transform.localPosition = new Vector2(4, 0);
+                        Vision.transform.rotation = Quaternion.Euler(0, 0, 90);
+                        NPCRigidBody.velocity = new Vector2(walkingSpeed, 0);
+                        break;
+                    case 2:
+                        Vision.transform.localPosition = new Vector2(0, -4);
+                        Vision.transform.rotation = Quaternion.Euler(0, 0, 0);
+                        NPCRigidBody.velocity = new Vector2(0, -walkingSpeed);
+                        break;
+                    case 3:
+                        Vision.transform.localPosition = new Vector2(-4, 0);
+                        Vision.transform.rotation = Quaternion.Euler(0, 0, 270);
+                        NPCRigidBody.velocity = new Vector2(-walkingSpeed, 0);
+                        break;
                 }
-                walkDirection = route[numSpot];
-                isWalking = true;
-                walkingCounter = movementList[numSpot];
-                
+                if (walkingCounter < 0)
+                {
+                    isWalking = false;
+                    stopCounter = stopTime;
+                    numSpot++;
+                    //Debug.Log(numSpot);
+                }
+            }
+            else
+            {
+
+                stopCounter -= Time.deltaTime;
+
+                NPCRigidBody.velocity = Vector2.zero;
+
+                if (stopCounter < 0)
+                {
+                    if (numSpot > route.Length - 1)
+                    {
+                        numSpot = 0;
+                    }
+                    walkDirection = route[numSpot];
+                    isWalking = true;
+                    walkingCounter = movementList[numSpot];
+
+                }
             }
         }
 
     } 
+
+    public void AllowMove(bool allow)
+    {
+        gaurdStop = !allow;
+        if (gaurdStop)
+        {
+            NPCRigidBody.velocity = Vector2.zero;
+        }
+    }
 
     private void ExpandPathList(int[] input, int[] output)
     {
