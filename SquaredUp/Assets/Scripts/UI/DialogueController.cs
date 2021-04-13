@@ -1,5 +1,4 @@
 ﻿using UnityEngine;
-using UnityEngine.InputSystem;
 
 /// <summary>Manages the dialogue box and typewriter</summary>
 public class DialogueController : MonoBehaviour
@@ -8,13 +7,9 @@ public class DialogueController : MonoBehaviour
     private static DialogueController instance;
     public static DialogueController Instance { get { return instance; } }
 
-    // Input References
-    // Reference to the player input
-    private PlayerInput playerInputRef = null;
+
     // Name of the dialogue action map in player input
     [SerializeField] private string dialogueActionMapName = "Dialogue";
-    // Name of the player action map in player input
-    [SerializeField] private string playerActionMapName = "Player";
 
     // UI References
     // Object that shows the textbox when active
@@ -45,12 +40,6 @@ public class DialogueController : MonoBehaviour
             Debug.LogError("Cannot have multiple DialogueControllers");
             Destroy(this);
         }
-
-        playerInputRef = FindObjectOfType<PlayerInput>();
-        if (playerInputRef == null)
-        {
-            Debug.LogError("DialogueController could not find PlayerInput");
-        }
     }
 
     // Called when the script is enabled.
@@ -72,7 +61,7 @@ public class DialogueController : MonoBehaviour
     public void StartDialogue(string[] lines)
     {
         // Swap input map
-        playerInputRef.SwitchCurrentActionMap(dialogueActionMapName);
+        InputController.Instance.SwitchInputMap(dialogueActionMapName);
         // Show text box
         uiComponent.SetActive(true);
         // Initialization
@@ -129,6 +118,6 @@ public class DialogueController : MonoBehaviour
         // Hide text box
         uiComponent.SetActive(false);
         // Swap input map back
-        playerInputRef.SwitchCurrentActionMap(playerActionMapName);
+        InputController.Instance.PopInputMap(dialogueActionMapName);
     }
 }

@@ -1,6 +1,5 @@
 ﻿using System.Collections;
 using UnityEngine;
-using UnityEngine.InputSystem;
 
 /// <summary>Skill that zooms the camera in</summary>
 public class ZoomController : MonoBehaviour
@@ -8,12 +7,9 @@ public class ZoomController : MonoBehaviour
     // SFX for zoom ability
     [SerializeField] private AudioSource zoomAudioSource = null;
 
-    // Reference to the PlayerInput to swap maps
-    [SerializeField] private PlayerInput playerInp = null;
     // Name of the zoomed out action map in player input
     [SerializeField] private string zoomActionMapName = "ZoomedOut";
-    // Name of the player action map in player input
-    [SerializeField] private string playerActionMapName = "Player";
+
     // Reference to camera whose orthographic size to change.
     private Camera zoomCam = null;
 
@@ -83,7 +79,7 @@ public class ZoomController : MonoBehaviour
     private void ZoomIn()
     {
         // Let player move now that we are zoomed back in
-        playerInp.SwitchCurrentActionMap(playerActionMapName);
+        InputController.Instance.PopInputMap(zoomActionMapName);
         // Start coroutine to zoom in
         BeginZoom(zoomInOrthoSize);
     }
@@ -92,7 +88,7 @@ public class ZoomController : MonoBehaviour
     private void ZoomOut()
     {
         // Can't move while zoomed out
-        playerInp.SwitchCurrentActionMap(zoomActionMapName);
+        InputController.Instance.SwitchInputMap(zoomActionMapName);
         // Start coroutine to zoom out
         BeginZoom(zoomOutOrthoSize);
     }

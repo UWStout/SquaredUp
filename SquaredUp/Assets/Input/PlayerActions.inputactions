@@ -22,14 +22,6 @@
                     "interactions": ""
                 },
                 {
-                    "name": "UseAbility",
-                    "type": "Button",
-                    "id": "69b70ad9-917e-430b-ba67-eee2151627f6",
-                    "expectedControlType": "Button",
-                    "processors": "",
-                    "interactions": ""
-                },
-                {
                     "name": "OpenSkillMenu",
                     "type": "Button",
                     "id": "7e453076-e923-4981-89fe-f69f97213016",
@@ -131,17 +123,6 @@
                 },
                 {
                     "name": "",
-                    "id": "e52e3d17-ccf7-4ee8-ac3e-1f190629acf2",
-                    "path": "<Keyboard>/q",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "",
-                    "action": "UseAbility",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
                     "id": "1cef9960-a7ed-4eb2-9125-241aa25fc307",
                     "path": "<Keyboard>/p",
                     "interactions": "",
@@ -197,6 +178,30 @@
                     "expectedControlType": "Button",
                     "processors": "",
                     "interactions": ""
+                },
+                {
+                    "name": "Zoom",
+                    "type": "Button",
+                    "id": "178c7483-1816-45ce-800b-657ccf7df418",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": ""
+                },
+                {
+                    "name": "OpenSkillMenu",
+                    "type": "Button",
+                    "id": "f9e90421-1c34-4486-b833-81c94332db52",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": ""
+                },
+                {
+                    "name": "ShapeUpdate",
+                    "type": "Button",
+                    "id": "1b050cb6-ea1a-4d79-afb0-0a8f3e0c3fa0",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": ""
                 }
             ],
             "bindings": [
@@ -219,6 +224,39 @@
                     "processors": "",
                     "groups": "",
                     "action": "AdvanceDialogue",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "76e96b93-9f55-490b-81a5-1f167c042ded",
+                    "path": "<Keyboard>/f",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Zoom",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "76dc9c19-68ca-417b-adfd-7708a87750e0",
+                    "path": "<Keyboard>/p",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "OpenSkillMenu",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "38a8c148-8303-4f64-8e9d-ae1492678073",
+                    "path": "<Keyboard>/o",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "ShapeUpdate",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }
@@ -256,6 +294,14 @@
                     "name": "Revert",
                     "type": "Button",
                     "id": "cdd89a40-e869-4315-a93a-4147e5fda07c",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": ""
+                },
+                {
+                    "name": "AdvanceDialogue",
+                    "type": "Button",
+                    "id": "0db4d253-6917-470f-8e5e-6c862f8728d1",
                     "expectedControlType": "Button",
                     "processors": "",
                     "interactions": ""
@@ -393,6 +439,28 @@
                     "action": "Revert",
                     "isComposite": false,
                     "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "aa7a1136-7c96-4269-b077-92f3ae250ee6",
+                    "path": "<Mouse>/leftButton",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "AdvanceDialogue",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "7ce79136-2b85-43c2-a5d5-5083357331bc",
+                    "path": "<Keyboard>/e",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "AdvanceDialogue",
+                    "isComposite": false,
+                    "isPartOfComposite": false
                 }
             ]
         },
@@ -407,6 +475,14 @@
                     "expectedControlType": "Button",
                     "processors": "",
                     "interactions": ""
+                },
+                {
+                    "name": "AdvanceDialogue",
+                    "type": "Button",
+                    "id": "138ae1ac-1c84-44b5-bb7c-5571dad98f7d",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": ""
                 }
             ],
             "bindings": [
@@ -418,6 +494,28 @@
                     "processors": "",
                     "groups": "",
                     "action": "Zoom",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "244c02c6-029e-4421-bcda-17d2f1ec5043",
+                    "path": "<Mouse>/leftButton",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "AdvanceDialogue",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "356904df-f552-4cad-97b6-5b2e64a36050",
+                    "path": "<Keyboard>/e",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "AdvanceDialogue",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

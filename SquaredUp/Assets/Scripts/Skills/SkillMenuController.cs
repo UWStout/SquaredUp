@@ -1,16 +1,10 @@
 ﻿using UnityEngine;
-using UnityEngine.InputSystem;
 
 /// <summary>Controls the opening and closing of the skill menu</summary>
 public class SkillMenuController : MonoBehaviour
 {
-    // Input References
-    // Reference to the player input
-    [SerializeField] private PlayerInput playerInputRef = null;
     // Name of the skill menu action map in player input
     [SerializeField] private string skillMenuActionMapName = "SkillMenu";
-    // Name of the player action map in player input
-    [SerializeField] private string playerActionMapName = "Player";
 
     // Pause events
     public delegate void OpenSkillMenu();
@@ -36,18 +30,18 @@ public class SkillMenuController : MonoBehaviour
         InputEvents.RevertEvent -= OnCloseSkillMenu;
     }
 
-    /// <summary>Called when the player wants to pause. Invokes GamePauseEvent.</summary>
+    /// <summary>Called when the player wants to open the skill menu. Invokes OpenSkillMenuEvent.</summary>
     private void OnOpenSkillMenu()
     {
-        // Pause
-        playerInputRef.SwitchCurrentActionMap(skillMenuActionMapName);
+        // Swap input maps and call the open event
+        InputController.Instance.SwitchInputMap(skillMenuActionMapName);
         OpenSkillMenuEvent?.Invoke();
     }
-    /// <summary>Called when the player wants to unpause. Invokes GameUnpauseEvent.</summary>
+    /// <summary>Called when the player wants to close the skill menu. Invokes OpenSkillMenuEvent.</summary>
     private void OnCloseSkillMenu()
     {
-        // Unpause
-        playerInputRef.SwitchCurrentActionMap(playerActionMapName);
+        // Revert the input map and call the close event
+        InputController.Instance.PopInputMap(skillMenuActionMapName);
         CloseSkillMenuEvent?.Invoke();
     }
 }
