@@ -17,7 +17,7 @@ public class ChangeFormController : MonoBehaviour
     // Reference tot he test collider script for checking for walls in the way
     [SerializeField] private TestCollider colliderTest = null;
     // SFX for size transformation
-    [SerializeField] private AudioSource transformSizeSound;
+    [SerializeField] private AudioSource transformSizeSound = null;
 
     // Coroutine variables for how fast to change the shape and when we are close enough
     [SerializeField] [Min(0.0001f)] private float changeSpeed = 1f;
@@ -70,15 +70,13 @@ public class ChangeFormController : MonoBehaviour
             size = shapeDirectionalSize * curSizeData.Size;
         }
 
-        /*
-        Debug.Log("Was Size Changed: " + wasShapeChanged);
-        Debug.Log("Was Shape Changed: " + wasShapeChanged);
-        Debug.Log("CurShapeData: " + curShapeData);
-        Debug.Log("Does direciton affect scale: " + curShapeData.DirectionAffectsScale);
-        Debug.Log("Target Size: " + size);
-        Debug.Log("Current Size: " + playerScaleCont.ShapeScale);
-        Debug.Log("Target=Size? " + (size != playerScaleCont.ShapeScale));
-        */
+        //Debug.Log("Was Size Changed: " + wasSizeChanged);
+        //Debug.Log("Was Shape Changed: " + wasShapeChanged);
+        //Debug.Log("CurShapeData: " + curShapeData);
+        //Debug.Log("Does direciton affect scale: " + curShapeData.DirectionAffectsScale);
+        //Debug.Log("Target Size: " + size);
+        //Debug.Log("Current Size: " + playerScaleCont.ShapeScale);
+        //Debug.Log("Target=Size? " + (size != playerScaleCont.ShapeScale));
 
         // Change if size or shape was changed or
         // if the shape's direction affects scale and the scale has changed
@@ -94,6 +92,10 @@ public class ChangeFormController : MonoBehaviour
                 OnAvailableSpotFound?.Invoke();
                 // Start changing form
                 StartChangeForm(size, availSpot.Position);
+
+                // They are now the current, so reset them
+                wasSizeChanged = false;
+                wasShapeChanged = false;
             }
         }
     }
