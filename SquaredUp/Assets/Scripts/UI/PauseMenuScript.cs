@@ -70,6 +70,7 @@ public class PauseMenuScript : MonoBehaviour
         Time.timeScale = 0.0f;
         playerInputRef.SwitchCurrentActionMap(pauseActionMapName);
         pauseMenu.SetActive(true);
+        loreMenu.SetActive(false);
     }
 
     private void OnUnpauseGame()

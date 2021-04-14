@@ -27,7 +27,7 @@ public class StartLaserScript : MonoBehaviour
         Vector3 rotatedVector = Quaternion.Euler(0f, 0f, angleZ) * Vector3.up;
         Vector3 modifyStart = Quaternion.Euler(0f, 0f, angleZ) * new Vector3(0f, 1f, 0f);
         RaycastHit2D hit = Physics2D.Raycast(transform.position+modifyStart, rotatedVector, Mathf.Infinity, ~(layerMask1));
-        Debug.Log((int)angleZ);
+        //Debug.Log((int)angleZ);
         if (hit.collider.gameObject.layer == Mathf.Log(raycastLayer.value, 2))
         {
             hit.collider.gameObject.GetComponent<LaserScript>().HitByCast(this.transform.position,hit.point,(int)angleZ);
