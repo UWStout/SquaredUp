@@ -330,6 +330,18 @@ PrefabInstance:
       propertyPath: m_Name
       value: ShapeUnlockInteract
       objectReference: {fileID: 0}
+    - target: {fileID: 2322673380674605297, guid: e1fa718a105b83b40a12c37b5987ac63, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 4294967295
+      objectReference: {fileID: 0}
+    - target: {fileID: 2322673380871144123, guid: e1fa718a105b83b40a12c37b5987ac63, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 4294967295
+      objectReference: {fileID: 0}
+    - target: {fileID: 2322673380872603760, guid: e1fa718a105b83b40a12c37b5987ac63, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 4294967295
+      objectReference: {fileID: 0}
     - target: {fileID: 2322673381319215602, guid: e1fa718a105b83b40a12c37b5987ac63, type: 3}
       propertyPath: m_SizeDelta.x
       value: 1.5
