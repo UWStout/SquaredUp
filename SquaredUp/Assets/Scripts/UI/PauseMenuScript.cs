@@ -8,6 +8,8 @@ public class PauseMenuScript : MonoBehaviour
     [SerializeField]
     private GameObject pauseMenu;
     [SerializeField]
+    private GameObject controlMenu;
+    [SerializeField]
     private string pauseActionMapName = "PauseGame";
     [SerializeField]
     private string defaultActionMapName = "Player";
@@ -30,11 +32,6 @@ public class PauseMenuScript : MonoBehaviour
         Application.Quit();
     }
 
-    public void OpenMainFromPause()
-    {
-        SceneManager.LoadScene("MainMenu");
-    }
-
     public void StartGame()
     {
         SceneManager.LoadScene("SquaredUp");
@@ -53,6 +50,16 @@ public class PauseMenuScript : MonoBehaviour
     public void ResumeGame()
     {
         OnUnpauseGame();
+    }
+
+    public void OpenControlFromPause()
+    {
+        FlipMenu(controlMenu, pauseMenu);
+    }
+
+    public void OpenPauseFromControl()
+    {
+        FlipMenu(pauseMenu, controlMenu);
     }
 
     private void FlipMenu(GameObject g, GameObject o)
