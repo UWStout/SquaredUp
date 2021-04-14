@@ -1,7 +1,5 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-using UnityEngine.InputSystem;
+﻿using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class PauseMenuScript : MonoBehaviour
 {
@@ -13,8 +11,6 @@ public class PauseMenuScript : MonoBehaviour
     private string pauseActionMapName = "PauseGame";
     [SerializeField]
     private string defaultActionMapName = "Player";
-    [SerializeField] 
-    private PlayerInput playerInputRef = null;
 
 
     private void OnEnable()
@@ -36,12 +32,12 @@ public class PauseMenuScript : MonoBehaviour
 
     public void OpenMainFromPause()
     {
-        Application.LoadLevel("MainMenu");
+        SceneManager.LoadScene("MainMenu");
     }
 
     public void StartGame()
     {
-        Application.LoadLevel("SquaredUp");
+        SceneManager.LoadScene("SquaredUp");
     }
 
     public void OpenPauseFromLore()
@@ -68,7 +64,7 @@ public class PauseMenuScript : MonoBehaviour
     private void OnPauseGame()
     {
         Time.timeScale = 0.0f;
-        playerInputRef.SwitchCurrentActionMap(pauseActionMapName);
+        InputController.Instance.SwitchInputMap(pauseActionMapName);
         pauseMenu.SetActive(true);
         loreMenu.SetActive(false);
     }
@@ -76,7 +72,7 @@ public class PauseMenuScript : MonoBehaviour
     private void OnUnpauseGame()
     {
         Time.timeScale = 1.0f;
-        playerInputRef.SwitchCurrentActionMap(defaultActionMapName);
+        InputController.Instance.SwitchInputMap(defaultActionMapName);
         pauseMenu.SetActive(false);
         loreMenu.SetActive(false);
     }
