@@ -38,7 +38,7 @@ public class DialogueController : MonoBehaviour
         else
         {
             Debug.LogError("Cannot have multiple DialogueControllers");
-            Destroy(this);
+            Destroy(this.gameObject);
         }
     }
 
@@ -78,7 +78,7 @@ public class DialogueController : MonoBehaviour
         if (finishedTyping)
         {
             // If there are more lines, continue the dialogue
-            if (curLineIndex < dialogueLines.Length)
+            if (dialogueLines != null && curLineIndex < dialogueLines.Length)
             {
                 // Type next line.
                 StartTyping();

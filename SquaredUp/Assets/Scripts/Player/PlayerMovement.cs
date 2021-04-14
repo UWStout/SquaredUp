@@ -5,8 +5,9 @@ using UnityEngine;
 [RequireComponent(typeof(Rigidbody2D))]
 public class PlayerMovement : MonoBehaviour
 {
-    // Constants
-    private const int MOVE_INCREMENT_AMOUNT = 4;
+    // Singleton
+    private static PlayerMovement instance;
+    public static PlayerMovement Instance { get { return instance; } }
 
     // References
     // Reference to the pivot of the player's eyes.
@@ -33,6 +34,17 @@ public class PlayerMovement : MonoBehaviour
     // Set references
     private void Awake()
     {
+        // Set up singleton
+        if (instance == null)
+        {
+            instance = this;
+        }
+        else
+        {
+            Debug.LogError("Cannot have multiple PlayerMovements");
+            Destroy(this.gameObject);
+        }
+
         rb = GetComponent<Rigidbody2D>();
     }
 

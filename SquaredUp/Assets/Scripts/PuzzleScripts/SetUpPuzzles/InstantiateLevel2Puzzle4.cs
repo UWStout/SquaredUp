@@ -9,8 +9,6 @@ public class InstantiateLevel2Puzzle4 : MonoBehaviour
     [SerializeField]
     private GameObject[] Tilemaps;
     [SerializeField]
-    GameObject ColorChangeScript;
-    [SerializeField]
     private GameObject doorPrefab, doorControllerPrefab;
     [SerializeField]
     private GameObject tilemapControllerRedPrefab, tilemapControllerGreenPrefab, tilemapControllerBluePrefab;
@@ -21,39 +19,42 @@ public class InstantiateLevel2Puzzle4 : MonoBehaviour
     void Start()
     {
         //formating gameobjects when game starts
-        puzzleTwoDoors = new GameObject();
-        puzzleTwoControllers = new GameObject();
-        puzzleTwoTilemapControllers = new GameObject();
-        puzzleTwoColorChanger = new GameObject();
-        puzzleTwoDoors.name = "PuzzleTwoDoors";
-        puzzleTwoControllers.name = "PuzzleTwoControllers";
-        puzzleTwoTilemapControllers.name = "PuzzleTwoTilemapControllers";
-        puzzleTwoColorChanger.name = "PuzzleTwoColorChanger";
+        // Insantiation
+        puzzleTwoDoors = new GameObject("PuzzleTwoDoors");
+        puzzleTwoControllers = new GameObject("PuzzleTwoControllers");
+        puzzleTwoTilemapControllers = new GameObject("PuzzleTwoTilemapControllers");
+        puzzleTwoColorChanger = new GameObject("PuzzleTwoColorChanger");
+        // Parenting
         puzzleTwoDoors.transform.parent = this.transform;
         puzzleTwoControllers.transform.parent = this.transform;
         puzzleTwoTilemapControllers.transform.parent = this.transform;
         puzzleTwoColorChanger.transform.parent = this.transform;
+        // Position
+        puzzleTwoDoors.transform.localPosition = Vector2.zero;
+        puzzleTwoControllers.transform.localPosition = Vector2.zero;
+        puzzleTwoTilemapControllers.transform.localPosition = Vector2.zero;
+        puzzleTwoColorChanger.transform.localPosition = Vector2.zero;
 
         //Doors
         foreach (UniquePrefabInfo UPI in doorPrefabInfo)
         {
             //instantiate
-            GameObject temp = Instantiate(doorPrefab, UPI.prefabLoc, Quaternion.Euler(0, 0, UPI.prefabRot));
+            GameObject temp = Instantiate(doorPrefab, Vector3.zero, Quaternion.Euler(0, 0, UPI.prefabRot), puzzleTwoDoors.transform);
+            // Position
+            temp.transform.localPosition = UPI.prefabLoc;
             //scale
             temp.transform.localScale = new Vector3(UPI.prefabScale.x, UPI.prefabScale.y, 1);
-            //parent the object
-            temp.transform.parent = puzzleTwoDoors.transform;
         }
 
         //Controllers
         foreach (UniquePrefabInfo UPI in controllerPrefabInfo)
         {
             //instantiate
-            GameObject temp = Instantiate(doorControllerPrefab, UPI.prefabLoc, Quaternion.Euler(0, 0, UPI.prefabRot));
+            GameObject temp = Instantiate(doorControllerPrefab, Vector3.zero, Quaternion.Euler(0, 0, UPI.prefabRot), puzzleTwoControllers.transform);
+            // Position
+            temp.transform.localPosition = UPI.prefabLoc;
             //scale
             temp.transform.localScale = new Vector3(UPI.prefabScale.x, UPI.prefabScale.y, 1);
-            //parent the object
-            temp.transform.parent = puzzleTwoControllers.transform;
         }
 
         //Tilemap Controllers
@@ -77,11 +78,11 @@ public class InstantiateLevel2Puzzle4 : MonoBehaviour
             }
 
             //instantiate
-            GameObject temp = Instantiate(tilemapControllerPrefab, UPI.prefabLoc, Quaternion.Euler(0, 0, UPI.prefabRot));
+            GameObject temp = Instantiate(tilemapControllerPrefab, Vector3.zero, Quaternion.Euler(0, 0, UPI.prefabRot), puzzleTwoTilemapControllers.transform);
+            // Position
+            temp.transform.localPosition = UPI.prefabLoc;
             //scale
             temp.transform.localScale = new Vector3(UPI.prefabScale.x, UPI.prefabScale.y, 1);
-            //parent the object
-            temp.transform.parent = puzzleTwoTilemapControllers.transform;
 
             //set the prefab to have specific tilemaps enabled and disabled
             ColoredWallPuzzle cwp;
@@ -103,16 +104,16 @@ public class InstantiateLevel2Puzzle4 : MonoBehaviour
         foreach (UniquePrefabInfo UPI in colorChangerPrefabInfo)
         {
             //instantiate
-            GameObject temp = Instantiate(colorChangerPrefab, UPI.prefabLoc, Quaternion.Euler(0, 0, UPI.prefabRot));
+            GameObject temp = Instantiate(colorChangerPrefab, Vector3.zero, Quaternion.Euler(0, 0, UPI.prefabRot), puzzleTwoColorChanger.transform);
+            // Position
+            temp.transform.localPosition = UPI.prefabLoc;
             //scale
             temp.transform.localScale = new Vector3(UPI.prefabScale.x, UPI.prefabScale.y, 1);
-            //parent the object
-            temp.transform.parent = puzzleTwoColorChanger.transform;
 
             //set the interact color change so that character changes to blue on interact
             InteractColorChange ICC;
             ICC = temp.GetComponentInChildren<InteractColorChange>();
-            ICC.SetColorChangeObject(ColorChangeScript);
+            ICC.SetColorChangeObject(ChangeColorSkill.Instance.gameObject);
         }
     }
 

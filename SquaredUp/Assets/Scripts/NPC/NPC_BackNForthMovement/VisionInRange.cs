@@ -7,7 +7,6 @@ public class VisionInRange : MonoBehaviour
 {
 
     bool wasCaught = false;
-    [SerializeField]Image fadeOutImage = null;
     [SerializeField][Range(0,1)] float colorSpeed = 0.05f;
     [SerializeField] AudioSource alert;
 
@@ -15,9 +14,6 @@ public class VisionInRange : MonoBehaviour
     bool isCoRutineActive = false;
 
     private NPC_Movement npcMovement;
-
-    public GameObject player;
-    // public GameObject playerMovementReset;
 
     [SerializeField] private Transform jailCellLocation;
 
@@ -63,6 +59,7 @@ public class VisionInRange : MonoBehaviour
 
     IEnumerator FadeCoRutine()
     {
+        Image fadeOutImage = CanvasSingleton.Instance.BlackImage;
         isCoRutineActive = true;
         Color startColor;
         startColor = fadeOutImage.color;
@@ -76,7 +73,7 @@ public class VisionInRange : MonoBehaviour
         }
         startColor.a = 1;
         fadeOutImage.color = startColor;
-        player.transform.position = jailCellLocation.position;
+        PlayerMovement.Instance.transform.position = jailCellLocation.position;
         while (fadeOutImage.color.a > 0)
         {
             Color CurrentColor = fadeOutImage.color;

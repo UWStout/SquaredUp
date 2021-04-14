@@ -14,33 +14,36 @@ public class InstantiateLevel2Puzzle2 : MonoBehaviour
     void Start()
     {
         //formating gameobjects when game starts
-        puzzleOneDoors = new GameObject();
-        puzzleOneControllers = new GameObject();
-        puzzleOneDoors.name = "PuzzleOneDoors";
-        puzzleOneControllers.name = "PuzzleOneControllers";
+        // Insantiation
+        puzzleOneDoors = new GameObject("PuzzleOneDoors");
+        puzzleOneControllers = new GameObject("PuzzleOneControllers");
+        // Parenting
         puzzleOneDoors.transform.parent = this.transform;
         puzzleOneControllers.transform.parent = this.transform;
+        // Position
+        puzzleOneDoors.transform.localPosition = Vector3.zero;
+        puzzleOneControllers.transform.localPosition = Vector3.zero;
 
         //Doors
         foreach(UniquePrefabInfo UPI in doorPrefabInfo)
         {
             //instantiate
-            GameObject temp= Instantiate(doorPrefab,UPI.prefabLoc, Quaternion.Euler(0, 0, UPI.prefabRot));
+            GameObject temp= Instantiate(doorPrefab, Vector3.zero, Quaternion.Euler(0, 0, UPI.prefabRot), puzzleOneDoors.transform);
+            // Position
+            temp.transform.localPosition = UPI.prefabLoc;
             //scale
             temp.transform.localScale = new Vector3(UPI.prefabScale.x, UPI.prefabScale.y, 1);
-            //parent the object
-            temp.transform.parent = puzzleOneDoors.transform;
         }
 
         //Controllers
         foreach (UniquePrefabInfo UPI in controllerPrefabInfo)
         {
             //instantiate
-            GameObject temp = Instantiate(controllerPrefab, UPI.prefabLoc, Quaternion.Euler(0, 0, UPI.prefabRot));
+            GameObject temp = Instantiate(controllerPrefab, Vector3.zero, Quaternion.Euler(0, 0, UPI.prefabRot), puzzleOneControllers.transform);
+            // Position
+            temp.transform.localPosition = UPI.prefabLoc;
             //scale
             temp.transform.localScale = new Vector3(UPI.prefabScale.x, UPI.prefabScale.y, 1);
-            //parent the object
-            temp.transform.parent = puzzleOneControllers.transform;
         }
     }
     //custom class for serialized information for gameobjects

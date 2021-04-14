@@ -4,6 +4,11 @@ using UnityEngine;
 /// <summary>Skill to change the player's color</summary>
 public class ChangeColorSkill : SkillBase<ColorData>
 {
+    // Singleton
+    private static ChangeColorSkill instance;
+    public static ChangeColorSkill Instance { get { return instance; } }
+
+
     //SFX for color transformation
     public AudioSource transformColor;
     // References
@@ -24,6 +29,24 @@ public class ChangeColorSkill : SkillBase<ColorData>
     // References to the gameobjects on the player that have the wall colliders on them
     // The order of the walls MUST match the enum
     [SerializeField] private GameObject[] coloredWallColliders = new GameObject[0];
+
+
+    // Called 0th
+    // Set references
+    private void Awake()
+    {
+        // Set up singleton
+        if (instance == null)
+        {
+            instance = this;
+        }
+        else
+        {
+            Debug.LogError("Cannot have multiple ChangeColorSkills");
+            Destroy(this.gameObject);
+        }
+    }
+
 
     /// <summary>Changes the player's material to the material with color corresponding to the given index.
     /// Index matches what is specified in the editor. If index is unknown, consider using Use(ColorData) instead.</summary>
