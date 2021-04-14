@@ -154,9 +154,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 03db969d466990f46896399decfab151, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  fadeOutImage: {fileID: 0}
   colorSpeed: 0.05
-  player: {fileID: 0}
+  alert: {fileID: 0}
   jailCellLocation: {fileID: 5958946005170157923}
 --- !u!1 &5958946003603818660
 GameObject:
@@ -528,9 +527,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 03db969d466990f46896399decfab151, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  fadeOutImage: {fileID: 0}
   colorSpeed: 0.05
-  player: {fileID: 0}
+  alert: {fileID: 0}
   jailCellLocation: {fileID: 5958946005170157923}
 --- !u!1 &5958946003896971842
 GameObject:
@@ -688,9 +686,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 03db969d466990f46896399decfab151, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  fadeOutImage: {fileID: 0}
   colorSpeed: 0.05
-  player: {fileID: 0}
+  alert: {fileID: 0}
   jailCellLocation: {fileID: 5958946005170157923}
 --- !u!1 &5958946003898146537
 GameObject:
@@ -848,9 +845,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 03db969d466990f46896399decfab151, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  fadeOutImage: {fileID: 0}
   colorSpeed: 0.05
-  player: {fileID: 0}
+  alert: {fileID: 0}
   jailCellLocation: {fileID: 5958946005170157923}
 --- !u!1 &5958946004122573436
 GameObject:
@@ -1008,9 +1004,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 03db969d466990f46896399decfab151, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  fadeOutImage: {fileID: 0}
   colorSpeed: 0.05
-  player: {fileID: 0}
+  alert: {fileID: 0}
   jailCellLocation: {fileID: 5958946005170157923}
 --- !u!1 &5958946004236217548
 GameObject:
@@ -1382,9 +1377,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 03db969d466990f46896399decfab151, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  fadeOutImage: {fileID: 0}
   colorSpeed: 0.05
-  player: {fileID: 0}
+  alert: {fileID: 0}
   jailCellLocation: {fileID: 5958946005170157923}
 --- !u!1 &5958946004644923392
 GameObject:
@@ -1825,9 +1819,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 03db969d466990f46896399decfab151, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  fadeOutImage: {fileID: 0}
   colorSpeed: 0.05
-  player: {fileID: 0}
+  alert: {fileID: 0}
   jailCellLocation: {fileID: 5958946005170157923}
 --- !u!1 &5958946005442527337
 GameObject:
@@ -2092,9 +2085,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 03db969d466990f46896399decfab151, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  fadeOutImage: {fileID: 0}
   colorSpeed: 0.05
-  player: {fileID: 0}
+  alert: {fileID: 0}
   jailCellLocation: {fileID: 5958946005170157923}
 --- !u!1 &5958946005659398785
 GameObject:
@@ -2178,7 +2170,7 @@ SpriteRenderer:
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
-  m_MaskInteraction: 0
+  m_MaskInteraction: 2
   m_SpriteSortPoint: 0
 --- !u!68 &5958946005659398796
 EdgeCollider2D:
@@ -2216,7 +2208,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 03db969d466990f46896399decfab151, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  fadeOutImage: {fileID: 0}
   colorSpeed: 0.05
-  player: {fileID: 0}
+  alert: {fileID: 0}
   jailCellLocation: {fileID: 5958946005170157923}
