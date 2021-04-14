@@ -9,6 +9,7 @@ public class VisionInRange : MonoBehaviour
     bool wasCaught = false;
     [SerializeField]Image fadeOutImage = null;
     [SerializeField][Range(0,1)] float colorSpeed = 0.05f;
+    [SerializeField] AudioSource alert;
 
     private Coroutine activeCoRoutine = null;
     bool isCoRutineActive = false;
@@ -25,6 +26,7 @@ public class VisionInRange : MonoBehaviour
 
         if (!wasCaught) 
         {
+            alert.Play();
             wasCaught = true;
             npcMovement.AllowMove(false);
             InputEvents.AdvanceDialogueEvent += FadeInOut;

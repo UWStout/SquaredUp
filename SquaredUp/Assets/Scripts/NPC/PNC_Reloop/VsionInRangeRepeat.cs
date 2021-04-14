@@ -7,6 +7,7 @@ public class VsionInRangeRepeat : MonoBehaviour
 {
 
     bool wasCaught = false;
+    [SerializeField] AudioSource alert;
     [SerializeField] Image fadeOutImage = null;
     [SerializeField] [Range(0, 1)] float colorSpeed = 0.05f;
 
@@ -25,6 +26,7 @@ public class VsionInRangeRepeat : MonoBehaviour
 
         if (!wasCaught)
         {
+            alert.Play();
             wasCaught = true;
             npcMovement.AllowMove(false);
             InputEvents.AdvanceDialogueEvent += FadeInOut;
