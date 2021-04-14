@@ -58,7 +58,8 @@ public class LaserScript : MonoBehaviour
             hit = Physics2D.Raycast(hitPointPos + modifyStart, rotatedVector, Mathf.Infinity, ~layerMask);
             lineRenderer.enabled = true;
         }
-
+        else { lineRenderer.enabled = false; }
+        
         if (oldHit && hit && hit.collider.gameObject != oldHit.collider.gameObject)
         {
             if (oldHit.collider.gameObject.layer == Mathf.Log(raycastLayer.value, 2))
