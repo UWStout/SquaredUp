@@ -124,6 +124,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   alertObj: {fileID: 4569751960956873210}
+  colorChangeObject: {fileID: 0}
+  color: 3
 --- !u!61 &885725887285336995
 BoxCollider2D:
   m_ObjectHideFlags: 0
