@@ -4614,6 +4614,7 @@ GameObject:
   m_Component:
   - component: {fileID: 8761551426236527894}
   - component: {fileID: 8761551426236527889}
+  - component: {fileID: 3583555605206122724}
   m_Layer: 0
   m_Name: Menus
   m_TagString: Untagged
@@ -4655,6 +4656,18 @@ MonoBehaviour:
   controlMenu: {fileID: 264807323903966070}
   pauseActionMapName: PauseGame
   defaultActionMapName: Player
+--- !u!114 &3583555605206122724
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8761551426236527895}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 38cffd76c81ee8749859b5b672f95011, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &8761551426277979196
 GameObject:
   m_ObjectHideFlags: 0
