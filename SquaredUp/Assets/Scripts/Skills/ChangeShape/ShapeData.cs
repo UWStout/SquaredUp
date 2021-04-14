@@ -27,10 +27,9 @@ public class ShapeData : SkillStateData
     [SerializeField] private bool hasShapeChangeBehavior = false;
     public bool HasShapeChangeBehavior { get { return hasShapeChangeBehavior; } }
     // Shape change behavior
-    private ShapeChangeBehavior shapeChangeBehave = null;
+    [SerializeField] [HideInInspector] private ShapeChangeBehavior shapeChangeBehave = null;
     public ShapeChangeBehavior ShapeChangeBehave { get { return shapeChangeBehave; } set { shapeChangeBehave = value; } }
 }
-
 
 // Editor to hide shape change behavior if we don't have it for this data
 #if UNITY_EDITOR
