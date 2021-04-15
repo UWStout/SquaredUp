@@ -12,6 +12,7 @@ public class LoreMenu : MonoBehaviour
     [SerializeField] private UnityEngine.UI.Button[] loreButtons = new UnityEngine.UI.Button[3];
     [SerializeField] private TextMeshProUGUI[] textBoxes = new TextMeshProUGUI[3];
 
+    /*
     private void Update()
     {
         OnKeyboardDown();
@@ -44,6 +45,20 @@ public class LoreMenu : MonoBehaviour
             }
             loreCanvas.gameObject.SetActive(false);
             movement.AllowMovement(true);
+        }
+    }
+    */
+    public void UpdateLore()
+    {
+        // Check for each lore that is collected and enable corresponding button
+        for (int i = 0; i < texts.Length; ++i)
+        {
+            //Debug.Log("iteration" + (i + 1));
+            if (texts[i] && texts[i].GetCollected())
+            {
+                loreButtons[i].gameObject.SetActive(true);
+                //Debug.Log("Lore " + (i + 1));
+            }
         }
     }
 

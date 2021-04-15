@@ -20,7 +20,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &3291419534994162690
 RectTransform:
   m_ObjectHideFlags: 0
@@ -959,7 +959,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &8264918025844789256
 Transform:
   m_ObjectHideFlags: 0
@@ -1562,7 +1562,7 @@ RectTransform:
   m_GameObject: {fileID: 8268855045607367236}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 2.5, y: 2.5, z: 1}
   m_Children: []
   m_Father: {fileID: 3291419534994162690}
   m_RootOrder: 0
@@ -1765,7 +1765,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &8761551424415468522
 RectTransform:
   m_ObjectHideFlags: 0
@@ -2484,7 +2484,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &8761551425182775915
 Transform:
   m_ObjectHideFlags: 0
@@ -2758,7 +2758,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &8761551425277027813
 Transform:
   m_ObjectHideFlags: 0
@@ -3415,7 +3415,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &8761551425655527488
 RectTransform:
   m_ObjectHideFlags: 0
@@ -3759,7 +3759,7 @@ RectTransform:
   m_GameObject: {fileID: 8761551425686390820}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 2.5, y: 2.5, z: 1}
   m_Children: []
   m_Father: {fileID: 8761551425655527488}
   m_RootOrder: 0
@@ -4651,9 +4651,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1ebd7d870d9dc2b4cbb5c3206cc96443, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  loreMenu: {fileID: 8761551425655527489}
-  pauseMenu: {fileID: 8761551424415468523}
-  controlMenu: {fileID: 264807323903966070}
+  loreMenu: {fileID: 8761551425182775912}
+  pauseMenu: {fileID: 8761551425277027818}
+  controlMenu: {fileID: 5503639394467705948}
   pauseActionMapName: PauseGame
   defaultActionMapName: Player
 --- !u!114 &3583555605206122724

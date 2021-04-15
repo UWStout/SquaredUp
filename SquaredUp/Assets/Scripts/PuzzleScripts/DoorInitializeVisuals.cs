@@ -10,8 +10,9 @@ public class DoorInitializeVisuals : MonoBehaviour
     // Transform of the physics parent of the door.
     [SerializeField] private Transform physicsTransform = null;
 
+
     // Start is called before the first frame update
-    private void Start()
+    void Start()
     {
         // Get scale
         Vector2Int scale = new Vector2Int(Mathf.RoundToInt(transform.localScale.x), Mathf.RoundToInt(transform.localScale.y));

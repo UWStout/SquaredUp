@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using System.Collections;
 
 public class DoorController : Interactable
 {
@@ -14,6 +15,14 @@ public class DoorController : Interactable
     //Start Method
     void Start()
     {
+        StartCoroutine(MyCoroutine());
+    }
+
+    IEnumerator MyCoroutine()
+    {
+        //This is a coroutine
+        yield return new WaitForSeconds(2); ;    //Wait 2 seconds
+
         //raycast out a distance of 100f and only on the layerMask
         RaycastHit hit;
         if (Physics.Raycast(interactableObject.transform.position, interactableObject.transform.TransformDirection(Vector3.up), out hit,distance, layerMask))

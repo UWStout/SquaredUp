@@ -44,6 +44,7 @@ public class PauseMenuScript : MonoBehaviour
 
     public void OpenLoreFromPause()
     {
+        loreMenu.GetComponent<LoreMenu>().UpdateLore();
         FlipMenu(pauseMenu, loreMenu);
     }
 
