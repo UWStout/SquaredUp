@@ -52,6 +52,14 @@
                     "expectedControlType": "Button",
                     "processors": "",
                     "interactions": ""
+                },
+                {
+                    "name": "HackerTeleport",
+                    "type": "Value",
+                    "id": "fdf28daf-fdd0-4110-bc4b-f503edd95d33",
+                    "expectedControlType": "Analog",
+                    "processors": "",
+                    "interactions": ""
                 }
             ],
             "bindings": [
@@ -162,6 +170,127 @@
                     "processors": "",
                     "groups": "",
                     "action": "PauseGame",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "e1900fd6-4aaa-4726-85fa-29b7344061c8",
+                    "path": "<Keyboard>/1",
+                    "interactions": "Press",
+                    "processors": "Scale",
+                    "groups": "",
+                    "action": "HackerTeleport",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "86aad11d-5376-482b-89aa-f7453c8581f9",
+                    "path": "<Keyboard>/2",
+                    "interactions": "Press",
+                    "processors": "Scale(factor=2)",
+                    "groups": "",
+                    "action": "HackerTeleport",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "57a8c63a-6e6b-49ac-a514-8940b563f1f7",
+                    "path": "<Keyboard>/3",
+                    "interactions": "Press",
+                    "processors": "Scale(factor=3)",
+                    "groups": "",
+                    "action": "HackerTeleport",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "41910315-6452-4975-bf27-48a859accfaf",
+                    "path": "<Keyboard>/4",
+                    "interactions": "Press",
+                    "processors": "Scale(factor=4)",
+                    "groups": "",
+                    "action": "HackerTeleport",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "6a0c157e-5344-4c9e-a6da-53602d61dc60",
+                    "path": "<Keyboard>/5",
+                    "interactions": "Press",
+                    "processors": "Scale(factor=5)",
+                    "groups": "",
+                    "action": "HackerTeleport",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "464184fe-6101-447e-9530-4da7b1504fcb",
+                    "path": "<Keyboard>/6",
+                    "interactions": "Press",
+                    "processors": "Scale(factor=6)",
+                    "groups": "",
+                    "action": "HackerTeleport",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "df528361-d543-498b-a025-09b1c692e435",
+                    "path": "<Keyboard>/7",
+                    "interactions": "Press",
+                    "processors": "Scale(factor=7)",
+                    "groups": "",
+                    "action": "HackerTeleport",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "06c36988-a41a-4db0-aa69-bf6708a155c0",
+                    "path": "<Keyboard>/8",
+                    "interactions": "Press",
+                    "processors": "Scale(factor=8)",
+                    "groups": "",
+                    "action": "HackerTeleport",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "d6f13549-518b-4ec2-912c-d8847abc7ad1",
+                    "path": "<Keyboard>/9",
+                    "interactions": "Press",
+                    "processors": "Scale(factor=9)",
+                    "groups": "",
+                    "action": "HackerTeleport",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "e5e90443-06d6-41bc-8ad3-527a226cbed4",
+                    "path": "<Keyboard>/0",
+                    "interactions": "Press",
+                    "processors": "Scale(factor=10)",
+                    "groups": "",
+                    "action": "HackerTeleport",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "a1211cce-a8d1-4285-9675-26e594a7b985",
+                    "path": "<Keyboard>/minus",
+                    "interactions": "Press",
+                    "processors": "Scale(factor=11)",
+                    "groups": "",
+                    "action": "HackerTeleport",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

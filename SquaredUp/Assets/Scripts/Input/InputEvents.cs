@@ -148,4 +148,13 @@ public class InputEvents : MonoBehaviour
         //Debug.Log("OnRevert" + rawInpVec);
         RevertEvent?.Invoke();
     }
+
+    // HackerTeleport
+    public delegate void HackerTeleport(int val);
+    public static event HackerTeleport HackerTeleportEvent;
+    private void OnHackerTeleport(InputValue value)
+    {
+        //Debug.Log("OnHackerTeleport" + rawInpVec);
+        HackerTeleportEvent?.Invoke(Mathf.RoundToInt(value.Get<float>()));
+    }
 }
