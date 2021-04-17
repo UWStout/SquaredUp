@@ -5,7 +5,7 @@ using UnityEngine.SceneManagement;
 /// When the player collides with this object, the scene is changed.
 /// Should be on a layer that only collides with the player.
 /// </summary>
-public class LevelChangeTrigger : MonoBehaviour
+public class SceneChangeTrigger : MonoBehaviour
 {
     // Name of the scene to change to
     [SerializeField] private string sceneName = "Scene";
