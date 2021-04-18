@@ -59,13 +59,13 @@ public class LaserScript : MonoBehaviour
             lineRenderer.enabled = true;
         }
         else { lineRenderer.enabled = false; }
-        
         if (oldHit && hit && hit.collider.gameObject != oldHit.collider.gameObject)
         {
             if (oldHit.collider.gameObject.layer == Mathf.Log(raycastLayer.value, 2))
             {
                 if (oldHit.collider.gameObject.GetComponent<LaserScript>())
                 {
+                    Debug.Log(oldHit.collider.gameObject.name);
                     oldHit.collider.gameObject.GetComponent<LaserScript>().VoidCast();
                 }
                 else if (oldHit.collider.gameObject.GetComponent<EndTower>())
@@ -86,7 +86,7 @@ public class LaserScript : MonoBehaviour
                 hit.collider.gameObject.GetComponent<EndTower>().HitByCast();
             }
         }
-        return hit.point;
+        return (Vector3)hit.point + new Vector3(0, 0, -.1f);
 
     }
 }
