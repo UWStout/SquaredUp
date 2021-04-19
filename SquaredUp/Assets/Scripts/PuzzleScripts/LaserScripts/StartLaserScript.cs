@@ -31,9 +31,8 @@ public class StartLaserScript : MonoBehaviour
         {
             hit.collider.gameObject.GetComponent<LaserScript>().HitByCast(this.transform.position, (Vector3)hit.point + new Vector3(0, 0, -.1f), (int)angleZ);
         }
-        if (oldHit&&oldHit.collider.gameObject.layer == Mathf.Log(raycastLayer.value, 2)&&oldHit!=hit)
+        if (oldHit && (oldHit.collider.gameObject.layer == Mathf.Log(raycastLayer.value, 2)) && (oldHit.collider.gameObject != hit.collider.gameObject))
         {
-            Debug.Log("hit");
             oldHit.collider.gameObject.GetComponent<LaserScript>().VoidCast();
         }
         oldHit = hit;
