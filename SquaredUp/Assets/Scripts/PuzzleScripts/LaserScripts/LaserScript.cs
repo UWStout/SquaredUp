@@ -20,8 +20,7 @@ public class LaserScript : MonoBehaviour
     {
         if (lineRenderer.enabled)
         {
-            lineRenderer.SetPosition(0, hitPointPos);
-            lineRenderer.SetPosition(1, Casting());
+            SetLine();
         }
         else if (hit && (hit.collider.gameObject.layer == Mathf.Log(raycastLayer.value, 2)))
         {
@@ -35,7 +34,23 @@ public class LaserScript : MonoBehaviour
         fromDir = from;
         if (!lineRenderer.enabled)
         {
-            Casting();
+            SetLine();
+        }
+    }
+
+    private void SetLine()
+    {
+        int angleZ = (int)(this.transform.rotation.eulerAngles.z);
+        int castAngle = angleArray[(fromDir / 90), (angleZ / 90)];
+        if (castAngle != -1)
+        {
+            lineRenderer.SetPosition(0, hitPointPos);
+            lineRenderer.SetPosition(1, Casting( castAngle));
+            lineRenderer.enabled = true;
+        }
+        else
+        {
+            lineRenderer.enabled = false;
         }
     }
 
@@ -46,19 +61,11 @@ public class LaserScript : MonoBehaviour
         //hit.collider.gameObject.GetComponent<LaserScript>().VoidCast();
     }
 
-    public Vector3 Casting()
+    public Vector3 Casting(int castAngle_)
     {
-
-        int angleZ = (int)(this.transform.rotation.eulerAngles.z);
-        int castAngle = angleArray[(fromDir/90), (angleZ/90)];
-        if (castAngle != -1)
-        {
-            Vector3 rotatedVector = Quaternion.Euler(0f, 0f, castAngle) * Vector3.up;
-            Vector3 modifyStart = Quaternion.Euler(0f, 0f, castAngle) * new Vector3(0f, .1f, 0f);
-            hit = Physics2D.Raycast(hitPointPos + modifyStart, rotatedVector, Mathf.Infinity, ~layerMask);
-            lineRenderer.enabled = true;
-        }
-        else { lineRenderer.enabled = false; }
+        Vector3 rotatedVector = Quaternion.Euler(0f, 0f, castAngle_) * Vector3.up;
+        Vector3 modifyStart = Quaternion.Euler(0f, 0f, castAngle_) * new Vector3(0f, .1f, 0f);
+        hit = Physics2D.Raycast(hitPointPos + modifyStart, rotatedVector, Mathf.Infinity, ~layerMask);
         if (oldHit && hit && hit.collider.gameObject != oldHit.collider.gameObject)
         {
             if (oldHit.collider.gameObject.layer == Mathf.Log(raycastLayer.value, 2))
@@ -79,7 +86,7 @@ public class LaserScript : MonoBehaviour
         {
             if (hit.collider.gameObject.GetComponent<LaserScript>())
             {
-                hit.collider.gameObject.GetComponent<LaserScript>().HitByCast(this.transform.position, hit.point, castAngle);
+                hit.collider.gameObject.GetComponent<LaserScript>().HitByCast(this.transform.position, hit.point, castAngle_);
             }
             else if (hit.collider.gameObject.GetComponent<EndTower>())
             {
