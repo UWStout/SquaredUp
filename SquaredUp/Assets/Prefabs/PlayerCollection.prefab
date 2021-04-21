@@ -488,6 +488,8 @@ MonoBehaviour:
   meshRend: {fileID: 8545668449240166798}
   blendTrans: {fileID: 3934741497668171432}
   scaleCont: {fileID: 5831320622290952209}
+  fadeSpeed: 5
+  aliveTime: 1.5
 --- !u!114 &3934741497668171432
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1459,8 +1461,8 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 1, y: 1}
-  m_EdgeRadius: 0
+  m_Size: {x: 0.6, y: 0.6}
+  m_EdgeRadius: 0.4
 --- !u!114 &6257086274663262137
 MonoBehaviour:
   m_ObjectHideFlags: 0
