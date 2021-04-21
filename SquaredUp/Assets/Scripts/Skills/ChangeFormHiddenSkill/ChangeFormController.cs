@@ -7,7 +7,7 @@ public class ChangeFormController : MonoBehaviour
 {
     // References
     // Scale controller for the player
-    [SerializeField] private PlayerScaleController playerScaleCont = null;
+    [SerializeField] private ScaleController playerScaleCont = null;
     // Reference to the player collider controller
     [SerializeField] private PlayerColliderController playerColContRef = null;
     // Refernce to the player movement script
@@ -18,6 +18,8 @@ public class ChangeFormController : MonoBehaviour
     [SerializeField] private TestCollider colliderTest = null;
     // SFX for size transformation
     [SerializeField] private AudioSource transformSizeSound = null;
+    // Reference to the CannotFitVisual
+    [SerializeField] private CannotFitVisualController cannotFitCont = null;
 
     // Coroutine variables for how fast to change the shape and when we are close enough
     [SerializeField] [Min(0.0001f)] private float changeSpeed = 1f;
@@ -28,22 +30,34 @@ public class ChangeFormController : MonoBehaviour
 
     // If the shape data has been changed since last time
     private bool wasShapeChanged = false;
+    // Previous shape data
+    private ShapeData prevShapeData = null;
     // Current shape data to change to
     private ShapeData curShapeData = null;
     public ShapeData CurShapeData {
         set {
-            wasShapeChanged = curShapeData != value;
+            if (curShapeData != null)
+            {
+                wasShapeChanged = curShapeData != value;
+            }
+            prevShapeData = curShapeData;
             curShapeData = value;
         }
     }
 
     // If the size data has been changed since last time
     private bool wasSizeChanged = false;
+    // Previous size data
+    private SizeData prevSizeData = null;
     // Current size to change to
     private SizeData curSizeData = null;
     public SizeData CurSizeData {
         set {
-            wasSizeChanged = curSizeData != value;
+            if (curSizeData != null)
+            {
+                wasSizeChanged = curSizeData != value;
+            }
+            prevSizeData = curSizeData;
             curSizeData = value;
         }
     }
@@ -70,13 +84,13 @@ public class ChangeFormController : MonoBehaviour
             size = shapeDirectionalSize * curSizeData.Size;
         }
 
-        //Debug.Log("Was Size Changed: " + wasSizeChanged);
-        //Debug.Log("Was Shape Changed: " + wasShapeChanged);
-        //Debug.Log("CurShapeData: " + curShapeData);
-        //Debug.Log("Does direciton affect scale: " + curShapeData.DirectionAffectsScale);
-        //Debug.Log("Target Size: " + size);
-        //Debug.Log("Current Size: " + playerScaleCont.ShapeScale);
-        //Debug.Log("Target=Size? " + (size != playerScaleCont.ShapeScale));
+        Debug.Log("Was Size Changed: " + wasSizeChanged);
+        Debug.Log("Was Shape Changed: " + wasShapeChanged);
+        Debug.Log("CurShapeData: " + curShapeData);
+        Debug.Log("Does direciton affect scale: " + curShapeData.DirectionAffectsScale);
+        Debug.Log("Target Size: " + size);
+        Debug.Log("Current Size: " + playerScaleCont.ShapeScale);
+        Debug.Log("Target!=Size? " + (size != playerScaleCont.ShapeScale));
 
         // Change if size or shape was changed or
         // if the shape's direction affects scale and the scale has changed
@@ -96,6 +110,16 @@ public class ChangeFormController : MonoBehaviour
                 // They are now the current, so reset them
                 wasSizeChanged = false;
                 wasShapeChanged = false;
+            }
+            // Player could not change here, so display the error that could not change here
+            else
+            {
+                // Display cannot fit here error
+                ShowCannotFitHere(curShapeData.TypeOfShape, size);
+
+                // Revert shape and size data to their previous states
+                curShapeData = prevShapeData;
+                curSizeData = prevSizeData;
             }
         }
     }
@@ -323,4 +347,16 @@ public class ChangeFormController : MonoBehaviour
         // Call the finish form change event
         OnFinishChangingForm?.Invoke();
     }
+
+    /// <summary>Shows the visual for the player not fitting somewhere.</summary>
+    /// <param name="shapeType">Type of shape the player tried to change to.</param>
+    /// <param name="size">Size the player tried to change to.</param>
+    private void ShowCannotFitHere(ShapeData.ShapeType shapeType, Vector3 size)
+    {
+        // Activate the cannot fit controller to show itself
+        Vector3 pos = playerMoveTrans.position;
+        pos.z = cannotFitCont.transform.position.z;
+        cannotFitCont.Activate(pos, size, shapeType);
+    }
+
 }

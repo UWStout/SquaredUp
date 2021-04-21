@@ -17,12 +17,17 @@ public class ChangeSizeSkill : SkillBase<SizeData>
     {
         ChangeFormController.OnAvailableSpotFound += OnAvailableSpotFound;
     }
-
     // Called when this is disabled
     // Unsubscribe from events
     private void OnDisable()
     {
         ChangeFormController.OnAvailableSpotFound -= OnAvailableSpotFound;
+    }
+    // Called 1st
+    // Initialization
+    private void Start()
+    {
+        Use(0);
     }
 
 

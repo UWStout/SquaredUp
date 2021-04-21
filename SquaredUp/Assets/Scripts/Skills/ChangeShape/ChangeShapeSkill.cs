@@ -21,12 +21,17 @@ public class ChangeShapeSkill : SkillBase<ShapeData>
     {
         ChangeFormController.OnAvailableSpotFound += OnAvailableSpotFound;
     }
-
     // Called when this is disabled
     // Unsubscribe from events
     private void OnDisable()
     {
         ChangeFormController.OnAvailableSpotFound -= OnAvailableSpotFound;
+    }
+    // Called 1st
+    // Initialization
+    private void Start()
+    {
+        Use(0);
     }
 
     /// <summary>Changes the player to become the shape corresponding to the given index.

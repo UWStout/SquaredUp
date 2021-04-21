@@ -46,8 +46,8 @@ TagManager:
   - name: Background
     uniqueID: 3699758909
     locked: 0
-  - name: Default
-    uniqueID: 0
+  - name: Middle
+    uniqueID: 277335541
     locked: 0
   - name: Walls
     uniqueID: 3247731925
@@ -57,4 +57,7 @@ TagManager:
     locked: 0
   - name: WorldCanvas
     uniqueID: 843038267
+    locked: 0
+  - name: Default
+    uniqueID: 0
     locked: 0
