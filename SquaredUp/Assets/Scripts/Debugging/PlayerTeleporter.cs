@@ -2,6 +2,7 @@
 
 public class PlayerTeleporter : MonoBehaviour
 {
+#if DEVELOPMENT_BUILD || UNITY_EDITOR
     private void OnEnable()
     {
         InputEvents.HackerTeleportEvent += Teleport;
@@ -63,4 +64,5 @@ public class PlayerTeleporter : MonoBehaviour
                 break;
         }
     }
+#endif
 }

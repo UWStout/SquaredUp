@@ -2,20 +2,15 @@
 using UnityEngine.UI;
 using TMPro;
 
-
-/* Grid Design HUD for Squared Up
- * 
- * 
- */
-
 /// <summary>Manages the HUD for skills</summary>
-public class GridHUDManager : MonoBehaviour
+public class HUDManager : MonoBehaviour
 {
     // Reference to the grid HUD's total parent
     [SerializeField] private Transform gridHUDParent = null;
 
-    // Prefab that will be created to display the states of the skills
-    [SerializeField] private GameObject skillStatePrefab = null;
+    // Selection row and column parents
+    [SerializeField] private Transform colorRow = null;
+    [SerializeField] private Transform shapeCol = null;
 
     // Spacing for how the states should be layed out
     [SerializeField] private float verticalSpace = 150f;
@@ -41,7 +36,9 @@ public class GridHUDManager : MonoBehaviour
         InputEvents.RevertEvent += OnRevert;
 
         // Testing
+#if DEVELOPMENT_BUILD || UNITY_EDITOR
         InputEvents.HackerAxisEvent += OnHackerAxis;
+#endif
     }
     // Called when the script is disabled.
     // Unsubscribe from events.
@@ -51,17 +48,15 @@ public class GridHUDManager : MonoBehaviour
         SkillMenuController.CloseSkillMenuEvent -= CloseHUD;
         InputEvents.MainAxisEvent -= OnHUDAxis;
         InputEvents.HackerAxisEvent -= OnHackerAxis;
+#if DEVELOPMENT_BUILD || UNITY_EDITOR
         InputEvents.RevertEvent -= OnRevert;
+#endif
     }
 
     // Called 1st
     // Initialize
     private void Start()
     {
-        // Create the HUD
-        CreateSkillHUDParents();
-        CreateSkillStatesHUD();
-
         int amountSkills = SkillController.Instance.GetSkillAmount();
 
         // Initialize the selection indices
@@ -73,100 +68,13 @@ public class GridHUDManager : MonoBehaviour
         HUDstatus(false);
     }
 
-    /// <summary>Creates an object for every skill there is. This object will be the parent of the skill's states HUD</summary>
-    private void CreateSkillHUDParents()
+
+    /// <summary>Gets the index of the current state of the selected skill.</summary>
+    /// <param name="skillIndex">Index of the skill to check the state of.</param>
+    public int GetStateIndexOfSkill(int skillIndex)
     {
-        // Assumption is that it starts with no children
-        if (gridHUDParent.childCount != 0)
-        {
-            Debug.LogError(gridHUDParent.name + " cannot have children. Please remove them");
-        }
-
-        // Create a parent for each skill to hold the state HUD things
-        int amountSkills = SkillController.Instance.GetSkillAmount();
-        for (int i = 0; i < amountSkills; ++i)
-        {
-            // Create the transform, set its parent, and its local position
-            Transform parent = new GameObject().transform;
-            parent.SetParent(gridHUDParent);
-            parent.localPosition = new Vector3(horizontalSpace * i, 0);
-            // Set its name
-            parent.name = SkillController.Instance.GetSkill(i).ToString() + " HUD Parent";
-        }
+        return index[skillIndex];
     }
-
-    /// <summary>Creates an object for every states of each skill and childs it under the corresponding parent</summary>
-    private void CreateSkillStatesHUD()
-    {
-        // Create state HUDs for each skill
-        int count = 0;
-        foreach (Transform parent in gridHUDParent)
-        {
-            Skill curSkill = SkillController.Instance.GetSkill(count);
-            for (int i = 0; i < curSkill.GetAmountStates(); ++i)
-            {
-                CreateSingleStateUI(parent, curSkill, i);
-            }
-            ++count;
-        }
-    }
-
-    /// <summary>Helper function for CreateSkillStatesHUD. Create the UI object for the current skill.</summary>
-    /// <param name="parent">Transform that will be the parent of the single UI element.</param>
-    /// <param name="curSkill">Current skill whose state the UI is generated from.</param>
-    /// <param name="index">Index of the current state of the skill.</param>
-    private void CreateSingleStateUI(Transform parent, Skill curSkill, int index)
-    {
-        // Create the transform as a child, set its local position, and give it a good name
-        Transform child = Instantiate(skillStatePrefab, parent).transform;
-        child.transform.localPosition = new Vector3(0, -verticalSpace * index, 0);
-        child.name = curSkill.GetStateName(index);
-
-        // Try to pull a UI element off the skill
-        try
-        {
-            AddSpecificUIFromState(child, curSkill, index);
-        }
-        // If we failed to get the prefab, just slap some text on it
-        catch
-        {
-            AddDefaultTextToState(child);
-        }
-    }
-
-    /// <summary>Helper function for CreateSingleStateUI. Create and initialize a UI element from the current state of the current skill.</summary>
-    /// <param name="skillTransform">Transform of the state UI element.</param>
-    /// <param name="curSkill">Current skill whose state the UI is generated from.</param>
-    /// <param name="index">Index of the current state of the skill.</param>
-    private void AddSpecificUIFromState(Transform skillTransform, Skill curSkill, int index)
-    {
-        GameObject stateUIPref = curSkill.GetStateUIElement(index);
-        // Set the prefab as a child of the newley created object
-        GameObject stateUIInstance = Instantiate(stateUIPref, skillTransform);
-        // Try to pull the state ui behavior off the state instance to initialize it
-        try
-        {
-            StateUIBehavior stateUIBev = stateUIInstance.GetComponent<StateUIBehavior>();
-            stateUIBev.Initialize(this);
-        }
-        // Some won't have behaviors and that's okay
-        catch { }
-    }
-
-    /// <summary>Helper function for CreateSingleStateUI. Create a text element on the UI that just says the name of the skill.</summary>
-    /// <param name="skillTransform">Transform of the skill's UI.</param>
-    private void AddDefaultTextToState(Transform skillTransform)
-    {
-        // Add a child to house text
-        GameObject grandchild = new GameObject("State Text");
-        grandchild.transform.SetParent(skillTransform);
-        grandchild.transform.localPosition = Vector3.zero;
-        grandchild.transform.localScale = Vector3.one;
-        // Add text and set it to say the state's name
-        TextMeshProUGUI text = grandchild.AddComponent<TextMeshProUGUI>();
-        text.text = skillTransform.name;
-    }
-
 
     ///<summary>Helper method to open HUD</summary>
     private void OpenHUD()
@@ -255,7 +163,7 @@ public class GridHUDManager : MonoBehaviour
     {
         if (isHUDActive)
         {
-            int maxRow = gridHUDParent.childCount;
+            int maxRow = colorRow.childCount;
             // If there is another skill to the right
             if (row + 1 < maxRow)
             {
@@ -263,10 +171,7 @@ public class GridHUDManager : MonoBehaviour
                 Skill nextSkill = SkillController.Instance.GetSkill(row + 1);
                 if (nextSkill.IsSkillUnlocked())
                 {
-                    foreach (Transform parent in gridHUDParent)
-                    {
-                        parent.Translate(-horizontalSpace, 0, 0);
-                    }
+                    colorRow.Translate(-horizontalSpace, 0, 0);
                     ++row;
                 }
             }
@@ -279,10 +184,7 @@ public class GridHUDManager : MonoBehaviour
         {
             if (row > 0)
             {
-                foreach (Transform parent in gridHUDParent)
-                {
-                    parent.Translate(horizontalSpace, 0, 0);
-                }
+                colorRow.Translate(horizontalSpace, 0, 0);
                 --row;
             }
         }
@@ -319,8 +221,15 @@ public class GridHUDManager : MonoBehaviour
         }
     }
 
+    // Called when the player hits escape
+    // Close the hud without using the skills
+    private void OnRevert()
+    {
+        HUDstatus(false);
+    }
+
     // For testing
-    // TODO Remove this for final build
+#if DEVELOPMENT_BUILD || UNITY_EDITOR
     private void OnHackerAxis(Vector2 rawInputVector)
     {
         if (rawInputVector.y > 0)
@@ -338,19 +247,5 @@ public class GridHUDManager : MonoBehaviour
         // Update the HUD
         ActivateAllSets();
     }
-
-    // Called when the player hits escape
-    // Close the hud without using the skills
-    private void OnRevert()
-    {
-        HUDstatus(false);
-    }
-
-
-    /// <summary>Gets the index of the current state of the selected skill.</summary>
-    /// <param name="skillIndex">Index of the skill to check the state of.</param>
-    public int GetStateIndexOfSkill(int skillIndex)
-    {
-        return index[skillIndex];
-    }
+#endif
 }

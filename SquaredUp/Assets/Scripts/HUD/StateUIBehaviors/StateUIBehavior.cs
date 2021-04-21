@@ -4,12 +4,12 @@
 public abstract class StateUIBehavior : MonoBehaviour
 {
     // Reference tot he GridHUDManager
-    private GridHUDManager hudManager = null;
-    protected GridHUDManager HUDManager { get { return hudManager; } }
+    private HUDManager hudManager = null;
+    protected HUDManager HUDManager { get { return hudManager; } }
 
     /// <summary>Sets the hud manager reference for the state UI's behavior.</summary>
     /// <param name="hudMan">Reference tot he GridHUDManager.</param>
-    public void Initialize(GridHUDManager hudMan)
+    public void Initialize(HUDManager hudMan)
     {
         hudManager = hudMan;
     }
