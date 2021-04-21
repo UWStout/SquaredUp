@@ -24,7 +24,14 @@ public class LaserScript : MonoBehaviour
         }
         else if (hit && (hit.collider.gameObject.layer == Mathf.Log(raycastLayer.value, 2)))
         {
-            hit.collider.gameObject.GetComponent<LaserScript>().VoidCast();
+            if (hit.collider.gameObject.GetComponent<LaserScript>())
+            {
+                hit.collider.gameObject.GetComponent<LaserScript>().VoidCast();
+            }
+            else if (hit.collider.gameObject.GetComponent<EndTower>())
+            {
+                hit.collider.gameObject.GetComponent<EndTower>().VoidCast();
+            }
         }
     }
     public void HitByCast(Vector3 hitBy, Vector3 hitPoint, int from)
