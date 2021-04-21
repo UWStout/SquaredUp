@@ -80,8 +80,8 @@ RectTransform:
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
-  - {fileID: 2417587983397263045}
   - {fileID: 6135341904557106475}
+  - {fileID: 2417587983397263045}
   m_Father: {fileID: 1968065352896672003}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -103,7 +103,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   gridHUDParent: {fileID: 1968065351764972144}
-  skillStatePrefab: {fileID: 7429219623078615471, guid: 4b25ac603415e884fb01f13874320007, type: 3}
+  colorRow: {fileID: 6135341904557106475}
+  shapeCol: {fileID: 2417587983397263045}
   verticalSpace: 150
   horizontalSpace: 150
 --- !u!1 &1968065352838819353
@@ -700,7 +701,7 @@ RectTransform:
   - {fileID: 3698852764957754969}
   - {fileID: 2929351498009261464}
   m_Father: {fileID: 1968065351764972144}
-  m_RootOrder: 0
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -739,7 +740,7 @@ RectTransform:
   - {fileID: 1933237517093180856}
   - {fileID: 5602921334020195989}
   m_Father: {fileID: 1968065351764972144}
-  m_RootOrder: 1
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}

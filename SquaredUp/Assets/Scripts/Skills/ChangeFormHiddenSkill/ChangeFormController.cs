@@ -84,13 +84,13 @@ public class ChangeFormController : MonoBehaviour
             size = shapeDirectionalSize * curSizeData.Size;
         }
 
-        Debug.Log("Was Size Changed: " + wasSizeChanged);
-        Debug.Log("Was Shape Changed: " + wasShapeChanged);
-        Debug.Log("CurShapeData: " + curShapeData);
-        Debug.Log("Does direciton affect scale: " + curShapeData.DirectionAffectsScale);
-        Debug.Log("Target Size: " + size);
-        Debug.Log("Current Size: " + playerScaleCont.ShapeScale);
-        Debug.Log("Target!=Size? " + (size != playerScaleCont.ShapeScale));
+        //Debug.Log("Was Size Changed: " + wasSizeChanged);
+        //Debug.Log("Was Shape Changed: " + wasShapeChanged);
+        //Debug.Log("CurShapeData: " + curShapeData);
+        //Debug.Log("Does direciton affect scale: " + curShapeData.DirectionAffectsScale);
+        //Debug.Log("Target Size: " + size);
+        //Debug.Log("Current Size: " + playerScaleCont.ShapeScale);
+        //Debug.Log("Target!=Size? " + (size != playerScaleCont.ShapeScale));
 
         // Change if size or shape was changed or
         // if the shape's direction affects scale and the scale has changed

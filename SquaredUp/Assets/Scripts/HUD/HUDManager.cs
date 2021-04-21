@@ -9,16 +9,16 @@ public class HUDManager : MonoBehaviour
     [SerializeField] private Transform gridHUDParent = null;
 
     // Selection row and column parents
-    [SerializeField] private Transform colorRow = null;
-    [SerializeField] private Transform shapeCol = null;
+    [SerializeField] private RectTransform colorRow = null;
+    [SerializeField] private RectTransform shapeCol = null;
 
     // Spacing for how the states should be layed out
     [SerializeField] private float verticalSpace = 150f;
     [SerializeField] private float horizontalSpace = 150f;
 
     // Indexing information
-    private int row = 0;
-    private int[] index = null;
+    private int colorRowIndex = 0;
+    private int shapeColIndex = 0;
 
     // If the HUD is currently active
     private bool isHUDActive = false;
@@ -47,9 +47,9 @@ public class HUDManager : MonoBehaviour
         SkillMenuController.OpenSkillMenuEvent -= OpenHUD;
         SkillMenuController.CloseSkillMenuEvent -= CloseHUD;
         InputEvents.MainAxisEvent -= OnHUDAxis;
-        InputEvents.HackerAxisEvent -= OnHackerAxis;
-#if DEVELOPMENT_BUILD || UNITY_EDITOR
         InputEvents.RevertEvent -= OnRevert;
+#if DEVELOPMENT_BUILD || UNITY_EDITOR
+        InputEvents.HackerAxisEvent -= OnHackerAxis;
 #endif
     }
 
@@ -60,20 +60,27 @@ public class HUDManager : MonoBehaviour
         int amountSkills = SkillController.Instance.GetSkillAmount();
 
         // Initialize the selection indices
-        row = 0;
-        index = new int[amountSkills];
-        for (int i = 0; i < amountSkills; ++i) { index[i] = 0; }
+        colorRowIndex = 0;
+        shapeColIndex = 0;
 
         // Hide HUD on start
         HUDstatus(false);
     }
 
 
-    /// <summary>Gets the index of the current state of the selected skill.</summary>
+    /// <summary>Gets the index of the current state of the selected skill (Color or Shape).</summary>
     /// <param name="skillIndex">Index of the skill to check the state of.</param>
     public int GetStateIndexOfSkill(int skillIndex)
     {
-        return index[skillIndex];
+        switch ((SkillController.SkillEnum)skillIndex)
+        {
+            case SkillController.SkillEnum.Shape:
+                return shapeColIndex;
+            case SkillController.SkillEnum.Color:
+                return colorRowIndex;
+            default:
+                return -1;
+        }
     }
 
     ///<summary>Helper method to open HUD</summary>
@@ -113,13 +120,8 @@ public class HUDManager : MonoBehaviour
     /// <summary>Turns on the unlocked options in each set</summary>
     private void ActivateAllSets()
     {
-        int count = 0;
-        foreach (Transform parent in gridHUDParent)
-        {
-            Skill curSkill = SkillController.Instance.GetSkill(count);
-            ActivateSingleSet(parent, curSkill);
-            ++count;
-        }
+        ActivateSingleSet(shapeCol, SkillController.Instance.GetSkill(SkillController.SkillEnum.Shape));
+        ActivateSingleSet(colorRow, SkillController.Instance.GetSkill(SkillController.SkillEnum.Color));
     }
     /// <summary>Helper function for ActivateAllSets to turn on all the sets</summary>
     private void ActivateSingleSet(Transform setParent, Skill skillRef)
@@ -139,7 +141,11 @@ public class HUDManager : MonoBehaviour
     private void ExecuteHUD()
     {
         // Use the skills
-        SkillController.Instance.UseAllSkills(index);
+        SkillController.Instance.UseSkill(SkillController.SkillEnum.Color, colorRowIndex);
+        SkillController.Instance.UseSkill(SkillController.SkillEnum.Shape, shapeColIndex);
+
+        // Form change skill
+        SkillController.Instance.UseSkill(SkillController.SkillEnum.Form, 0);
     }
 
     /// <summary>Called when the player uses the HUD navigation</summary>
@@ -149,74 +155,74 @@ public class HUDManager : MonoBehaviour
         if (isHUDActive)
         {
             // Horizontal movement
-            if (rawInput.x < 0) { OnHUDRight(); }
-            else if (rawInput.x > 0) { OnHUDLeft(); }
+            if (rawInput.x < 0) { OnColorRowRight(); }
+            else if (rawInput.x > 0) { OnColorRowLeft(); }
 
             // Vertical movement
-            if (rawInput.y < 0) { OnColumnUp(); }
-            else if (rawInput.y > 0) { OnColumnDown(); }
+            if (rawInput.y < 0) { OnShapeColumnDown(); }
+            else if (rawInput.y > 0) { OnShapeColumnUp(); }
         }
     }
 
-    /// <summary>Moves the HUD left</summary>
-    private void OnHUDLeft()
+    /// <summary>Moves the color row left</summary>
+    private void OnColorRowLeft()
     {
         if (isHUDActive)
         {
             int maxRow = colorRow.childCount;
-            // If there is another skill to the right
-            if (row + 1 < maxRow)
+            // If there is another state to the right
+            if (colorRowIndex + 1 < maxRow)
             {
-                // If that skill is also unlocked
-                Skill nextSkill = SkillController.Instance.GetSkill(row + 1);
-                if (nextSkill.IsSkillUnlocked())
+                // If that state is also unlocked
+                Skill colorSkill = SkillController.Instance.GetSkill(SkillController.SkillEnum.Color);
+                if (colorSkill.IsStateUnlocked(colorRowIndex + 1))
                 {
-                    colorRow.Translate(-horizontalSpace, 0, 0);
-                    ++row;
+                    colorRow.anchoredPosition += new Vector2(-horizontalSpace, 0);
+                    ++colorRowIndex;
                 }
             }
         }
     }
-    /// <summary>Moves the HUD right</summary>
-    private void OnHUDRight()
+    /// <summary>Moves the color row right</summary>
+    private void OnColorRowRight()
     {
         if (isHUDActive)
         {
-            if (row > 0)
+            if (colorRowIndex > 0)
             {
-                colorRow.Translate(horizontalSpace, 0, 0);
-                --row;
+                colorRow.anchoredPosition += new Vector2(horizontalSpace, 0);
+                --colorRowIndex;
             }
         }
     }
     /// <summary>Move one column up</summary>
-    private void OnColumnUp()
+    private void OnShapeColumnUp()
     {
         if (isHUDActive)
         {
-            Skill curSkill = SkillController.Instance.GetSkill(row);
-            int totalStates = curSkill.GetAmountStates();
-            // If there is a next state
-            if (index[row] + 1 < totalStates)
+            if (shapeColIndex > 0)
             {
-                // And that state is unlocked
-                if (curSkill.IsStateUnlocked(index[row] + 1))
-                {
-                    gridHUDParent.GetChild(row).Translate(0, verticalSpace, 0);
-                    ++index[row];
-                }
-            }
+                shapeCol.anchoredPosition += new Vector2(0, -verticalSpace);
+                --shapeColIndex;
+            }            
         }
     }
     /// <summary>Move on column down</summary>
-    private void OnColumnDown()
+    private void OnShapeColumnDown()
     {
         if (isHUDActive)
         {
-            if (index[row] > 0)
+            int maxCol = shapeCol.childCount;
+            Skill shapeSkill = SkillController.Instance.GetSkill(SkillController.SkillEnum.Shape);
+            // If there is another state to the right
+            if (shapeColIndex + 1 < maxCol)
             {
-                gridHUDParent.GetChild(row).Translate(0, -verticalSpace, 0);
-                --index[row];
+                // And that state is unlocked
+                if (shapeSkill.IsStateUnlocked(shapeColIndex + 1))
+                {
+                    shapeCol.anchoredPosition += new Vector2(0, verticalSpace);
+                    ++shapeColIndex;
+                }
             }
         }
     }
@@ -232,16 +238,16 @@ public class HUDManager : MonoBehaviour
 #if DEVELOPMENT_BUILD || UNITY_EDITOR
     private void OnHackerAxis(Vector2 rawInputVector)
     {
-        if (rawInputVector.y > 0)
+        if (rawInputVector.y < 0)
         {
             Debug.Log("Elite Hacker detected. Unlocking hidden memes.");
-            SkillController.Instance.UnlockSkillState(row, index[row] + 1);
+            SkillController.Instance.UnlockSkillState(SkillController.SkillEnum.Shape, shapeColIndex + 1);
         }
 
         if (rawInputVector.x > 0)
         {
             Debug.Log("Elite Hacker detected. Expanding meme library.");
-            SkillController.Instance.UnlockSkill(row + 1);
+            SkillController.Instance.UnlockSkillState(SkillController.SkillEnum.Color, colorRowIndex + 1);
         }
 
         // Update the HUD
