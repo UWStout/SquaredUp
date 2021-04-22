@@ -20,6 +20,8 @@ public class ChangeFormController : MonoBehaviour
     [SerializeField] private AudioSource transformSizeSound = null;
     // Reference to the CannotFitVisual
     [SerializeField] private CannotFitVisualController cannotFitCont = null;
+    // SFX for failing transformation
+    [SerializeField] private AudioSource failedTransformSound = null;
 
     // Coroutine variables for how fast to change the shape and when we are close enough
     [SerializeField] [Min(0.0001f)] private float changeSpeed = 1f;
@@ -116,6 +118,8 @@ public class ChangeFormController : MonoBehaviour
             {
                 // Display cannot fit here error
                 ShowCannotFitHere(curShapeData.TypeOfShape, size);
+                // Play cannot fit sound
+                failedTransformSound.Play();
 
                 // Revert shape and size data to their previous states
                 curShapeData = prevShapeData;

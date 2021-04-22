@@ -1,10 +1,12 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
-using TMPro;
 
 /// <summary>Manages the HUD for skills</summary>
 public class HUDManager : MonoBehaviour
 {
+    // Constants
+    private const float fadedAlpha = 0.5f;
+
     // Reference to the grid HUD's total parent
     [SerializeField] private Transform gridHUDParent = null;
 
@@ -15,6 +17,16 @@ public class HUDManager : MonoBehaviour
     // Spacing for how the states should be layed out
     [SerializeField] private float verticalSpace = 150f;
     [SerializeField] private float horizontalSpace = 150f;
+
+    // References for the arrows
+    [SerializeField] private GameObject upArrow = null;
+    [SerializeField] private GameObject downArrow = null;
+    [SerializeField] private GameObject leftArrow = null;
+    [SerializeField] private GameObject rightArrow = null;
+
+    // References to the images for color and shape
+    private Image[] colorImages = new Image[0];
+    private Image[] shapeImages = new Image[0];
 
     // Indexing information
     private int colorRowIndex = 0;
@@ -63,6 +75,25 @@ public class HUDManager : MonoBehaviour
         colorRowIndex = 0;
         shapeColIndex = 0;
 
+        // Get the color and shape images
+        colorImages = new Image[colorRow.childCount];
+        shapeImages = new Image[shapeCol.childCount];
+        try
+        {
+            for (int i = 0; i < colorRow.childCount; ++i)
+            {
+                colorImages[i] = colorRow.GetChild(i).GetComponent<Image>();
+            }
+            for (int i = 0; i < shapeCol.childCount; ++i)
+            {
+                shapeImages[i] = shapeCol.GetChild(i).GetComponent<Image>();
+            }
+        }
+        catch
+        {
+            Debug.LogError("Failed to initialize images");
+        }
+
         // Hide HUD on start
         HUDstatus(false);
     }
@@ -87,6 +118,7 @@ public class HUDManager : MonoBehaviour
     private void OpenHUD()
     {
         HUDstatus(true);
+        UpdateVisuals();
     }
     /// <summary>Helper method to close HUD and execute the skill calls</summary>
     private void CloseHUD()
@@ -112,14 +144,12 @@ public class HUDManager : MonoBehaviour
     /// <summary>Turns off the parents of each of the sets</summary>
     private void DeactivateAllSets()
     {
-        foreach (Transform parent in gridHUDParent)
-        {
-            parent.gameObject.SetActive(false);
-        }
+        gridHUDParent.gameObject.SetActive(false);
     }
     /// <summary>Turns on the unlocked options in each set</summary>
     private void ActivateAllSets()
     {
+        gridHUDParent.gameObject.SetActive(true);
         ActivateSingleSet(shapeCol, SkillController.Instance.GetSkill(SkillController.SkillEnum.Shape));
         ActivateSingleSet(colorRow, SkillController.Instance.GetSkill(SkillController.SkillEnum.Color));
     }
@@ -179,6 +209,7 @@ public class HUDManager : MonoBehaviour
                 {
                     colorRow.anchoredPosition += new Vector2(-horizontalSpace, 0);
                     ++colorRowIndex;
+                    UpdateVisuals();
                 }
             }
         }
@@ -192,6 +223,7 @@ public class HUDManager : MonoBehaviour
             {
                 colorRow.anchoredPosition += new Vector2(horizontalSpace, 0);
                 --colorRowIndex;
+                UpdateVisuals();
             }
         }
     }
@@ -204,6 +236,7 @@ public class HUDManager : MonoBehaviour
             {
                 shapeCol.anchoredPosition += new Vector2(0, -verticalSpace);
                 --shapeColIndex;
+                UpdateVisuals();
             }            
         }
     }
@@ -222,9 +255,53 @@ public class HUDManager : MonoBehaviour
                 {
                     shapeCol.anchoredPosition += new Vector2(0, verticalSpace);
                     ++shapeColIndex;
+                    UpdateVisuals();
                 }
             }
         }
+    }
+
+    /// <summary>Fades out appropriate images and shows the appropriate arrows.</summary>
+    private void UpdateVisuals()
+    {
+        UpdateFadeImages();
+        UpdateActiveArrows();
+    }
+
+    /// <summary>Fades out all the images and fades the currently selected one back in.</summary>
+    private void UpdateFadeImages()
+    {
+        Color temp;
+        // Fade out shapes
+        foreach (Image shapeImg in shapeImages)
+        {
+            temp = shapeImg.color;
+            temp.a = fadedAlpha;
+            shapeImg.color = temp;
+        }
+        // Fade out colors
+        foreach (Image colorImg in colorImages)
+        {
+            temp = colorImg.color;
+            temp.a = fadedAlpha;
+            colorImg.color = temp;
+        }
+        // Fade in selected
+        temp = colorImages[colorRowIndex].color;
+        temp.a = 1f;
+        colorImages[colorRowIndex].color = temp;
+    }
+
+    /// <summary>Shows arrows for the directions the player can actually traverse in the menu.</summary>
+    private void UpdateActiveArrows()
+    {
+        Skill shapeSkill = SkillController.Instance.GetSkill(SkillController.SkillEnum.Shape);
+        Skill colorSkill = SkillController.Instance.GetSkill(SkillController.SkillEnum.Color);
+
+        upArrow.SetActive(shapeColIndex > 0);
+        downArrow.SetActive(shapeColIndex + 1 < shapeSkill.GetAmountStates() && shapeSkill.IsStateUnlocked(shapeColIndex + 1));
+        leftArrow.SetActive(colorRowIndex > 0);
+        rightArrow.SetActive(colorRowIndex + 1 < colorSkill.GetAmountStates() && colorSkill.IsStateUnlocked(colorRowIndex + 1));
     }
 
     // Called when the player hits escape

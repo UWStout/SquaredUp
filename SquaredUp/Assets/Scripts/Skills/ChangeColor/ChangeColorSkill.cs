@@ -18,6 +18,8 @@ public class ChangeColorSkill : SkillBase<ColorData>
     [SerializeField] private SpriteRenderer playerPointerSprRef = null;
     // Reference to the color check script
     [SerializeField] private PlayerInColorCheck playerColorCheckRef = null;
+    // SFX for failing transformation
+    [SerializeField] private AudioSource failedTransformSound = null;
 
     // Coroutine variables for how fast to change the color and when we are close enough
     [SerializeField] [Min(0.0001f)] private float changeSpeed = 1f;
@@ -62,7 +64,7 @@ public class ChangeColorSkill : SkillBase<ColorData>
         }
         else
         {
-            Debug.Log("Player cannot change to " + GetStateName(stateIndex) + " here");
+            failedTransformSound.Play();
         }
     }
 

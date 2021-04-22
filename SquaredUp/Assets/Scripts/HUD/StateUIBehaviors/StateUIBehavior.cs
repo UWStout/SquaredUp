@@ -4,7 +4,7 @@
 public abstract class StateUIBehavior : MonoBehaviour
 {
     // Reference tot he GridHUDManager
-    private HUDManager hudManager = null;
+    [SerializeField] private HUDManager hudManager = null;
     protected HUDManager HUDManager { get { return hudManager; } }
 
     /// <summary>Sets the hud manager reference for the state UI's behavior.</summary>
