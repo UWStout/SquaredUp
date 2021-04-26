@@ -41,6 +41,14 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 8717297439806156481, guid: bf1ed4abbeb3b6246b94b6b740704271, type: 3}
+      propertyPath: m_SortingLayerID
+      value: 277335541
+      objectReference: {fileID: 0}
+    - target: {fileID: 8717297439806156481, guid: bf1ed4abbeb3b6246b94b6b740704271, type: 3}
+      propertyPath: m_SortingLayer
+      value: -4
+      objectReference: {fileID: 0}
     - target: {fileID: 8717297440243521417, guid: bf1ed4abbeb3b6246b94b6b740704271, type: 3}
       propertyPath: m_Name
       value: Loop_Guard
