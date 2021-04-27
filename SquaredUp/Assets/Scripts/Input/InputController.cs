@@ -73,7 +73,6 @@ public class InputController : MonoBehaviour
     {
         if (activeMapNames.Count > 0)
         {
-            Debug.Log("Setting current input map to " + activeMapNames[activeMapNames.Count - 1]);
             playerInputRef.SwitchCurrentActionMap(activeMapNames[activeMapNames.Count - 1]);
         }
         else
