@@ -49,14 +49,12 @@ public class CircleTilemapSingleton : MonoBehaviour
         circleWallTiles = new TileBase[tilemap.GetUsedTilesCount()];
         tilemap.GetUsedTilesNonAlloc(circleWallTiles);
     }
-
     // Called 1st
     // Initialization
     private void Start()
     {
         currentTransparency = 1f;
     }
-
     // Called when the component set inactive.
     private void OnDisable()
     {

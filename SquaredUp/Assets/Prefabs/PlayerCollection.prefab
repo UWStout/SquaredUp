@@ -1612,7 +1612,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6257086275078037472}
-  - component: {fileID: 2134340687831649558}
+  - component: {fileID: 7168733040207796041}
   m_Layer: 0
   m_Name: PlayerCollection
   m_TagString: Untagged
@@ -1640,7 +1640,7 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &2134340687831649558
+--- !u!114 &7168733040207796041
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -1649,7 +1649,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 6257086275078037475}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5096defdcd2e42546a8623c06e60ca27, type: 3}
+  m_Script: {fileID: 11500000, guid: 701cd752de13f894fadf9a46b7e9c56c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1 &6257086275170067483

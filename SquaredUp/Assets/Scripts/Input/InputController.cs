@@ -35,15 +35,11 @@ public class InputController : MonoBehaviour
             Destroy(this);
         }
     }
-
     // Called 1st
     // Initialization
     private void Start()
     {
-        // Initialize active map names to have the default map in it.
-        activeMapNames = new List<string>();
-        activeMapNames.Add(defaultMapName);
-        UpdateActiveInputMap();
+        ResetInputMap();
     }
 
 
@@ -63,11 +59,21 @@ public class InputController : MonoBehaviour
         UpdateActiveInputMap();
     }
 
+    /// <summary>Resets the input map to just be the starting input map.</summary>
+    public void ResetInputMap()
+    {
+        // Initialize active map names to have the default map in it.
+        activeMapNames = new List<string>();
+        activeMapNames.Add(defaultMapName);
+        UpdateActiveInputMap();
+    }
+
     /// <summary>Updates the action map to be the map at the top of the stack.</summary>
     private void UpdateActiveInputMap()
     {
         if (activeMapNames.Count > 0)
         {
+            Debug.Log("Setting current input map to " + activeMapNames[activeMapNames.Count - 1]);
             playerInputRef.SwitchCurrentActionMap(activeMapNames[activeMapNames.Count - 1]);
         }
         else

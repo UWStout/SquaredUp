@@ -2,7 +2,7 @@
 using UnityEditor;
 
 /// <summary>Data to describe the shape the player will change into in the change shape skill</summary>
-[CreateAssetMenu(fileName = "Shape Data", menuName = "ScriptablesObjects/SkillData/ShapeData")]
+[CreateAssetMenu(fileName = "Shape Data", menuName = "ScriptableObjects/SkillData/ShapeData")]
 public class ShapeData : SkillStateData
 {
     // Types of 2D colliders

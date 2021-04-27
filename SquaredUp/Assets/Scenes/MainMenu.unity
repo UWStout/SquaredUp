@@ -469,6 +469,7 @@ GameObject:
   - component: {fileID: 155165318}
   - component: {fileID: 155165317}
   - component: {fileID: 155165316}
+  - component: {fileID: 155165319}
   m_Layer: 5
   m_Name: DoorsTeleButton
   m_TagString: Untagged
@@ -538,7 +539,31 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 155165317}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1418419916}
+        m_TargetAssemblyTypeName: MenuPuzzleLoader, Assembly-CSharp
+        m_MethodName: SetPuzzleData
+        m_Mode: 2
+        m_Arguments:
+          m_ObjectArgument: {fileID: 11400000, guid: 822aad09bbcf0c94fa6f8f8ee8eaa831, type: 2}
+          m_ObjectArgumentAssemblyTypeName: PuzzleLoadData, Assembly-CSharp
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 1709975410}
+        m_TargetAssemblyTypeName: PauseMenuScript, Assembly-CSharp
+        m_MethodName: StartGame
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &155165317
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -577,6 +602,19 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 155165314}
   m_CullTransparentMesh: 0
+--- !u!114 &155165319
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 155165314}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d0b148fe25e99eb48b9724523833bab1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Delegates: []
 --- !u!1 &192530678
 GameObject:
   m_ObjectHideFlags: 0
@@ -593,7 +631,7 @@ GameObject:
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 4294967295
   m_IsActive: 1
 --- !u!224 &192530679
 RectTransform:
@@ -830,8 +868,9 @@ GameObject:
   - component: {fileID: 260623012}
   - component: {fileID: 260623011}
   - component: {fileID: 260623010}
+  - component: {fileID: 260623013}
   m_Layer: 5
-  m_Name: EndTeleButton
+  m_Name: KingTeleButton
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -899,7 +938,31 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 260623011}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1418419916}
+        m_TargetAssemblyTypeName: MenuPuzzleLoader, Assembly-CSharp
+        m_MethodName: SetPuzzleData
+        m_Mode: 2
+        m_Arguments:
+          m_ObjectArgument: {fileID: 11400000, guid: aca75df27e782c1449ec5629a2f4fc68, type: 2}
+          m_ObjectArgumentAssemblyTypeName: PuzzleLoadData, Assembly-CSharp
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 1709975410}
+        m_TargetAssemblyTypeName: PauseMenuScript, Assembly-CSharp
+        m_MethodName: StartGame
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &260623011
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -938,6 +1001,19 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 260623008}
   m_CullTransparentMesh: 0
+--- !u!114 &260623013
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 260623008}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d0b148fe25e99eb48b9724523833bab1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Delegates: []
 --- !u!1 &315090171
 GameObject:
   m_ObjectHideFlags: 0
@@ -1390,6 +1466,7 @@ GameObject:
   - component: {fileID: 479499712}
   - component: {fileID: 479499711}
   - component: {fileID: 479499710}
+  - component: {fileID: 479499713}
   m_Layer: 5
   m_Name: Guard1TeleButton
   m_TagString: Untagged
@@ -1459,7 +1536,31 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 479499711}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1418419916}
+        m_TargetAssemblyTypeName: MenuPuzzleLoader, Assembly-CSharp
+        m_MethodName: SetPuzzleData
+        m_Mode: 2
+        m_Arguments:
+          m_ObjectArgument: {fileID: 11400000, guid: 6f2addae76f70454b95fe38d7d8c10f1, type: 2}
+          m_ObjectArgumentAssemblyTypeName: PuzzleLoadData, Assembly-CSharp
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 1709975410}
+        m_TargetAssemblyTypeName: PauseMenuScript, Assembly-CSharp
+        m_MethodName: StartGame
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &479499711
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1498,6 +1599,19 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 479499708}
   m_CullTransparentMesh: 0
+--- !u!114 &479499713
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 479499708}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d0b148fe25e99eb48b9724523833bab1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Delegates: []
 --- !u!1 &500057402
 GameObject:
   m_ObjectHideFlags: 0
@@ -1510,6 +1624,7 @@ GameObject:
   - component: {fileID: 500057406}
   - component: {fileID: 500057405}
   - component: {fileID: 500057404}
+  - component: {fileID: 500057407}
   m_Layer: 5
   m_Name: Color2TeleButton
   m_TagString: Untagged
@@ -1579,7 +1694,31 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 500057405}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1418419916}
+        m_TargetAssemblyTypeName: MenuPuzzleLoader, Assembly-CSharp
+        m_MethodName: SetPuzzleData
+        m_Mode: 2
+        m_Arguments:
+          m_ObjectArgument: {fileID: 11400000, guid: 1722c6c4515f30c458d152b13a61f93e, type: 2}
+          m_ObjectArgumentAssemblyTypeName: PuzzleLoadData, Assembly-CSharp
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 1709975410}
+        m_TargetAssemblyTypeName: PauseMenuScript, Assembly-CSharp
+        m_MethodName: StartGame
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &500057405
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1618,6 +1757,19 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 500057402}
   m_CullTransparentMesh: 0
+--- !u!114 &500057407
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 500057402}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d0b148fe25e99eb48b9724523833bab1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Delegates: []
 --- !u!1 &544444981
 GameObject:
   m_ObjectHideFlags: 0
@@ -1865,6 +2017,7 @@ GameObject:
   - component: {fileID: 684654739}
   - component: {fileID: 684654738}
   - component: {fileID: 684654737}
+  - component: {fileID: 684654740}
   m_Layer: 5
   m_Name: TempleTeleButton
   m_TagString: Untagged
@@ -1934,7 +2087,31 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 684654738}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1418419916}
+        m_TargetAssemblyTypeName: MenuPuzzleLoader, Assembly-CSharp
+        m_MethodName: SetPuzzleData
+        m_Mode: 2
+        m_Arguments:
+          m_ObjectArgument: {fileID: 11400000, guid: edc2df5da2cd5bd4d820a82b77ccf970, type: 2}
+          m_ObjectArgumentAssemblyTypeName: PuzzleLoadData, Assembly-CSharp
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 1709975410}
+        m_TargetAssemblyTypeName: PauseMenuScript, Assembly-CSharp
+        m_MethodName: StartGame
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &684654738
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1973,6 +2150,19 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 684654735}
   m_CullTransparentMesh: 0
+--- !u!114 &684654740
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 684654735}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d0b148fe25e99eb48b9724523833bab1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Delegates: []
 --- !u!1 &788014634
 GameObject:
   m_ObjectHideFlags: 0
@@ -1985,6 +2175,7 @@ GameObject:
   - component: {fileID: 788014638}
   - component: {fileID: 788014637}
   - component: {fileID: 788014636}
+  - component: {fileID: 788014639}
   m_Layer: 5
   m_Name: Color1TeleButton
   m_TagString: Untagged
@@ -2054,7 +2245,31 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 788014637}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1418419916}
+        m_TargetAssemblyTypeName: MenuPuzzleLoader, Assembly-CSharp
+        m_MethodName: SetPuzzleData
+        m_Mode: 2
+        m_Arguments:
+          m_ObjectArgument: {fileID: 11400000, guid: a41ec79b3a4b966428dd10bf2c0cf60c, type: 2}
+          m_ObjectArgumentAssemblyTypeName: PuzzleLoadData, Assembly-CSharp
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 1709975410}
+        m_TargetAssemblyTypeName: PauseMenuScript, Assembly-CSharp
+        m_MethodName: StartGame
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &788014637
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2093,6 +2308,19 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 788014634}
   m_CullTransparentMesh: 0
+--- !u!114 &788014639
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 788014634}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d0b148fe25e99eb48b9724523833bab1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Delegates: []
 --- !u!1 &805542895
 GameObject:
   m_ObjectHideFlags: 0
@@ -2150,7 +2378,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Temple End
+  m_text: Jungle Color
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: dc91e7f8b7bf20145ba0a1b5a4b68d4c, type: 2}
   m_sharedMaterial: {fileID: -8517254433017266214, guid: dc91e7f8b7bf20145ba0a1b5a4b68d4c, type: 2}
@@ -2239,6 +2467,7 @@ GameObject:
   - component: {fileID: 846752695}
   - component: {fileID: 846752694}
   - component: {fileID: 846752693}
+  - component: {fileID: 846752696}
   m_Layer: 5
   m_Name: IceTeleButton
   m_TagString: Untagged
@@ -2308,7 +2537,31 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 846752694}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1418419916}
+        m_TargetAssemblyTypeName: MenuPuzzleLoader, Assembly-CSharp
+        m_MethodName: SetPuzzleData
+        m_Mode: 2
+        m_Arguments:
+          m_ObjectArgument: {fileID: 11400000, guid: 227d74f02730ec64da855c3787cefe62, type: 2}
+          m_ObjectArgumentAssemblyTypeName: PuzzleLoadData, Assembly-CSharp
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 1709975410}
+        m_TargetAssemblyTypeName: PauseMenuScript, Assembly-CSharp
+        m_MethodName: StartGame
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &846752694
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2347,6 +2600,19 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 846752691}
   m_CullTransparentMesh: 0
+--- !u!114 &846752696
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 846752691}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d0b148fe25e99eb48b9724523833bab1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Delegates: []
 --- !u!1 &910914846
 GameObject:
   m_ObjectHideFlags: 0
@@ -2359,6 +2625,7 @@ GameObject:
   - component: {fileID: 910914850}
   - component: {fileID: 910914849}
   - component: {fileID: 910914848}
+  - component: {fileID: 910914851}
   m_Layer: 5
   m_Name: Light1TeleButton
   m_TagString: Untagged
@@ -2428,7 +2695,31 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 910914849}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1418419916}
+        m_TargetAssemblyTypeName: MenuPuzzleLoader, Assembly-CSharp
+        m_MethodName: SetPuzzleData
+        m_Mode: 2
+        m_Arguments:
+          m_ObjectArgument: {fileID: 11400000, guid: f7d3438731a93a14791bc3ba8977bc4a, type: 2}
+          m_ObjectArgumentAssemblyTypeName: PuzzleLoadData, Assembly-CSharp
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 1709975410}
+        m_TargetAssemblyTypeName: PauseMenuScript, Assembly-CSharp
+        m_MethodName: StartGame
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &910914849
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2467,6 +2758,19 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 910914846}
   m_CullTransparentMesh: 0
+--- !u!114 &910914851
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 910914846}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d0b148fe25e99eb48b9724523833bab1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Delegates: []
 --- !u!1 &922587351
 GameObject:
   m_ObjectHideFlags: 0
@@ -2511,6 +2815,7 @@ GameObject:
   - component: {fileID: 1055443454}
   - component: {fileID: 1055443453}
   - component: {fileID: 1055443452}
+  - component: {fileID: 1055443455}
   m_Layer: 5
   m_Name: Guard2TeleButton
   m_TagString: Untagged
@@ -2580,7 +2885,31 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1055443453}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1418419916}
+        m_TargetAssemblyTypeName: MenuPuzzleLoader, Assembly-CSharp
+        m_MethodName: SetPuzzleData
+        m_Mode: 2
+        m_Arguments:
+          m_ObjectArgument: {fileID: 11400000, guid: 06122596ae5154249a2c2c2ee1de9f52, type: 2}
+          m_ObjectArgumentAssemblyTypeName: PuzzleLoadData, Assembly-CSharp
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 1709975410}
+        m_TargetAssemblyTypeName: PauseMenuScript, Assembly-CSharp
+        m_MethodName: StartGame
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &1055443453
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2619,6 +2948,19 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1055443450}
   m_CullTransparentMesh: 0
+--- !u!114 &1055443455
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1055443450}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d0b148fe25e99eb48b9724523833bab1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Delegates: []
 --- !u!1 &1057649190
 GameObject:
   m_ObjectHideFlags: 0
@@ -3334,7 +3676,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: End
+  m_text: King
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: dc91e7f8b7bf20145ba0a1b5a4b68d4c, type: 2}
   m_sharedMaterial: {fileID: -8517254433017266214, guid: dc91e7f8b7bf20145ba0a1b5a4b68d4c, type: 2}
@@ -3493,6 +3835,18 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
+      - m_Target: {fileID: 1944796554}
+        m_TargetAssemblyTypeName: PuzzleLoader, Assembly-CSharp
+        m_MethodName: ResetPuzzleLoader
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
       - m_Target: {fileID: 1709975410}
         m_TargetAssemblyTypeName: PauseMenuScript, Assembly-CSharp
         m_MethodName: StartGame
@@ -3543,6 +3897,49 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1412866164}
   m_CullTransparentMesh: 0
+--- !u!1 &1418419915
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1418419917}
+  - component: {fileID: 1418419916}
+  m_Layer: 0
+  m_Name: MenuPuzzleLoader
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 4294967295
+  m_IsActive: 1
+--- !u!114 &1418419916
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1418419915}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 41d7b3954b5a29e4c8fe5c354fcfa20e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!4 &1418419917
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1418419915}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 2
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1446018733
 GameObject:
   m_ObjectHideFlags: 0
@@ -3914,7 +4311,31 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1610113065}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1418419916}
+        m_TargetAssemblyTypeName: MenuPuzzleLoader, Assembly-CSharp
+        m_MethodName: SetPuzzleData
+        m_Mode: 2
+        m_Arguments:
+          m_ObjectArgument: {fileID: 11400000, guid: 08ecfeb1a8f9c2b4980b5f44513dd5ed, type: 2}
+          m_ObjectArgumentAssemblyTypeName: PuzzleLoadData, Assembly-CSharp
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 1709975410}
+        m_TargetAssemblyTypeName: PauseMenuScript, Assembly-CSharp
+        m_MethodName: StartGame
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &1610113065
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4493,6 +4914,7 @@ GameObject:
   - component: {fileID: 1907683658}
   - component: {fileID: 1907683657}
   - component: {fileID: 1907683656}
+  - component: {fileID: 1907683659}
   m_Layer: 5
   m_Name: Light2TeleButton
   m_TagString: Untagged
@@ -4562,7 +4984,31 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1907683657}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1418419916}
+        m_TargetAssemblyTypeName: MenuPuzzleLoader, Assembly-CSharp
+        m_MethodName: SetPuzzleData
+        m_Mode: 2
+        m_Arguments:
+          m_ObjectArgument: {fileID: 11400000, guid: 813c90f20e171cc488a28690124f9df6, type: 2}
+          m_ObjectArgumentAssemblyTypeName: PuzzleLoadData, Assembly-CSharp
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 1709975410}
+        m_TargetAssemblyTypeName: PauseMenuScript, Assembly-CSharp
+        m_MethodName: StartGame
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &1907683657
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4601,6 +5047,19 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1907683654}
   m_CullTransparentMesh: 0
+--- !u!114 &1907683659
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1907683654}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d0b148fe25e99eb48b9724523833bab1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Delegates: []
 --- !u!1 &1938069462
 GameObject:
   m_ObjectHideFlags: 0
@@ -4680,6 +5139,49 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1938069462}
   m_CullTransparentMesh: 0
+--- !u!1 &1944796553
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1944796555}
+  - component: {fileID: 1944796554}
+  m_Layer: 0
+  m_Name: PuzzleLoaderSingleton
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 4294967295
+  m_IsActive: 1
+--- !u!114 &1944796554
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1944796553}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5f39eeba885b33641b99c2c2fcd6d762, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!4 &1944796555
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1944796553}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 3
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &2045951679
 GameObject:
   m_ObjectHideFlags: 0

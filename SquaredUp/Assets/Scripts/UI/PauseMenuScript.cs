@@ -65,6 +65,7 @@ public class PauseMenuScript : MonoBehaviour
 
     public void GoToScene(string sceneName)
     {
+        OnUnpauseGame();
         SceneManager.LoadScene(sceneName);
     }
 
@@ -80,6 +81,7 @@ public class PauseMenuScript : MonoBehaviour
         InputController.Instance.SwitchInputMap(pauseActionMapName);
         pauseMenu.SetActive(true);
         loreMenu.SetActive(false);
+        controlMenu.SetActive(false);
     }
 
     private void OnUnpauseGame()
@@ -88,5 +90,6 @@ public class PauseMenuScript : MonoBehaviour
         InputController.Instance.SwitchInputMap(defaultActionMapName);
         pauseMenu.SetActive(false);
         loreMenu.SetActive(false);
+        controlMenu.SetActive(false);
     }
 }
