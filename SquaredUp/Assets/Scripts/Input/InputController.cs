@@ -35,15 +35,11 @@ public class InputController : MonoBehaviour
             Destroy(this);
         }
     }
-
     // Called 1st
     // Initialization
     private void Start()
     {
-        // Initialize active map names to have the default map in it.
-        activeMapNames = new List<string>();
-        activeMapNames.Add(defaultMapName);
-        UpdateActiveInputMap();
+        ResetInputMap();
     }
 
 
@@ -60,6 +56,15 @@ public class InputController : MonoBehaviour
     public void PopInputMap(string inputMapName)
     {
         activeMapNames.Remove(inputMapName);
+        UpdateActiveInputMap();
+    }
+
+    /// <summary>Resets the input map to just be the starting input map.</summary>
+    public void ResetInputMap()
+    {
+        // Initialize active map names to have the default map in it.
+        activeMapNames = new List<string>();
+        activeMapNames.Add(defaultMapName);
         UpdateActiveInputMap();
     }
 

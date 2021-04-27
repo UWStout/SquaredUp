@@ -3,7 +3,7 @@
 /// <summary>
 /// When we change to the circle, allow the player to go through circle only areas.
 /// </summary>
-[CreateAssetMenu(fileName = "Circle Change Behavior", menuName = "ScriptablesObjects/ShapeChange/CircleData")]
+[CreateAssetMenu(fileName = "Circle Change Behavior", menuName = "ScriptableObjects/ShapeChange/CircleData")]
 public class CircleChange : ShapeChangeBehavior
 {
     // Reference to the player's collision object with the circle specific walls

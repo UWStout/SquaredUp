@@ -63,6 +63,12 @@ public class PauseMenuScript : MonoBehaviour
         FlipMenu(pauseMenu, controlMenu);
     }
 
+    public void GoToScene(string sceneName)
+    {
+        OnUnpauseGame();
+        SceneManager.LoadScene(sceneName);
+    }
+
     private void FlipMenu(GameObject g, GameObject o)
     {
         g.SetActive(!g.activeSelf);
@@ -75,6 +81,7 @@ public class PauseMenuScript : MonoBehaviour
         InputController.Instance.SwitchInputMap(pauseActionMapName);
         pauseMenu.SetActive(true);
         loreMenu.SetActive(false);
+        controlMenu.SetActive(false);
     }
 
     private void OnUnpauseGame()
@@ -83,5 +90,6 @@ public class PauseMenuScript : MonoBehaviour
         InputController.Instance.SwitchInputMap(defaultActionMapName);
         pauseMenu.SetActive(false);
         loreMenu.SetActive(false);
+        controlMenu.SetActive(false);
     }
 }
