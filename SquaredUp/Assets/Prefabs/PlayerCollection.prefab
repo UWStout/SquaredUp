@@ -1612,7 +1612,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6257086275078037472}
-  - component: {fileID: 3447933943707222297}
   - component: {fileID: 2134340687831649558}
   m_Layer: 0
   m_Name: PlayerCollection
@@ -1641,18 +1640,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &3447933943707222297
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6257086275078037475}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 38cffd76c81ee8749859b5b672f95011, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &2134340687831649558
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -63,6 +63,11 @@ public class PauseMenuScript : MonoBehaviour
         FlipMenu(pauseMenu, controlMenu);
     }
 
+    public void GoToScene(string sceneName)
+    {
+        SceneManager.LoadScene(sceneName);
+    }
+
     private void FlipMenu(GameObject g, GameObject o)
     {
         g.SetActive(!g.activeSelf);
