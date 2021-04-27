@@ -12,6 +12,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f62c44123be7a9c4893978f1cdfefe9a, type: 3}
   m_Name: CastleLight
   m_EditorClassIdentifier: 
-  startPos: {x: 509, y: 370.4, z: 0}
+  startPos: {x: 492, y: 370.4, z: 0}
   shapeUnlockStates: 01000000
   colorUnlockStates: 0100000002000000

@@ -12,6 +12,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f62c44123be7a9c4893978f1cdfefe9a, type: 3}
   m_Name: Doors
   m_EditorClassIdentifier: 
-  startPos: {x: 196, y: 383.4, z: 0}
+  startPos: {x: 179, y: 383.4, z: 0}
   shapeUnlockStates: 01000000
   colorUnlockStates: 01000000
