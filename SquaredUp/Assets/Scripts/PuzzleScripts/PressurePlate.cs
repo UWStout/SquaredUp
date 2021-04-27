@@ -1,26 +1,29 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
 public class PressurePlate : MonoBehaviour
 {
-    [SerializeField] private GameObject wall; // obstacle being controlled by pressure plate
-    private bool isIn = false; // Boolean for checking if the player is in the trigger
-    public GameObject other;
-    // Start is called before
+    // Obstacle being controlled by pressure plate
+    [SerializeField] private GameObject wall = null;
+    // Amount of objects in the pressure plate's trigger
+    private int amountIn = 0;
 
+
+    // Called when this object's trigger collides with another physics object
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        // Check if player is still inside the trigger, if not set isIn to true, stop exiting music track, play entering music track
-        if (!isIn)
-        {
-            wall.SetActive(false);
-        }
+        // Increment how many objects are in the trigger and hide the wall
+        ++amountIn;
+        wall.SetActive(false);
     }
+    // Called when this object's trigger stops colliding with another physics object
     private void OnTriggerExit2D(Collider2D collision)
     {
-        // Set isIn to false so the trigger will reset
-        isIn = false;
-        wall.SetActive(true);
+        // Decreemnt how many objects are in the trigger and show the wall if all objects have left
+        --amountIn;
+        if (amountIn <= 0)
+        {
+            wall.SetActive(true);
+            amountIn = 0;
+        }
     }
 }
