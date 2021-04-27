@@ -18,17 +18,14 @@ public class ColorStateUIBehavior : StateUIBehavior
     // Subscribe to events.
     private void OnEnable()
     {
-        InputEvents.MainAxisEvent += UpdateShapeImageVector2;
-        InputEvents.OpenSkillMenuEvent += UpdateShapeImage;
+        SkillHUDManager.OnVisualChange += UpdateShapeImage;
     }
     // Called when this component is disabled.
     // Unsubscribe from events.
     private void OnDisable()
     {
-        InputEvents.MainAxisEvent -= UpdateShapeImageVector2;
-        InputEvents.OpenSkillMenuEvent -= UpdateShapeImage;
+        SkillHUDManager.OnVisualChange -= UpdateShapeImage;
     }
-
     // Called 0th.
     // Set references.
     private void Awake()
@@ -37,11 +34,6 @@ public class ColorStateUIBehavior : StateUIBehavior
     }
 
 
-    /// <summary>Calls UpdateShapeImage.</summary>
-    private void UpdateShapeImageVector2(Vector2 rawMainAxis)
-    {
-        UpdateShapeImage();
-    }
     /// <summary>Changes the image on the color state to reflect the currently selected shape.</summary>
     private void UpdateShapeImage()
     {

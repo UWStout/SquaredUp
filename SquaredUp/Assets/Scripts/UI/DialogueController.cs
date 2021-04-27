@@ -17,6 +17,8 @@ public class DialogueController : MonoBehaviour
     // Type writer to help display text
     [SerializeField] private TypeWriter typeWriteRef = null;
 
+    // If the dialogue box is active
+    private bool isDialogueActive = false;
     // The lines that will be written in each text box
     private string[] dialogueLines;
     // Current line index
@@ -60,6 +62,7 @@ public class DialogueController : MonoBehaviour
     /// <param name="lines">Lines to show in the text box</param>
     public void StartDialogue(string[] lines)
     {
+        isDialogueActive = true;
         // Swap input map
         InputController.Instance.SwitchInputMap(dialogueActionMapName);
         // Show text box
@@ -74,25 +77,28 @@ public class DialogueController : MonoBehaviour
     /// <summary>Called when player inputs next or AdvanceDialogue</summary>
     public void OnAdvanceDialogue()
     {
-        // Type next line if finished typing
-        if (finishedTyping)
+        if (isDialogueActive)
         {
-            // If there are more lines, continue the dialogue
-            if (dialogueLines != null && curLineIndex < dialogueLines.Length)
+            // Type next line if finished typing
+            if (finishedTyping)
             {
-                // Type next line.
-                StartTyping();
+                // If there are more lines, continue the dialogue
+                if (dialogueLines != null && curLineIndex < dialogueLines.Length)
+                {
+                    // Type next line.
+                    StartTyping();
+                }
+                else
+                {
+                    // End the dialogue.
+                    EndDialogue();
+                }
             }
+            // End the typing early
             else
             {
-                // End the dialogue.
-                EndDialogue();
+                typeWriteRef.PreemptiveLineFinish();
             }
-        }
-        // End the typing early
-        else
-        {
-            typeWriteRef.PreemptiveLineFinish();
         }
     }
 
@@ -113,6 +119,7 @@ public class DialogueController : MonoBehaviour
     /// <summary>Ends the dialogue</summary>
     private void EndDialogue()
     {
+        isDialogueActive = false;
         // Reset some variables
         dialogueLines = null;
         // Hide text box

@@ -16,16 +16,17 @@ public class TypeWriter : MonoBehaviour
     [SerializeField] private float maxSentenceSize = 1f;
 
     // Text to write to
-    private TextMeshProUGUI typeText;
+    private TextMeshProUGUI typeText = null;
 
     // Curent line being written
-    private string currentLine;
+    private string currentLine = "";
     // Event to call when finished typing
     public delegate void FinishWriting();
     private FinishWriting OnFinishWriting;
 
     // Reference to running coroutine
-    private Coroutine typeWriteCoroutine;
+    private Coroutine typeWriteCoroutine = null;
+    private bool isTypeCoroutineActive = false;
 
     // Called 0th. Set references.
     private void Awake()
@@ -45,7 +46,10 @@ public class TypeWriter : MonoBehaviour
     /// <summary>Show the whole line before the typewriter is done</summary>
     public void PreemptiveLineFinish()
     {
-        StopCoroutine(typeWriteCoroutine);
+        if (isTypeCoroutineActive)
+        {
+            StopCoroutine(typeWriteCoroutine);
+        }
         typeText.text = currentLine;
         FinishTyping();
     }
@@ -53,6 +57,7 @@ public class TypeWriter : MonoBehaviour
     /// <summary>Coroutine to make the letters appear slowly</summary>
     private IEnumerator TypeLineCoroutine()
     {
+        isTypeCoroutineActive = true;
         // Individually write each character
         for (int i = 0; i < currentLine.Length; ++i)
         {
@@ -84,6 +89,7 @@ public class TypeWriter : MonoBehaviour
         }
         // Finish Typing.
         FinishTyping();
+        isTypeCoroutineActive = false;
         yield return null;
     }
 

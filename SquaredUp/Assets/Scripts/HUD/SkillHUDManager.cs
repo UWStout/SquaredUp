@@ -2,10 +2,13 @@
 using UnityEngine.UI;
 
 /// <summary>Manages the HUD for skills</summary>
-public class HUDManager : MonoBehaviour
+public class SkillHUDManager : MonoBehaviour
 {
     // Constants
-    private const float fadedAlpha = 0.5f;
+    private const float FADED_AMOUNT = 0.3f;
+
+    // Name of the skill menu action map in player input
+    [SerializeField] private string skillMenuActionMapName = "SkillMenu";
 
     // Reference to the grid HUD's total parent
     [SerializeField] private Transform gridHUDParent = null;
@@ -27,6 +30,8 @@ public class HUDManager : MonoBehaviour
     // References to the images for color and shape
     private Image[] colorImages = new Image[0];
     private Image[] shapeImages = new Image[0];
+    private Color[] colorImageStartColors = new Color[0];
+    private Color[] shapeImagesStartColors = new Color[0];
 
     // Indexing information
     private int colorRowIndex = 0;
@@ -35,17 +40,21 @@ public class HUDManager : MonoBehaviour
     // If the HUD is currently active
     private bool isHUDActive = false;
 
+    // Event to update the skill hud visuals
+    public delegate void VisualChange();
+    public static event VisualChange OnVisualChange;
+
 
     // Called when the script is enabled.
     // Subscribe to events.
     private void OnEnable()
     {
         // Open HUD when the game pauses and close it when it opens
-        SkillMenuController.OpenSkillMenuEvent += OpenHUD;
-        SkillMenuController.CloseSkillMenuEvent += CloseHUD;
-        // Navigate menu
-        InputEvents.MainAxisEvent += OnHUDAxis;
+        InputEvents.OpenSkillMenuEvent += OnOpenSkillMenu;
+        InputEvents.CloseSkillMenuEvent += OnCloseSkillMenu;
         InputEvents.RevertEvent += OnRevert;
+        // Navigate menu
+        InputEvents.MainAxisEvent += OnHUDAxis;        
 
         // Testing
 #if DEVELOPMENT_BUILD || UNITY_EDITOR
@@ -56,15 +65,17 @@ public class HUDManager : MonoBehaviour
     // Unsubscribe from events.
     private void OnDisable()
     {
-        SkillMenuController.OpenSkillMenuEvent -= OpenHUD;
-        SkillMenuController.CloseSkillMenuEvent -= CloseHUD;
-        InputEvents.MainAxisEvent -= OnHUDAxis;
+        InputEvents.OpenSkillMenuEvent -= OnOpenSkillMenu;
+        InputEvents.CloseSkillMenuEvent -= OnCloseSkillMenu;
         InputEvents.RevertEvent -= OnRevert;
+
+        InputEvents.MainAxisEvent -= OnHUDAxis;
+
+        // Testing
 #if DEVELOPMENT_BUILD || UNITY_EDITOR
         InputEvents.HackerAxisEvent -= OnHackerAxis;
 #endif
     }
-
     // Called 1st
     // Initialize
     private void Start()
@@ -78,15 +89,19 @@ public class HUDManager : MonoBehaviour
         // Get the color and shape images
         colorImages = new Image[colorRow.childCount];
         shapeImages = new Image[shapeCol.childCount];
+        colorImageStartColors = new Color[colorRow.childCount];
+        shapeImagesStartColors = new Color[shapeCol.childCount];
         try
         {
             for (int i = 0; i < colorRow.childCount; ++i)
             {
                 colorImages[i] = colorRow.GetChild(i).GetComponent<Image>();
+                colorImageStartColors[i] = colorImages[i].color;
             }
             for (int i = 0; i < shapeCol.childCount; ++i)
             {
                 shapeImages[i] = shapeCol.GetChild(i).GetComponent<Image>();
+                shapeImagesStartColors[i] = shapeImages[i].color;
             }
         }
         catch
@@ -114,13 +129,50 @@ public class HUDManager : MonoBehaviour
         }
     }
 
-    ///<summary>Helper method to open HUD</summary>
+    /// <summary>Called when the player wants to close the skill menu without applying. Pops the input map and closes without applying.</summary>
+    public void OnRevert()
+    {
+        // Revert the input map and close the hud without applying
+        InputController.Instance.PopInputMap(skillMenuActionMapName);
+        HUDstatus(false);
+    }
+    /// <summary>Called when the player wants to close the skill menu. Pops the input map and closes the skill menu.</summary>
+    public void OnCloseSkillMenu()
+    {
+        // Revert the input map and close the hud
+        InputController.Instance.PopInputMap(skillMenuActionMapName);
+        CloseHUD();
+    }
+    /// <summary>Called when the player wants to open the skill menu. Swaps the input map and opens the skill menu.</summary>
+    private void OnOpenSkillMenu()
+    {
+        // Swap input maps and call the open event
+        InputController.Instance.SwitchInputMap(skillMenuActionMapName);
+        OpenHUD();
+    }
+    /// <summary>Called when the player uses the HUD navigation</summary>
+    private void OnHUDAxis(Vector2 rawInput)
+    {
+        // Only navigate when active
+        if (isHUDActive)
+        {
+            // Horizontal movement
+            if (rawInput.x < 0) { OnColorRowLeft(); }
+            else if (rawInput.x > 0) { OnColorRowRight(); }
+
+            // Vertical movement
+            if (rawInput.y < 0) { OnShapeColumnDown(); }
+            else if (rawInput.y > 0) { OnShapeColumnUp(); }
+        }
+    }
+
+    ///<summary>Helper method to open HUD.</summary>
     private void OpenHUD()
     {
         HUDstatus(true);
         UpdateVisuals();
     }
-    /// <summary>Helper method to close HUD and execute the skill calls</summary>
+    /// <summary>Helper method to close HUD and execute the skill calls.</summary>
     private void CloseHUD()
     {
         HUDstatus(false);
@@ -178,24 +230,21 @@ public class HUDManager : MonoBehaviour
         SkillController.Instance.UseSkill(SkillController.SkillEnum.Form, 0);
     }
 
-    /// <summary>Called when the player uses the HUD navigation</summary>
-    private void OnHUDAxis(Vector2 rawInput)
+    /// <summary>Moves the color row right</summary>
+    public void OnColorRowLeft()
     {
-        // Only navigate when active
         if (isHUDActive)
         {
-            // Horizontal movement
-            if (rawInput.x < 0) { OnColorRowRight(); }
-            else if (rawInput.x > 0) { OnColorRowLeft(); }
-
-            // Vertical movement
-            if (rawInput.y < 0) { OnShapeColumnDown(); }
-            else if (rawInput.y > 0) { OnShapeColumnUp(); }
+            if (colorRowIndex > 0)
+            {
+                colorRow.anchoredPosition += new Vector2(horizontalSpace, 0);
+                --colorRowIndex;
+                UpdateVisuals();
+            }
         }
     }
-
     /// <summary>Moves the color row left</summary>
-    private void OnColorRowLeft()
+    public void OnColorRowRight()
     {
         if (isHUDActive)
         {
@@ -214,21 +263,8 @@ public class HUDManager : MonoBehaviour
             }
         }
     }
-    /// <summary>Moves the color row right</summary>
-    private void OnColorRowRight()
-    {
-        if (isHUDActive)
-        {
-            if (colorRowIndex > 0)
-            {
-                colorRow.anchoredPosition += new Vector2(horizontalSpace, 0);
-                --colorRowIndex;
-                UpdateVisuals();
-            }
-        }
-    }
     /// <summary>Move one column up</summary>
-    private void OnShapeColumnUp()
+    public void OnShapeColumnUp()
     {
         if (isHUDActive)
         {
@@ -241,7 +277,7 @@ public class HUDManager : MonoBehaviour
         }
     }
     /// <summary>Move on column down</summary>
-    private void OnShapeColumnDown()
+    public void OnShapeColumnDown()
     {
         if (isHUDActive)
         {
@@ -261,11 +297,14 @@ public class HUDManager : MonoBehaviour
         }
     }
 
-    /// <summary>Fades out appropriate images and shows the appropriate arrows.</summary>
+    /// <summary>Fades out appropriate images and shows the appropriate arrows.
+    /// Also calls the OnVisualChange event.</summary>
     private void UpdateVisuals()
     {
         UpdateFadeImages();
         UpdateActiveArrows();
+        // Call the event for when visuals are updated
+        OnVisualChange?.Invoke();
     }
 
     /// <summary>Fades out all the images and fades the currently selected one back in.</summary>
@@ -273,23 +312,21 @@ public class HUDManager : MonoBehaviour
     {
         Color temp;
         // Fade out shapes
-        foreach (Image shapeImg in shapeImages)
+        for (int i = 0; i < shapeImages.Length; ++i)
         {
-            temp = shapeImg.color;
-            temp.a = fadedAlpha;
-            shapeImg.color = temp;
+            temp = shapeImagesStartColors[i] * FADED_AMOUNT;
+            temp.a = 1f;
+            shapeImages[i].color = temp;
         }
         // Fade out colors
-        foreach (Image colorImg in colorImages)
+        for (int i = 0; i < colorImages.Length; ++i)
         {
-            temp = colorImg.color;
-            temp.a = fadedAlpha;
-            colorImg.color = temp;
+            temp = colorImageStartColors[i] * FADED_AMOUNT;
+            temp.a = 1f;
+            colorImages[i].color = temp;
         }
         // Fade in selected
-        temp = colorImages[colorRowIndex].color;
-        temp.a = 1f;
-        colorImages[colorRowIndex].color = temp;
+        colorImages[colorRowIndex].color = colorImageStartColors[colorRowIndex];
     }
 
     /// <summary>Shows arrows for the directions the player can actually traverse in the menu.</summary>
@@ -302,13 +339,6 @@ public class HUDManager : MonoBehaviour
         downArrow.SetActive(shapeColIndex + 1 < shapeSkill.GetAmountStates() && shapeSkill.IsStateUnlocked(shapeColIndex + 1));
         leftArrow.SetActive(colorRowIndex > 0);
         rightArrow.SetActive(colorRowIndex + 1 < colorSkill.GetAmountStates() && colorSkill.IsStateUnlocked(colorRowIndex + 1));
-    }
-
-    // Called when the player hits escape
-    // Close the hud without using the skills
-    private void OnRevert()
-    {
-        HUDstatus(false);
     }
 
     // For testing
