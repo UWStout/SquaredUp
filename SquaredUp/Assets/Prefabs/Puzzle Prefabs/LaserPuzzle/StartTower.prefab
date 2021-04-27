@@ -144,7 +144,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   layerMask1:
     serializedVersion: 2
-    m_Bits: 768
+    m_Bits: 8680449
   raycastLayer:
     serializedVersion: 2
     m_Bits: 262144

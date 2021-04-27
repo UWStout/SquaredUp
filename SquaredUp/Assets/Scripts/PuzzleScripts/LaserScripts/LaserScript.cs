@@ -72,7 +72,7 @@ public class LaserScript : MonoBehaviour
     {
         Vector3 rotatedVector = Quaternion.Euler(0f, 0f, castAngle_) * Vector3.up;
         Vector3 modifyStart = Quaternion.Euler(0f, 0f, castAngle_) * new Vector3(0f, .1f, 0f);
-        hit = Physics2D.Raycast(hitPointPos + modifyStart, rotatedVector, Mathf.Infinity, ~layerMask);
+        hit = Physics2D.Raycast(hitPointPos + modifyStart, rotatedVector, Mathf.Infinity, layerMask);
         if (oldHit && hit && hit.collider.gameObject != oldHit.collider.gameObject)
         {
             if (oldHit.collider.gameObject.layer == Mathf.Log(raycastLayer.value, 2))
