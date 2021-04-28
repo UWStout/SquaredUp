@@ -17,6 +17,7 @@ public class VsionInRangeRepeat : MonoBehaviour
     private NPC_MovementLoop npcMovement;
 
     [SerializeField] private Transform jailCellLocation;
+    [SerializeField] string alertPhrase = "";
 
     //Serielaize vision cone to set locations for mesh and polygon collider
     [SerializeField] private GameObject visionCone;
@@ -116,7 +117,7 @@ public class VsionInRangeRepeat : MonoBehaviour
             wasCaught = true;
             npcMovement.AllowMove(false);
             InputEvents.AdvanceDialogueEvent += FadeInOut;
-            DialogueController.Instance.StartDialogue(new string[] { "HEY YOU, STOP!!!" });
+            DialogueController.Instance.StartDialogue(new string[] { alertPhrase });
             Debug.Log("change");
             // playerMovementReset.transform.localPosition = new Vector2(0, 0);
 
