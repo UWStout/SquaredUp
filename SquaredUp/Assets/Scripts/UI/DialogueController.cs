@@ -62,16 +62,20 @@ public class DialogueController : MonoBehaviour
     /// <param name="lines">Lines to show in the text box</param>
     public void StartDialogue(string[] lines)
     {
-        isDialogueActive = true;
-        // Swap input map
-        InputController.Instance.SwitchInputMap(dialogueActionMapName);
-        // Show text box
-        uiComponent.SetActive(true);
-        // Initialization
-        dialogueLines = lines;
-        curLineIndex = 0;
-        // Start typing
-        StartTyping();
+        // Check to make sure there is not already dialogue active
+        if (!isDialogueActive)
+        {
+            isDialogueActive = true;
+            // Swap input map
+            InputController.Instance.SwitchInputMap(dialogueActionMapName);
+            // Show text box
+            uiComponent.SetActive(true);
+            // Initialization
+            dialogueLines = lines;
+            curLineIndex = 0;
+            // Start typing
+            StartTyping();
+        }
     }
 
     /// <summary>Called when player inputs next or AdvanceDialogue</summary>

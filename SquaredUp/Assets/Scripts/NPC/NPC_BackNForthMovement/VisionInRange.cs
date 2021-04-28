@@ -1,17 +1,11 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-using UnityEngine.UI;
+﻿using UnityEngine;
+
 [RequireComponent(typeof(NPC_Movement))]
 public class VisionInRange : MonoBehaviour
 {
-
-    bool wasCaught = false;
-    [SerializeField][Range(0,1)] float colorSpeed = 0.05f;
-    [SerializeField] AudioSource alert;
-
-    private Coroutine activeCoRoutine = null;
-    bool isCoRutineActive = false;
+    private bool wasCaught = false;
+    [SerializeField][Range(0,1)] private float colorSpeed = 0.05f;
+    [SerializeField] private AudioSource alert;
 
     private NPC_Movement npcMovement;
 
@@ -23,8 +17,16 @@ public class VisionInRange : MonoBehaviour
     [SerializeField] private float viewHeight = 14f;
     [SerializeField] private int rayCount = 10;
     //mesh
-    Mesh mesh;
+    private Mesh mesh;
 
+    // Called 0th
+    // Set references
+    private void Awake()
+    {
+        npcMovement = GetComponent<NPC_Movement>();
+    }
+    // Called 1st
+    // Initialization
     private void Start()
     {
         //make a new mesh
@@ -32,7 +34,14 @@ public class VisionInRange : MonoBehaviour
         //set meshfilter of vision cone
         visionCone.GetComponent<MeshFilter>().mesh = mesh;
     }
-
+    // Called when this component is destroyed
+    // Unsubscribe from ALL events
+    private void OnDestroy()
+    {
+        InputEvents.AdvanceDialogueEvent -= FadeInOut;
+    }
+    // Called at a fixed interval of time
+    // Do physics calculations
     private void FixedUpdate()
     {
         //view width start spot
@@ -104,10 +113,9 @@ public class VisionInRange : MonoBehaviour
         mesh.uv = uv;
         mesh.triangles = triangles;
     }
-
+    // Called when the trigger on this object is involved with a collision
     private void OnTriggerEnter2D(Collider2D collision)
     {
-
         if (!wasCaught) 
         {
             alert.Play();
@@ -115,68 +123,25 @@ public class VisionInRange : MonoBehaviour
             npcMovement.AllowMove(false);
             InputEvents.AdvanceDialogueEvent += FadeInOut;
             DialogueController.Instance.StartDialogue(new string[] { "HEY YOU, STOP!!!" });
-            Debug.Log("change");
-            // playerMovementReset.transform.localPosition = new Vector2(0, 0);
-            
         }
-        
-        
     }
 
 
-    void FadeInOut()
+    /// <summary>Start fading out the screen. When faded out, move the player. After faded back in let the guard move again.</summary>
+    private void FadeInOut()
     {
         InputEvents.AdvanceDialogueEvent -= FadeInOut;
         wasCaught = false;
-        startFade();
+        CanvasSingleton.Instance.StartFadeOutAndIn(colorSpeed, MovePlayerToJail, AllowNPCMoveAgain);
     }
-
-    private void OnDestroy()
+    /// <summary>Set the player to be at the jail.</summary>
+    private void MovePlayerToJail()
     {
-        InputEvents.AdvanceDialogueEvent -= FadeInOut;
-    }
-
-    void startFade()
-    {
-        if (isCoRutineActive)
-        {
-            StopCoroutine(activeCoRoutine);
-        }
-        activeCoRoutine = StartCoroutine(FadeCoRutine());
-    }
-
-    IEnumerator FadeCoRutine()
-    {
-        Image fadeOutImage = CanvasSingleton.Instance.BlackImage;
-        isCoRutineActive = true;
-        Color startColor;
-        startColor = fadeOutImage.color;
-        startColor.a = 0;
-        while (fadeOutImage.color.a < 1)
-        {
-            Color CurrentColor = fadeOutImage.color;
-            CurrentColor.a += colorSpeed;
-            fadeOutImage.color = CurrentColor;
-            yield return null;
-        }
-        startColor.a = 1;
-        fadeOutImage.color = startColor;
         PlayerMovement.Instance.transform.position = jailCellLocation.position;
-        while (fadeOutImage.color.a > 0)
-        {
-            Color CurrentColor = fadeOutImage.color;
-            CurrentColor.a -= colorSpeed;
-            fadeOutImage.color = CurrentColor;
-            yield return null;
-        }
-        startColor.a = 0;
-        fadeOutImage.color = startColor;
-        npcMovement.AllowMove(true);
-        isCoRutineActive = false;
-        yield return null;
     }
-    private void Awake()
+    /// <summary>Let the guard move again.</summary>
+    private void AllowNPCMoveAgain()
     {
-        npcMovement = GetComponent<NPC_Movement>();
+        npcMovement.AllowMove(true);
     }
 }

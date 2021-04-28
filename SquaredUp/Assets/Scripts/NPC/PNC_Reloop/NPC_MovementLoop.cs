@@ -35,10 +35,6 @@ public class NPC_MovementLoop : MonoBehaviour
         stopCounter = stopTime;
         walkingCounter = walkingSpeed;
         numSpot = 0;
-
-        //Debug.Log(route.Length);
-
-
     }
 
     // Update is called once per frame

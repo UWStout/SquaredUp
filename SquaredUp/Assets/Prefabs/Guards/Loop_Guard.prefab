@@ -18,7 +18,11 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 1024
   jailCellLocation: {fileID: 0}
+  alertPhrase: HEY YOU, STOP!!!
   visionCone: {fileID: 7893489947156653086}
+  viewWidth: 6
+  viewHeight: 14
+  rayCount: 10
 --- !u!114 &5173779238521656095
 MonoBehaviour:
   m_ObjectHideFlags: 0
