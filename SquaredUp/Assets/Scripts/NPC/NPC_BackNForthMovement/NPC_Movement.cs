@@ -29,7 +29,7 @@ public class NPC_Movement : MonoBehaviour
 
     public GameObject Vision;
 
-    bool gaurdStop = true;
+    bool gaurdStop = false;
 
     void Start()
     {
@@ -51,8 +51,7 @@ public class NPC_Movement : MonoBehaviour
         ExpandMovementList(movementTime, movementList);
 
         walkDirection = route[numSpot];
-        gaurdStop = false;
-        isWalking = true;
+        UpdateFacingDirection(walkDirection);
     }
 
     // Update is called once per frame
@@ -187,6 +186,28 @@ public class NPC_Movement : MonoBehaviour
 
         }
         numSpot = 0;
+    }
+
+    private void UpdateFacingDirection(int direction)
+    {
+        switch (direction)
+        {
+            case 0:
+                Vision.transform.rotation = Quaternion.Euler(0, 0, 180);
+                break;
+            case 1:
+                Vision.transform.rotation = Quaternion.Euler(0, 0, 90);
+                break;
+            case 2:
+                Vision.transform.rotation = Quaternion.Euler(0, 0, 0);
+                break;
+            case 3:
+                Vision.transform.rotation = Quaternion.Euler(0, 0, 270);
+                break;
+            default:
+                Debug.LogError("Unhandled WalkDirection");
+                break;
+        }
     }
 }
 
