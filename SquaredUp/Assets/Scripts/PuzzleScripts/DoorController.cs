@@ -21,7 +21,7 @@ public class DoorController : Interactable
     IEnumerator MyCoroutine()
     {
         //This is a coroutine
-        yield return new WaitForSeconds(2); ;    //Wait 2 seconds
+        yield return new WaitForEndOfFrame();    //Wait a small amount
 
         //raycast out a distance of 100f and only on the layerMask
         RaycastHit hit;
