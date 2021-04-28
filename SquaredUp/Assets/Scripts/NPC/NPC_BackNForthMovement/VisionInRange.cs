@@ -13,9 +13,11 @@ public class VisionInRange : MonoBehaviour
 
     //Serielaize vision cone to set locations for mesh and polygon collider
     [SerializeField] private GameObject visionCone;
+    [SerializeField] private Transform visionOffset;
     [SerializeField] private float viewWidth = 6f;
     [SerializeField] private float viewHeight = 14f;
     [SerializeField] private int rayCount = 10;
+    [SerializeField] private LayerMask layerMask;
     //mesh
     private Mesh mesh;
 
@@ -42,7 +44,7 @@ public class VisionInRange : MonoBehaviour
     }
     // Called at a fixed interval of time
     // Do physics calculations
-    private void FixedUpdate()
+    void FixedUpdate()
     {
         //view width start spot
         float viewLeft = (viewWidth / 2);
@@ -68,19 +70,20 @@ public class VisionInRange : MonoBehaviour
             Vector3 target = new Vector3(viewLeft, -viewHeight, 0f);
             //set up vertex
             Vector3 vertex;
+
             //ray cast
             RaycastHit2D hit;
-            hit = Physics2D.Raycast(origin, origin + target, target.magnitude);
+            hit = Physics2D.Raycast(origin + visionOffset.position, visionOffset.rotation * target, target.magnitude, layerMask);
             // if raycast hits a collider
             if (hit.collider != null)
             {
                 //set triangle corner to that point
-                vertex = hit.point;
+                vertex = Quaternion.Inverse(visionOffset.rotation) * (hit.point - (Vector2)visionOffset.position);
             }
             else
             {
                 //set farthest distance on miss
-                vertex = origin + target;
+                vertex = target;
             }
             //add vertex to the index
             vertices[vertexIndex] = vertex;
@@ -114,10 +117,11 @@ public class VisionInRange : MonoBehaviour
         mesh.triangles = triangles;
         mesh.RecalculateBounds();
     }
+
     // Called when the trigger on this object is involved with a collision
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (!wasCaught) 
+        if (!wasCaught)
         {
             alert.Play();
             wasCaught = true;

@@ -16,9 +16,13 @@ MonoBehaviour:
   alert: {fileID: 0}
   jailCellLocation: {fileID: 0}
   visionCone: {fileID: 3506112667058760945}
+  visionOffset: {fileID: 7557761865407379907}
   viewWidth: 6
   viewHeight: 14
   rayCount: 10
+  layerMask:
+    serializedVersion: 2
+    m_Bits: 1536
 --- !u!114 &5392609512167541441
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -44,6 +48,30 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 2355568897693858700, guid: bf1ed4abbeb3b6246b94b6b740704271, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2355568897693858700, guid: bf1ed4abbeb3b6246b94b6b740704271, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2355568897693858700, guid: bf1ed4abbeb3b6246b94b6b740704271, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8717297439806156479, guid: bf1ed4abbeb3b6246b94b6b740704271, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8717297439806156479, guid: bf1ed4abbeb3b6246b94b6b740704271, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8717297439806156479, guid: bf1ed4abbeb3b6246b94b6b740704271, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 8717297440243521417, guid: bf1ed4abbeb3b6246b94b6b740704271, type: 3}
       propertyPath: m_Name
       value: Normal_Guard Variant
@@ -114,6 +142,11 @@ GameObject:
 --- !u!1 &8454830039379780149 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 4397674949826912378, guid: bf1ed4abbeb3b6246b94b6b740704271, type: 3}
+  m_PrefabInstance: {fileID: 5211290602168746575}
+  m_PrefabAsset: {fileID: 0}
+--- !u!4 &7557761865407379907 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 2355568897693858700, guid: bf1ed4abbeb3b6246b94b6b740704271, type: 3}
   m_PrefabInstance: {fileID: 5211290602168746575}
   m_PrefabAsset: {fileID: 0}
 --- !u!1 &3506112667058760945 stripped

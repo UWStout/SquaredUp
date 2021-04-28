@@ -14,15 +14,16 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   alert: {fileID: 0}
   colorSpeed: 0.05
-  layerMask:
-    serializedVersion: 2
-    m_Bits: 1024
   jailCellLocation: {fileID: 0}
   alertPhrase: HEY YOU, STOP!!!
-  visionCone: {fileID: 7893489947156653086}
+  visionOffset: {fileID: 3873634381590622508}
   viewWidth: 6
   viewHeight: 14
   rayCount: 10
+  layerMask:
+    serializedVersion: 2
+    m_Bits: 1536
+  visionCone: {fileID: 7893489947156653086}
 --- !u!114 &5173779238521656095
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -49,6 +50,18 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 2355568897693858700, guid: bf1ed4abbeb3b6246b94b6b740704271, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2355568897693858700, guid: bf1ed4abbeb3b6246b94b6b740704271, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2355568897693858700, guid: bf1ed4abbeb3b6246b94b6b740704271, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 8717297439806156479, guid: bf1ed4abbeb3b6246b94b6b740704271, type: 3}
       propertyPath: m_LocalPosition.y
       value: 0
@@ -155,6 +168,11 @@ GameObject:
 --- !u!1 &2915780101908196058 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 4397674949826912378, guid: bf1ed4abbeb3b6246b94b6b740704271, type: 3}
+  m_PrefabInstance: {fileID: 1545087189270055584}
+  m_PrefabAsset: {fileID: 0}
+--- !u!4 &3873634381590622508 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 2355568897693858700, guid: bf1ed4abbeb3b6246b94b6b740704271, type: 3}
   m_PrefabInstance: {fileID: 1545087189270055584}
   m_PrefabAsset: {fileID: 0}
 --- !u!1 &7893489947156653086 stripped
