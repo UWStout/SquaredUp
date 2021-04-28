@@ -112,6 +112,7 @@ public class VisionInRange : MonoBehaviour
         mesh.vertices = vertices;
         mesh.uv = uv;
         mesh.triangles = triangles;
+        mesh.RecalculateBounds();
     }
     // Called when the trigger on this object is involved with a collision
     private void OnTriggerEnter2D(Collider2D collision)
