@@ -41,12 +41,13 @@ public class MusicManager : MonoBehaviour
     {
         //Debug.Log("X: " + (player.position.x - 25) + "y: " + (player.position.y - 150));
         //Spawn is 25, 151
+        //Debug.Log(player.position);
         if (player.position.x - 25 > -60 && player.position.x - 25 < 40 && player.position.y - 150 > -5 && player.position.y - 150 < 80)
         {
             current_location = Sector.jungle1;
             //Debug.Log("Jungle1");
         }
-        else if (player.position.x - 25 > -90 && player.position.x - 25 < 168 && player.position.y - 150 > 80 && player.position.y - 150 < 160)
+        else if (player.position.x - 25 > -90 && player.position.x - 25 < 148 && player.position.y - 150 > 80 && player.position.y - 150 < 160)
         {
             current_location = Sector.village;
             //Debug.Log("Village");
@@ -63,18 +64,19 @@ public class MusicManager : MonoBehaviour
             current_location = Sector.temple;
             //Debug.Log("Temple");
         }
-        else if (player.position.x - 25 > 163 && player.position.x - 25 < 363 && player.position.y - 150 > 114 && player.position.y - 150 < 165)
+        //Level 2 was moved to the left (x-17)
+        else if (player.position.x - 25 > 148 -17 && player.position.x - 25 < 363 -17 && player.position.y - 150 > 114 && player.position.y - 150 < 167)
         {
             current_location = Sector.desert;
             //Debug.Log("Desert");
         }
-        else if (player.position.x - 25 > 163 && player.position.x - 25 < 463 && player.position.y - 150 > 165 && player.position.y - 150 < 375)
+        else if (player.position.x - 25 > 148 && player.position.x - 25 < 463 - 17 && player.position.y - 150 > 167 && player.position.y - 150 < 375)
         {
             current_location = Sector.castle_start;
             //Debug.Log("Castle Start");
         }
-        else if (player.position.x - 25 > 463 && player.position.x - 25 < 568 && player.position.y - 150 > 200 && player.position.y - 150 < 450
-            || player.position.x - 25 > 200 && player.position.x - 25 < 463 && player.position.y - 150 > 417 && player.position.y - 150 < 450)
+        else if (player.position.x - 25 > 463 - 17 && player.position.x - 25 < 568 -17 && player.position.y - 150 > 200 && player.position.y - 150 < 450
+            || player.position.x - 25 > 200-17 && player.position.x - 25 < 463 -17 && player.position.y - 150 > 417 && player.position.y - 150 < 450)
         {
             current_location = Sector.castle_end;
             //Debug.Log("Castle End");
@@ -189,6 +191,12 @@ public class MusicManager : MonoBehaviour
                 break;
             case Sector.out_of_bounds:
                 //Debug.Log("Out of bounds, no music plays");
+                jungle1.Stop();
+                village.Stop();
+                jungle1.Stop();
+                temple.Stop();
+                desert.Stop();
+                stealth.Stop();
                 yield return null;
                 break;
         }
