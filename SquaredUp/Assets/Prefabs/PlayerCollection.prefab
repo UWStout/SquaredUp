@@ -441,6 +441,56 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!1 &3533280680680181747
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 3572620594844313986}
+  - component: {fileID: 1197072110361840884}
+  m_Layer: 0
+  m_Name: CamerCenterToPlayer
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &3572620594844313986
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3533280680680181747}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children:
+  - {fileID: 6257086275565431317}
+  m_Father: {fileID: 6257086275170067480}
+  m_RootOrder: 3
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1197072110361840884
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3533280680680181747}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f5160e3237e75e84ea2750e4f3a253f7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  followTarget: {fileID: 6257086274663262138}
+  xAxisFollow: 1
+  yAxisFollow: 1
+  zAxisFollow: 0
+  whenToUpdate: 0
+  startFolowOnStart: 1
 --- !u!1 &4172341876139195685
 GameObject:
   m_ObjectHideFlags: 0
@@ -473,7 +523,7 @@ Transform:
   m_LocalScale: {x: 93.6, y: 90, z: 0.1}
   m_Children: []
   m_Father: {fileID: 6257086275078037472}
-  m_RootOrder: 3
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &3459119628150241823
 MonoBehaviour:
@@ -604,7 +654,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 6257086275078037472}
-  m_RootOrder: 2
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &2780176195393848663
 MonoBehaviour:
@@ -1632,7 +1682,6 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 6257086275822434843}
-  - {fileID: 6257086275565431317}
   - {fileID: 5403807943662128392}
   - {fileID: 8567339245636238774}
   - {fileID: 6070696615313352809}
@@ -1682,8 +1731,9 @@ Transform:
   - {fileID: 6257086274663262138}
   - {fileID: 6257086273939944752}
   - {fileID: 6420274319548720154}
+  - {fileID: 3572620594844313986}
   m_Father: {fileID: 6257086275078037472}
-  m_RootOrder: 5
+  m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &6257086275565431318
 GameObject:
@@ -1696,7 +1746,6 @@ GameObject:
   - component: {fileID: 6257086275565431317}
   - component: {fileID: 6257086275565431316}
   - component: {fileID: 6257086275565431319}
-  - component: {fileID: 6257086275565431314}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -1712,11 +1761,11 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6257086275565431318}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: -20}
+  m_LocalPosition: {x: 0, y: 0, z: -30.200003}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
-  m_Father: {fileID: 6257086275078037472}
-  m_RootOrder: 1
+  m_Father: {fileID: 3572620594844313986}
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!20 &6257086275565431316
 Camera:
@@ -1769,24 +1818,6 @@ AudioListener:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6257086275565431318}
   m_Enabled: 1
---- !u!114 &6257086275565431314
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6257086275565431318}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f5160e3237e75e84ea2750e4f3a253f7, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  followTarget: {fileID: 6257086274663262138}
-  xAxisFollow: 1
-  yAxisFollow: 1
-  zAxisFollow: 0
-  whenToUpdate: 0
-  startFolowOnStart: 1
 --- !u!1 &6257086275822434845
 GameObject:
   m_ObjectHideFlags: 0
@@ -2108,7 +2139,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 6257086275078037472}
-  m_RootOrder: 4
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!82 &8361466951313758623
 AudioSource:
