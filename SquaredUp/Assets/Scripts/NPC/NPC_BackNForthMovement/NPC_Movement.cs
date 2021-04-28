@@ -29,7 +29,7 @@ public class NPC_Movement : MonoBehaviour
 
     public GameObject Vision;
 
-    bool gaurdStop = false;
+    bool gaurdStop = true;
 
     void Start()
     {
@@ -38,7 +38,7 @@ public class NPC_Movement : MonoBehaviour
         stopCounter = stopTime;
         walkingCounter = walkingSpeed;
         numSpot = 0;
-        
+
         newLength = paths.Length * 2;
         route = new int[newLength];
 
@@ -50,13 +50,16 @@ public class NPC_Movement : MonoBehaviour
 
         ExpandMovementList(movementTime, movementList);
 
-
+        walkDirection = route[numSpot];
+        gaurdStop = false;
+        isWalking = true;
     }
 
     // Update is called once per frame
     void Update()
     {
-        if (!gaurdStop) {
+        if (!gaurdStop)
+        {
             if (isWalking)
             {
                 walkingCounter -= Time.deltaTime;
@@ -77,6 +80,9 @@ public class NPC_Movement : MonoBehaviour
                     case 3:
                         Vision.transform.rotation = Quaternion.Euler(0, 0, 270);
                         NPCRigidBody.velocity = new Vector2(-walkingSpeed, 0);
+                        break;
+                    default:
+                        Debug.LogError("Unhandled WalkDirection");
                         break;
                 }
                 if (walkingCounter < 0)
@@ -103,12 +109,11 @@ public class NPC_Movement : MonoBehaviour
                     walkDirection = route[numSpot];
                     isWalking = true;
                     walkingCounter = movementList[numSpot];
-
                 }
             }
         }
 
-    } 
+    }
 
     public void AllowMove(bool allow)
     {
@@ -155,7 +160,7 @@ public class NPC_Movement : MonoBehaviour
     {
         for (int i = 0; i < input.Length; i++)
         {
-           // Debug.Log(numSpot);
+            // Debug.Log(numSpot);
             output[numSpot] = input[i];
             numSpot++;
         }

@@ -35,6 +35,10 @@ public class NPC_MovementLoop : MonoBehaviour
         stopCounter = stopTime;
         walkingCounter = walkingSpeed;
         numSpot = 0;
+
+        walkDirection = paths[numSpot];
+        gaurdStop = false;
+        isWalking = true;
     }
 
     // Update is called once per frame
@@ -62,6 +66,9 @@ public class NPC_MovementLoop : MonoBehaviour
                     case 3:
                         Vision.transform.rotation = Quaternion.Euler(0, 0, 270);
                         NPCRigidBody.velocity = new Vector2(-walkingSpeed, 0);
+                        break;
+                    default:
+                        Debug.LogError("Unhandled WalkDirection");
                         break;
                 }
                 if (walkingCounter < 0)
@@ -103,8 +110,6 @@ public class NPC_MovementLoop : MonoBehaviour
             NPCRigidBody.velocity = Vector2.zero;
         }
     }
-
-
 }
 
 
