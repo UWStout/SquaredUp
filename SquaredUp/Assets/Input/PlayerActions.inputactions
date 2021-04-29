@@ -164,6 +164,17 @@
                     "action": "PauseGame",
                     "isComposite": false,
                     "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "b642547b-71d0-4c1b-b5c1-2d9d1027d80a",
+                    "path": "<Keyboard>/space",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "PauseGame",
+                    "isComposite": false,
+                    "isPartOfComposite": false
                 }
             ]
         },
@@ -434,6 +445,17 @@
                 },
                 {
                     "name": "",
+                    "id": "ce9c5642-0757-4362-9447-ab3a459aadfa",
+                    "path": "<Keyboard>/space",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Revert",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
                     "id": "aa7a1136-7c96-4269-b077-92f3ae250ee6",
                     "path": "<Mouse>/leftButton",
                     "interactions": "",
@@ -531,6 +553,17 @@
                     "name": "",
                     "id": "1bd788a7-141f-4944-900c-88f6a3c746d5",
                     "path": "<Keyboard>/escape",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "UnpauseGame",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "b793f79c-ebe7-4e38-9e73-e255145506df",
+                    "path": "<Keyboard>/space",
                     "interactions": "",
                     "processors": "",
                     "groups": "",
