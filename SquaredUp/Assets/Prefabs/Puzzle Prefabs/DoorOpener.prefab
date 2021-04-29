@@ -362,11 +362,11 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 1896380346892685828, guid: e1fa718a105b83b40a12c37b5987ac63, type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: 0
+      value: 1.7
       objectReference: {fileID: 0}
     - target: {fileID: 1896380346892685828, guid: e1fa718a105b83b40a12c37b5987ac63, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: -0.534
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2322673380542306573, guid: e1fa718a105b83b40a12c37b5987ac63, type: 3}
       propertyPath: m_LocalPosition.x
@@ -416,9 +416,13 @@ PrefabInstance:
       propertyPath: m_Name
       value: DoorOpener
       objectReference: {fileID: 0}
-    - target: {fileID: 2322673381319215501, guid: e1fa718a105b83b40a12c37b5987ac63, type: 3}
-      propertyPath: m_IsActive
-      value: 0
+    - target: {fileID: 2322673381319215602, guid: e1fa718a105b83b40a12c37b5987ac63, type: 3}
+      propertyPath: m_SizeDelta.x
+      value: 2.56
+      objectReference: {fileID: 0}
+    - target: {fileID: 2322673381319215603, guid: e1fa718a105b83b40a12c37b5987ac63, type: 3}
+      propertyPath: m_text
+      value: Rotate
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: e1fa718a105b83b40a12c37b5987ac63, type: 3}

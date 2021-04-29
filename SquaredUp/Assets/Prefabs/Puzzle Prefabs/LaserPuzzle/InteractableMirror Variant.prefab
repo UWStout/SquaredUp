@@ -504,11 +504,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2322673381319215603, guid: e1fa718a105b83b40a12c37b5987ac63, type: 3}
       propertyPath: m_text
-      value: Rotate Mirror
-      objectReference: {fileID: 0}
-    - target: {fileID: 2322673381847108116, guid: e1fa718a105b83b40a12c37b5987ac63, type: 3}
-      propertyPath: m_IsActive
-      value: 0
+      value: Rotate
       objectReference: {fileID: 0}
     - target: {fileID: 6423752762077287024, guid: e1fa718a105b83b40a12c37b5987ac63, type: 3}
       propertyPath: m_LocalRotation.x
