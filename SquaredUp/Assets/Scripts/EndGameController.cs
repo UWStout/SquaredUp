@@ -17,6 +17,8 @@ public class EndGameController : MonoBehaviour
     [SerializeField] private Animator playerCollectionAnimator = null;
     // Position to move the player to at the end of the game.
     [SerializeField] private Vector3 endGamePosition = Vector3.zero;
+    // Music to play at the end.
+    [SerializeField] private AudioSource endMusicSource = null;
 
 
     // Called 0th
@@ -39,6 +41,8 @@ public class EndGameController : MonoBehaviour
     public void PlayEndGameAnimation()
     {
         PlayerMovement.Instance.transform.position = endGamePosition;
+        MusicManager.Instance.gameObject.SetActive(false);
+        endMusicSource.Play();
         StopTopDownFollow();
         playerCollectionAnimator.enabled = true;
         playerCollectionAnimator.SetBool("endGame", true);

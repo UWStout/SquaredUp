@@ -21,8 +21,30 @@ public class MusicManager : MonoBehaviour
     private Vector2 last_position;
     // Boolean holding status of corroutine (active or inactive)
     private bool PMCorotuineIsActive;
+
+    // Singleton
+    private static MusicManager instance = null;
+    public static MusicManager Instance { get { return instance; } }
+
+
+    // Called 0th
+    // Set references
+    private void Awake()
+    {
+        // Singleton setup
+        if (instance == null)
+        {
+            instance = this;
+        }
+        else
+        {
+            Debug.LogError("Cannot have multiple MusicManagers");
+            Destroy(this.gameObject);
+        }
+    }
+
     // Start is called before the first frame update
-    void Start()
+    private void Start()
     {
         current_location = Sector.out_of_bounds;
     }
