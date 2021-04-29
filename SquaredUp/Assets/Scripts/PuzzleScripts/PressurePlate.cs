@@ -5,7 +5,9 @@ public class PressurePlate : MonoBehaviour
     // Obstacle being controlled by pressure plate
     [SerializeField] private GameObject wall = null;
     // AudioSource to play the click sound for pressing down on the pressure plate
-    [SerializeField] private AudioSource audioSource = null;
+    [SerializeField] private AudioSource pressDownAudio = null;
+    // AudioSource to play the release sound for when everything leaves the pressure plate
+    [SerializeField] private AudioSource releaseAudio = null;
     // Reference to the pressure plate sprite renderer
     [SerializeField] private SpriteRenderer pressurePlateSpriteRend = null;
     // Color to change the pressure plate when it is triggered
@@ -31,7 +33,7 @@ public class PressurePlate : MonoBehaviour
         {
             wall.SetActive(false);
             pressurePlateSpriteRend.color = pressedColor;
-            audioSource.Play();
+            pressDownAudio.Play();
         }
     }
     // Called when this object's trigger stops colliding with another physics object
@@ -43,6 +45,7 @@ public class PressurePlate : MonoBehaviour
         {
             wall.SetActive(true);
             pressurePlateSpriteRend.color = defaultColor;
+            releaseAudio.Play();
             amountIn = 0;
         }
     }
