@@ -9,6 +9,12 @@ public abstract class ShapeChangeBehavior : ScriptableObject
     private bool restrictChange = false;
     public bool RestrictChange { get { return restrictChange; } set { restrictChange = value; } }
 
+    /// <summary>Resets variables in the change behavior to clear data from previous sessions.</summary>
+    public void Reset()
+    {
+        restrictChange = false;
+    }
+
     /// <summary>Called when the shape is change to.</summary>
     public virtual void ChangeTo() { }
     /// <summary>Called when the shape is changed from.</summary>

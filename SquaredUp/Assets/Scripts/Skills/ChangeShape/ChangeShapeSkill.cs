@@ -48,12 +48,17 @@ public class ChangeShapeSkill : SkillBase<ShapeData>
                 allowChange = false;
             }
         }
+        ShapeData data = SkillData.GetData(stateIndex);
+        curAttemptedStateIndex = stateIndex;
         // Change shape
         if (allowChange)
         {
-            ShapeData data = SkillData.GetData(stateIndex);
-            curAttemptedStateIndex = stateIndex;
             changeFormCont.CurShapeData = data;
+        }
+        // Fail to change shape if the shape is not the previous data
+        else if (data != prevData)
+        {
+            changeFormCont.FailToChange(data);
         }
     }
 

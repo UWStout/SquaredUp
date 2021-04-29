@@ -116,16 +116,31 @@ public class ChangeFormController : MonoBehaviour
             // Player could not change here, so display the error that could not change here
             else
             {
-                // Display cannot fit here error
-                ShowCannotFitHere(curShapeData.TypeOfShape, size);
-                // Play cannot fit sound
-                failedTransformSound.Play();
-
-                // Revert shape and size data to their previous states
-                curShapeData = prevShapeData;
-                curSizeData = prevSizeData;
+                FailToChange(curShapeData);
             }
         }
+    }
+
+    /// <summary>Display the error and sound error that the player cannot change here.</summary>
+    public void FailToChange(ShapeData shapeData)
+    {
+        Vector2Int facingDir = playerMoveRef.GetFacingDirection();
+        Vector3 shapeDirectionalSize = GetSize(shapeData, facingDir, playerScaleCont.ShapeScale, shapeData != curShapeData);
+        // Set size using facing size and size data
+        Vector3 size = shapeDirectionalSize;
+        if (curSizeData != null)
+        {
+            size = shapeDirectionalSize * curSizeData.Size;
+        }
+
+        // Display cannot fit here error
+        ShowCannotFitHere(shapeData.TypeOfShape, size);
+        // Play cannot fit sound
+        failedTransformSound.Play();
+
+        // Revert shape and size data to their previous states
+        curShapeData = prevShapeData;
+        curSizeData = prevSizeData;
     }
 
     /// <summary>Gets the size of the shape given by the data</summary>
