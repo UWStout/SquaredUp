@@ -10,6 +10,8 @@ public class CanvasSingleton : MonoBehaviour
 
     // Completely black covering the canvas
     [SerializeField] private Image blackImage = null;
+    // End game menu
+    [SerializeField] private GameObject gameOverMenu = null;
 
     // Functionality to do at different points in the fadeinout coroutine.
     public delegate void FadeOutInFunction();
@@ -34,6 +36,12 @@ public class CanvasSingleton : MonoBehaviour
         }
     }
 
+
+    /// <summary>Shows the game over menu.</summary>
+    public void ShowGameOverMenu()
+    {
+        gameOverMenu.SetActive(true);
+    }
 
     /// <summary>Starts a coroutine to fade the screen to black and then to show everything again.</summary>
     /// <param name="colorChangeSpeed">Speed to fade in and out at.</param>

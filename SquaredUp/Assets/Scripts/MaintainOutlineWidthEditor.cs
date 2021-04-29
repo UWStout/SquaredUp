@@ -24,6 +24,6 @@ public class MaintainOutlineWidthEditor : MonoBehaviour
     public void SetGlobalScale(Transform transform, Vector3 globalScale)
     {
         transform.localScale = Vector3.one;
-        transform.localScale = new Vector3(globalScale.x / transform.lossyScale.x, globalScale.y / transform.lossyScale.y, transform.localScale.z);
+        transform.localScale = new Vector3(globalScale.x / transform.lossyScale.x, globalScale.y / transform.lossyScale.y, globalScale.z / transform.lossyScale.z);
     }
 }

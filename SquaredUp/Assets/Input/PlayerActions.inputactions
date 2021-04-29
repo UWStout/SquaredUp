@@ -539,6 +539,12 @@
                     "isPartOfComposite": false
                 }
             ]
+        },
+        {
+            "name": "EndGame",
+            "id": "8c4fc2a7-6850-4b2d-9447-b4feef3e5766",
+            "actions": [],
+            "bindings": []
         }
     ],
     "controlSchemes": []
