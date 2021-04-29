@@ -124,6 +124,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   alertObj: {fileID: 4569751960956873210}
+  colorChangeObject: {fileID: 0}
   color: 2
 --- !u!61 &885725887285336995
 BoxCollider2D:
@@ -330,7 +331,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 1896380346892685828, guid: e1fa718a105b83b40a12c37b5987ac63, type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: 0
+      value: 1.6666667
       objectReference: {fileID: 0}
     - target: {fileID: 2322673380542306573, guid: e1fa718a105b83b40a12c37b5987ac63, type: 3}
       propertyPath: m_LocalPosition.x
@@ -382,7 +383,13 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2322673381319215501, guid: e1fa718a105b83b40a12c37b5987ac63, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2322673381319215603, guid: e1fa718a105b83b40a12c37b5987ac63, type: 3}
+      propertyPath: m_text
+      value: 'Swap
+
+        to Red'
       objectReference: {fileID: 0}
     - target: {fileID: 2322673381847108117, guid: e1fa718a105b83b40a12c37b5987ac63, type: 3}
       propertyPath: m_LocalScale.x
