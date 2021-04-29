@@ -4,25 +4,26 @@ using UnityEngine;
 public class PushableFix : MonoBehaviour
 {
     [SerializeField] private GameObject parentObject;
-    void OnTriggerEnter2D(Collider2D other)
+
+    private void OnCollisionEnter2D(Collision2D collision)
     {
-        function(other);
+        function(collision);
+    }
+    private void OnCollisionStay2D(Collision2D collision)
+    {
+        function(collision);
     }
 
-    void OnTriggerStay2D(Collider2D other)
+    private void function(Collision2D collision)
     {
-        function(other);
-    }
-
-    private void function(Collider2D other)
-    {
-        if (other.tag == "Player")
+        Vector2 hitPos = collision.GetContact(0).point;
+        if (collision.gameObject.tag == "Player")
         {
             Vector2 dir = new Vector2(0, 0);
-            if (Mathf.Abs(transform.position.x - other.transform.position.x) > Mathf.Abs(transform.position.y - other.transform.position.y))
+            if (Mathf.Abs(transform.position.x - hitPos.x) > Mathf.Abs(transform.position.y - hitPos.y))
             {
                 dir.y = 0;
-                if (Mathf.Abs(transform.position.x) > Mathf.Abs(other.transform.position.x))
+                if (Mathf.Abs(transform.position.x) > Mathf.Abs(hitPos.x))
                 {
                     dir.x = 1;
                 }
@@ -34,7 +35,7 @@ public class PushableFix : MonoBehaviour
             else
             {
                 dir.x = 0;
-                if (Mathf.Abs(transform.position.y) > Mathf.Abs(other.transform.position.y))
+                if (Mathf.Abs(transform.position.y) > Mathf.Abs(hitPos.y))
                 {
                     dir.y = 1;
                 }
