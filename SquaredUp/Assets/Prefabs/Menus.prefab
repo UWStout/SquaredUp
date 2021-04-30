@@ -539,9 +539,9 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 'All residents of the second realm hereby are united under the leadership
+  m_text: 'All residents of the second realm are hereby united under the leadership
     of Lord Sphermoth, the Intrepid. In doing so, the reigning order and authority
-    of Lord Spheremoth has been established. '
+    of Lord Spheremoth is established. '
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: dc91e7f8b7bf20145ba0a1b5a4b68d4c, type: 2}
   m_sharedMaterial: {fileID: -8517254433017266214, guid: dc91e7f8b7bf20145ba0a1b5a4b68d4c, type: 2}
@@ -1209,14 +1209,14 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: "Our efforts were futile, for the Fallen could manipulate our own world
+  m_text: "Our efforts were futile, for The Fallen could manipulate our own world
     in ways we could not hope to understand. We could no longer know whether one
-    was friend or foe because of the Fallen\u2019s ability to take our shapes as
+    was friend or foe, because of the Fallen\u2019s ability to take our shapes as
     their own. If not our shape, then what was to define us? Color, its hues and
     blends neither benign nor insignificant, would represent who was banished and
     who was not. We would strip away the colors and textures that the Fallen wore
-    as their own so that we could be sure who was a traitor and who was not.  In
-    the dimmest light, we would rise."
+    as their own so that we could determine friend from traitor.  In the dimmest
+    light, we would rise."
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: dc91e7f8b7bf20145ba0a1b5a4b68d4c, type: 2}
   m_sharedMaterial: {fileID: -8517254433017266214, guid: dc91e7f8b7bf20145ba0a1b5a4b68d4c, type: 2}
@@ -1515,11 +1515,11 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Any 3rd dimensional beings outside of Lord Spheremoth and loyal subjects
-    are hereby banished permanently from this plane and shall not posses color or
-    unique characteristics. Lord Spheremoth is the singular ruler and only shape
-    permitted to exist outside of the 2nd plane outside of those deemed worthy to
-    do so by Lord Sphermoth.
+  m_text: Any 3rd dimensional beings other than Lord Spheremoth and his loyal subjects
+    are hereby banished from this plane.  They shall not posses color or unique characteristics.
+    Lord Spheremoth is the one true ruler. Only he is permitted to possess a shape
+    outside of the 2nd dimension. He may also grant this special gift to those he
+    deems worthy.
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: dc91e7f8b7bf20145ba0a1b5a4b68d4c, type: 2}
   m_sharedMaterial: {fileID: -8517254433017266214, guid: dc91e7f8b7bf20145ba0a1b5a4b68d4c, type: 2}
@@ -2594,9 +2594,9 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   m_text: Any resources amassed by the residents of the second realm are hereby subject
-    to inspection and ownership of Lord Spheremoth or those Lord Spheremoth has deemed
-    appropriate for ownership. This includes colors and distinguishing resources
-    as well as anything Lord Spheremoth determines to be of importance.
+    to inspection and sizure by Lord Spheremoth or those Lord Spheremoth has deemed
+    appropriate for ownership. This includes colors, distinguishing feauters, and
+    resources, as well as anything Lord Spheremoth determines to be of importance.
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: dc91e7f8b7bf20145ba0a1b5a4b68d4c, type: 2}
   m_sharedMaterial: {fileID: -8517254433017266214, guid: dc91e7f8b7bf20145ba0a1b5a4b68d4c, type: 2}
@@ -6438,11 +6438,11 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Soon after the Fall, our friends and families began to phase in and out
+  m_text: Soon after The Fall, our friends and families began to phase in and out
     of our realm. They too spoke of rotation and other foreign things. Knowing they
     had been corrupted, we had no choice but to banish the Fallen and their teachings.
-    All of those who chose to do so would be branded Fallen and forced out of our
-    plane of existence.
+    All of those who chose to follow these teachings were branded Fallen and forced
+    out of our realm.
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: dc91e7f8b7bf20145ba0a1b5a4b68d4c, type: 2}
   m_sharedMaterial: {fileID: -8517254433017266214, guid: dc91e7f8b7bf20145ba0a1b5a4b68d4c, type: 2}
