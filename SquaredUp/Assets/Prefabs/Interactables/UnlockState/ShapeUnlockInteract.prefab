@@ -223,7 +223,7 @@ CircleCollider2D:
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: 0}
   serializedVersion: 2
-  m_Radius: 1.6
+  m_Radius: 2
 --- !u!114 &4299876055909704604
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -239,6 +239,7 @@ MonoBehaviour:
   alertObj: {fileID: 5558184334077445841}
   lines:
   - Shape 'Shape' unlocked.
+  vision: {fileID: 0}
   skillsToUnlock: 00000000
   statesToUnlock:
   - skillIndex: 0

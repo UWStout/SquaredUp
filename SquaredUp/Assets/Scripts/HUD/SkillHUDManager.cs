@@ -5,7 +5,7 @@ using UnityEngine.UI;
 public class SkillHUDManager : MonoBehaviour
 {
     // Constants
-    private const float FADED_AMOUNT = 0.3f;
+    private const float FADED_AMOUNT = 0.5f;
 
     // Name of the skill menu action map in player input
     [SerializeField] private string skillMenuActionMapName = "SkillMenu";

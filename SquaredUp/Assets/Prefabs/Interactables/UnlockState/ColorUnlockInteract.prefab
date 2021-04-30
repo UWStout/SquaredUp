@@ -1,87 +1,5 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!114 &1206071910979384238
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3750216638967123589}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e360a3bb28bcd454c9c91a9e59118151, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  randomOrder: 1
-  waitTime: 0.2
-  shapeTypes: 000000000100000002000000
---- !u!114 &6060332607970903974
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3750216638967123589}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6a32327d595dff14a8c4294b4f9b8bc6, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  targetRenderers:
-  - {fileID: 2168291498461942416}
-  - {fileID: 2168291497572098690}
-  changeSpeed: 2
---- !u!58 &6060332608473651063
-CircleCollider2D:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5554477733679125638}
-  m_Enabled: 1
-  m_Density: 1
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_UsedByEffector: 0
-  m_UsedByComposite: 0
-  m_Offset: {x: 0, y: 0}
-  serializedVersion: 2
-  m_Radius: 1
---- !u!114 &6060332608473651062
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5554477733679125638}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: dfcda6061006cb74f981623d4aa1d4aa, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  alertObj: {fileID: 5554477733576742626}
-  lines:
-  - Color 'Color' unlocked.
-  skillsToUnlock: 01000000
-  statesToUnlock:
-  - skillIndex: 1
-    stateIndex: 0
---- !u!58 &6060332607483367638
-CircleCollider2D:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5554477733682912845}
-  m_Enabled: 1
-  m_Density: 1
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_UsedByEffector: 0
-  m_UsedByComposite: 0
-  m_Offset: {x: 0, y: 0}
-  serializedVersion: 2
-  m_Radius: 1
 --- !u!1 &6060332607746592417
 GameObject:
   m_ObjectHideFlags: 0
@@ -304,6 +222,89 @@ SkinnedMeshRenderer:
     m_Center: {x: -0.0000000023283064, y: -0.0000000018626451, z: 0}
     m_Extent: {x: 0.01, y: 0.010000002, z: 0.01}
   m_DirtyAABB: 0
+--- !u!114 &1206071910979384238
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3750216638967123589}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e360a3bb28bcd454c9c91a9e59118151, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  randomOrder: 1
+  waitTime: 0.2
+  shapeTypes: 000000000100000002000000
+--- !u!114 &6060332607970903974
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3750216638967123589}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6a32327d595dff14a8c4294b4f9b8bc6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  targetRenderers:
+  - {fileID: 2168291498461942416}
+  - {fileID: 2168291497572098690}
+  changeSpeed: 2
+--- !u!58 &6060332608473651063
+CircleCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5554477733679125638}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: 0}
+  serializedVersion: 2
+  m_Radius: 1.5
+--- !u!114 &6060332608473651062
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5554477733679125638}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dfcda6061006cb74f981623d4aa1d4aa, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  alertObj: {fileID: 5554477733576742626}
+  lines:
+  - Color 'Color' unlocked.
+  vision: {fileID: 0}
+  skillsToUnlock: 01000000
+  statesToUnlock:
+  - skillIndex: 1
+    stateIndex: 0
+--- !u!58 &6060332607483367638
+CircleCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5554477733682912845}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: 0}
+  serializedVersion: 2
+  m_Radius: 1
 --- !u!1001 &7867422633387105526
 PrefabInstance:
   m_ObjectHideFlags: 0
