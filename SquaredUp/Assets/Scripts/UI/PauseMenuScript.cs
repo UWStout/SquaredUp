@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 public class PauseMenuScript : MonoBehaviour
 {
@@ -14,6 +15,16 @@ public class PauseMenuScript : MonoBehaviour
     [SerializeField]
     private string defaultActionMapName = "Player";
 
+    void Start()
+    {
+        if (SceneManager.GetActiveScene().name == "MainMenu")
+        {
+            showCursor();
+        } else
+        {
+            hideCursor();
+        }
+    }
 
     private void OnEnable()
     {
@@ -82,6 +93,7 @@ public class PauseMenuScript : MonoBehaviour
         pauseMenu.SetActive(true);
         loreMenu.SetActive(false);
         controlMenu.SetActive(false);
+        showCursor();
     }
 
     private void OnUnpauseGame()
@@ -91,5 +103,18 @@ public class PauseMenuScript : MonoBehaviour
         pauseMenu.SetActive(false);
         loreMenu.SetActive(false);
         controlMenu.SetActive(false);
+        hideCursor();
+    }
+
+    private void showCursor()
+    {
+        Cursor.visible = true;
+        Screen.lockCursor = false;
+    }
+
+    private void hideCursor()
+    {
+        Cursor.visible = false;
+        Screen.lockCursor = true;
     }
 }

@@ -142,6 +142,7 @@ public class SkillHUDManager : MonoBehaviour
         // Revert the input map and close the hud
         InputController.Instance.PopInputMap(skillMenuActionMapName);
         CloseHUD();
+        hideCursor();
     }
     /// <summary>Called when the player wants to open the skill menu. Swaps the input map and opens the skill menu.</summary>
     private void OnOpenSkillMenu()
@@ -149,6 +150,17 @@ public class SkillHUDManager : MonoBehaviour
         // Swap input maps and call the open event
         InputController.Instance.SwitchInputMap(skillMenuActionMapName);
         OpenHUD();
+        showCursor();
+    }
+    private void showCursor()
+    {
+        Cursor.visible = true;
+        Screen.lockCursor = false;
+    }
+    private void hideCursor()
+    {
+        Cursor.visible = false;
+        Screen.lockCursor = true;
     }
     /// <summary>Called when the player uses the HUD navigation</summary>
     private void OnHUDAxis(Vector2 rawInput)
