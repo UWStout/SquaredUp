@@ -17,7 +17,7 @@ public class DoorInitializeVisuals : MonoBehaviour
         // Get scale
         Vector2Int scale = new Vector2Int(Mathf.RoundToInt(transform.localScale.x), Mathf.RoundToInt(transform.localScale.y));
         // Move scale to be on the physics only
-        physicsTransform.localScale = transform.localScale;
+        //physicsTransform.localScale = transform.localScale;
         transform.localScale = Vector3.one;
 
         float xWidth = singleVisualPrefab.transform.localScale.x;
