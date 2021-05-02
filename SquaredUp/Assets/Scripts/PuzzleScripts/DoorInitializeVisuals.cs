@@ -12,13 +12,13 @@ public class DoorInitializeVisuals : MonoBehaviour
 
 
     // Start is called before the first frame update
-    void Start()
+    private void Start()
     {
         // Get scale
         Vector2Int scale = new Vector2Int(Mathf.RoundToInt(transform.localScale.x), Mathf.RoundToInt(transform.localScale.y));
         // Move scale to be on the physics only
-        //physicsTransform.localScale = transform.localScale;
         transform.localScale = Vector3.one;
+        physicsTransform.localScale = new Vector3(scale.x, scale.y, 1);
 
         float xWidth = singleVisualPrefab.transform.localScale.x;
         float yWidth = singleVisualPrefab.transform.localScale.y;
