@@ -1,6 +1,6 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!114 &6366357358643348391
+--- !u!114 &5694280063209706080
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -9,10 +9,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 2309278724611360569}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 961edf7f2aac8324b90578ec58dbce15, type: 3}
+  m_Script: {fileID: 11500000, guid: d415448ccfff2534aaa8c03dd4e700ed, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  physicsTransform: {fileID: 2309278724747726529}
+  doorOpener: {fileID: 1063622412523194555}
 --- !u!58 &1063622412523194546
 CircleCollider2D:
   m_ObjectHideFlags: 0

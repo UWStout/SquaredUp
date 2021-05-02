@@ -5,7 +5,7 @@ public class DoorController : Interactable
 {
 
     //variables
-    private GameObject targetDoor;
+    [HideInInspector] [SerializeField] private GameObject targetDoor = null;
     [SerializeField]
     private LayerMask layerMask;
     [SerializeField]
@@ -40,16 +40,23 @@ public class DoorController : Interactable
 
     public override void Interact()
     {
+        interactableObject.transform.Rotate(0, 0, 90);
+        UpdateTarget();
+    }
+
+    /// <summary>Updates the door controller's target and hides it. Shows the previous target again if this was its only door controller.</summary>
+    public void UpdateTarget()
+    {
         //check if there is a saved target door
-        if (targetDoor!=null)
+        if (targetDoor != null)
         {
             //call the out of sight for the target door
             targetDoor.GetComponent<DoorState>().OutOfSight();
         }
-        interactableObject.transform.Rotate(0, 0, 90);
+
         //raycast out a distance of 100f and only on the layerMask
         RaycastHit hit;
-        if(Physics.Raycast(interactableObject.transform.position,interactableObject.transform.TransformDirection(Vector3.up),out hit,distance, layerMask))
+        if (Physics.Raycast(interactableObject.transform.position, interactableObject.transform.TransformDirection(Vector3.up), out hit, distance, layerMask))
         {
             //get the gameobject of the collider that gets hit by raycast and save it as the target
             targetDoor = hit.collider.gameObject;
@@ -60,7 +67,7 @@ public class DoorController : Interactable
             targetDoor = null;
         }
         //if there is a target door
-        if (targetDoor!=null)
+        if (targetDoor != null)
         {
             //call within sight on the target door
             targetDoor.GetComponent<DoorState>().WithinSight();
