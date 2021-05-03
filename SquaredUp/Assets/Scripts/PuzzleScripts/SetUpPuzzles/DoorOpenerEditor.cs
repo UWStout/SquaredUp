@@ -19,7 +19,7 @@ public class DoorOpenerEditor : MonoBehaviour
     }
 }
 
-
+#if UNITY_EDITOR
 /// <summary>CustomEditor for the DoorOpenerEditor to give a button to rotate the door opener.</summary>
 [CustomEditor(typeof(DoorOpenerEditor))]
 public class DoorOpenerEditorUnityEditor : Editor
@@ -40,3 +40,4 @@ public class DoorOpenerEditorUnityEditor : Editor
         }
     }
 }
+#endif
