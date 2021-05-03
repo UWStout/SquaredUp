@@ -127,7 +127,7 @@ public class VisionInRange : MonoBehaviour
             wasCaught = true;
             npcMovement.AllowMove(false);
             InputEvents.AdvanceDialogueEvent += FadeInOut;
-            DialogueController.Instance.StartDialogue(new string[] { "HEY YOU, STOP!!!" });
+            DialogueController.Instance.StartDialogue(new string[] { "HEY YOU! STOP!!!" });
         }
     }
 

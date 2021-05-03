@@ -15,7 +15,7 @@ MonoBehaviour:
   alert: {fileID: 0}
   colorSpeed: 0.05
   jailCellLocation: {fileID: 0}
-  alertPhrase: HEY YOU, STOP!!!
+  alertPhrase: HEY YOU! STOP!!!
   visionOffset: {fileID: 3873634381590622508}
   viewWidth: 6
   viewHeight: 14
