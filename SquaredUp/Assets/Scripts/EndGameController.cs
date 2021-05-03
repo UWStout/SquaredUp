@@ -59,5 +59,7 @@ public class EndGameController : MonoBehaviour
     {
         playerCollectionAnimator.SetBool("endGameAfter", true);
         CanvasSingleton.Instance.ShowGameOverMenu();
+        Cursor.visible = true;
+        Screen.lockCursor = false;
     }
 }
