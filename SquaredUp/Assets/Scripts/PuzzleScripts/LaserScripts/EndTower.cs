@@ -5,6 +5,7 @@ using UnityEngine;
 public class EndTower : MonoBehaviour
 {
     private bool hitByCast;
+    [SerializeField] Material targetMaterial;
     [SerializeField]
     GameObject wall;
     // Start is called before the first frame update
@@ -22,9 +23,16 @@ public class EndTower : MonoBehaviour
         }
     }
 
-    public void HitByCast()
+    public void HitByCast(Material matCheck)
     {
-        hitByCast = true;
+        if (!targetMaterial || matCheck.color == targetMaterial.color)
+        {
+            hitByCast = true;
+        }
+        else
+        {
+            hitByCast = false;
+        }
     }
 
     public void VoidCast()

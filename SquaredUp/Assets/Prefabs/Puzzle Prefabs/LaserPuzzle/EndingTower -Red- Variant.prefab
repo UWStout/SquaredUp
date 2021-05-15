@@ -1,0 +1,103 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1001 &6132310462726494499
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 1523585945550600157, guid: 97e22af96868c5344ae651f92c7db74a, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 0.42282835
+      objectReference: {fileID: 0}
+    - target: {fileID: 1523585945550600157, guid: 97e22af96868c5344ae651f92c7db74a, type: 3}
+      propertyPath: m_LocalScale.y
+      value: 0.42282835
+      objectReference: {fileID: 0}
+    - target: {fileID: 8120290749303442401, guid: 97e22af96868c5344ae651f92c7db74a, type: 3}
+      propertyPath: m_Color.r
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8120290749303442401, guid: 97e22af96868c5344ae651f92c7db74a, type: 3}
+      propertyPath: m_Color.g
+      value: 0.4
+      objectReference: {fileID: 0}
+    - target: {fileID: 8120290749303442401, guid: 97e22af96868c5344ae651f92c7db74a, type: 3}
+      propertyPath: m_Color.b
+      value: 0.3882353
+      objectReference: {fileID: 0}
+    - target: {fileID: 8714450233971705436, guid: 97e22af96868c5344ae651f92c7db74a, type: 3}
+      propertyPath: wall
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 8714450233971705436, guid: 97e22af96868c5344ae651f92c7db74a, type: 3}
+      propertyPath: targetMaterial
+      value: 
+      objectReference: {fileID: 2100000, guid: 4ba0f7b59100ec14380546c4858118b6, type: 2}
+    - target: {fileID: 8714450234710690724, guid: 97e22af96868c5344ae651f92c7db74a, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 102
+      objectReference: {fileID: 0}
+    - target: {fileID: 8714450234710690724, guid: 97e22af96868c5344ae651f92c7db74a, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 8714450234710690724, guid: 97e22af96868c5344ae651f92c7db74a, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8714450234710690724, guid: 97e22af96868c5344ae651f92c7db74a, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8714450234710690724, guid: 97e22af96868c5344ae651f92c7db74a, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8714450234710690724, guid: 97e22af96868c5344ae651f92c7db74a, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8714450234710690724, guid: 97e22af96868c5344ae651f92c7db74a, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8714450234710690724, guid: 97e22af96868c5344ae651f92c7db74a, type: 3}
+      propertyPath: m_RootOrder
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8714450234710690724, guid: 97e22af96868c5344ae651f92c7db74a, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8714450234710690724, guid: 97e22af96868c5344ae651f92c7db74a, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8714450234710690724, guid: 97e22af96868c5344ae651f92c7db74a, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8714450234710690724, guid: 97e22af96868c5344ae651f92c7db74a, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 1.4
+      objectReference: {fileID: 0}
+    - target: {fileID: 8714450234710690724, guid: 97e22af96868c5344ae651f92c7db74a, type: 3}
+      propertyPath: m_LocalScale.y
+      value: 1.4
+      objectReference: {fileID: 0}
+    - target: {fileID: 8714450234710690725, guid: 97e22af96868c5344ae651f92c7db74a, type: 3}
+      propertyPath: m_Name
+      value: EndingTower -Red- Variant
+      objectReference: {fileID: 0}
+    - target: {fileID: 8714450235073655098, guid: 97e22af96868c5344ae651f92c7db74a, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 0.8571428
+      objectReference: {fileID: 0}
+    - target: {fileID: 8714450235073655098, guid: 97e22af96868c5344ae651f92c7db74a, type: 3}
+      propertyPath: m_LocalScale.y
+      value: 0.8571428
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 97e22af96868c5344ae651f92c7db74a, type: 3}

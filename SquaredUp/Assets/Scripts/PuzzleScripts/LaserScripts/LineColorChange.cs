@@ -2,20 +2,24 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class LaserScript : MonoBehaviour
+public class LineColorChange : MonoBehaviour
 {
+
     private LineRenderer lineRenderer;
-    [SerializeField] LayerMask raycastLayer;
-    private LayerMask layerMask;
+    [SerializeField] GameObject findMaterial;
+    private Material thisMaterial;
+    [SerializeField] private LayerMask raycastLayer, layerMask;
     private RaycastHit2D hit, oldHit;
-    private Vector3 hitByPos, hitPointPos;
+    private Vector3 hitByPos, hitPointPos,rotatedVector;
     private int fromDir;
     [SerializeField]
-    private int[,] angleArray = new int[4, 4] { { -1, 90, 270, -1}, { -1, -1, 180, 0},{ 90, -1, -1, 270},{ 0, 180, -1, -1 } }; 
+    private int[,] angleArray = new int[4, 4] { { -1, 90, 270, -1 }, { -1, -1, 180, 0 }, { 90, -1, -1, 270 }, { 0, 180, -1, -1 } };
     void Start()
     {
         lineRenderer = GetComponent<LineRenderer>();
         lineRenderer.useWorldSpace = true;
+        thisMaterial = findMaterial.GetComponent<MeshRenderer>().material;
+        lineRenderer.material = thisMaterial;
     }
     void FixedUpdate()
     {
@@ -39,13 +43,12 @@ public class LaserScript : MonoBehaviour
             }
         }
     }
-    public void HitByCast(Vector3 hitBy, Vector3 hitPoint, int from, Material newmat, LayerMask layerMask_)
+    public void HitByCast(Vector3 hitBy, Vector3 hitPoint, int from, Vector3 rotatedVector_)
     {
         hitByPos = hitBy;
         hitPointPos = hitPoint;
         fromDir = from;
-        lineRenderer.material = newmat;
-        layerMask = layerMask_;
+        rotatedVector = rotatedVector_;
         if (!lineRenderer.enabled)
         {
             SetLine();
@@ -54,32 +57,23 @@ public class LaserScript : MonoBehaviour
 
     private void SetLine()
     {
-        int angleZ = (int)(this.transform.rotation.eulerAngles.z);
-        int castAngle = angleArray[(fromDir / 90), (angleZ / 90)];
-        if (castAngle != -1)
-        {
-            lineRenderer.SetPosition(0, hitPointPos);
-            lineRenderer.SetPosition(1, Casting(castAngle));
-            lineRenderer.enabled = true;
-        }
-        else
-        {
-            lineRenderer.enabled = false;
-        }
+        lineRenderer.SetPosition(0, hitPointPos);
+        lineRenderer.SetPosition(1, Casting());
+        lineRenderer.material = thisMaterial;
+        lineRenderer.enabled = true;
     }
 
     public void VoidCast()
     {
         lineRenderer.enabled = false;
         hitByPos = new Vector3();
-        //hit.collider.gameObject.GetComponent<LaserScript>().VoidCast();
     }
 
-    public Vector3 Casting(int castAngle_)
+    public Vector3 Casting()
     {
-        Vector3 rotatedVector = Quaternion.Euler(0f, 0f, castAngle_) * Vector3.up;
-        Vector3 modifyStart = Quaternion.Euler(0f, 0f, castAngle_) * new Vector3(0f, .1f, 0f);
-        hit = Physics2D.Raycast(hitPointPos + modifyStart, rotatedVector, Mathf.Infinity, layerMask);
+        
+        Vector3 modifyStart = Quaternion.Euler(0f, 0f, fromDir) * new Vector3(0f, 2*this.transform.localScale.y, 0f);
+        hit = Physics2D.Raycast(hitPointPos+modifyStart, rotatedVector, Mathf.Infinity, layerMask);
         if (oldHit && hit && hit.collider.gameObject != oldHit.collider.gameObject)
         {
             if (oldHit.collider.gameObject.layer == Mathf.Log(raycastLayer.value, 2))
@@ -103,7 +97,7 @@ public class LaserScript : MonoBehaviour
         {
             if (hit.collider.gameObject.GetComponent<LaserScript>())
             {
-                hit.collider.gameObject.GetComponent<LaserScript>().HitByCast(this.transform.position, hit.point, castAngle_, lineRenderer.material, layerMask);
+                hit.collider.gameObject.GetComponent<LaserScript>().HitByCast(this.transform.position, hit.point, fromDir, lineRenderer.material, layerMask);
             }
             else if (hit.collider.gameObject.GetComponent<EndTower>())
             {
@@ -111,10 +105,10 @@ public class LaserScript : MonoBehaviour
             }
             else if (hit.collider.gameObject.GetComponent<LineColorChange>())
             {
-                hit.collider.gameObject.GetComponent<LineColorChange>().HitByCast(this.transform.position, hit.point, castAngle_, rotatedVector);
+                hit.collider.gameObject.GetComponent<LineColorChange>().HitByCast(rotatedVector, hit.point, fromDir, rotatedVector);
             }
         }
-        return (Vector3)hit.point + new Vector3(0, 0, -.1f);
+        return hit.point;
 
     }
 }

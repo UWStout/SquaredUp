@@ -29,11 +29,25 @@ public class StartLaserScript : MonoBehaviour
         RaycastHit2D hit = Physics2D.Raycast(transform.position + modifyStart, rotatedVector, Mathf.Infinity, layerMask1);
         if (hit&&hit.collider.gameObject.layer == Mathf.Log(raycastLayer.value, 2))
         {
-            hit.collider.gameObject.GetComponent<LaserScript>().HitByCast(this.transform.position, (Vector3)hit.point + new Vector3(0, 0, -.1f), (int)angleZ);
+            if (hit.collider.gameObject.GetComponent<LaserScript>())
+            {
+                hit.collider.gameObject.GetComponent<LaserScript>().HitByCast(this.transform.position, (Vector3)hit.point + new Vector3(0, 0, -.1f), (int)angleZ, lineRenderer.material,layerMask1);
+            }
+            else if (hit.collider.gameObject.GetComponent<LineColorChange>())
+            {
+                hit.collider.gameObject.GetComponent<LineColorChange>().HitByCast(this.transform.position, hit.point, (int)angleZ, rotatedVector);
+            }
         }
         if (oldHit && (oldHit.collider.gameObject.layer == Mathf.Log(raycastLayer.value, 2)) && (oldHit.collider.gameObject != hit.collider.gameObject))
         {
-            oldHit.collider.gameObject.GetComponent<LaserScript>().VoidCast();
+            if (oldHit.collider.gameObject.GetComponent<LaserScript>())
+            {
+                oldHit.collider.gameObject.GetComponent<LaserScript>().VoidCast();
+            }
+            else if (oldHit.collider.gameObject.GetComponent<LineColorChange>())
+            {
+                oldHit.collider.gameObject.GetComponent<LineColorChange>().VoidCast();
+            }
         }
         oldHit = hit;
         return hit.point;
