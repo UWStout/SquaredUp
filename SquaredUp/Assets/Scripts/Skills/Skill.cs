@@ -16,8 +16,11 @@ public interface Skill
     bool IsStateUnlocked(int stateIndex);
     /// <summary>Sets the state with the given index to be unlocked</summary>
     void UnlockState(int stateIndex);
-    /// <summary>Gets the ui element prefab associated with the skill with the given index</summary>
-    GameObject GetStateUIElement(int stateIndex);
+    /// <summary>Gets index of the active state.</summary>
+    int GetCurrentStateIndex();
     /// <summary>Activation of the skill</summary>
     void Use(int stateIndex);
+    /// <summary>Sets the active state to the given state without using the skill.
+    /// Should only be used for loading save data.</summary>
+    void FakeUse(int stateIndex);
 }

@@ -27,7 +27,7 @@ public abstract class SingletonMonoBehav<T> : MonoBehaviour where T : SingletonM
         }
         else
         {
-            Debug.LogError("Cannot have multiple " + (this as T).GetType());
+            Debug.Log("Cannot have multiple " + (this as T).GetType());
             Destroy(this);
         }
     }

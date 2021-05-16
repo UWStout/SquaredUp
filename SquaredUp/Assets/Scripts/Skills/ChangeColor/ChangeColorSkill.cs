@@ -28,6 +28,9 @@ public class ChangeColorSkill : SkillBase<ColorData>
     // Refrence to the coroutine running
     private Coroutine changeColorCorout = null;
 
+    // Target material to change color to match
+    private Material targetMat = null;
+
     // References to the gameobjects on the player that have the wall colliders on them
     // The order of the walls MUST match the enum
     [SerializeField] private GameObject[] coloredWallColliders = new GameObject[0];
@@ -83,6 +86,16 @@ public class ChangeColorSkill : SkillBase<ColorData>
         return -1;
     }
 
+    /// <summary>
+    /// Gets the color of the target material.
+    /// </summary>
+    /// <returns>Color of the target material.</returns>
+    public Color GetTargetColor()
+    {
+        return targetMat.color;
+    }
+
+
     /// <summary>Turns off the collider that inhbits passage through the given color</summary>
     /// <param name="index">Index of the color. 0 is default</param>
     private void AllowColorPassage(int index)
@@ -109,17 +122,17 @@ public class ChangeColorSkill : SkillBase<ColorData>
     /// <param name="stateIndex">Index of the state/material to change the player to/param>
     private void StartColorChange(int stateIndex)
     {
-        Material targetMat = SkillData.GetData(stateIndex).Material;
+        targetMat = SkillData.GetData(stateIndex).Material;
         // If a coroutine is currently going, stop it and start a new one
         if (!changeColorCoroutFin)
         {
             StopCoroutine(changeColorCorout);
         }
-        changeColorCorout = StartCoroutine(ColorChangeCoroutine(stateIndex, targetMat));
+        changeColorCorout = StartCoroutine(ColorChangeCoroutine(stateIndex));
     }
 
     /// <summary>Coroutine to smoothly change the player's material/color to the target material</summary>
-    private IEnumerator ColorChangeCoroutine(int stateIndex, Material targetMat)
+    private IEnumerator ColorChangeCoroutine(int stateIndex)
     {
         changeColorCoroutFin = false;
 

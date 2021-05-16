@@ -2,28 +2,25 @@
 using UnityEngine;
 
 /// <summary>
-/// Saves and loads the player's data.
+/// Saves and loads data for the player's skills.
 /// </summary>
-public class PlayerSavable : SavableMonoBehav<PlayerSavable>
+public class SkillSavable : SavableMonoBehav<SkillSavable>
 {
-    // Player's movement transform
-    [SerializeField] private Transform playerMovement = null;
     // Skill controller to unlock the saved skill states
     [SerializeField] private SkillController skillController = null;
+    // Scale controller to set the sizes based on the shape and size skills
+    [SerializeField] private ScaleController scaleController = null;
 
-    
+
     /// <summary>
-    /// Load the player data from the serialized object and
+    /// Load the skill data from the serialized object and
     /// reapply the loaded data to the active player.
     /// </summary>
     /// <param name="serializedObj">object with the player's saved data</param>
     public override void Load(object serializedObj)
     {
-        // Cast to the correct data type
-        PlayerSaveData data = serializedObj as PlayerSaveData;
+        SkillSaveData data = serializedObj as SkillSaveData;
 
-        // Put the player back to their previous position
-        playerMovement.position = data.GetPosition();
         // Give the player their unlocked skills and unlocked skill states back
         // Shapes
         int[] shapeStates = data.GetShapeUnlockStates();
@@ -31,10 +28,17 @@ public class PlayerSavable : SavableMonoBehav<PlayerSavable>
         // Colors
         int[] colorStates = data.GetColorUnlockStates();
         UnlockSkillStatesForPlayer(SkillController.SkillEnum.Color, colorStates);
+        // Set the active states without using the skills
+        SkillBase<ShapeData> shapeSkill = skillController.GetSkill(SkillController.SkillEnum.Shape) as SkillBase<ShapeData>;
+        SkillBase<ColorData> colorSkill = skillController.GetSkill(SkillController.SkillEnum.Color) as SkillBase<ColorData>;
+        shapeSkill.FakeUse(data.GetActiveShapeState());
+        colorSkill.FakeUse(data.GetActiveColorState());
+        // Set the shape size
+        scaleController.ShapeScale = shapeSkill.GetCurrentState().Scale;
     }
 
     /// <summary>
-    /// Creates and returns player save data.
+    /// Creates and returns SkillSaveData holding the current skill controller's information.
     /// </summary>
     /// <returns></returns>
     public override object Save()
@@ -42,10 +46,11 @@ public class PlayerSavable : SavableMonoBehav<PlayerSavable>
         // Determine the skill states that need to be saved
         int[] shapeUnlockStates = GetUnlockedStatesArray(SkillController.SkillEnum.Shape);
         int[] colorUnlockStates = GetUnlockedStatesArray(SkillController.SkillEnum.Color);
-
-        // Create the data
-        PlayerSaveData data = new PlayerSaveData(playerMovement.position, shapeUnlockStates, colorUnlockStates);
-        return data;
+        // Active skill states
+        int shapeActive = skillController.GetSkill(SkillController.SkillEnum.Shape).GetCurrentStateIndex();
+        int colorActive = skillController.GetSkill(SkillController.SkillEnum.Color).GetCurrentStateIndex();
+        // Return the created data
+        return new SkillSaveData(shapeUnlockStates, colorUnlockStates, shapeActive, colorActive);
     }
 
 
@@ -66,7 +71,7 @@ public class PlayerSavable : SavableMonoBehav<PlayerSavable>
             skillController.UnlockSkillState(skillType, i);
         }
     }
-    
+
     /// <summary>
     /// Creates an array of indices of the unlocked states of the given skill.
     /// </summary>
@@ -86,5 +91,5 @@ public class PlayerSavable : SavableMonoBehav<PlayerSavable>
             }
         }
         return unlockedStates.ToArray();
-    } 
+    }
 }

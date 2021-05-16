@@ -88,6 +88,7 @@ public class ChangeFormController : MonoBehaviour
 
         //Debug.Log("Was Size Changed: " + wasSizeChanged);
         //Debug.Log("Was Shape Changed: " + wasShapeChanged);
+        //Debug.Log("PreviousShapeData: " + prevShapeData);
         //Debug.Log("CurShapeData: " + curShapeData);
         //Debug.Log("Does direciton affect scale: " + curShapeData.DirectionAffectsScale);
         //Debug.Log("Target Size: " + size);
@@ -101,7 +102,7 @@ public class ChangeFormController : MonoBehaviour
         {
             // Swap the colliders
             // If the colliders couldn't be swapped, ergo could not fit, then do not swap the player's shape
-            Vector3 scaledSize = Vector3.Scale(size, playerScaleCont.OriginalScale);
+            Vector3 scaledSize = Vector3.Scale(size, ScaleController.ORIGINAL_SCALE);
             AvailableSpot availSpot = playerColContRef.ActivateCollider(curShapeData.TypeOfShape, scaledSize);
             if (availSpot.Available)
             {

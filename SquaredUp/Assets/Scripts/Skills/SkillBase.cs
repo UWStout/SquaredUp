@@ -27,15 +27,14 @@ public abstract class SkillBase<T> : MonoBehaviour, Skill where T : SkillStateDa
     
     /// <summary>Gets if the state is unlocked</summary>
     public bool IsStateUnlocked(int stateIndex) { return SkillData.GetState(stateIndex).Unlocked; }
+    /// <summary>Returns index of the current state</summary>
+    public int GetCurrentStateIndex() { return curSkillIndex; }
 
     /// <summary>Sets the state with the given index to be unlocked</summary>
     public void UnlockState(int stateIndex) { SkillData.GetState(stateIndex).UnlockState(); }
 
     /// <summary>Uses the skill and switches to the given state</summary>
     public abstract void Use(int stateIndex);
-
-    /// <summary>Gets the ui element prefab associated with the skill with the given index</summary>
-    public GameObject GetStateUIElement(int stateIndex) { return SkillData.GetState(stateIndex).Data.UIElement; }
 
     /// <summary>Uses the skill and tries to swap to the state corresponding to the given data</summary>
     public void Use(T stateData)
@@ -44,6 +43,17 @@ public abstract class SkillBase<T> : MonoBehaviour, Skill where T : SkillStateDa
         if (index != -1) { Use(index); }
         else { Debug.LogError(stateData.name + " is not specified as a state of " + ToString()); }
     }
+
+    /// <summary>Sets the active state to the given state without using the skill.
+    /// Should only be used for loading save data.</summary>
+    public virtual void FakeUse(int stateIndex)
+    {
+        curSkillIndex = stateIndex;
+    }
+
+    /// <summary>Returns the data for the current state</summary>
+    public T GetCurrentState() { return SkillData.GetData(curSkillIndex); }
+
 
     /// <summary>If the current state is the given state, returns false. If the current state is not the given
     /// state, sets the given state as the new current state and returns true</summary>
@@ -62,10 +72,4 @@ public abstract class SkillBase<T> : MonoBehaviour, Skill where T : SkillStateDa
     {
         return stateIndex.Equals(curSkillIndex);
     }
-
-    /// <summary>Returns index of the current state</summary>
-    public int GetCurrentStateIndex() { return curSkillIndex; }
-
-    /// <summary>Returns the data for the current state</summary>
-    public T GetCurrentState() { return SkillData.GetData(curSkillIndex); }
 }

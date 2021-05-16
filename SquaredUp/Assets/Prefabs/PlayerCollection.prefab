@@ -124,6 +124,7 @@ GameObject:
   m_Component:
   - component: {fileID: 6420274319548720154}
   - component: {fileID: 4619847326458750135}
+  - component: {fileID: 1303626228547212147}
   - component: {fileID: 5669019019337796142}
   - component: {fileID: 329320815945794181}
   m_Layer: 0
@@ -163,6 +164,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4d24c429ca470c243a35b3e393b1e34e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &1303626228547212147
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2532794357441744131}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8dfd2ec7201962d468adaee86d2e34b0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  skillController: {fileID: 4619847326458750135}
+  scaleController: {fileID: 2072241410518489459}
 --- !u!114 &5669019019337796142
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1400,6 +1415,7 @@ GameObject:
   - component: {fileID: 6257086274663262137}
   - component: {fileID: 2072241410518489459}
   - component: {fileID: 2638144812263462055}
+  - component: {fileID: 8183317876690771843}
   m_Layer: 0
   m_Name: Movement/Scalable
   m_TagString: Player
@@ -1510,6 +1526,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f22b368ab2636f34698fcdd1a69812ce, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &8183317876690771843
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6257086274663262141}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3fbdf9072a56fe34391615c22708f6da, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &6257086274752830770
 GameObject:
   m_ObjectHideFlags: 0
@@ -1599,6 +1627,7 @@ GameObject:
   - component: {fileID: 6257086275068474217}
   - component: {fileID: 6061642244824605309}
   - component: {fileID: 4898641650442204773}
+  - component: {fileID: 8452416644543713140}
   m_Layer: 0
   m_Name: Visuals
   m_TagString: Untagged
@@ -1652,6 +1681,20 @@ MonoBehaviour:
   body: {fileID: 8781572359714857935}
   outline: {fileID: 5431205377339427332}
   outlineWidth: 18
+--- !u!114 &8452416644543713140
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6257086275068474216}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6ea55a9bfc805a6448e3f7833bf6964d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  blendTransitioner: {fileID: 2805875161544513333}
+  meshRenderer: {fileID: 3772082658385108022}
 --- !u!1 &6257086275078037475
 GameObject:
   m_ObjectHideFlags: 0
@@ -1843,7 +1886,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6257086275170067480}
-  - component: {fileID: 5787723588998483379}
   m_Layer: 0
   m_Name: Player
   m_TagString: Untagged
@@ -1869,20 +1911,6 @@ Transform:
   m_Father: {fileID: 6257086275078037472}
   m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &5787723588998483379
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6257086275170067483}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3fbdf9072a56fe34391615c22708f6da, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  playerMovement: {fileID: 6257086274663262138}
-  skillController: {fileID: 4619847326458750135}
 --- !u!1 &6257086275565431318
 GameObject:
   m_ObjectHideFlags: 0

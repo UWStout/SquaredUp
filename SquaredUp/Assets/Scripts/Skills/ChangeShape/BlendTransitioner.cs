@@ -18,11 +18,17 @@ public class BlendTransitioner : MonoBehaviour
     // Function to call once mesh transition is done
     public delegate void FinishChange();
 
+    // The current shape type
+    private ShapeData.ShapeType currentShapeType = ShapeData.ShapeType.BOX;
+    public ShapeData.ShapeType CurrentShapeType { get { return currentShapeType; } }
+
 
     /// <summary>Instantly changes the shape to the specified shape type.</summary>
     /// <param name="shapeType">Shape to change to.</param>
     public void ChangeShapeInstant(ShapeData.ShapeType shapeType)
     {
+        currentShapeType = shapeType;
+
         // Get the initial values for each of the blend shapes
         float[] startBlendShapes = new float[BLEND_SHAPE_AMOUNT];
         for (int i = 0; i < BLEND_SHAPE_AMOUNT; ++i)
@@ -40,6 +46,8 @@ public class BlendTransitioner : MonoBehaviour
     /// <param name="onFinishMeshChange">Function to call once the mesh has finished changing</param>
     public void StartChangeShape(ShapeData.ShapeType shapeType, FinishChange onFinishMeshChange=null)
     {
+        currentShapeType = shapeType;
+
         // If there is an ongoing coroutine, stop it
         if (!changeMeshCoroutFin)
         {
@@ -48,6 +56,7 @@ public class BlendTransitioner : MonoBehaviour
         // Start a new coroutine
         changeMeshCorout = StartCoroutine(ChangeMeshCoroutine(shapeType, onFinishMeshChange));
     }
+
 
     /// <summary>Coroutine to smoothly change the shape of the mesh</summary>
     /// <param name="onFinishMeshChange">Function to call once the mesh has finished changing</param>

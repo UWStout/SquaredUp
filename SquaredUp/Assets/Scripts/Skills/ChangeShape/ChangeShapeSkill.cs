@@ -9,7 +9,7 @@ public class ChangeShapeSkill : SkillBase<ShapeData>
     // Mesh transitioner to change the meshes shapes
     [SerializeField] private BlendTransitioner meshTransitioner = null;
 
-    // Current state
+    // Current state attempted
     private int curAttemptedStateIndex;
     // Current shape
     private ShapeData.ShapeType curShape = ShapeData.ShapeType.BOX;
@@ -60,6 +60,19 @@ public class ChangeShapeSkill : SkillBase<ShapeData>
         {
             changeFormCont.FailToChange(data);
         }
+    }
+
+    /// <summary>Sets the active state to the given state without using the skill.
+    /// Should only be used for loading save data.
+    /// Also sets the attempted state and current shape type to the
+    /// state information associated with the specified state.</summary>
+    public override void FakeUse(int stateIndex)
+    {
+        base.FakeUse(stateIndex);
+        ShapeData data = SkillData.GetData(stateIndex);
+        curAttemptedStateIndex = stateIndex;
+        curShape = data.TypeOfShape;
+        changeFormCont.CurShapeData = data;
     }
 
     /// <summary>Called when an avaible spot is found in change form controller.
