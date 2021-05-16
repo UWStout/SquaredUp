@@ -4,14 +4,10 @@ using UnityEngine;
 /// <summary>Manages the player's skills.
 /// Skills must each be set up to their own gameobjects and made children of the gameobject
 /// this script is attached to.</summary>
-public class SkillController : MonoBehaviour
+public class SkillController : SingletonMonoBehav<SkillController>
 {
     // Enum for the skills
     public enum SkillEnum { Shape, Color, Size, Form };
-
-    // Singleton
-    private static SkillController instance = null;
-    public static SkillController Instance { get { return instance; } }
 
     // The skills that were found in the children
     private List<Skill> skills = new List<Skill>();
@@ -19,18 +15,11 @@ public class SkillController : MonoBehaviour
 
     // Called 0th
     // Set references
-    private void Awake()
+    protected override void Awake()
     {
+        base.Awake();
         // Get references to all the skills
         GetSkillsFromChildren();
-
-        // Set up singleton
-        if (instance == null) { instance = this; }
-        else
-        {
-            Debug.LogError("Cannot have multiple SkillControllers in a scene");
-            Destroy(this);
-        }
     }
 
 

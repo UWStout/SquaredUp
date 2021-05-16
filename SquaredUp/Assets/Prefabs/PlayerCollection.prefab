@@ -1698,7 +1698,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6257086275078037475}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 701cd752de13f894fadf9a46b7e9c56c, type: 3}
   m_Name: 
@@ -1882,6 +1882,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   playerMovement: {fileID: 6257086274663262138}
+  skillController: {fileID: 4619847326458750135}
 --- !u!1 &6257086275565431318
 GameObject:
   m_ObjectHideFlags: 0

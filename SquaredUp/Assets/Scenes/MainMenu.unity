@@ -552,9 +552,9 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-      - m_Target: {fileID: 1709975410}
-        m_TargetAssemblyTypeName: PauseMenuScript, Assembly-CSharp
-        m_MethodName: StartGame
+      - m_Target: {fileID: 1773903690}
+        m_TargetAssemblyTypeName: DiscardSaveData, Assembly-CSharp
+        m_MethodName: DeletePreviousSave
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -564,9 +564,9 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-      - m_Target: {fileID: 1412866169}
-        m_TargetAssemblyTypeName: DiscardSaveData, Assembly-CSharp
-        m_MethodName: DeletePreviousSave
+      - m_Target: {fileID: 1709975410}
+        m_TargetAssemblyTypeName: PauseMenuScript, Assembly-CSharp
+        m_MethodName: StartGame
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -710,6 +710,18 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
+      - m_Target: {fileID: 1418419916}
+        m_TargetAssemblyTypeName: MenuPuzzleLoader, Assembly-CSharp
+        m_MethodName: ResetPuzzleLoader
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
       - m_Target: {fileID: 1709975410}
         m_TargetAssemblyTypeName: PauseMenuScript, Assembly-CSharp
         m_MethodName: StartGame
@@ -1289,9 +1301,9 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-      - m_Target: {fileID: 1709975410}
-        m_TargetAssemblyTypeName: PauseMenuScript, Assembly-CSharp
-        m_MethodName: StartGame
+      - m_Target: {fileID: 1773903690}
+        m_TargetAssemblyTypeName: DiscardSaveData, Assembly-CSharp
+        m_MethodName: DeletePreviousSave
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -1301,9 +1313,9 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-      - m_Target: {fileID: 1412866169}
-        m_TargetAssemblyTypeName: DiscardSaveData, Assembly-CSharp
-        m_MethodName: DeletePreviousSave
+      - m_Target: {fileID: 1709975410}
+        m_TargetAssemblyTypeName: PauseMenuScript, Assembly-CSharp
+        m_MethodName: StartGame
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -2114,9 +2126,9 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-      - m_Target: {fileID: 1709975410}
-        m_TargetAssemblyTypeName: PauseMenuScript, Assembly-CSharp
-        m_MethodName: StartGame
+      - m_Target: {fileID: 1773903690}
+        m_TargetAssemblyTypeName: DiscardSaveData, Assembly-CSharp
+        m_MethodName: DeletePreviousSave
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -2126,9 +2138,9 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-      - m_Target: {fileID: 1412866169}
-        m_TargetAssemblyTypeName: DiscardSaveData, Assembly-CSharp
-        m_MethodName: DeletePreviousSave
+      - m_Target: {fileID: 1709975410}
+        m_TargetAssemblyTypeName: PauseMenuScript, Assembly-CSharp
+        m_MethodName: StartGame
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -2284,9 +2296,9 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-      - m_Target: {fileID: 1709975410}
-        m_TargetAssemblyTypeName: PauseMenuScript, Assembly-CSharp
-        m_MethodName: StartGame
+      - m_Target: {fileID: 1773903690}
+        m_TargetAssemblyTypeName: DiscardSaveData, Assembly-CSharp
+        m_MethodName: DeletePreviousSave
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -2296,9 +2308,9 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-      - m_Target: {fileID: 1412866169}
-        m_TargetAssemblyTypeName: DiscardSaveData, Assembly-CSharp
-        m_MethodName: DeletePreviousSave
+      - m_Target: {fileID: 1709975410}
+        m_TargetAssemblyTypeName: PauseMenuScript, Assembly-CSharp
+        m_MethodName: StartGame
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -2701,9 +2713,9 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-      - m_Target: {fileID: 1709975410}
-        m_TargetAssemblyTypeName: PauseMenuScript, Assembly-CSharp
-        m_MethodName: StartGame
+      - m_Target: {fileID: 1773903690}
+        m_TargetAssemblyTypeName: DiscardSaveData, Assembly-CSharp
+        m_MethodName: DeletePreviousSave
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -2713,9 +2725,9 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-      - m_Target: {fileID: 1412866169}
-        m_TargetAssemblyTypeName: DiscardSaveData, Assembly-CSharp
-        m_MethodName: DeletePreviousSave
+      - m_Target: {fileID: 1709975410}
+        m_TargetAssemblyTypeName: PauseMenuScript, Assembly-CSharp
+        m_MethodName: StartGame
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -2871,9 +2883,9 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-      - m_Target: {fileID: 1709975410}
-        m_TargetAssemblyTypeName: PauseMenuScript, Assembly-CSharp
-        m_MethodName: StartGame
+      - m_Target: {fileID: 1773903690}
+        m_TargetAssemblyTypeName: DiscardSaveData, Assembly-CSharp
+        m_MethodName: DeletePreviousSave
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -2883,9 +2895,9 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-      - m_Target: {fileID: 1412866169}
-        m_TargetAssemblyTypeName: DiscardSaveData, Assembly-CSharp
-        m_MethodName: DeletePreviousSave
+      - m_Target: {fileID: 1709975410}
+        m_TargetAssemblyTypeName: PauseMenuScript, Assembly-CSharp
+        m_MethodName: StartGame
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -3347,9 +3359,9 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-      - m_Target: {fileID: 1709975410}
-        m_TargetAssemblyTypeName: PauseMenuScript, Assembly-CSharp
-        m_MethodName: StartGame
+      - m_Target: {fileID: 1773903690}
+        m_TargetAssemblyTypeName: DiscardSaveData, Assembly-CSharp
+        m_MethodName: DeletePreviousSave
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -3359,9 +3371,9 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-      - m_Target: {fileID: 1412866169}
-        m_TargetAssemblyTypeName: DiscardSaveData, Assembly-CSharp
-        m_MethodName: DeletePreviousSave
+      - m_Target: {fileID: 1709975410}
+        m_TargetAssemblyTypeName: PauseMenuScript, Assembly-CSharp
+        m_MethodName: StartGame
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -3653,9 +3665,9 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-      - m_Target: {fileID: 1709975410}
-        m_TargetAssemblyTypeName: PauseMenuScript, Assembly-CSharp
-        m_MethodName: StartGame
+      - m_Target: {fileID: 1773903690}
+        m_TargetAssemblyTypeName: DiscardSaveData, Assembly-CSharp
+        m_MethodName: DeletePreviousSave
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -3665,9 +3677,9 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-      - m_Target: {fileID: 1412866169}
-        m_TargetAssemblyTypeName: DiscardSaveData, Assembly-CSharp
-        m_MethodName: DeletePreviousSave
+      - m_Target: {fileID: 1709975410}
+        m_TargetAssemblyTypeName: PauseMenuScript, Assembly-CSharp
+        m_MethodName: StartGame
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -4029,9 +4041,9 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-      - m_Target: {fileID: 1709975410}
-        m_TargetAssemblyTypeName: PauseMenuScript, Assembly-CSharp
-        m_MethodName: StartGame
+      - m_Target: {fileID: 1773903690}
+        m_TargetAssemblyTypeName: DiscardSaveData, Assembly-CSharp
+        m_MethodName: DeletePreviousSave
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -4041,9 +4053,9 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-      - m_Target: {fileID: 1412866169}
-        m_TargetAssemblyTypeName: DiscardSaveData, Assembly-CSharp
-        m_MethodName: DeletePreviousSave
+      - m_Target: {fileID: 1709975410}
+        m_TargetAssemblyTypeName: PauseMenuScript, Assembly-CSharp
+        m_MethodName: StartGame
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -5227,7 +5239,6 @@ GameObject:
   - component: {fileID: 1412866168}
   - component: {fileID: 1412866167}
   - component: {fileID: 1412866166}
-  - component: {fileID: 1412866169}
   m_Layer: 5
   m_Name: NewGameButton
   m_TagString: Untagged
@@ -5300,17 +5311,17 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 1418419916}
         m_TargetAssemblyTypeName: MenuPuzzleLoader, Assembly-CSharp
-        m_MethodName: SetPuzzleData
-        m_Mode: 2
+        m_MethodName: ResetPuzzleLoader
+        m_Mode: 1
         m_Arguments:
-          m_ObjectArgument: {fileID: 11400000, guid: 08ecfeb1a8f9c2b4980b5f44513dd5ed, type: 2}
-          m_ObjectArgumentAssemblyTypeName: PuzzleLoadData, Assembly-CSharp
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
           m_IntArgument: 0
           m_FloatArgument: 0
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-      - m_Target: {fileID: 1412866169}
+      - m_Target: {fileID: 1773903690}
         m_TargetAssemblyTypeName: DiscardSaveData, Assembly-CSharp
         m_MethodName: DeletePreviousSave
         m_Mode: 1
@@ -5372,18 +5383,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1412866164}
   m_CullTransparentMesh: 0
---- !u!114 &1412866169
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1412866164}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9cf7bb5b31832c1479ce7c1d987a778e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &1418419915
 GameObject:
   m_ObjectHideFlags: 0
@@ -6059,9 +6058,9 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-      - m_Target: {fileID: 1709975410}
-        m_TargetAssemblyTypeName: PauseMenuScript, Assembly-CSharp
-        m_MethodName: StartGame
+      - m_Target: {fileID: 1773903690}
+        m_TargetAssemblyTypeName: DiscardSaveData, Assembly-CSharp
+        m_MethodName: DeletePreviousSave
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -6071,9 +6070,9 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-      - m_Target: {fileID: 1412866169}
-        m_TargetAssemblyTypeName: DiscardSaveData, Assembly-CSharp
-        m_MethodName: DeletePreviousSave
+      - m_Target: {fileID: 1709975410}
+        m_TargetAssemblyTypeName: PauseMenuScript, Assembly-CSharp
+        m_MethodName: StartGame
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -6656,6 +6655,49 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1764662666}
   m_CullTransparentMesh: 0
+--- !u!1 &1773903689
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1773903691}
+  - component: {fileID: 1773903690}
+  m_Layer: 0
+  m_Name: DiscardSaveDataController
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1773903690
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1773903689}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9cf7bb5b31832c1479ce7c1d987a778e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!4 &1773903691
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1773903689}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 3
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1884962435
 GameObject:
   m_ObjectHideFlags: 0
@@ -6826,9 +6868,9 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-      - m_Target: {fileID: 1709975410}
-        m_TargetAssemblyTypeName: PauseMenuScript, Assembly-CSharp
-        m_MethodName: StartGame
+      - m_Target: {fileID: 1773903690}
+        m_TargetAssemblyTypeName: DiscardSaveData, Assembly-CSharp
+        m_MethodName: DeletePreviousSave
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -6838,9 +6880,9 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-      - m_Target: {fileID: 1412866169}
-        m_TargetAssemblyTypeName: DiscardSaveData, Assembly-CSharp
-        m_MethodName: DeletePreviousSave
+      - m_Target: {fileID: 1709975410}
+        m_TargetAssemblyTypeName: PauseMenuScript, Assembly-CSharp
+        m_MethodName: StartGame
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -7009,9 +7051,9 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-      - m_Target: {fileID: 1709975410}
-        m_TargetAssemblyTypeName: PauseMenuScript, Assembly-CSharp
-        m_MethodName: StartGame
+      - m_Target: {fileID: 1773903690}
+        m_TargetAssemblyTypeName: DiscardSaveData, Assembly-CSharp
+        m_MethodName: DeletePreviousSave
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -7021,9 +7063,9 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-      - m_Target: {fileID: 1412866169}
-        m_TargetAssemblyTypeName: DiscardSaveData, Assembly-CSharp
-        m_MethodName: DeletePreviousSave
+      - m_Target: {fileID: 1709975410}
+        m_TargetAssemblyTypeName: PauseMenuScript, Assembly-CSharp
+        m_MethodName: StartGame
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -7191,7 +7233,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 3
+  m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1994197084
 GameObject:
@@ -7588,7 +7630,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 4
+  m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &2114122779
 GameObject:
