@@ -80,6 +80,14 @@ public class PauseMenuScript : MonoBehaviour
         SceneManager.LoadScene(sceneName);
     }
 
+    /// <summary>
+    /// Saves the current scene's game data.
+    /// </summary>
+    public void SaveGame()
+    {
+        SaveManager.SaveGame();
+    }
+
     private void FlipMenu(GameObject g, GameObject o)
     {
         g.SetActive(!g.activeSelf);

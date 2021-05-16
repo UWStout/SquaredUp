@@ -1,31 +1,18 @@
-﻿using UnityEngine;
-
+﻿
 /// <summary>
 /// Singleton persistent class that holds data for where the player should start and what skill states to give them.
 /// </summary>
-public class PuzzleLoader : MonoBehaviour
+public class PuzzleLoader : SingletonMonoBehav<PuzzleLoader>
 {
-    // Singleton
-    private static PuzzleLoader instance = null;
-    public static PuzzleLoader Instance { get { return instance; } }
-
     // Variables to set for the player when we load the level
     private PuzzleLoadData puzzleData = null;
 
 
     // Called 0th
     // Set references
-    private void Awake()
+    protected override void Awake()
     {
-        // Set up singleton
-        if (instance == null)
-        {
-            instance = this;
-        }
-        else
-        {
-            Destroy(this.gameObject);
-        }
+        base.Awake();
         DontDestroyOnLoad(this.gameObject);
     }
 
