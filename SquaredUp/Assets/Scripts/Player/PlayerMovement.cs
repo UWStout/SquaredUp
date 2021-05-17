@@ -3,12 +3,8 @@ using UnityEngine;
 
 // For Player Movement
 [RequireComponent(typeof(Rigidbody2D))]
-public class PlayerMovement : MonoBehaviour
+public class PlayerMovement : SingletonMonoBehav<PlayerMovement>
 {
-    // Singleton
-    private static PlayerMovement instance;
-    public static PlayerMovement Instance { get { return instance; } }
-
     // References
     // Reference to the pivot of the player's eyes.
     [SerializeField] private Transform eyePivot = null;
@@ -30,24 +26,15 @@ public class PlayerMovement : MonoBehaviour
     private bool allowMove;
     private Vector3 moveVel = Vector3.zero;
     
+
     // Called 0th
     // Set references
-    private void Awake()
+    protected override void Awake()
     {
-        // Set up singleton
-        if (instance == null)
-        {
-            instance = this;
-        }
-        else
-        {
-            Debug.LogError("Cannot have multiple PlayerMovements");
-            Destroy(this.gameObject);
-        }
+        base.Awake();
 
         rb = GetComponent<Rigidbody2D>();
     }
-
     // Called when the script is enabled.
     // Subscribe to events.
     private void OnEnable()
@@ -62,7 +49,6 @@ public class PlayerMovement : MonoBehaviour
         // Unsub from Movement
         AllowMovement(false);
     }
-
     private void OnCollisionExit2D(Collision2D collision)
     {
         // This fixes a bug where if you hold down the movement keys
@@ -74,11 +60,11 @@ public class PlayerMovement : MonoBehaviour
     }
     private void OnCollisionEnter2D(Collision2D collision)
     {
-       rb.velocity = new Vector2(Mathf.Round(rb.velocity.x), Mathf.Round(rb.velocity.y));
+        rb.velocity = new Vector2(Mathf.Round(rb.velocity.x), Mathf.Round(rb.velocity.y));
     }
     private void OnCollisionStay2D(Collision2D collision)
     {
-      rb.velocity = moveVel;
+        rb.velocity = moveVel;
     }
 
     /* This was an attempt to make you not get stuck on stuff as much

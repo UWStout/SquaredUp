@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 422463318323569489}
   - component: {fileID: 422463318323569490}
   - component: {fileID: 7354508944221798407}
+  - component: {fileID: 8035962372671028426}
   m_Layer: 9
   m_Name: Pushable
   m_TagString: Untagged
@@ -97,6 +98,18 @@ MonoBehaviour:
   body: {fileID: 7357564513430282882}
   outline: {fileID: 5617297595019707499}
   outlineWidth: 0.2
+--- !u!114 &8035962372671028426
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 422463318323569491}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3fbdf9072a56fe34391615c22708f6da, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &724636372425124949
 GameObject:
   m_ObjectHideFlags: 0
@@ -124,7 +137,7 @@ Transform:
   m_GameObject: {fileID: 724636372425124949}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 0.8611111, y: 0.8611111, z: 0.8611111}
+  m_LocalScale: {x: 0.9714286, y: 0.7777778, z: -19}
   m_Children: []
   m_Father: {fileID: 422463318323569502}
   m_RootOrder: 0
@@ -156,7 +169,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 4ba0f7b59100ec14380546c4858118b6, type: 2}
+  - {fileID: 2100000, guid: 5f1e018ae3ae667449da8f58965ad599, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0

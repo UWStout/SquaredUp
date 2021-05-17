@@ -10,6 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 3355325117344158402}
   - component: {fileID: 6151370376637433302}
+  - component: {fileID: 8470206840087272720}
   m_Layer: 15
   m_Name: GreenWall
   m_TagString: Untagged
@@ -57,6 +58,18 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 1, y: 1}
   m_EdgeRadius: 0
+--- !u!114 &8470206840087272720
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 815508983924247115}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ef4cc7688b8578449b168796b1e4f8ef, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &947864729812206118
 GameObject:
   m_ObjectHideFlags: 0
@@ -1242,6 +1255,7 @@ GameObject:
   m_Component:
   - component: {fileID: 6257086273939944752}
   - component: {fileID: 6257086273939944753}
+  - component: {fileID: 5693199684296992750}
   m_Layer: 0
   m_Name: NoneScaleVisuals
   m_TagString: Untagged
@@ -1283,6 +1297,19 @@ MonoBehaviour:
   zAxisFollow: 0
   whenToUpdate: 0
   startFolowOnStart: 1
+--- !u!114 &5693199684296992750
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6257086273939944755}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 976b69a1ea3f0394796c898905848e77, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  pointerSprRend: {fileID: 6257086273778774681}
 --- !u!1 &6257086274534009296
 GameObject:
   m_ObjectHideFlags: 0
@@ -1379,6 +1406,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6257086274558080415}
+  - component: {fileID: 1000374070882423461}
   m_Layer: 0
   m_Name: LookPivot
   m_TagString: Untagged
@@ -1401,6 +1429,18 @@ Transform:
   m_Father: {fileID: 6257086273939944752}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1000374070882423461
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6257086274558080414}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3fbdf9072a56fe34391615c22708f6da, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &6257086274663262141
 GameObject:
   m_ObjectHideFlags: 0
@@ -1549,6 +1589,7 @@ GameObject:
   - component: {fileID: 6257086274752830771}
   - component: {fileID: 6257086274752830768}
   - component: {fileID: 9177552967270623550}
+  - component: {fileID: 1561838931132544991}
   m_Layer: 0
   m_Name: MainColliders
   m_TagString: Untagged
@@ -1616,6 +1657,19 @@ MonoBehaviour:
   - GreenWall
   - RedWall
   - BlueWall
+--- !u!114 &1561838931132544991
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6257086274752830770}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: aebb0a05fb167284b9df390e3ab72250, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  colliderCont: {fileID: 6257086274752830768}
 --- !u!1 &6257086275068474216
 GameObject:
   m_ObjectHideFlags: 0
@@ -1705,6 +1759,7 @@ GameObject:
   m_Component:
   - component: {fileID: 6257086275078037472}
   - component: {fileID: 7168733040207796041}
+  - component: {fileID: 4494702824725450568}
   - component: {fileID: 2106447158387234099}
   - component: {fileID: 7379745682299935605}
   - component: {fileID: 8348782990659342570}
@@ -1744,6 +1799,18 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 701cd752de13f894fadf9a46b7e9c56c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &4494702824725450568
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6257086275078037475}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3fbdf9072a56fe34391615c22708f6da, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!95 &2106447158387234099
@@ -2239,6 +2306,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2240248868217200228}
   - component: {fileID: 6171410660885080998}
+  - component: {fileID: 7617495823935854502}
   m_Layer: 16
   m_Name: RedWall
   m_TagString: Untagged
@@ -2286,6 +2354,18 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 1, y: 1}
   m_EdgeRadius: 0
+--- !u!114 &7617495823935854502
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6593881369109893089}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ef4cc7688b8578449b168796b1e4f8ef, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &7415807503308466911
 GameObject:
   m_ObjectHideFlags: 0
@@ -2424,6 +2504,7 @@ GameObject:
   - component: {fileID: 9048909395052182609}
   - component: {fileID: 1755412369390098068}
   - component: {fileID: 8060601105706173261}
+  - component: {fileID: 7765500900189628885}
   m_Layer: 24
   m_Name: CircleWall
   m_TagString: Untagged
@@ -2485,6 +2566,18 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 1, y: 1}
   m_EdgeRadius: 0
+--- !u!114 &7765500900189628885
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7456116821587791153}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ef4cc7688b8578449b168796b1e4f8ef, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &7546268444791495749
 GameObject:
   m_ObjectHideFlags: 0
@@ -2546,6 +2639,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4284677802596754749}
   - component: {fileID: 4530808695327200810}
+  - component: {fileID: 2553053521547954438}
   m_Layer: 17
   m_Name: BlueWall
   m_TagString: Untagged
@@ -2593,6 +2687,18 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 1, y: 1}
   m_EdgeRadius: 0
+--- !u!114 &2553053521547954438
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8407562376634621229}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ef4cc7688b8578449b168796b1e4f8ef, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &5536399480942718447
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -2698,14 +2804,14 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: b55e82b3263febe4e9c0a501c9f05777, type: 3}
---- !u!137 &493368710166738429 stripped
-SkinnedMeshRenderer:
-  m_CorrespondingSourceObject: {fileID: -3887185075125053422, guid: b55e82b3263febe4e9c0a501c9f05777, type: 3}
-  m_PrefabInstance: {fileID: 5536399480942718447}
-  m_PrefabAsset: {fileID: 0}
 --- !u!4 &5431205377339427332 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: b55e82b3263febe4e9c0a501c9f05777, type: 3}
+  m_PrefabInstance: {fileID: 5536399480942718447}
+  m_PrefabAsset: {fileID: 0}
+--- !u!137 &493368710166738429 stripped
+SkinnedMeshRenderer:
+  m_CorrespondingSourceObject: {fileID: -3887185075125053422, guid: b55e82b3263febe4e9c0a501c9f05777, type: 3}
   m_PrefabInstance: {fileID: 5536399480942718447}
   m_PrefabAsset: {fileID: 0}
 --- !u!1001 &9103130500470146084
@@ -2813,13 +2919,13 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: b55e82b3263febe4e9c0a501c9f05777, type: 3}
---- !u!137 &3772082658385108022 stripped
-SkinnedMeshRenderer:
-  m_CorrespondingSourceObject: {fileID: -3887185075125053422, guid: b55e82b3263febe4e9c0a501c9f05777, type: 3}
-  m_PrefabInstance: {fileID: 9103130500470146084}
-  m_PrefabAsset: {fileID: 0}
 --- !u!4 &8781572359714857935 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: b55e82b3263febe4e9c0a501c9f05777, type: 3}
+  m_PrefabInstance: {fileID: 9103130500470146084}
+  m_PrefabAsset: {fileID: 0}
+--- !u!137 &3772082658385108022 stripped
+SkinnedMeshRenderer:
+  m_CorrespondingSourceObject: {fileID: -3887185075125053422, guid: b55e82b3263febe4e9c0a501c9f05777, type: 3}
   m_PrefabInstance: {fileID: 9103130500470146084}
   m_PrefabAsset: {fileID: 0}

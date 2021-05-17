@@ -16,16 +16,13 @@ public abstract class SavableMonoBehav<T> : MonoBehaviour, ISavable where T : Sa
     {
         // Generate the unique savable ID for this savable
         CreateSavableID();
-    }
-    // Subscribe to the save load system
-    protected virtual void OnEnable()
-    {
         // Subscribe this savable to the save load system
         SaveSystem.SubscribeToSaveLoadSystem(this);
     }
-    // Unsubscribe from the save load system
-    protected virtual void OnDisable()
+    // Called when this component is destroyed
+    protected virtual void OnDestroy()
     {
+        // Unsubscribe from the save load system
         SaveSystem.UnsubscribeFromSaveLoadSystem(this);
     }
 

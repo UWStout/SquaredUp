@@ -177,6 +177,7 @@ GameObject:
   - component: {fileID: 4761738532882270679}
   - component: {fileID: 34474914242266289}
   - component: {fileID: 3707270578854801711}
+  - component: {fileID: 2056398192981173997}
   m_Layer: 9
   m_Name: Pushable (Ice)
   m_TagString: Untagged
@@ -275,3 +276,15 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   parentPhys: {fileID: 4761738532882270679}
+--- !u!114 &2056398192981173997
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4761738532882270678}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3fbdf9072a56fe34391615c22708f6da, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

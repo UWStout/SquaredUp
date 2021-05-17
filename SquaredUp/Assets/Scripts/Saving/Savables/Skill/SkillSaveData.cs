@@ -1,4 +1,5 @@
-﻿
+﻿using UnityEngine;
+
 /// <summary>
 /// Save data for the player's skills.
 /// </summary>
@@ -13,6 +14,8 @@ public class SkillSaveData
     private int activeShapeState = 0;
     // Currently active color skill state
     private int activeColorState = 0;
+    // Size of the shape that accounts for direction of the shape
+    private float[] shapeSize = new float[3];
 
 
     /// <summary>
@@ -22,7 +25,8 @@ public class SkillSaveData
     /// <param name="colorStates">Array of indices of the unlocked colors.</param>
     /// <param name="activeShape">Index of the active shape.</param>
     /// <param name="activeColor">Index of the active color.</param>
-    public SkillSaveData(int[] shapeStates, int[] colorStates, int activeShape, int activeColor)
+    /// <param name="shapeScale">Current size of the shape from the scale controller.</param>
+    public SkillSaveData(int[] shapeStates, int[] colorStates, int activeShape, int activeColor, Vector3 shapeScale)
     {
         // Unlocked skill states
         shapeUnlockStates = shapeStates.Clone() as int[];
@@ -30,6 +34,10 @@ public class SkillSaveData
         // Active skill states
         activeShapeState = activeShape;
         activeColorState = activeColor;
+        // Shape scale
+        shapeSize[0] = shapeScale.x;
+        shapeSize[1] = shapeScale.y;
+        shapeSize[2] = shapeScale.z;
     }
 
     /// <summary>
@@ -63,5 +71,13 @@ public class SkillSaveData
     public int GetActiveColorState()
     {
         return activeColorState;
+    }
+    /// <summary>
+    /// Gets the saved size of the shape that accounts for which direction the shape was facing.
+    /// </summary>
+    /// <returns>Saced size of the shape.</returns>
+    public Vector3 GetShapeSize()
+    {
+        return new Vector3(shapeSize[0], shapeSize[1], shapeSize[2]);
     }
 }

@@ -17,6 +17,9 @@ public class PlayerColliderController : MonoBehaviour
     // List of polygon colliders
     private List<PolygonCollider2D> polygonColliders = new List<PolygonCollider2D>();
 
+    // Which collider type we currently have active
+    private ShapeData.ShapeType activeColliderType = ShapeData.ShapeType.BOX;
+
 
     // Called 0th
     // Set references
@@ -42,25 +45,7 @@ public class PlayerColliderController : MonoBehaviour
         AvailableSpot availSpot = TestColliderChange(colliderType, size);
         if (availSpot.Available)
         {
-            switch (colliderType)
-            {
-                // BoxCollider2D
-                case ShapeData.ShapeType.BOX:
-                    EnableOneColliderType(boxColliders);
-                    break;
-                // CircleCollider2D
-                case ShapeData.ShapeType.CIRCLE:
-                    EnableOneColliderType(circleColliders);
-                    break;
-                // Triangle needs to be a specific kind of polygon collider
-                case ShapeData.ShapeType.TRIANGLE:
-                    MorphPolygonToShape(ShapeData.TRIANGLE_POINTS);
-                    EnableOneColliderType(polygonColliders);
-                    break;
-                default:
-                    Debug.LogError("Unhandled ColliderType of '" + colliderType + "' in PlayerColliderController.cs");
-                    break;
-            }
+            ChangeColliderType(colliderType);
         }
         return availSpot;
     }
@@ -74,6 +59,45 @@ public class PlayerColliderController : MonoBehaviour
     {
         return testColliderRef.CheckIfColliderWillHitWall(colliderType, size);
     }
+
+    /// <summary>
+    /// Actives the collider associated with the given shape type.
+    /// Should only be used internally and by the save/load system.
+    /// </summary>
+    /// <param name="colliderType">Shape type to change the collider to.</param>
+    public void ChangeColliderType(ShapeData.ShapeType colliderType)
+    {
+        activeColliderType = colliderType;
+        switch (colliderType)
+        {
+            // BoxCollider2D
+            case ShapeData.ShapeType.BOX:
+                EnableOneColliderType(boxColliders);
+                break;
+            // CircleCollider2D
+            case ShapeData.ShapeType.CIRCLE:
+                EnableOneColliderType(circleColliders);
+                break;
+            // Triangle needs to be a specific kind of polygon collider
+            case ShapeData.ShapeType.TRIANGLE:
+                MorphPolygonToShape(ShapeData.TRIANGLE_POINTS);
+                EnableOneColliderType(polygonColliders);
+                break;
+            default:
+                Debug.LogError("Unhandled ColliderType of '" + colliderType + "' in PlayerColliderController.cs");
+                break;
+        }
+    }
+
+    /// <summary>
+    /// Gets the type of collider is currently active.
+    /// </summary>
+    /// <returns>Type of collider that is currently active.</returns>
+    public ShapeData.ShapeType GetActiveColliderType()
+    {
+        return activeColliderType;
+    }
+
 
     /// <summary>Gets the colliders from the player collider objects</summary>
     /// <param name="colliderList">List of 2D colliders to populate</param>

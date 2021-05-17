@@ -29,7 +29,6 @@ public class UpdateShapeDirection : MonoBehaviour
         ChangeFormController.OnAvailableSpotFound -= DenyInput;
         ChangeFormController.OnFinishChangingForm -= AllowInput;
     }
-
     // Called 0th
     // Set references
     private void Awake()

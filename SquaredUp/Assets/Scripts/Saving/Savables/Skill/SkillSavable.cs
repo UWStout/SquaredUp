@@ -34,7 +34,7 @@ public class SkillSavable : SavableMonoBehav<SkillSavable>
         shapeSkill.FakeUse(data.GetActiveShapeState());
         colorSkill.FakeUse(data.GetActiveColorState());
         // Set the shape size
-        scaleController.ShapeScale = shapeSkill.GetCurrentState().Scale;
+        scaleController.ShapeScale = data.GetShapeSize();
     }
 
     /// <summary>
@@ -49,8 +49,11 @@ public class SkillSavable : SavableMonoBehav<SkillSavable>
         // Active skill states
         int shapeActive = skillController.GetSkill(SkillController.SkillEnum.Shape).GetCurrentStateIndex();
         int colorActive = skillController.GetSkill(SkillController.SkillEnum.Color).GetCurrentStateIndex();
+        // Current shape scale
+        Vector3 shapeScale = scaleController.ShapeScale;
+
         // Return the created data
-        return new SkillSaveData(shapeUnlockStates, colorUnlockStates, shapeActive, colorActive);
+        return new SkillSaveData(shapeUnlockStates, colorUnlockStates, shapeActive, colorActive, shapeScale);
     }
 
 

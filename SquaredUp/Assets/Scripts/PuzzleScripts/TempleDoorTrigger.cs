@@ -9,6 +9,5 @@ public class TempleDoorTrigger : MonoBehaviour
     private void OnTriggerEnter2D(Collider2D collision)
     {
         door.SetActive(true);
-        Destroy(this.gameObject);
     }
 }

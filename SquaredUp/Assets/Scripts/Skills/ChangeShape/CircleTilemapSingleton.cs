@@ -6,12 +6,8 @@ using UnityEngine.Tilemaps;
 /// Singleton to control the circle tilemap
 /// </summary>
 [RequireComponent(typeof(Tilemap))]
-public class CircleTilemapSingleton : MonoBehaviour
+public class CircleTilemapSingleton : SingletonMonoBehav<CircleTilemapSingleton>
 {
-    // Singleton
-    private static CircleTilemapSingleton instance = null;
-    public static CircleTilemapSingleton Instance { get { return instance; } }
-
     // Speed of the transparency transition
     [SerializeField] private float alphaChangeSpeed = 2f;
 
@@ -21,6 +17,8 @@ public class CircleTilemapSingleton : MonoBehaviour
     private TileBase[] circleWallTiles = null;
     // Current alpha value of the tiles on the tilemap
     private float currentTransparency = 1f;
+    // Target alpha value of the tiles on the tilemap
+    private float targetTransparency = 1f;
 
     // Coroutine variables
     private bool isFadeCoroutineActive = false;
@@ -29,18 +27,9 @@ public class CircleTilemapSingleton : MonoBehaviour
 
     // Called 0th
     // Set references
-    private void Awake()
+    protected override void Awake()
     {
-        // Set up singleton
-        if (instance == null)
-        {
-            instance = this;
-        }
-        else
-        {
-            Debug.LogError("Cannot have multiple CircleTilemapSingletons in the scene");
-            Destroy(this.gameObject);
-        }
+        base.Awake();
 
         // References
         tilemap = GetComponent<Tilemap>();
@@ -49,17 +38,11 @@ public class CircleTilemapSingleton : MonoBehaviour
         circleWallTiles = new TileBase[tilemap.GetUsedTilesCount()];
         tilemap.GetUsedTilesNonAlloc(circleWallTiles);
     }
-    // Called 1st
-    // Initialization
-    private void Start()
-    {
-        currentTransparency = 1f;
-    }
     // Called when the component set inactive.
     private void OnDisable()
     {
         // Get rid of any run-time changes
-        SetOpacity(1f);
+        SetOpacity(currentTransparency);
     }
 
 
@@ -67,16 +50,35 @@ public class CircleTilemapSingleton : MonoBehaviour
     /// <param name="targetAlpha">Alpha to fade the tiles to.</param>
     public void StartTileFade(float targetAlpha)
     {
+        targetTransparency = targetAlpha;
         if (isFadeCoroutineActive)
         {
             StopCoroutine(fadeCoroutine);
         }
-        fadeCoroutine = StartCoroutine(TileFadeCoroutine(targetAlpha));
+        fadeCoroutine = StartCoroutine(TileFadeCoroutine());
     }
 
-    /// <summary>Coroutine to fade the tiles to the given alpha.</summary>
+    /// <summary>
+    /// Instantly fades the tiles to the given alpha.
+    /// </summary>
     /// <param name="targetAlpha">Alpha to fade the tiles to.</param>
-    private IEnumerator TileFadeCoroutine(float targetAlpha)
+    public void TileFadeInstant(float targetAlpha)
+    {
+        targetTransparency = targetAlpha;
+        SetOpacity(targetAlpha);
+    }
+    /// <summary>
+    /// Gets the current target the tiles are being faded to.
+    /// </summary>
+    /// <returns>Target alpha the tiles are being faded to.</returns>
+    public float GetTargetTileAlpha()
+    {
+        return targetTransparency;
+    }
+
+
+    /// <summary>Coroutine to fade the tiles to the given alpha.</summary>
+    private IEnumerator TileFadeCoroutine()
     {
         isFadeCoroutineActive = true;
 
@@ -87,13 +89,13 @@ public class CircleTilemapSingleton : MonoBehaviour
         while (t < 1)
         {
             // Update the transparency of the tiles
-            SetOpacity(Mathf.Lerp(startAlpha, targetAlpha, t));
+            SetOpacity(Mathf.Lerp(startAlpha, targetTransparency, t));
             t += alphaChangeSpeed * Time.deltaTime;
 
             yield return null;
         }
         // Set it since we are done
-        SetOpacity(targetAlpha);
+        SetOpacity(targetTransparency);
 
         isFadeCoroutineActive = false;
         yield return null;
@@ -111,12 +113,6 @@ public class CircleTilemapSingleton : MonoBehaviour
             tile.color = col;
         }
         currentTransparency = alphaValue;
-        RefreshTilemap();
-    }
-
-    /// <summary>Refreshes all tiles on the tilemap.</summary>
-    private void RefreshTilemap()
-    {
         tilemap.RefreshAllTiles();
     }
 }

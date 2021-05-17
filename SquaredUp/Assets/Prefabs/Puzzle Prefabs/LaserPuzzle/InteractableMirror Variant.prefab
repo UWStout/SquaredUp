@@ -209,9 +209,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f1f3afc8bfff8ef458bf199c620e79a8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  layerMask:
-    serializedVersion: 2
-    m_Bits: 8680449
   raycastLayer:
     serializedVersion: 2
     m_Bits: 262144
@@ -341,6 +338,18 @@ PolygonCollider2D:
     - - {x: 0.65, y: 0.65}
       - {x: 0.65, y: -0.65}
       - {x: -0.65, y: -0.65}
+--- !u!114 &3196811717202268041
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5374030207356177479}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3fbdf9072a56fe34391615c22708f6da, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!58 &1442753516
 CircleCollider2D:
   m_ObjectHideFlags: 0

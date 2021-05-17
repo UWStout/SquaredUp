@@ -15,9 +15,11 @@ public class TransformSavable : SavableMonoBehav<TransformSavable>
         TransformSaveData data = serializedObj as TransformSaveData;
 
         // Put the transform back to their previous position
-        transform.position = data.GetPosition();
+        transform.localPosition = data.GetLocalPosition();
         // Rescale the transform
-        transform.localScale = data.GetScale();
+        transform.localScale = data.GetLocalScale();
+        // Reapply the rotation
+        transform.localRotation = data.GetLocalRotation();
     }
 
     /// <summary>

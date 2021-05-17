@@ -13,6 +13,18 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   doorOpener: {fileID: 1063622412523194555}
+--- !u!114 &6254795325948877562
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2309278724747726534}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3fbdf9072a56fe34391615c22708f6da, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!58 &1063622412523194546
 CircleCollider2D:
   m_ObjectHideFlags: 0
@@ -42,6 +54,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   alertObj: {fileID: 2309278723706819619}
+  targetDoor: {fileID: 0}
   layerMask:
     serializedVersion: 2
     m_Bits: 262144
