@@ -598,6 +598,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   scalableTrans: {fileID: 8567339245636238774}
+  originalScale: {x: 93.6, y: 90, z: 0.1}
 --- !u!137 &8545668449240166798
 SkinnedMeshRenderer:
   m_ObjectHideFlags: 0
@@ -1554,6 +1555,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   scalableTrans: {fileID: 6257086274663262138}
+  originalScale: {x: 1.8, y: 1.8, z: 1.8}
 --- !u!114 &2638144812263462055
 MonoBehaviour:
   m_ObjectHideFlags: 0

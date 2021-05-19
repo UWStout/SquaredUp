@@ -102,7 +102,7 @@ public class ChangeFormController : MonoBehaviour
         {
             // Swap the colliders
             // If the colliders couldn't be swapped, ergo could not fit, then do not swap the player's shape
-            Vector3 scaledSize = Vector3.Scale(size, ScaleController.ORIGINAL_SCALE);
+            Vector3 scaledSize = Vector3.Scale(size, playerScaleCont.OriginalScale);
             AvailableSpot availSpot = playerColContRef.ActivateCollider(curShapeData.TypeOfShape, scaledSize);
             if (availSpot.Available)
             {
@@ -132,7 +132,7 @@ public class ChangeFormController : MonoBehaviour
         Vector3 size = shapeDirectionalSize;
         if (curSizeData != null)
         {
-            size = shapeDirectionalSize * curSizeData.Size;
+            size *= curSizeData.Size;
         }
 
         // Display cannot fit here error
