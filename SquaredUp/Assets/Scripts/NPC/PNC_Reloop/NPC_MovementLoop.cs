@@ -1,49 +1,66 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
 public class NPC_MovementLoop : MonoBehaviour
 {
-    private const float VISION_LENGTH = 8;
-
-    private Rigidbody2D NPCRigidBody;
+    private Rigidbody2D rb = null;
 
     public bool isWalking;
 
     public float walkingSpeed;
-    private float walkingCounter;
+    private float walkingCounter = 0.0f;
+    public float WalkingCounter
+    {
+        get { return walkingCounter; }
+        set { walkingCounter = value; }
+    }
     public float stopTime;
-    private float stopCounter;
+    private float stopCounter = 0.0f;
+    public float StopCounter
+    {
+        get { return stopCounter; }
+        set { stopCounter = value; }
+    }
 
     public int[] paths;
 
     public float[] movementTime;
 
-    private int numSpot;
-    private int position;
+    private int numSpot = 0;
+    public int NumSpot
+    {
+        get { return numSpot; }
+        set { numSpot = value; }
+    }
 
-    private int walkDirection;
+    private int walkDirection = 0;
 
     public GameObject Vision;
 
-    bool gaurdStop = false;
-
-    void Start()
+    private bool guardStop = false;
+    public bool GuardStop
     {
-        NPCRigidBody = GetComponent<Rigidbody2D>();
+        get { return guardStop; }
+        set { guardStop = value; }
+    }
 
-        stopCounter = stopTime;
-        walkingCounter = walkingSpeed;
-        numSpot = 0;
 
+    // Called 0th
+    // Set references
+    private void Awake()
+    {
+        rb = GetComponent<Rigidbody2D>();
+    }
+    // Called 1st
+    // Initialization
+    private void Start()
+    {
         walkDirection = paths[numSpot];
         UpdateFacingDirection(walkDirection);
     }
-
     // Update is called once per frame
-    void Update()
+    private void Update()
     {
-        if (!gaurdStop)
+        if (!guardStop)
         {
             if (isWalking)
             {
@@ -52,19 +69,19 @@ public class NPC_MovementLoop : MonoBehaviour
                 {
                     case 0:
                         Vision.transform.rotation = Quaternion.Euler(0, 0, 180);
-                        NPCRigidBody.velocity = new Vector2(0, walkingSpeed);
+                        rb.velocity = new Vector2(0, walkingSpeed);
                         break;
                     case 1:
                         Vision.transform.rotation = Quaternion.Euler(0, 0, 90);
-                        NPCRigidBody.velocity = new Vector2(walkingSpeed, 0);
+                        rb.velocity = new Vector2(walkingSpeed, 0);
                         break;
                     case 2:
                         Vision.transform.rotation = Quaternion.Euler(0, 0, 0);
-                        NPCRigidBody.velocity = new Vector2(0, -walkingSpeed);
+                        rb.velocity = new Vector2(0, -walkingSpeed);
                         break;
                     case 3:
                         Vision.transform.rotation = Quaternion.Euler(0, 0, 270);
-                        NPCRigidBody.velocity = new Vector2(-walkingSpeed, 0);
+                        rb.velocity = new Vector2(-walkingSpeed, 0);
                         break;
                     default:
                         Debug.LogError("Unhandled WalkDirection");
@@ -83,7 +100,7 @@ public class NPC_MovementLoop : MonoBehaviour
 
                 stopCounter -= Time.deltaTime;
 
-                NPCRigidBody.velocity = Vector2.zero;
+                rb.velocity = Vector2.zero;
 
                 if (stopCounter < 0)
                 {
@@ -103,10 +120,10 @@ public class NPC_MovementLoop : MonoBehaviour
 
     public void AllowMove(bool allow)
     {
-        gaurdStop = !allow;
-        if (gaurdStop)
+        guardStop = !allow;
+        if (guardStop)
         {
-            NPCRigidBody.velocity = Vector2.zero;
+            rb.velocity = Vector2.zero;
         }
     }
 
