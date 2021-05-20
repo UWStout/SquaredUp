@@ -4,7 +4,7 @@ public class NPC_Movement : MonoBehaviour
 {
     private Rigidbody2D rb = null;
 
-    public bool isWalking = false;
+    public bool isWalking = true;
 
     public float walkingSpeed;
     private float walkingCounter = 0.0f;
@@ -34,8 +34,6 @@ public class NPC_Movement : MonoBehaviour
         set { numSpot = value; }
     }
 
-    private int walkDirection = 0;
-
     public GameObject Vision;
 
     private bool guardStop = false;
@@ -51,6 +49,12 @@ public class NPC_Movement : MonoBehaviour
     private void Awake()
     {
         rb = GetComponent<Rigidbody2D>();
+
+        // Do this here so it can be overwritten by the load in start
+        isWalking = true;
+        guardStop = false;
+        walkingCounter = movementTime[numSpot];
+        stopCounter = stopTime;
     }
     // Called 1st
     // Initialization
@@ -66,63 +70,38 @@ public class NPC_Movement : MonoBehaviour
         ExpandPathList(paths, route);
 
         ExpandMovementList(movementTime, movementList);
-
-        walkDirection = route[numSpot];
-        UpdateFacingDirection(walkDirection);
     }
     // Update is called once per frame
     private void Update()
     {
+        int walkDirection = route[numSpot];
+        UpdateFacingDirection(walkDirection);
         if (!guardStop)
         {
             if (isWalking)
             {
                 walkingCounter -= Time.deltaTime;
-                switch (walkDirection)
-                {
-                    case 0:
-                        Vision.transform.rotation = Quaternion.Euler(0, 0, 180);
-                        rb.velocity = new Vector2(0, walkingSpeed);
-                        break;
-                    case 1:
-                        Vision.transform.rotation = Quaternion.Euler(0, 0, 90);
-                        rb.velocity = new Vector2(walkingSpeed, 0);
-                        break;
-                    case 2:
-                        Vision.transform.rotation = Quaternion.Euler(0, 0, 0);
-                        rb.velocity = new Vector2(0, -walkingSpeed);
-                        break;
-                    case 3:
-                        Vision.transform.rotation = Quaternion.Euler(0, 0, 270);
-                        rb.velocity = new Vector2(-walkingSpeed, 0);
-                        break;
-                    default:
-                        Debug.LogError("Unhandled WalkDirection");
-                        break;
-                }
+                UpdateVelocity(walkDirection);
                 if (walkingCounter < 0)
                 {
                     isWalking = false;
                     stopCounter = stopTime;
-                    numSpot++;
-                    //Debug.Log(numSpot);
                 }
             }
             else
             {
-
-                stopCounter -= Time.deltaTime;
-
                 rb.velocity = Vector2.zero;
 
+                stopCounter -= Time.deltaTime;
                 if (stopCounter < 0)
                 {
+                    isWalking = true;
+
+                    numSpot++;
                     if (numSpot > route.Length - 1)
                     {
                         numSpot = 0;
                     }
-                    walkDirection = route[numSpot];
-                    isWalking = true;
                     walkingCounter = movementList[numSpot];
                 }
             }
@@ -220,6 +199,28 @@ public class NPC_Movement : MonoBehaviour
                 break;
             case 3:
                 Vision.transform.rotation = Quaternion.Euler(0, 0, 270);
+                break;
+            default:
+                Debug.LogError("Unhandled WalkDirection");
+                break;
+        }
+    }
+
+    private void UpdateVelocity(int direction)
+    {
+        switch (direction)
+        {
+            case 0:
+                rb.velocity = new Vector2(0, walkingSpeed);
+                break;
+            case 1:
+                rb.velocity = new Vector2(walkingSpeed, 0);
+                break;
+            case 2:
+                rb.velocity = new Vector2(0, -walkingSpeed);
+                break;
+            case 3:
+                rb.velocity = new Vector2(-walkingSpeed, 0);
                 break;
             default:
                 Debug.LogError("Unhandled WalkDirection");
