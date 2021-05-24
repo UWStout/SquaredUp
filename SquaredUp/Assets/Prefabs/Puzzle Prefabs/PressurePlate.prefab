@@ -94,6 +94,7 @@ GameObject:
   - component: {fileID: 4296923390889878442}
   - component: {fileID: 3563610387894523785}
   - component: {fileID: 7937550645380674972}
+  - component: {fileID: 5140057742371166014}
   - component: {fileID: 2570158700235690530}
   - component: {fileID: 3090026379382772576}
   m_Layer: 0
@@ -184,6 +185,19 @@ MonoBehaviour:
   releaseAudio: {fileID: 3090026379382772576}
   pressurePlateSpriteRend: {fileID: 31894339202970533}
   pressedColor: {r: 0.41960785, g: 0.45882353, b: 0.5254902, a: 1}
+--- !u!114 &5140057742371166014
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2741463502455003336}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bbbab4a09917d0e42ad005ef2403a372, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  pressurePlate: {fileID: 7937550645380674972}
 --- !u!82 &2570158700235690530
 AudioSource:
   m_ObjectHideFlags: 0
@@ -446,7 +460,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 277335541
   m_SortingLayer: -4
-  m_SortingOrder: -1
+  m_SortingOrder: -2
   m_Sprite: {fileID: 21300000, guid: 45495da096c63644887aa3fa0ea4b9cc, type: 3}
   m_Color: {r: 0.34594163, g: 0.3801719, b: 0.4339623, a: 1}
   m_FlipX: 0
@@ -528,7 +542,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 277335541
   m_SortingLayer: -4
-  m_SortingOrder: 0
+  m_SortingOrder: -1
   m_Sprite: {fileID: 21300000, guid: 45495da096c63644887aa3fa0ea4b9cc, type: 3}
   m_Color: {r: 0.69803923, g: 0.6784314, b: 0.64705884, a: 1}
   m_FlipX: 0
