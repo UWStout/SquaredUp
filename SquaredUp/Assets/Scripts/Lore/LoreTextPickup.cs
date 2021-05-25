@@ -30,6 +30,7 @@ public class LoreTextPickup : MonoBehaviour
         }
         else
         {
+            textBox.text = "You have already collected this text!";
             textBox.gameObject.SetActive(true);
         }
     }
@@ -37,7 +38,6 @@ public class LoreTextPickup : MonoBehaviour
     private void OnTriggerExit2D(Collider2D collision)
     {
         textBox.gameObject.SetActive(false);
-        textBox.text = "You have already collected this text!";
     }
 
     // Simple getter for isCollected boolean (used to check for collected lore in LoreMenu)
@@ -51,4 +51,12 @@ public class LoreTextPickup : MonoBehaviour
         return this.textBox;
     }
 
+    /// <summary>
+    /// Loads save data for the lore text pickup.
+    /// </summary>
+    /// <param name="saveData">Data to load into this pickup.</param>
+    public void LoadSave(LorePickupSaveData saveData)
+    {
+        this.isCollected = saveData.GetWasCollected();
+    }
 }
