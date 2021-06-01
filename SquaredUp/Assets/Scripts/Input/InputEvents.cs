@@ -39,6 +39,15 @@ public class InputEvents : MonoBehaviour
         MovementEvent?.Invoke(rawInpVec);
     }
 
+    // SlowWalk
+    public delegate void SlowWalk(bool isPressed);
+    public static event SlowWalk SlowWalkEvent;
+    private void OnSlowWalk(InputValue value)
+    {
+        //Debug.Log("OnSlowWalk");
+        SlowWalkEvent?.Invoke(value.isPressed);
+    }
+
     // Interact
     public delegate void Interact();
     public static event Interact InteractEvent;

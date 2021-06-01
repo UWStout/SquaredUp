@@ -13,6 +13,8 @@ public class PlayerMovement : SingletonMonoBehav<PlayerMovement>
 
     // Speed of the player.
     [SerializeField] [Min(0.01f)] private float speed = 1f;
+    // Slow walk speed of the player
+    [SerializeField] [Min(0.01f)] private float slowWalkSpeed = 0.5f;
 
     // Smooths rotation/turn speed of eyes.
     [SerializeField] private float turnSmoothTime = 0.1f;
@@ -23,9 +25,12 @@ public class PlayerMovement : SingletonMonoBehav<PlayerMovement>
     private float targetAngle = 0;
 
     // If the player is allowed to move
-    private bool allowMove;
+    private bool allowMove = false;
     private Vector3 moveVel = Vector3.zero;
-    
+
+    // If the player is walking or moving at normal speed
+    private bool isSlowWalking = false;
+
 
     // Called 0th
     // Set references
@@ -41,6 +46,8 @@ public class PlayerMovement : SingletonMonoBehav<PlayerMovement>
     {
         // Sub to Movement
         AllowMovement(true);
+
+        InputEvents.SlowWalkEvent += OnSlowWalk;
     }
     // Called when the script is disabled.
     // Unsubscribe from events.
@@ -48,6 +55,8 @@ public class PlayerMovement : SingletonMonoBehav<PlayerMovement>
     {
         // Unsub from Movement
         AllowMovement(false);
+
+        InputEvents.SlowWalkEvent -= OnSlowWalk;
     }
     private void OnCollisionExit2D(Collision2D collision)
     {
@@ -80,9 +89,8 @@ public class PlayerMovement : SingletonMonoBehav<PlayerMovement>
     }
     */
 
-
     // Called when the player inputs movement.
-    public void OnMovement(Vector2 rawInputVector)
+    private void OnMovement(Vector2 rawInputVector)
     {
         // Check for input
         Vector2 direction = rawInputVector.normalized;
@@ -96,7 +104,8 @@ public class PlayerMovement : SingletonMonoBehav<PlayerMovement>
             }
 
             // Movement
-            moveVel = direction * Mathf.Round(speed);
+            float moveSpeed = isSlowWalking ? slowWalkSpeed : speed;
+            moveVel = direction * moveSpeed;
         }
         else
         {
@@ -105,28 +114,13 @@ public class PlayerMovement : SingletonMonoBehav<PlayerMovement>
         }
         rb.velocity = moveVel;
     }
-
-
-    /// <summary>
-    /// Coroutine to rotate the eyes to which direction the player is moving.
-    /// </summary>
-    /// <param name="direction">Direction to put the eyes in.</param>
-    private IEnumerator MoveEyes()
+    // Called when the player inputs slow walk.
+    private void OnSlowWalk(bool shouldSlowWalk)
     {
-        eyeCoroutineActive = true;
-        // Eye rotation
-        while (targetAngle != eyePivot.eulerAngles.z)
-        {
-            float angle = Mathf.SmoothDampAngle(eyePivot.eulerAngles.z, targetAngle, ref turnSmoothVelocity, turnSmoothTime);
-            Vector3 newAngles = eyePivot.eulerAngles;
-            newAngles.z = angle;
-            eyePivot.rotation = Quaternion.Euler(newAngles);
-
-            yield return null;
-        }
-        eyeCoroutineActive = false;
-        yield return null;
+        isSlowWalking = shouldSlowWalk;
+        OnMovement(moveVel);
     }
+
 
     /// <summary>Lets the player move if given true. Keeps the player from moving if given false.
     /// Subscribes and unsubscribes the movement function from the Movement Input Event</summary>
@@ -179,5 +173,27 @@ public class PlayerMovement : SingletonMonoBehav<PlayerMovement>
                 return new Vector2Int(0, -1);
             }
         }
+    }
+
+
+    /// <summary>
+    /// Coroutine to rotate the eyes to which direction the player is moving.
+    /// </summary>
+    /// <param name="direction">Direction to put the eyes in.</param>
+    private IEnumerator MoveEyes()
+    {
+        eyeCoroutineActive = true;
+        // Eye rotation
+        while (targetAngle != eyePivot.eulerAngles.z)
+        {
+            float angle = Mathf.SmoothDampAngle(eyePivot.eulerAngles.z, targetAngle, ref turnSmoothVelocity, turnSmoothTime);
+            Vector3 newAngles = eyePivot.eulerAngles;
+            newAngles.z = angle;
+            eyePivot.rotation = Quaternion.Euler(newAngles);
+
+            yield return null;
+        }
+        eyeCoroutineActive = false;
+        yield return null;
     }
 }

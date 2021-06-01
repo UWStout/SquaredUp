@@ -1541,6 +1541,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   eyePivot: {fileID: 6257086274558080415}
   speed: 10
+  slowWalkSpeed: 5
   turnSmoothTime: 0.1
 --- !u!114 &2072241410518489459
 MonoBehaviour:

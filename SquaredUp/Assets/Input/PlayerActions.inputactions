@@ -14,6 +14,14 @@
                     "interactions": ""
                 },
                 {
+                    "name": "SlowWalk",
+                    "type": "Value",
+                    "id": "f44e14e6-2e6f-4cc3-b523-36f0580185e2",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": ""
+                },
+                {
                     "name": "Interact",
                     "type": "Button",
                     "id": "83c086d2-3109-479d-bfb4-40d2a1f76e8e",
@@ -173,6 +181,17 @@
                     "processors": "",
                     "groups": "",
                     "action": "PauseGame",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "797f6d65-7ca0-40fb-8dbb-ea4d2c494d6b",
+                    "path": "<Keyboard>/shift",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "SlowWalk",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }
