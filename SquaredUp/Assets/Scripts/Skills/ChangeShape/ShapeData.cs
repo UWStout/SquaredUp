@@ -9,7 +9,7 @@ public class ShapeData : SkillStateData
     public enum ShapeType { BOX, CIRCLE, TRIANGLE}
     // Constants
     // Points for the types of colliders that are polygonal
-    public static readonly Vector2[] TRIANGLE_POINTS = { new Vector2(0, 0.5f), new Vector2(-0.5f, -0.36603f), new Vector2(0.5f, -0.36603f) };
+    public static readonly Vector2[] TRIANGLE_POINTS = { new Vector2(-0.5f, 0.5f), new Vector2(-0.5f, -0.5f), new Vector2(0.5f, -0.5f) };
 
     // Type of 2D collider that this shape uses
     [SerializeField] private ShapeType typeOfShape = ShapeType.BOX;
