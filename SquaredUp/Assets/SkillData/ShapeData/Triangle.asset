@@ -15,4 +15,6 @@ MonoBehaviour:
   uiElement: {fileID: 9203763147008845070, guid: f8500d6ff5d8b8c43926e31900ae0d56, type: 3}
   typeOfShape: 2
   scale: {x: 1, y: 1, z: 1}
-  directionAffectsScale: 0
+  directionAffectsScale: 1
+  hasShapeChangeBehavior: 0
+  shapeChangeBehave: {fileID: 0}
