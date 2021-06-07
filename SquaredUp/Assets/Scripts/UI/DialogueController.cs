@@ -16,6 +16,8 @@ public class DialogueController : MonoBehaviour
     [SerializeField] private GameObject uiComponent = null;
     // Type writer to help display text
     [SerializeField] private TypeWriter typeWriteRef = null;
+    // Reference to the continue prompt to flash
+    [SerializeField] private GameObject contPrompt = null;
 
     // If the dialogue box is active
     private bool isDialogueActive = false;
@@ -102,6 +104,8 @@ public class DialogueController : MonoBehaviour
             else
             {
                 typeWriteRef.PreemptiveLineFinish();
+                // Show the continue prompt
+                contPrompt.SetActive(true);
             }
         }
     }
@@ -110,6 +114,9 @@ public class DialogueController : MonoBehaviour
     private void StartTyping()
     {
         finishedTyping = false;
+        // Show the continue prompt
+        contPrompt.SetActive(false);
+
         typeWriteRef.TypeLine(dialogueLines[curLineIndex], HandleFinishTyping);
     }
 
@@ -118,6 +125,8 @@ public class DialogueController : MonoBehaviour
     {
         ++curLineIndex;
         finishedTyping = true;
+        // Hide the continue prompt
+        contPrompt.SetActive(true);
     }
 
     /// <summary>Ends the dialogue</summary>
