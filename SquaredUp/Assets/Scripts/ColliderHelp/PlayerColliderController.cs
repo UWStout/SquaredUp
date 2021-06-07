@@ -127,6 +127,10 @@ public class PlayerColliderController : MonoBehaviour
         {
             circ.enabled = false;
         }
+        foreach (PolygonCollider2D poly in polygonColliders)
+        {
+            poly.enabled = false;
+        }
     }
 
     /// <summary>Turns off all colliders and turns on the given collider</summary>
