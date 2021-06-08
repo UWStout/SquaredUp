@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System.Collections.Generic;
+using UnityEngine;
 
 // Class that helps debug some physics stuff
 public static class PhysicsDebugging
@@ -13,7 +14,7 @@ public static class PhysicsDebugging
     /// <param name="distance">The maximum distance over which to cast the box.</param>
     /// <param name="mask">Filter to detect Colliders only on certain layers.</param>
     /// <returns>RaycastHit2D The cast results returned.</returns>
-    static public RaycastHit2D BoxCast(Vector2 origen, Vector2 size, float angle, Vector2 direction, float distance, int mask)
+    public static RaycastHit2D BoxCast(Vector2 origen, Vector2 size, float angle, Vector2 direction, float distance, int mask)
     {
         RaycastHit2D hit = Physics2D.BoxCast(origen, size, angle, direction, distance, mask);
 
@@ -79,7 +80,7 @@ public static class PhysicsDebugging
     /// <param name="minDepth">Only include objects with a Z coordinate (depth) greater than or equal to this value.</param>
     /// <param name="maxDepth">Only include objects with a Z coordinate (depth) less than or equal to this value.</param>
     /// <returns>RaycastHit2D The cast results returned.</returns>
-    static public RaycastHit2D CircleCast(Vector2 origin, float radius, Vector2 direction, float distance = Mathf.Infinity, int layerMask = Physics.DefaultRaycastLayers,
+    public static RaycastHit2D CircleCast(Vector2 origin, float radius, Vector2 direction, float distance = Mathf.Infinity, int layerMask = Physics.DefaultRaycastLayers,
         float minDepth = -Mathf.Infinity, float maxDepth = Mathf.Infinity)
     {
         RaycastHit2D hit = Physics2D.CircleCast(origin, radius, direction, distance, layerMask, minDepth, maxDepth);
@@ -100,7 +101,7 @@ public static class PhysicsDebugging
     /// <param name="radius">The radius of the circle.</param>
     /// <param name="color">Color of the lines</param>
     /// <param name="detailLevel">Optional value that can increase the curvature of the circle</param>
-    static public void DrawCircle(Vector2 origin, float radius, Color color, int detailLevel = 16)
+    public static void DrawCircle(Vector2 origin, float radius, Color color, int detailLevel = 16)
     {
         float curRad = 0;
         float incrAm = 2 * Mathf.PI / detailLevel;
@@ -118,5 +119,57 @@ public static class PhysicsDebugging
 
             Debug.DrawLine(p1, p2, color);
         }
+    }
+
+    /// <summary>Does a bunch of lines casts between the points of the polygon. Returns the list of hits.</summary>
+    /// <param name="origin">Center of the polygon.</param>
+    /// <param name="size">Scale of the polygon.</param>
+    /// <param name="rotation">Rotation of the polygon.</param>
+    /// <param name="points">Offsets for the points of the polygon.</param>
+    /// <param name="layerMask">LayerMask to check on.</param>
+    public static RaycastHit2D[] PolygonCast(Vector2 origin, Vector2 size, float rotation, Vector2[] points, int layerMask)
+    {
+        // Return list
+        List<RaycastHit2D> hits = new List<RaycastHit2D>();
+
+        // Iterate over the points
+        for (int i = 0; i < points.Length; ++i)
+        {
+            // Create a line from the current point to the next point
+            // If the current point is the last, loop back to the first
+            Vector2 start = ApplyTransformToPoint(origin, size, rotation, points[i]);
+            Vector2 end;
+            if (i == points.Length - 1)
+            {
+                end = ApplyTransformToPoint(origin, size, rotation, points[0]);
+            }
+            else
+            {
+                end = ApplyTransformToPoint(origin, size, rotation, points[i + 1]);
+            }
+
+            // Do a line cast with the start and end points
+            // Add it to the list if there is a hit
+            RaycastHit2D hit = Physics2D.Linecast(start, end, layerMask);
+            Debug.DrawLine(start, end);
+            if (hit)
+            {
+                Debug.Log("Hit " + hit.transform.name + " at " + hit.point);
+                hits.Add(hit);
+            }
+        }
+
+        return hits.ToArray();
+    }
+
+
+
+    /// <summary>Applies the origin (0,0) position, scale/size, and rotation to the given point</summary>
+    private static Vector2 ApplyTransformToPoint(Vector2 origin, Vector2 size, float rotation, Vector2 point)
+    {
+        Vector2 scaledPoint = Vector2.Scale(point, size);
+        Vector2 rotatedPoint = Quaternion.Euler(0.0f, 0.0f, rotation) * scaledPoint;
+        Vector2 translatedPoint = origin + rotatedPoint;
+        return translatedPoint;
     }
 }

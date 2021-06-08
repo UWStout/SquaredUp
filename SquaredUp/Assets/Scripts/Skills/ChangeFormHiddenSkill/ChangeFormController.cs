@@ -1,10 +1,15 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using UnityEngine;
 
 /// <summary>Acts as a controller for the skills that affect the scale of the player.
 /// ActivateFormChange must be called by the last skill to activate</summary>
 public class ChangeFormController : MonoBehaviour
 {
+    // Constants
+    // Size of the cube to shrink to
+    private static readonly Vector2 SHRINK_SIZE = new Vector2(1.0f / 3.0f, 1.0f / 3.0f);
+
     // References
     // Scale controller for the player
     [SerializeField] private ScaleController playerScaleCont = null;
@@ -32,6 +37,8 @@ public class ChangeFormController : MonoBehaviour
 
     // If the shape data has been changed since last time
     private bool wasShapeChanged = false;
+    // Rotation the shape had last (in degrees)
+    private float shapeRotation = 0.0f;
     // Previous shape data
     private ShapeData prevShapeData = null;
     // Current shape data to change to
@@ -41,6 +48,11 @@ public class ChangeFormController : MonoBehaviour
             if (curShapeData != null)
             {
                 wasShapeChanged = curShapeData != value;
+                // Reset shape rotation if the shape was changed
+                if (wasShapeChanged)
+                {
+                    shapeRotation = 0.0f;
+                }
             }
             prevShapeData = curShapeData;
             curShapeData = value;
@@ -66,11 +78,9 @@ public class ChangeFormController : MonoBehaviour
 
     // Events
     // Event for when an available spot is found
-    public delegate void AvailableSpotFound();
-    public static event AvailableSpotFound OnAvailableSpotFound;
+    public static event Action OnAvailableSpotFound;
     // Event for when the form is done changing
-    public delegate void FinishChangingForm();
-    public static event FinishChangingForm OnFinishChangingForm;
+    public static event Action OnFinishChangingForm;
 
 
     /// <summary>Should be called after shape data and size data have been given to it.
@@ -78,12 +88,12 @@ public class ChangeFormController : MonoBehaviour
     public void ActivateFormChange()
     {
         Vector2Int facingDir = playerMoveRef.GetFacingDirection();
-        Vector3 shapeDirectionalSize = GetSize(curShapeData, facingDir, playerScaleCont.ShapeScale, wasShapeChanged);
+        float shapeRot = GetShapeRotation(curShapeData, facingDir, playerScaleCont.ShapeScale, wasShapeChanged);
         // Set size using facing size and size data
-        Vector3 size = shapeDirectionalSize;
+        Vector3 size = curShapeData.Scale;
         if (curSizeData != null)
         { 
-            size = shapeDirectionalSize * curSizeData.Size;
+            size *= curSizeData.Size;
         }
 
         //Debug.Log("Was Size Changed: " + wasSizeChanged);
@@ -94,22 +104,25 @@ public class ChangeFormController : MonoBehaviour
         //Debug.Log("Target Size: " + size);
         //Debug.Log("Current Size: " + playerScaleCont.ShapeScale);
         //Debug.Log("Target!=Size? " + (size != playerScaleCont.ShapeScale));
+        //Debug.Log("ShapeRot: " + shapeRot);
 
         // Change if size or shape was changed or
-        // if the shape's direction affects scale and the scale has changed
+        // if the shape's direction affects scale and the rotation has been changed because of it
         if (wasSizeChanged || wasShapeChanged ||
-            (curShapeData != null && size != playerScaleCont.ShapeScale))
+            (curShapeData != null && curShapeData.DirectionAffectsScale && shapeRot != shapeRotation))
         {
             // Swap the colliders
             // If the colliders couldn't be swapped, ergo could not fit, then do not swap the player's shape
             Vector3 scaledSize = Vector3.Scale(size, playerScaleCont.OriginalScale);
-            AvailableSpot availSpot = playerColContRef.ActivateCollider(curShapeData.TypeOfShape, scaledSize);
+            AvailableSpot availSpot = playerColContRef.ActivateCollider(curShapeData.TypeOfShape, scaledSize, shapeRot);
             if (availSpot.Available)
             {
                 // Call the available spot found event
                 OnAvailableSpotFound?.Invoke();
+                // Set the shape rotation
+                shapeRotation = shapeRot;
                 // Start changing form
-                StartChangeForm(size, availSpot.Position);
+                StartChangeForm(size, availSpot.Position, curShapeData.DirectionAffectsScale);
 
                 // They are now the current, so reset them
                 wasSizeChanged = false;
@@ -126,17 +139,18 @@ public class ChangeFormController : MonoBehaviour
     /// <summary>Display the error and sound error that the player cannot change here.</summary>
     public void FailToChange(ShapeData shapeData)
     {
+        // Get the rotation from the facing direction and the current shape direction
         Vector2Int facingDir = playerMoveRef.GetFacingDirection();
-        Vector3 shapeDirectionalSize = GetSize(shapeData, facingDir, playerScaleCont.ShapeScale, shapeData != prevShapeData);
-        // Set size using facing size and size data
-        Vector3 size = shapeDirectionalSize;
+        float shapeRot = GetShapeRotation(shapeData, facingDir, playerScaleCont.ShapeScale, shapeData != prevShapeData);
+        // Set size
+        Vector3 size = shapeData.Scale;
         if (curSizeData != null)
         {
             size *= curSizeData.Size;
         }
 
         // Display cannot fit here error
-        ShowCannotFitHere(shapeData.TypeOfShape, size);
+        ShowCannotFitHere(shapeData.TypeOfShape, size, shapeRot);
         // Play cannot fit sound
         failedTransformSound.Play();
 
@@ -145,48 +159,63 @@ public class ChangeFormController : MonoBehaviour
         curSizeData = prevSizeData;
     }
 
-    /// <summary>Gets the size of the shape given by the data</summary>
+    /// <summary>
+    /// Gets the rotation of the given shape with the specified data.
+    /// </summary>
     /// <param name="data">Shape of collider to turn into</param>
     /// <param name="playerFacingDirection">The direction the player is facing</param>
     /// <param name="previousShapeScale">Shape of the previous shape</param>
     /// <param name="isDifferentShape">If the shape has changed from last time</param>
-    private Vector3 GetSize(ShapeData data, Vector2Int playerFacingDirection, Vector2 previousShapeScale, bool isDifferentShape)
+    /// <returns>Rotation in degrees that the shape should be.</returns>
+    private float GetShapeRotation(ShapeData data, Vector2Int playerFacingDirection, Vector2 previousShapeScale, bool isDifferentShape)
     {
-        Vector3 size = Vector3.one;
+        float rot = 0.0f;
         if (data != null)
         {
-            size = data.Scale;
-            // If the direciton affects scale
+            // If the direction affects scale
             if (data.DirectionAffectsScale)
             {
                 // If this is the first time we are swapping to this shape,
-                // then base the player's scale on their facing direction.
+                // then base the player's rotation on their facing direction.
                 if (isDifferentShape)
                 {
-                    // If facing left or right, swap x and y
-                    if (playerFacingDirection.x != 0)
+                    // Facing up's rotation is 0
+                    if (playerFacingDirection.y > 0)
                     {
-                        float temp = size.x;
-                        size.x = size.y;
-                        size.y = temp;
+                        rot = 0.0f;
+                    }
+                    // Facing left's rotation is 90
+                    else if (playerFacingDirection.x < 0)
+                    {
+                        rot = 90.0f;
+                    }
+                    // Facing down's rotation is 180
+                    else if (playerFacingDirection.x < 0)
+                    {
+                        rot = 180.0f;
+                    }
+                    // Facing right's rotation is 270
+                    else if (playerFacingDirection.y < 0)
+                    {
+                        rot = 270.0f;
                     }
                 }
-                // If we are just updating the current scale, just set the x and y to be opposite
+                // If we are just updating the current scale, just spin based off the last rotation
                 else
                 {
-                    size.x = previousShapeScale.y;
-                    size.y = previousShapeScale.x;
+                    rot = (shapeRotation + 90.0f) % 360.0f;
                 }
             }
         }
 
-        return size;
+        return rot;
     }
 
-    /// <summary>Starts smoothly changing the scale of the player</summary>
-    /// <param name="targetSize">Target size</param>
-    /// <param name="availSpot">Position that was close enough to allow for form changing</param>
-    private void StartChangeForm(Vector3 targetSize, Vector3 availSpot)
+    /// <summary>Starts smoothly changing the scale of the player.</summary>
+    /// <param name="targetSize">Target size.</param>
+    /// <param name="availSpot">Position that was close enough to allow for form changing.</param>
+    /// <param name="directionMatters">If direction matters for the shape.</param>
+    private void StartChangeForm(Vector3 targetSize, Vector3 availSpot, bool directionMatters)
     {
         //Debug.Log("StartChangeForm");
         // Don't let the player move while changing form
@@ -200,45 +229,31 @@ public class ChangeFormController : MonoBehaviour
             StopCoroutine(changeFormCorout);
         }
         // Start a new coroutine
-        changeFormCorout = StartCoroutine(ShrinkCoroutine(targetSize, availSpot));
+        changeFormCorout = StartCoroutine(ShrinkCoroutine(targetSize, availSpot, directionMatters));
     }
 
     /// <summary>Coroutine to shrink the player. Calls the ChangePositionCoroutine once done.</summary>
     /// <param name="targetSize">Size to lerp towards</param>
     /// <param name="availSpot">Position that was close enough to allow for form changing</param>
-    /// 
-    private IEnumerator ShrinkCoroutine(Vector3 targetSize, Vector3 availSpot)
+    /// <param name="directionMatters">If direction matters for the shape.</param>
+    private IEnumerator ShrinkCoroutine(Vector3 targetSize, Vector3 availSpot, bool directionMatters)
     {
         changeFormCoroutFin = false;
 
         // Save the current size
         Vector3 startSize = playerScaleCont.ShapeScale;
 
-        // If we are shrinking
+        // If we are shrinking and growing
         bool areShrinking = true;
         bool areGrowing = true;
 
-        Vector3 shrinkTargetSize = targetSize;
-        // Identify which axix the player will be growing least one
-        Vector3 difference = targetSize - startSize;
-        float xDiff = difference.x;
-        float yDiff = difference.y;
-        // X is the smaller of the growths
-        if (xDiff < yDiff)
+        // Get the size to shrink to by taking the smallest value of the target and start size
+        Vector3 shrinkTargetSize = new Vector3(SHRINK_SIZE.x, SHRINK_SIZE.y, targetSize.z);
+        // No need to grow or shrink if the target and start size are the same length are the same
+        if (!directionMatters && (targetSize - startSize).sqrMagnitude == 0)
         {
-            shrinkTargetSize.y = startSize.y;
-        }
-        // Y is the smaller of the growths
-        else if (xDiff > yDiff)
-        {
-            shrinkTargetSize.x = startSize.x;
-        }
-        // Else they are the same size
-        else
-        {
-            // Determine if we are growing or shrinking
-            areShrinking = xDiff < 0;
-            areGrowing = !areShrinking;
+            areShrinking = false;
+            areGrowing = false;
         }
 
         // Determine the speed of lerping for each coroutine
@@ -281,6 +296,12 @@ public class ChangeFormController : MonoBehaviour
     {
         // Starting position
         Vector3 startPos = playerMoveTrans.position;
+        // Starting rotation
+        float startRot = playerMoveTrans.eulerAngles.z;
+        // Target rotation
+        float targetRot = shapeRotation - ((shapeRotation - startRot) / 2);
+        // Will hold the angle changes
+        Vector3 angles;
 
         // Iteration information
         float changePosSpeed = lerpSpeed;
@@ -299,27 +320,48 @@ public class ChangeFormController : MonoBehaviour
             {
                 // Lerp towards the mid point
                 playerMoveTrans.position = Vector3.Lerp(startPos, wallInWay.Midpoint, t);
+                // Rotate towards desired rotation
+                float newRot = Mathf.LerpAngle(startRot, targetRot, t);
+                angles = playerMoveTrans.eulerAngles;
+                angles.z = newRot;
+                playerMoveTrans.eulerAngles = angles;
                 // Step
                 t += changePosSpeed * Time.deltaTime;
 
                 yield return null;
             }
+            // Set player position and rotation to get exact
             playerMoveTrans.position = wallInWay.Midpoint;
+            angles = playerMoveTrans.eulerAngles;
+            angles.z = targetRot;
+            playerMoveTrans.eulerAngles = angles;
         }
 
         // Update the start position in case the player moved due to a wall
         startPos = playerMoveTrans.position;
+        // Update the start and target rotations
+        startRot = playerMoveTrans.eulerAngles.z;
+        targetRot = shapeRotation;
         t = 0;
-        while (t < 0)
+        while (t < 1)
         {
             // Lerp towards the available spot
             playerMoveTrans.position = Vector3.Lerp(startPos, availSpot, t);
+            // Rotate towards desired rotation
+            float newRot = Mathf.LerpAngle(startRot, targetRot, t);
+            angles = playerMoveTrans.eulerAngles;
+            angles.z = newRot;
+            playerMoveTrans.eulerAngles = angles;
             // Step
             t += changePosSpeed * Time.deltaTime;
 
             yield return null;
         }
+        // Set player position and rotation to get exact
         playerMoveTrans.position = availSpot;
+        angles = playerMoveTrans.eulerAngles;
+        angles.z = targetRot;
+        playerMoveTrans.eulerAngles = angles;
 
         // Call the last part of the transition
         changeFormCorout = StartCoroutine(GrowCoroutine(targetSize, shouldGrow, lerpSpeed));
@@ -372,12 +414,13 @@ public class ChangeFormController : MonoBehaviour
     /// <summary>Shows the visual for the player not fitting somewhere.</summary>
     /// <param name="shapeType">Type of shape the player tried to change to.</param>
     /// <param name="size">Size the player tried to change to.</param>
-    private void ShowCannotFitHere(ShapeData.ShapeType shapeType, Vector3 size)
+    /// <param name="rotation">Rotation of the shape to display.</param>
+    private void ShowCannotFitHere(ShapeData.ShapeType shapeType, Vector3 size, float rotation)
     {
         // Activate the cannot fit controller to show itself
         Vector3 pos = playerMoveTrans.position;
         pos.z = cannotFitCont.transform.position.z;
-        cannotFitCont.Activate(pos, size, shapeType);
+        cannotFitCont.Activate(pos, size, rotation, shapeType);
     }
 
 }

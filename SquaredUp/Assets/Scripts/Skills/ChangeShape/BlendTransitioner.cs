@@ -119,7 +119,6 @@ public class BlendTransitioner : MonoBehaviour
     /// <param name="t">Step for the lerp</param>
     private void LerpRenderers(int targetBlendIndex, float[] startBlendShapes, float t)
     {
-        Debug.Log(this.name + " has " + targetRenderers.Length + " targetRenderers");
         float increaseWeight = t * 100;
         // Lerp for the transition for each renderer
         for (int k = 0; k < targetRenderers.Length; ++k)

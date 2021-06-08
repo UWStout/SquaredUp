@@ -40,9 +40,10 @@ public class PlayerColliderController : MonoBehaviour
     /// If a spot was not found, they cannot fit in their current location and their colliders were not changed.</summary>
     /// <param name="colliderType">Type of collider to activate</param>
     /// <param name="size">The actual size of the collider to test</param>
-    public AvailableSpot ActivateCollider(ShapeData.ShapeType colliderType, Vector3 size)
+    /// /// <param name="rotation">Rotation of the shape.</param>
+    public AvailableSpot ActivateCollider(ShapeData.ShapeType colliderType, Vector3 size, float rotation)
     {
-        AvailableSpot availSpot = TestColliderChange(colliderType, size);
+        AvailableSpot availSpot = TestColliderChange(colliderType, size, rotation);
         if (availSpot.Available)
         {
             ChangeColliderType(colliderType);
@@ -52,12 +53,13 @@ public class PlayerColliderController : MonoBehaviour
 
     /// <summary>Tests if the given type of shape will fit in the player's current position.
     /// Returns an AvailableSpot to hold if a spot was found (player can fit) and
-    /// where that spot is</summary>
-    /// <param name="colliderType">Shape of the collider to test</param>
-    /// <param name="size">The actual size of the collider to test</param>
-    public AvailableSpot TestColliderChange(ShapeData.ShapeType colliderType, Vector3 size)
+    /// where that spot is.</summary>
+    /// <param name="colliderType">Shape of the collider to test.s</param>
+    /// <param name="size">The actual size of the collider to test.</param>
+    /// <param name="rotation">Rotation of the shape.</param>
+    public AvailableSpot TestColliderChange(ShapeData.ShapeType colliderType, Vector3 size, float rotation)
     {
-        return testColliderRef.CheckIfColliderWillHitWall(colliderType, size);
+        return testColliderRef.CheckIfColliderWillHitWall(colliderType, size, rotation);
     }
 
     /// <summary>

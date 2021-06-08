@@ -9,6 +9,7 @@ public class TestCollider : MonoBehaviour
     // Amount of times to iterate for testing position
     private const int ITERATIONS = 6;
 
+
     // Reference to the ChangeColorSkill
     [SerializeField] private ChangeColorSkill changeColorSkillRef = null;
     // Wall sorting layers names
@@ -43,12 +44,13 @@ public class TestCollider : MonoBehaviour
     /// the location the available spot was found</summary>
     /// <param name="colliderType">Shape of collider to turn into</param>
     /// <param name="size">The actual size of the collider</param>
-    public AvailableSpot CheckIfColliderWillHitWall(ShapeData.ShapeType colliderType, Vector3 size)
+    /// <param name="rotation">Rotation of the shape.</param>
+    public AvailableSpot CheckIfColliderWillHitWall(ShapeData.ShapeType colliderType, Vector3 size, float rotation)
     {
         // Colored wall layer mask
         LayerMask colorWallLayerMask = GetCurrentColoredWallLayerMask();
 
-        RaycastHit2D hit = new RaycastHit2D();
+        bool foundHit = false;
         Vector2 roundedPos = RoundPositionToHalfInts(transform.position);
 
         // Physics casts don't play well with negatives sizes, so fix that
@@ -65,33 +67,42 @@ public class TestCollider : MonoBehaviour
                 // BoxCollider2D
                 case ShapeData.ShapeType.BOX:
                     // Testing
-                    //hit = PhysicsDebugging.BoxCast(curPos, size, 0, transform.up, 0, colorWallLayerMask);
+                    //foundHit = PhysicsDebugging.BoxCast(curPos, size, 0, transform.up, 0, colorWallLayerMask);
                     // End Testing
-                    hit = Physics2D.BoxCast(curPos, size, 0, transform.up, 0, colorWallLayerMask);
+                    foundHit = Physics2D.BoxCast(curPos, size, rotation, transform.up, 0, colorWallLayerMask);
                     break;
                 // CircleCollider2D
                 case ShapeData.ShapeType.CIRCLE:
                     // Testing
-                    //hit = PhysicsDebugging.CircleCast(curPos, size.x * 0.5f, transform.up, 0, colorWallLayerMask);
+                    //foundHit = PhysicsDebugging.CircleCast(curPos, size.x * 0.5f, transform.up, 0, colorWallLayerMask);
                     // End Testing
-                    hit = Physics2D.CircleCast(curPos, size.x * 0.5f, transform.up, 0, colorWallLayerMask);
+                    foundHit = Physics2D.CircleCast(curPos, size.x * 0.5f, transform.up, 0, colorWallLayerMask);
                     break;
                 // Triangle needs to be a specific kind of polygon collider
                 case ShapeData.ShapeType.TRIANGLE:
-                    RaycastHit2D[] polyhits = PolygonCast(curPos, size, ShapeData.TRIANGLE_POINTS, colorWallLayerMask);
-                    if (polyhits.Length > 0)
+                    foundHit = false;
+                    RaycastHit2D[] polyhits;
+                    // Testing
+                    //polyhits = PhysicsDebugging.PolygonCast(curPos, size, rotation, ShapeData.TRIANGLE_POINTS, colorWallLayerMask);
+                    // End Testing
+                    polyhits = PolygonCast(curPos, size, rotation, ShapeData.TRIANGLE_POINTS, colorWallLayerMask);
+                    foreach (RaycastHit2D pHit in polyhits)
                     {
-                        hit = polyhits[0];
+                        if (pHit)
+                        {
+                            foundHit = true;
+                            break;
+                        }
                     }
                     break;
                 default:
                     Debug.LogError("Unhandled ColliderType of '" + colliderType + "' in PlayerColliderController.cs");
                     return new AvailableSpot(false, Vector2.zero);
             }
+            //Debug.Break();
             // If there was no hit, we found a place the player can be
-            if (!hit)
+            if (!foundHit)
             {
-                //Debug.Break();
                 return new AvailableSpot(true, curPos);
             }
 
@@ -104,7 +115,6 @@ public class TestCollider : MonoBehaviour
                 ++curIter;
             }
         }
-        //Debug.Break();
         return new AvailableSpot(false, Vector2.zero);
     }
 
@@ -139,12 +149,13 @@ public class TestCollider : MonoBehaviour
         return layerMaskVal;
     }
 
-    /// <summary>Does a bunch of lines casts between the points of the polygon. Returns the list of hits</summary>
-    /// <param name="origin">Center of the polygon</param>
-    /// <param name="size">Scale of the polygon</param>
-    /// <param name="points">Offsets for the points of the polygon</param>
-    /// <param name="layerMask">LayerMask to check on</param>
-    private RaycastHit2D[] PolygonCast(Vector2 origin, Vector2 size, Vector2[] points, int layerMask)
+    /// <summary>Does a bunch of lines casts between the points of the polygon. Returns the list of hits.</summary>
+    /// <param name="origin">Center of the polygon.</param>
+    /// <param name="size">Scale of the polygon.</param>
+    /// <param name="rotation">Rotation of the polygon.</param>
+    /// <param name="points">Offsets for the points of the polygon.</param>
+    /// <param name="layerMask">LayerMask to check on.</param>
+    private RaycastHit2D[] PolygonCast(Vector2 origin, Vector2 size, float rotation, Vector2[] points, int layerMask)
     {
         // Return list
         List<RaycastHit2D> hits = new List<RaycastHit2D>();
@@ -154,15 +165,15 @@ public class TestCollider : MonoBehaviour
         {
             // Create a line from the current point to the next point
             // If the current point is the last, loop back to the first
-            Vector2 start = ApplyTransformToPoint(origin, size, points[i]);
+            Vector2 start = ApplyTransformToPoint(origin, size, rotation, points[i]);
             Vector2 end;
             if (i == points.Length - 1)
             {
-                end = ApplyTransformToPoint(origin, size, points[0]);
+                end = ApplyTransformToPoint(origin, size, rotation, points[0]);
             }
             else
             {
-                end = ApplyTransformToPoint(origin, size, points[1]);
+                end = ApplyTransformToPoint(origin, size, rotation, points[i + 1]);
             }
 
             // Do a line cast with the start and end points
@@ -177,10 +188,13 @@ public class TestCollider : MonoBehaviour
         return hits.ToArray();
     }
     
-    /// <summary>Applies the origin (0,0) position and scale/size to the given point</summary>
-    private Vector2 ApplyTransformToPoint(Vector2 origin, Vector2 size, Vector2 point)
+    /// <summary>Applies the origin (0,0) position, scale/size, and rotation to the given point</summary>
+    private Vector2 ApplyTransformToPoint(Vector2 origin, Vector2 size, float rotation, Vector2 point)
     {
-        return new Vector2(origin.x + point.x * size.x, origin.y + point.y * size.y);
+        Vector2 scaledPoint = Vector2.Scale(point, size);
+        Vector2 rotatedPoint = Quaternion.Euler(0.0f, 0.0f, rotation) * scaledPoint;
+        Vector2 translatedPoint = origin + rotatedPoint;
+        return translatedPoint;
     }
 
     /// <summary>Rounds the given position's x and y values to the closest half int</summary>

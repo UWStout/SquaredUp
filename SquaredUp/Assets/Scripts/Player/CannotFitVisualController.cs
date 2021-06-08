@@ -40,11 +40,16 @@ public class CannotFitVisualController : MonoBehaviour
     /// <summary>Shows the cannot fit visual at the given position as the given size and shape.</summary>
     /// <param name="pos">Position to move the cannot fit visual to.</param>
     /// <param name="size">Shape size to set.</param>
+    /// <param name="rotation">Rotation of the shape.</param>
     /// <param name="shapeType">ShapeType to set the cannot fit visual to.</param>
-    public void Activate(Vector3 pos, Vector3 size, ShapeData.ShapeType shapeType)
+    public void Activate(Vector3 pos, Vector3 size, float rotation, ShapeData.ShapeType shapeType)
     {
         // Move to the player's position.
         transform.position = pos;
+        // Rotate the shape
+        Vector3 angles = transform.eulerAngles;
+        angles.z = rotation;
+        transform.eulerAngles = angles;
         // Make it fit the size and shape the player attempted to change to.
         scaleCont.ShapeScale = size;
         blendTrans.ChangeShapeInstant(shapeType);
