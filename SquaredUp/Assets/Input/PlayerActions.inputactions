@@ -297,18 +297,18 @@
             "id": "2d8a5a1d-c047-4a5a-b32b-461aed72a298",
             "actions": [
                 {
-                    "name": "CloseSkillMenu",
-                    "type": "Button",
-                    "id": "27071d54-0b88-43b2-adfb-22f0a4ccdf8d",
-                    "expectedControlType": "Button",
-                    "processors": "",
-                    "interactions": ""
-                },
-                {
                     "name": "MainAxis",
                     "type": "Value",
                     "id": "2d45a3f2-73ec-4846-8836-1e79e00bf05b",
                     "expectedControlType": "Vector2",
+                    "processors": "",
+                    "interactions": ""
+                },
+                {
+                    "name": "CloseSkillMenu",
+                    "type": "Button",
+                    "id": "27071d54-0b88-43b2-adfb-22f0a4ccdf8d",
+                    "expectedControlType": "Button",
                     "processors": "",
                     "interactions": ""
                 },
@@ -338,6 +338,50 @@
                     "processors": "",
                     "groups": "",
                     "action": "CloseSkillMenu",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "d9b810a8-1734-4935-94e0-6e40a54a4885",
+                    "path": "<Keyboard>/escape",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Revert",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "ce9c5642-0757-4362-9447-ab3a459aadfa",
+                    "path": "<Keyboard>/space",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Revert",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "aa7a1136-7c96-4269-b077-92f3ae250ee6",
+                    "path": "<Mouse>/leftButton",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "AdvanceDialogue",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "7ce79136-2b85-43c2-a5d5-5083357331bc",
+                    "path": "<Keyboard>/e",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "AdvanceDialogue",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },
@@ -450,50 +494,6 @@
                     "action": "MainAxis",
                     "isComposite": false,
                     "isPartOfComposite": true
-                },
-                {
-                    "name": "",
-                    "id": "d9b810a8-1734-4935-94e0-6e40a54a4885",
-                    "path": "<Keyboard>/escape",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "",
-                    "action": "Revert",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
-                    "id": "ce9c5642-0757-4362-9447-ab3a459aadfa",
-                    "path": "<Keyboard>/space",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "",
-                    "action": "Revert",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
-                    "id": "aa7a1136-7c96-4269-b077-92f3ae250ee6",
-                    "path": "<Mouse>/leftButton",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "",
-                    "action": "AdvanceDialogue",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
-                    "id": "7ce79136-2b85-43c2-a5d5-5083357331bc",
-                    "path": "<Keyboard>/e",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "",
-                    "action": "AdvanceDialogue",
-                    "isComposite": false,
-                    "isPartOfComposite": false
                 }
             ]
         },
