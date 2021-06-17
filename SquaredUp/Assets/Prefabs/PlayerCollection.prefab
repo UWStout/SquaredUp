@@ -364,7 +364,7 @@ MonoBehaviour:
       data: {fileID: 11400000, guid: c7e631810acd28841bd3bc42d730ce27, type: 2}
     isUnlocked: 1
   transformColor: {fileID: 4380345195031301519}
-  playerMeshRendRef: {fileID: 0}
+  playerMeshRendRef: {fileID: 6471596394136985084}
   playerPointerSprRef: {fileID: 6257086273778774681}
   playerColorCheckRef: {fileID: 7503979376264357203}
   failedTransformSound: {fileID: 8361466951313758623}
