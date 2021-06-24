@@ -12,8 +12,6 @@ public class TypeWriter : MonoBehaviour
     
     // Delay between typing characters
     [SerializeField] private float delayBetweenLetters = 0.15f;
-    // Size not to grow larger than
-    [SerializeField] private float maxSentenceSize = 1f;
 
     // Text to write to
     private TextMeshProUGUI typeText = null;

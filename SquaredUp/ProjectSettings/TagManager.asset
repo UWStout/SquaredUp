@@ -9,6 +9,7 @@ TagManager:
   - HUDzoom
   - HUDscale
   - HUDdisplay
+  - Lazer
   layers:
   - Default
   - TransparentFX
