@@ -121,7 +121,7 @@ public class VisionInRange : MonoBehaviour
     // Called when the trigger on this object is involved with a collision
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (!wasCaught)
+        if (!wasCaught && collision.CompareTag("Player"))
         {
             alert.Play();
             wasCaught = true;
