@@ -144,7 +144,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   layerMask:
     serializedVersion: 2
-    m_Bits: 1537
+    m_Bits: 1025
   lineRenderer: {fileID: 3235942693108831502}
 --- !u!1 &3235942693126610225
 GameObject:
