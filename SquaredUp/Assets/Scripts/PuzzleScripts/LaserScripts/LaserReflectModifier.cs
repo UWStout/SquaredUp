@@ -1,33 +1,33 @@
 ﻿using UnityEngine;
 
 /// <summary>
-/// LazerColliderModifier that reflects the lazer.
+/// LaserColliderModifier that reflects the lazer.
 /// </summary>
 [DisallowMultipleComponent]
-public class LazerReflectModifier : LazerColliderModifier
+public class LaserReflectModifier : LaserColliderModifier
 {
     // An angle offset of 0 means that the normalize of the reflector is its up
     [SerializeField] [Range(0.0f, 360.0f)] private float angleOffset = 0.0f;
 
 
     /// <summary>
-    /// Shoots the lazer in a reflected direction.
+    /// Shoots the laser in a reflected direction.
     /// 
-    /// Called when the lazer is hitting this collider.
+    /// Called when the laser is hitting this collider.
     /// </summary>
-    /// <param name="lazer">Lazer that is hititng this collider.</param>
+    /// <param name="laser">Laser that is hititng this collider.</param>
     /// <param name="hitPoint">Point on the collider that the collider hit.</param>
-    /// <param name="incidentDirection">Direction the lazer came from.</param>
-    public override void HandleLazer(Lazer lazer, Vector2 hitPoint, Vector2 incidentDirection)
+    /// <param name="incidentDirection">Direction the laser came from.</param>
+    public override void HandleLaser(Laser laser, Vector2 hitPoint, Vector2 incidentDirection)
     {
         Vector2 reflectDirection = DetermineReflectDirection(incidentDirection);
-        lazer.ShootLazer(reflectDirection);
+        laser.ShootLaser(reflectDirection);
     }
-    public override void LazerRemoved(Lazer lazer) { }
+    public override void LaserRemoved(Laser laser) { }
 
 
     /// <summary>
-    /// Finds what angle to reflect the lazer at from the incident ray.
+    /// Finds what angle to reflect the laser at from the incident ray.
     /// </summary>
     /// <param name="incidentDirection">Direction of the incident vector to determine the reflect vector.</param>
     /// <returns>Reflected vector.</returns>
