@@ -1,15 +1,18 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
 public class InteractColorChange : Interactable
 {
-    [SerializeField] private int color;
-    //override interactable
+    // Color to change to
+    [SerializeField] private ColorEnum color = ColorEnum.Green;
+
+
+    /// <summary>
+    /// Overrides interact to change the player's color
+    /// </summary>
     public override void Interact()
     {
         // Change color to specified color
-        ChangeColorSkill.Instance.Use(color);
+        ChangeColorSkill.Instance.Use((int)color);
     }
 
     //set the object that you want to change the color of

@@ -37,8 +37,8 @@ TagManager:
   - CircleWall
   - CircleWallCheck
   - PlayerDetection
-  - 
-  - 
+  - YellowWall
+  - YellowWallCheck
   - 
   - 
   - 
