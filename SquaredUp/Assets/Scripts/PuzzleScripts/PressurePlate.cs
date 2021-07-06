@@ -31,14 +31,15 @@ public class PressurePlate : MonoBehaviour
     {
         // Increment how many objects are in the trigger and hide the wall
         ++amountIn;
-        // When we go from 0 to 1 thing pushing down, something has begun pushing down
+        // When we go from 0 to 1 things pushing down, something has begun pushing down
         if (amountIn == 1)
         {
             wall.SetActive(false);
             pressurePlateSpriteRend.color = pressedColor;
 
-            
-            // If we now have the previous amount, reset the amount
+
+            // For not playing the sound on loading a save state
+            // If we now have the previous amount, reset the previous amount
             if (amountIn == previousAmountIn)
             {
                 ResetPreviousAmount();
@@ -46,7 +47,7 @@ public class PressurePlate : MonoBehaviour
             // Don't play the audio until we have put more on the amount than was there previously
             else if (amountIn > previousAmountIn)
             {
-                pressDownAudio.Play();
+                PlaySoundIfVisible(pressDownAudio);
             }
         }
     }
@@ -61,7 +62,7 @@ public class PressurePlate : MonoBehaviour
             wall.SetActive(true);
             pressurePlateSpriteRend.color = defaultColor;
             amountIn = 0;
-            releaseAudio.Play();
+            PlaySoundIfVisible(releaseAudio);
         }
         // Gets rid of the previous amount
         ResetPreviousAmount();
@@ -70,7 +71,6 @@ public class PressurePlate : MonoBehaviour
 
     /// <summary>
     /// Set the amount of things holding the pressure plate down.
-    /// Optionally play the audio associated.
     /// </summary>
     /// <param name="prevAmount">Amount of things that were holding the pressure plate down.</param>
     public void SetPreviousAmountIn(int prevAmount)
@@ -106,5 +106,16 @@ public class PressurePlate : MonoBehaviour
     private void ResetPreviousAmount()
     {
         previousAmountIn = 0;
+    }
+    /// <summary>
+    /// Plays the given AudioSource if it is visible on the screen.
+    /// </summary>
+    /// <param name="sound">Sound to play.</param>
+    private void PlaySoundIfVisible(AudioSource sound)
+    {
+        if (pressurePlateSpriteRend.isVisible)
+        {
+            sound.Play();
+        }
     }
 }

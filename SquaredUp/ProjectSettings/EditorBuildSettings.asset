@@ -12,10 +12,13 @@ EditorBuildSettings:
     path: Assets/Scenes/SquaredUp_Combined.unity
     guid: e0bf11f4a3c5f4048b08571b1d266af8
   - enabled: 0
-    path: Assets/Scenes/SquaredUp.unity
-    guid: 2cda990e2423bbf4892e6590ba056729
+    path: 
+    guid: 00000000000000000000000000000000
   - enabled: 0
-    path: Assets/Scenes/SquaredUp_Level2.unity
-    guid: 185b4ac2e2cbd5a458e40bf5d6a57e9e
+    path: 
+    guid: 00000000000000000000000000000000
+  - enabled: 1
+    path: Assets/Scenes/Wyatt_FinalZone.unity
+    guid: 14bb3d15b3309604ebae5b512e46bee6
   m_configObjects:
     com.unity.input.settings: {fileID: 11400000, guid: 274377b162da12f4f9f7a790827ba44a, type: 2}
