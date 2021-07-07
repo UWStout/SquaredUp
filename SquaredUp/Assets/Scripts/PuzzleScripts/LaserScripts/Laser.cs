@@ -24,14 +24,13 @@ public class Laser
     private Stack<Vector3> points = new Stack<Vector3>();
     // Current modifiers that the laser is hitting
     private List<LaserColliderModifier> curModifiers = new List<LaserColliderModifier>();
-    // Modifiers that the laser was hitting, but is not hitting any longer
-    private List<LaserColliderModifier> removeModifiers = new List<LaserColliderModifier>();
     
     // Reference to the line renderer to display the laser
     private LineRenderer lineRenderer = null;
     // Object that was hit last by the laser. Used to be sure that we
     // aren't hitting the same thing multiple times and causing an infinite loop
     private GameObject lastHitObj = null;
+    private List<GameObject> hitObjs = new List<GameObject>();
 
 
     /// <summary>
@@ -75,12 +74,13 @@ public class Laser
     public void UpdateLaser()
     {
         // Reset any previous modifiers
-        ResetModifiers();
+        ClearLazer();
         // Reinitialize the contact points
         points.Clear();
         points.Push(startPoint);
         // Re-setup the infinite loop guard
         lastHitObj = null;
+        hitObjs.Clear();
         // Start shooting the laser
         ShootLaser(initialDirection);
         // Refreshes the line renderer with the collected points from the ShootLaser
@@ -105,6 +105,15 @@ public class Laser
                 return;
             }
             lastHitObj = hitObj;
+            // Make sure we are not hitting an object we hit previously to avoid an infinite loop
+            if (hitObjs.Contains(hitObj))
+            {
+                return;
+            }
+            else
+            {
+                hitObjs.Add(hitObj);
+            }
 
             // Previous point to determine the incident direction from
             Vector2 prevPoint = points.Peek();
@@ -121,10 +130,8 @@ public class Laser
                 LaserColliderModifier[] modifiers = hit.collider.GetComponents<LaserColliderModifier>();
                 foreach (LaserColliderModifier mod in modifiers)
                 {
-                    // Add the mod to the current mods and potentially remove it from the mods to remove so it
-                    // doesn't get turned off
+                    // Add the mod to the current mods
                     curModifiers.Add(mod);
-                    removeModifiers.Remove(mod);
                     // Call the logic for what happens when the laser hits the modifier
                     mod.HandleLaser(this, hit.point, incidentDirection);
                 }
@@ -153,21 +160,10 @@ public class Laser
         {
             mod.LaserRemoved(this);
         }
-    }
-
-
-    /// <summary>
-    /// Removes old modifiers that are no longer selected.
-    /// </summary>
-    private void ResetModifiers()
-    {
-        foreach (LaserColliderModifier mod in removeModifiers)
-        {
-            mod.LaserRemoved(this);
-        }
-        removeModifiers = new List<LaserColliderModifier>(curModifiers);
         curModifiers.Clear();
     }
+
+
     /// <summary>
     /// Sets the positions of the line renderer to reflect the collected points.
     /// </summary>
