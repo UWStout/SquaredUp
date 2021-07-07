@@ -88,7 +88,7 @@ public class ChangeFormController : MonoBehaviour
     public void ActivateFormChange()
     {
         Vector2Int facingDir = playerMoveRef.GetFacingDirection();
-        float shapeRot = GetShapeRotation(curShapeData, facingDir, playerScaleCont.ShapeScale, wasShapeChanged);
+        float shapeRot = GetShapeRotation(curShapeData, facingDir, wasShapeChanged);
         // Set size using facing size and size data
         Vector3 size = curShapeData.Scale;
         if (curSizeData != null)
@@ -141,7 +141,7 @@ public class ChangeFormController : MonoBehaviour
     {
         // Get the rotation from the facing direction and the current shape direction
         Vector2Int facingDir = playerMoveRef.GetFacingDirection();
-        float shapeRot = GetShapeRotation(shapeData, facingDir, playerScaleCont.ShapeScale, shapeData != prevShapeData);
+        float shapeRot = GetShapeRotation(shapeData, facingDir, shapeData != prevShapeData);
         // Set size
         Vector3 size = shapeData.Scale;
         if (curSizeData != null)
@@ -164,10 +164,9 @@ public class ChangeFormController : MonoBehaviour
     /// </summary>
     /// <param name="data">Shape of collider to turn into</param>
     /// <param name="playerFacingDirection">The direction the player is facing</param>
-    /// <param name="previousShapeScale">Shape of the previous shape</param>
     /// <param name="isDifferentShape">If the shape has changed from last time</param>
     /// <returns>Rotation in degrees that the shape should be.</returns>
-    private float GetShapeRotation(ShapeData data, Vector2Int playerFacingDirection, Vector2 previousShapeScale, bool isDifferentShape)
+    private float GetShapeRotation(ShapeData data, Vector2Int playerFacingDirection, bool isDifferentShape)
     {
         float rot = 0.0f;
         if (data != null)
@@ -190,12 +189,12 @@ public class ChangeFormController : MonoBehaviour
                         rot = 90.0f;
                     }
                     // Facing down's rotation is 180
-                    else if (playerFacingDirection.x < 0)
+                    else if (playerFacingDirection.y < 0)
                     {
                         rot = 180.0f;
                     }
                     // Facing right's rotation is 270
-                    else if (playerFacingDirection.y < 0)
+                    else if (playerFacingDirection.x > 0)
                     {
                         rot = 270.0f;
                     }

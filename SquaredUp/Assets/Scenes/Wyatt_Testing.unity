@@ -53078,12 +53078,24 @@ PrefabInstance:
       propertyPath: skillData.states.Array.data[1].isUnlocked
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 1937018708140037048, guid: 699c614f6a1e7e64a963556354ee38c3, type: 3}
+      propertyPath: skillData.states.Array.data[3].isUnlocked
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1937018708140037048, guid: 699c614f6a1e7e64a963556354ee38c3, type: 3}
+      propertyPath: skillData.states.Array.data[4].isUnlocked
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 6257086274534009294, guid: 699c614f6a1e7e64a963556354ee38c3, type: 3}
       propertyPath: skillData.states.Array.data[2].isUnlocked
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 6257086274534009294, guid: 699c614f6a1e7e64a963556354ee38c3, type: 3}
       propertyPath: skillData.states.Array.data[1].isUnlocked
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6257086274534009294, guid: 699c614f6a1e7e64a963556354ee38c3, type: 3}
+      propertyPath: skillData.states.Array.data[3].isUnlocked
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 6257086275078037472, guid: 699c614f6a1e7e64a963556354ee38c3, type: 3}
