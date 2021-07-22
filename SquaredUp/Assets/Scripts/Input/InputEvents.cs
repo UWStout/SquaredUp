@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 using UnityEngine.InputSystem;
 
 // Handles event calling for input events
@@ -6,32 +7,28 @@ using UnityEngine.InputSystem;
 public class InputEvents : MonoBehaviour
 {
     // Device Lost
-    public delegate void DeviceLost();
-    public static event DeviceLost DeviceLostEvent;
+    public static event Action DeviceLostEvent;
     private void OnDeviceLost()
     {
         DeviceLostEvent?.Invoke();
     }
 
     // Device Regained
-    public delegate void DeviceRegained();
-    public static event DeviceRegained DeviceRegainedEvent;
+    public static event Action DeviceRegainedEvent;
     private void OnDeviceRegained()
     {
         DeviceRegainedEvent?.Invoke();
     }
 
     // Controls Changed
-    public delegate void ControlsChanged();
-    public static event ControlsChanged ControlsChangedEvent;
+    public static event Action ControlsChangedEvent;
     private void OnControlsChanged()
     {
         ControlsChangedEvent?.Invoke();
     }
 
     // Movement
-    public delegate void Movement(Vector2 rawMovement);
-    public static event Movement MovementEvent;
+    public static event Action<Vector2> MovementEvent;
     private void OnMovement(InputValue value)
     {
         Vector2 rawInpVec = value.Get<Vector2>();
@@ -40,8 +37,7 @@ public class InputEvents : MonoBehaviour
     }
 
     // SlowWalk
-    public delegate void SlowWalk(bool isPressed);
-    public static event SlowWalk SlowWalkEvent;
+    public static event Action<bool> SlowWalkEvent;
     private void OnSlowWalk(InputValue value)
     {
         //Debug.Log("OnSlowWalk");
@@ -49,8 +45,7 @@ public class InputEvents : MonoBehaviour
     }
 
     // Interact
-    public delegate void Interact();
-    public static event Interact InteractEvent;
+    public static event Action InteractEvent;
     private void OnInteract()
     {
         //Debug.Log("OnInteract");
@@ -58,8 +53,7 @@ public class InputEvents : MonoBehaviour
     }
 
     // UseAbility
-    public delegate void UseAbility();
-    public static event UseAbility UseAbilityEvent;
+    public static event Action UseAbilityEvent;
     private void OnUseAbility()
     {
         //Debug.Log("OnUseAbility");
@@ -67,8 +61,7 @@ public class InputEvents : MonoBehaviour
     }
 
     // AdvanceDialogue
-    public delegate void AdvanceDialogue();
-    public static event AdvanceDialogue AdvanceDialogueEvent;
+    public static event Action AdvanceDialogueEvent;
     private void OnAdvanceDialogue()
     {
         //Debug.Log("OnAdvanceDialogue");
@@ -76,8 +69,7 @@ public class InputEvents : MonoBehaviour
     }
 
     // OpenSkillMenu
-    public delegate void OpenSkillMenu();
-    public static event OpenSkillMenu OpenSkillMenuEvent;
+    public static event Action OpenSkillMenuEvent;
     private void OnOpenSkillMenu()
     {
         //Debug.Log("OnOpenSkillMenu");
@@ -85,8 +77,7 @@ public class InputEvents : MonoBehaviour
     }
 
     // CloseSkillMenu
-    public delegate void CloseSkillMenu();
-    public static event CloseSkillMenu CloseSkillMenuEvent;
+    public static event Action CloseSkillMenuEvent;
     private void OnCloseSkillMenu()
     {
         //Debug.Log("OnCloseSkillMenu");
@@ -94,16 +85,15 @@ public class InputEvents : MonoBehaviour
     }
 
     // PauseGame
-    public delegate void PauseGame();
-    public static event PauseGame PauseGameEvent;
+    public static event Action PauseGameEvent;
     private void OnPauseGame()
     {
         //Debug.Log("OnPauseGame");
         PauseGameEvent?.Invoke();
     }
 
-    public delegate void UnpauseGame();
-    public static event UnpauseGame UnpauseGameEvent;
+    // UnpauseGame
+    public static event Action UnpauseGameEvent;
     private void OnUnpauseGame()
     {
         //Debug.Log("OnPauseGame");
@@ -112,8 +102,7 @@ public class InputEvents : MonoBehaviour
 
 
     // MainAxis
-    public delegate void MainAxis(Vector2 rawMainAxis);
-    public static event MainAxis MainAxisEvent;
+    public static event Action<Vector2> MainAxisEvent;
     private void OnMainAxis(InputValue value)
     {
         Vector2 rawInpVec = value.Get<Vector2>();
@@ -122,8 +111,7 @@ public class InputEvents : MonoBehaviour
     }
 
     // HackerAxis
-    public delegate void HackerAxis(Vector2 rawHackerAxis);
-    public static event HackerAxis HackerAxisEvent;
+    public static event Action<Vector2> HackerAxisEvent;
     private void OnHackerAxis(InputValue value)
     {
         Vector2 rawInpVec = value.Get<Vector2>();
@@ -132,8 +120,7 @@ public class InputEvents : MonoBehaviour
     }
 
     // Zoom
-    public delegate void Zoom();
-    public static event Zoom ZoomEvent;
+    public static event Action ZoomEvent;
     private void OnZoom()
     {
         //Debug.Log("OnZoom" + rawInpVec);
@@ -141,8 +128,7 @@ public class InputEvents : MonoBehaviour
     }
 
     // ShapeUpdate
-    public delegate void ShapeUpdate();
-    public static event ShapeUpdate ShapeUpdateEvent;
+    public static event Action ShapeUpdateEvent;
     private void OnShapeUpdate()
     {
         //Debug.Log("OnShapeUpdate" + rawInpVec);
@@ -150,8 +136,7 @@ public class InputEvents : MonoBehaviour
     }
 
     // Revert
-    public delegate void Revert();
-    public static event Revert RevertEvent;
+    public static event Action RevertEvent;
     private void OnRevert()
     {
         //Debug.Log("OnRevert" + rawInpVec);
@@ -159,11 +144,18 @@ public class InputEvents : MonoBehaviour
     }
 
     // HackerTeleport
-    public delegate void HackerTeleport(int val);
-    public static event HackerTeleport HackerTeleportEvent;
+    public static event Action<int> HackerTeleportEvent;
     private void OnHackerTeleport(InputValue value)
     {
         //Debug.Log("OnHackerTeleport" + rawInpVec);
         HackerTeleportEvent?.Invoke(Mathf.RoundToInt(value.Get<float>()));
+    }
+
+    // Sprint
+    public static event Action<bool> SprintEvent;
+    private void OnSprint(InputValue value)
+    {
+        //Debug.Log("OnSprint" + rawInpVec);
+        SprintEvent?.Invoke(value.isPressed);
     }
 }

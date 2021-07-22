@@ -22,6 +22,14 @@
                     "interactions": ""
                 },
                 {
+                    "name": "Sprint",
+                    "type": "Value",
+                    "id": "a71cda9b-a5f9-4c33-b704-861487fd8dda",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": ""
+                },
+                {
                     "name": "Interact",
                     "type": "Button",
                     "id": "83c086d2-3109-479d-bfb4-40d2a1f76e8e",
@@ -192,6 +200,17 @@
                     "processors": "",
                     "groups": "",
                     "action": "SlowWalk",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "4e8c6f1d-f0ba-4c34-8e43-fa6e7656ba82",
+                    "path": "<Keyboard>/ctrl",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Sprint",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

@@ -15,6 +15,8 @@ public class PlayerMovement : SingletonMonoBehav<PlayerMovement>
     [SerializeField] [Min(0.01f)] private float speed = 1f;
     // Slow walk speed of the player
     [SerializeField] [Min(0.01f)] private float slowWalkSpeed = 0.5f;
+    // Sprint speed of the player
+    [SerializeField] [Min(0.01f)] private float sprintSpeed = 0.5f;
 
     // Smooths rotation/turn speed of eyes.
     [SerializeField] private float turnSmoothTime = 0.1f;
@@ -30,6 +32,8 @@ public class PlayerMovement : SingletonMonoBehav<PlayerMovement>
 
     // If the player is walking or moving at normal speed
     private bool isSlowWalking = false;
+    // If the player is sprinting or not
+    private bool isSprinting = false;
 
 
     // Called 0th
@@ -48,6 +52,7 @@ public class PlayerMovement : SingletonMonoBehav<PlayerMovement>
         AllowMovement(true);
 
         InputEvents.SlowWalkEvent += OnSlowWalk;
+        InputEvents.SprintEvent += OnSprint;
     }
     // Called when the script is disabled.
     // Unsubscribe from events.
@@ -57,6 +62,7 @@ public class PlayerMovement : SingletonMonoBehav<PlayerMovement>
         AllowMovement(false);
 
         InputEvents.SlowWalkEvent -= OnSlowWalk;
+        InputEvents.SprintEvent -= OnSprint;
     }
     private void OnCollisionExit2D(Collision2D collision)
     {
@@ -92,6 +98,7 @@ public class PlayerMovement : SingletonMonoBehav<PlayerMovement>
 
             // Movement
             float moveSpeed = isSlowWalking ? slowWalkSpeed : speed;
+            moveSpeed = isSprinting ? sprintSpeed : moveSpeed;
             moveVel = direction * moveSpeed;
         }
         else
@@ -105,6 +112,12 @@ public class PlayerMovement : SingletonMonoBehav<PlayerMovement>
     private void OnSlowWalk(bool shouldSlowWalk)
     {
         isSlowWalking = shouldSlowWalk;
+        OnMovement(moveVel);
+    }
+    // Called when the player inputs sprint.
+    private void OnSprint(bool shouldSprint)
+    {
+        isSprinting = shouldSprint;
         OnMovement(moveVel);
     }
 
