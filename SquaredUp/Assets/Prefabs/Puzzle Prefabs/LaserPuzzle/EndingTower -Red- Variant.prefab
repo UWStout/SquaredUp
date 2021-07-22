@@ -23,6 +23,14 @@ PrefabInstance:
       propertyPath: requiredColor
       value: 
       objectReference: {fileID: 2100000, guid: 4ba0f7b59100ec14380546c4858118b6, type: 2}
+    - target: {fileID: 6553914864618745411, guid: 97e22af96868c5344ae651f92c7db74a, type: 3}
+      propertyPath: colorSpecific
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6553914864618745411, guid: 97e22af96868c5344ae651f92c7db74a, type: 3}
+      propertyPath: requiredColor
+      value: 
+      objectReference: {fileID: 2100000, guid: 4ba0f7b59100ec14380546c4858118b6, type: 2}
     - target: {fileID: 8120290749303442401, guid: 97e22af96868c5344ae651f92c7db74a, type: 3}
       propertyPath: m_Color.r
       value: 1

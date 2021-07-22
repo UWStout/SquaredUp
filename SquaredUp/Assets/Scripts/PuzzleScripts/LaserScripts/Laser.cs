@@ -56,14 +56,8 @@ public class Laser
     /// <param name="start">Position to cast the laser from. First point of the line renderer.</param>
     /// <param name="direction">Direction to raycast in from the start position.</param>
     /// <param name="other">Other laser to copy the layer mask from.</param>
-    public Laser(LineRenderer lineRend, Vector2 start, Vector2 direction, Laser other)
+    public Laser(LineRenderer lineRend, Vector2 start, Vector2 direction, Laser other) : this(lineRend, start, direction, other.layerMask)
     {
-        lineRenderer = lineRend;
-        startPoint = start;
-        initialDirection = direction;
-        layerMask = other.layerMask;
-
-        UpdateLaser();
     }
 
 
@@ -108,6 +102,7 @@ public class Laser
             // Make sure we are not hitting an object we hit previously to avoid an infinite loop
             if (hitObjs.Contains(hitObj))
             {
+                Debug.LogError("Laser is rehitting the a previous object");
                 return;
             }
             else
