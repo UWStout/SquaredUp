@@ -76,19 +76,6 @@ public class PlayerMovement : SingletonMonoBehav<PlayerMovement>
         rb.velocity = moveVel;
     }
 
-    /* This was an attempt to make you not get stuck on stuff as much
-    private void FixedUpdate()
-    {
-        transform.position = CastPositionToIncrement(transform.position);
-    }
-    private Vector3 CastPositionToIncrement(Vector3 position)
-    {
-        float x = Mathf.Round(position.x * MOVE_INCREMENT_AMOUNT) / MOVE_INCREMENT_AMOUNT;
-        float y = Mathf.Round(position.y * MOVE_INCREMENT_AMOUNT) / MOVE_INCREMENT_AMOUNT;
-        return new Vector3(x, y);
-    }
-    */
-
     // Called when the player inputs movement.
     private void OnMovement(Vector2 rawInputVector)
     {
