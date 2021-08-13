@@ -773,7 +773,7 @@ MonoBehaviour:
   zoomAudioSource: {fileID: 3513556677928853555}
   zoomActionMapName: ZoomedOut
   zoomInOrthoSize: 12
-  zoomOutOrthoSize: 36
+  zoomOutOrthoSize: 30
   zoomSpeed: 6
   closeEnoughVal: 0.1
 --- !u!82 &3513556677928853555
