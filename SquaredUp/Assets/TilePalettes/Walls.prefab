@@ -100,7 +100,7 @@ Tilemap:
       m_TileIndex: 1
       m_TileSpriteIndex: 1
       m_TileMatrixIndex: 0
-      m_TileColorIndex: 2
+      m_TileColorIndex: 1
       m_TileObjectToInstantiateIndex: 65535
       m_AllTileFlags: 1073741825
   - first: {x: 0, y: -1, z: 0}
@@ -109,7 +109,7 @@ Tilemap:
       m_TileIndex: 3
       m_TileSpriteIndex: 1
       m_TileMatrixIndex: 0
-      m_TileColorIndex: 6
+      m_TileColorIndex: 2
       m_TileObjectToInstantiateIndex: 65535
       m_AllTileFlags: 1073741825
   - first: {x: 1, y: -1, z: 0}
@@ -130,18 +130,6 @@ Tilemap:
       m_TileColorIndex: 3
       m_TileObjectToInstantiateIndex: 65535
       m_AllTileFlags: 1073741825
-<<<<<<< Updated upstream
-=======
-  - first: {x: 0, y: 0, z: 0}
-    second:
-      serializedVersion: 2
-      m_TileIndex: 2
-      m_TileSpriteIndex: 0
-      m_TileMatrixIndex: 0
-      m_TileColorIndex: 1
-      m_TileObjectToInstantiateIndex: 65535
-      m_AllTileFlags: 1073741827
->>>>>>> Stashed changes
   - first: {x: 1, y: 0, z: 0}
     second:
       serializedVersion: 2
@@ -251,15 +239,11 @@ Tilemap:
       e33: 1
   m_TileColorArray:
   - m_RefCount: 0
-<<<<<<< Updated upstream
     m_Data: {r: -6.434479e-18, g: -6.434479e-18, b: -6.434479e-18, a: -6.434479e-18}
-=======
-    m_Data: {r: 0, g: 0, b: 0, a: 0}
-  - m_RefCount: 1
-    m_Data: {r: 0.85442036, g: 0.5800148, b: 0.58939904, a: 1}
->>>>>>> Stashed changes
   - m_RefCount: 1
     m_Data: {r: 0.30588236, g: 0.20784315, b: 0, a: 1}
+  - m_RefCount: 1
+    m_Data: {r: 0.2924528, g: 0.2924528, b: 0.2924528, a: 1}
   - m_RefCount: 1
     m_Data: {r: 0.4433962, g: 0.31511247, b: 0.05228728, a: 1}
   - m_RefCount: 1
@@ -267,11 +251,7 @@ Tilemap:
   - m_RefCount: 1
     m_Data: {r: 0.7075472, g: 0.7075472, b: 0.7075472, a: 1}
   - m_RefCount: 1
-<<<<<<< Updated upstream
     m_Data: {r: 1, g: 1, b: 1, a: 1}
-=======
-    m_Data: {r: 0.2924528, g: 0.2924528, b: 0.2924528, a: 1}
->>>>>>> Stashed changes
   - m_RefCount: 4
     m_Data: {r: 0.44313726, g: 0.3137255, b: 0.050980393, a: 1}
   m_TileObjectToInstantiateArray: []
@@ -346,11 +326,7 @@ TilemapRenderer:
   m_Mode: 0
   m_DetectChunkCullingBounds: 0
   m_MaskInteraction: 0
-<<<<<<< Updated upstream
 --- !u!114 &8756488790114463589
-=======
---- !u!114 &7709036190296111444
->>>>>>> Stashed changes
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
