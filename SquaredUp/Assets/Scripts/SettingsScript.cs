@@ -10,6 +10,7 @@ public class SettingsScript : MonoBehaviour
 {
     [SerializeField] private inputReferences[] inputReferenceArray;
     [SerializeField] private TMP_Text[] bindingDisplayNameText;
+    [SerializeField] private Slider VolumeSlider;
     private InputActionReference inputReference_;
     private int control;
     private InputActionRebindingExtensions.RebindingOperation rebindOperation, rebindCompositeOperation, rebindLoopingOperation;
@@ -24,7 +25,8 @@ public class SettingsScript : MonoBehaviour
 
     private void Start()
     {
-        resolutions=Screen.resolutions;
+
+        resolutions = Screen.resolutions;
 
         resolutionDropdown.ClearOptions();
 
@@ -36,8 +38,8 @@ public class SettingsScript : MonoBehaviour
         {
             string option = resolutions[i].width + "x" + resolutions[i].height;
             options.Add(option);
-
-            if(resolutions[i].width == Screen.currentResolution.width && resolutions[i].height == Screen.currentResolution.height)
+            Debug.Log(option);
+            if (resolutions[i].width == Screen.currentResolution.width && resolutions[i].height == Screen.currentResolution.height)
             {
                 currentResolutionIndex = i;
             }
@@ -46,17 +48,50 @@ public class SettingsScript : MonoBehaviour
         resolutionDropdown.AddOptions(options);
         resolutionDropdown.value = currentResolutionIndex;
         resolutionDropdown.RefreshShownValue();
+
+
+        foreach (inputReferences _a in inputReferenceArray)
+        { 
+            control = (System.Array.IndexOf(inputReferenceArray, _a));
+            
+            if (!string.IsNullOrWhiteSpace(PlayerPrefs.GetString(control.ToString())))
+            {
+                if (control <= 3)
+                {
+                    string _temp = PlayerPrefs.GetString(control.ToString());
+                    control++;
+                    _a.inputActions[0].action.ApplyBindingOverride(control, _temp);
+                    RebindCompositeComplete();
+                }
+                else
+                {
+                    string _temp = PlayerPrefs.GetString(control.ToString());
+                    _a.inputActions[0].action.ApplyBindingOverride(0, _temp);
+                    RebindComplete();
+                }
+            }
+        }
+
+        audioMixer.SetFloat("Volume", PlayerPrefs.GetFloat("Volume"));
+        VolumeSlider.SetValueWithoutNotify(PlayerPrefs.GetFloat("Volume"));
+        SetResolution(options.IndexOf(PlayerPrefs.GetString("Resolution")));
     }
 
-    public void SetResolution (int resolutionIndex)
+    public void SetResolution(int resolutionIndex)
     {
-        Resolution resolution = resolutions[resolutionIndex];
-        Screen.SetResolution(resolution.width,resolution.height,Screen.fullScreen);
+        if (resolutionIndex < resolutions.Length && resolutionIndex>0)
+        {
+            Resolution resolution = resolutions[resolutionIndex];
+            Screen.SetResolution(resolution.width, resolution.height, Screen.fullScreen);
+            PlayerPrefs.SetString("Resolution", resolution.ToString());
+        }
     }
 
     public void SetVolume(float volume_)
     {
         audioMixer.SetFloat("Volume", volume_);
+        PlayerPrefs.SetFloat("Volume", volume_);
+        PlayerPrefs.Save();
     }
 
     public void SetFullscreen(bool isFull)
@@ -64,7 +99,7 @@ public class SettingsScript : MonoBehaviour
         Screen.fullScreen = isFull;
     }
 
-    public void StartRebindingComposite(int control_) 
+    public void StartRebindingComposite(int control_)
     {
         control = control_;
         InputController.Instance.SwitchInputMap("EndGame");
@@ -84,16 +119,17 @@ public class SettingsScript : MonoBehaviour
 
     private void RebindCompositeComplete()
     {
-        Debug.Log(inputReferenceArray[0].inputActions[1].action);
-        inputReferenceArray[0].inputActions[1].action.ApplyBindingOverride(control, inputReferenceArray[0].inputActions[0].action.bindings[control].effectivePath);
-
         bindingDisplayNameText[control-1].text = InputControlPath.ToHumanReadableString(
             inputReferenceArray[control-1].inputActions[0].action.bindings[control].effectivePath,
             InputControlPath.HumanReadableStringOptions.OmitDevice);
-        
-        rebindCompositeOperation.Dispose();
-        InputController.Instance.SwitchInputMap("PauseGame");
 
+        PlayerPrefs.SetString((control-1).ToString(), inputReferenceArray[0].inputActions[0].action.bindings[control].effectivePath);
+        PlayerPrefs.Save();
+        if (rebindCompositeOperation != null)
+        {
+            rebindCompositeOperation.Dispose();
+        }
+        InputController.Instance.SwitchInputMap("PauseGame");
     }
 
     public void StartRebinding(int control_)
@@ -112,13 +148,17 @@ public class SettingsScript : MonoBehaviour
         for (int i = 1; i < inputReferenceArray[control].inputActions.Length; i++)
         {
             inputReferenceArray[control].inputActions[i].action.ApplyBindingOverride(0, inputReferenceArray[control].inputActions[0].action.bindings[0].effectivePath);
-        } 
+        }
         bindingDisplayNameText[control].text = InputControlPath.ToHumanReadableString(
             inputReferenceArray[control].inputActions[0].action.bindings[0].effectivePath,
             InputControlPath.HumanReadableStringOptions.OmitDevice);
 
-        
-        rebindOperation.Dispose();
+        PlayerPrefs.SetString(control.ToString(), inputReferenceArray[control].inputActions[0].action.bindings[0].effectivePath);
+        PlayerPrefs.Save();
+        if (rebindOperation!=null)
+        {
+            rebindOperation.Dispose();
+        }
         InputController.Instance.SwitchInputMap("PauseGame");
     }
 
