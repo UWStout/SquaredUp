@@ -1,7 +1,9 @@
 ﻿using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
+/// <summary>
+/// Handles the behaviour for after talking to the king.
+/// </summary>
 public class KingEnding : MonoBehaviour
 {
     [SerializeField] private Follow camFollow = null;
@@ -10,11 +12,12 @@ public class KingEnding : MonoBehaviour
 
     [SerializeField] private float moveSpeed = 1.0f;
     [SerializeField] private float moveTime = 5.0f;
-    [SerializeField] private Vector3 playerEndPos = Vector3.zero;
 
-    [SerializeField] private float fadeOutTime = 1.0f;
+    [SerializeField] [Range(0, 1)] private float fadeOutSpeed = 0.03f;
     [SerializeField] private string noControlsMapName = "EndGame";
 
+    [SerializeField] private Transform playerEndPos = null;
+    [SerializeField] private GameObject levelThreeEntranceWall = null;
 
     private Vector3 kingOriginalPosition = Vector3.zero;
 
@@ -41,17 +44,18 @@ public class KingEnding : MonoBehaviour
             yield return null;
         }
 
-        CanvasSingleton.Instance.StartFadeOutAndIn(fadeOutTime, Teleport, RestoreInput);
+        CanvasSingleton.Instance.StartFadeOutAndIn(fadeOutSpeed, OnFadedOut, OnFadedIn);
     }
 
-    private void Teleport()
+    private void OnFadedOut()
     {
         kingTrans.position = kingOriginalPosition;
-        playerTrans.position = playerEndPos;
-        camFollow.StopFollow();
+        playerTrans.position = playerEndPos.position;
+        levelThreeEntranceWall.SetActive(false);
+        camFollow.StartFollow();
     }
 
-    private void RestoreInput()
+    private void OnFadedIn()
     {
         InputController.Instance.PopInputMap(noControlsMapName);
     }
