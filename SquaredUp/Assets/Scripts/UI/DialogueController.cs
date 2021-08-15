@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 
 /// <summary>Manages the dialogue box and typewriter</summary>
 public class DialogueController : MonoBehaviour
@@ -28,6 +29,8 @@ public class DialogueController : MonoBehaviour
 
     // If the type writer has finished
     private bool finishedTyping;
+    // Action to call on finished typing
+    private Action onFinishedTyping;
 
 
     // Called 0th
@@ -62,12 +65,13 @@ public class DialogueController : MonoBehaviour
 
     /// <summary>Starts the dialogue</summary>
     /// <param name="lines">Lines to show in the text box</param>
-    public void StartDialogue(string[] lines)
+    public void StartDialogue(string[] lines, Action finishedCallback = null)
     {
         // Check to make sure there is not already dialogue active
         if (!isDialogueActive)
         {
             isDialogueActive = true;
+            onFinishedTyping = finishedCallback;
             // Swap input map
             InputController.Instance.SwitchInputMap(dialogueActionMapName);
             // Show text box
@@ -139,5 +143,7 @@ public class DialogueController : MonoBehaviour
         uiComponent.SetActive(false);
         // Swap input map back
         InputController.Instance.PopInputMap(dialogueActionMapName);
+
+        onFinishedTyping?.Invoke();
     }
 }

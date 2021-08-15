@@ -17,7 +17,7 @@ public class UnlockSkillStateInteractable : NPCTalkInteractable
 
 
     /// <summary>Unlocks the specified skills/states and displays dialogue for each skill/state unlocked</summary>
-    public override void Interact()
+    public override void InteractAbstract()
     {
         foreach (SkillController.SkillEnum skillIndex in skillsToUnlock)
         {

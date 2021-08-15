@@ -11,7 +11,7 @@ public class WhiteHoleInteraction : Interactable
 
 
     /// <summary>Starts a dialogue with the NPC.</summary>
-    public override void Interact()
+    public override void InteractAbstract()
     {
         whiteHole.transform.GetChild(1).gameObject.SetActive(false);
         player.transform.position = Vector3.MoveTowards(player.transform.position, whiteHole.transform.position, 1);

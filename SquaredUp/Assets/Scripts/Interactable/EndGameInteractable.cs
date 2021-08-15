@@ -6,7 +6,7 @@ public class EndGameInteractable : Interactable
 {
     [SerializeField] private string endGameInputMapName = "EndGame";
 
-    public override void Interact()
+    public override void InteractAbstract()
     {
         InputController.Instance.SwitchInputMap(endGameInputMapName);
         CanvasSingleton.Instance.StartFadeOutAndIn(0.01f, CenterPlayer, null);

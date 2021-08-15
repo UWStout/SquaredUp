@@ -9,7 +9,7 @@ public class InteractColorChange : Interactable
     /// <summary>
     /// Overrides interact to change the player's color
     /// </summary>
-    public override void Interact()
+    public override void InteractAbstract()
     {
         // Change color to specified color
         ChangeColorSkill.Instance.Use((int)color);

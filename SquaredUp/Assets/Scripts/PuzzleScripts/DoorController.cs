@@ -38,7 +38,7 @@ public class DoorController : Interactable
         }
     }
 
-    public override void Interact()
+    public override void InteractAbstract()
     {
         interactableObject.transform.Rotate(0, 0, 90);
         UpdateTarget();

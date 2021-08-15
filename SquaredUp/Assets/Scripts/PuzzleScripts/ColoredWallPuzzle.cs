@@ -9,7 +9,7 @@ public class ColoredWallPuzzle : Interactable
     private GameObject[] otherTileMaps;
 
     //override interactable
-    public override void Interact()
+    public override void InteractAbstract()
     {
         //set other tilemaps active
         foreach(GameObject g in otherTileMaps)

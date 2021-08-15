@@ -14,7 +14,7 @@ public class RotationMirrorInteract : Interactable
     /// 
     /// Called when the player interacts with this interactable.
     /// </summary>
-    public override void Interact()
+    public override void InteractAbstract()
     {
         rotateObject.transform.Rotate(0f, 0f, 90f);
     }
