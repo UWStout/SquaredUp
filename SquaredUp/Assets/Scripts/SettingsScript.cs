@@ -11,6 +11,8 @@ public class SettingsScript : MonoBehaviour
     [SerializeField] private inputReferences[] inputReferenceArray;
     [SerializeField] private TMP_Text[] bindingDisplayNameText;
     [SerializeField] private Slider VolumeSlider;
+    [SerializeField] private GameObject BlackScreen;
+    [SerializeField] private GameObject ControlMenu;
     private InputActionReference inputReference_;
     private int control;
     private InputActionRebindingExtensions.RebindingOperation rebindOperation, rebindCompositeOperation, rebindLoopingOperation;
@@ -81,9 +83,21 @@ public class SettingsScript : MonoBehaviour
     {
         if (resolutionIndex < resolutions.Length && resolutionIndex>0)
         {
+            bool revert = false;
+            if (ControlMenu.activeSelf)
+            {
+                BlackScreen.SetActive(true);
+                ControlMenu.SetActive(false);
+                revert = true;
+            }
             Resolution resolution = resolutions[resolutionIndex];
             Screen.SetResolution(resolution.width, resolution.height, Screen.fullScreen);
             PlayerPrefs.SetString("Resolution", resolution.ToString());
+            if (revert)
+            {
+                ControlMenu.SetActive(true);
+                BlackScreen.SetActive(false);
+            }
         }
     }
 
@@ -96,7 +110,19 @@ public class SettingsScript : MonoBehaviour
 
     public void SetFullscreen(bool isFull)
     {
+        bool revert = false;
+        if (ControlMenu.activeSelf)
+        {
+            BlackScreen.SetActive(true);
+            ControlMenu.SetActive(false);
+            revert = true;
+        }
         Screen.fullScreen = isFull;
+        if (revert)
+        {
+            ControlMenu.SetActive(true);
+            BlackScreen.SetActive(false);
+        }
     }
 
     public void StartRebindingComposite(int control_)
