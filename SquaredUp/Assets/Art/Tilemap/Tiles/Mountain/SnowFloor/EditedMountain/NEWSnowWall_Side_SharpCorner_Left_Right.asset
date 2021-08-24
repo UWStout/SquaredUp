@@ -10,10 +10,10 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 13312, guid: 0000000000000000e000000000000000, type: 0}
-  m_Name: NEWMountainWall 1
+  m_Name: NEWSnowWall_Side_SharpCorner_Left_Right
   m_EditorClassIdentifier: 
-  m_Sprite: {fileID: 21300000, guid: 2364ae136d8da5e478555bff5443335c, type: 3}
-  m_Color: {r: 0.7607844, g: 0.7607844, b: 0.7607844, a: 1}
+  m_Sprite: {fileID: 21300000, guid: 4d56586ca3d63084881889dddc2183e0, type: 3}
+  m_Color: {r: 0.7607843, g: 0.7607843, b: 0.7607843, a: 1}
   m_Transform:
     e00: 1
     e01: 0

@@ -10,10 +10,10 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 13312, guid: 0000000000000000e000000000000000, type: 0}
-  m_Name: NEWSnowWall_TopSide_BotRightSharpCorner
+  m_Name: NEWSnowWall_Side_Bot
   m_EditorClassIdentifier: 
-  m_Sprite: {fileID: 21300000, guid: 914f81476765e144e8e5206cb60b4393, type: 3}
-  m_Color: {r: 0.7607843, g: 0.7607843, b: 0.7607843, a: 1}
+  m_Sprite: {fileID: 21300000, guid: 85d34a4bfe5d81e4e92f9d08da9e4bd8, type: 3}
+  m_Color: {r: 0.7607844, g: 0.7607844, b: 0.7607844, a: 1}
   m_Transform:
     e00: 1
     e01: 0
