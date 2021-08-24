@@ -10,9 +10,9 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 13312, guid: 0000000000000000e000000000000000, type: 0}
-  m_Name: SnowWall_AllSharpCorners
+  m_Name: SnowWall_Corner_BotRight
   m_EditorClassIdentifier: 
-  m_Sprite: {fileID: 21300000, guid: 138881c5f957d8a4cb3ff00323f1f272, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 3c83c0f2437e89c4c876166e8b6fb0c8, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_Transform:
     e00: 1
