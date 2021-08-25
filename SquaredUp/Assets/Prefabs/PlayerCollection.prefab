@@ -1901,7 +1901,7 @@ Animator:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6257086275078037475}
-  m_Enabled: 0
+  m_Enabled: 1
   m_Avatar: {fileID: 0}
   m_Controller: {fileID: 9100000, guid: be039d38e4fdb7f408270138c0a4c087, type: 2}
   m_CullingMode: 0
@@ -1926,7 +1926,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   cameraFollow: {fileID: 1197072110361840884}
   playerCollectionAnimator: {fileID: 2106447158387234099}
-  endGamePosition: {x: 240, y: 575.4, z: 0}
+  endGamePosition: {x: 781, y: 161, z: 0}
   endMusicSource: {fileID: 8348782990659342570}
 --- !u!82 &8348782990659342570
 AudioSource:
