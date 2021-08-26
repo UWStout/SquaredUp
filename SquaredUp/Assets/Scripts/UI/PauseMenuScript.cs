@@ -47,7 +47,7 @@ public class PauseMenuScript : MonoBehaviour
 
     public void StartGame()
     {
-        SceneManager.LoadScene("SquaredUp_Combined");
+        SceneManager.LoadScene("SquaredUp_Combined_TempNew");
     }
 
     public void OpenPauseFromLore()
