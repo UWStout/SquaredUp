@@ -1,13 +1,13 @@
 ﻿using UnityEngine;
 
-[RequireComponent(typeof(NPC_MovementLoop))]
+[RequireComponent(typeof(IGuardMovement))]
 public class VsionInRangeRepeat : MonoBehaviour
 {
     private bool wasCaught = false;
     [SerializeField] private AudioSource alert = null;
     [SerializeField] [Range(0, 1)] private float colorSpeed = 0.05f;
 
-    private NPC_MovementLoop npcMovement = null;
+    private IGuardMovement npcMovement = null;
 
     [SerializeField] private Transform jailCellLocation = null;
     [SerializeField] private string alertPhrase = "";
@@ -27,7 +27,7 @@ public class VsionInRangeRepeat : MonoBehaviour
     // Set references
     private void Awake()
     {
-        npcMovement = GetComponent<NPC_MovementLoop>();
+        npcMovement = GetComponent<IGuardMovement>();
     }
     // Called 1st
     // Initialization

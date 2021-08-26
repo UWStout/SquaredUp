@@ -1,13 +1,13 @@
 ﻿using UnityEngine;
 
-[RequireComponent(typeof(NPC_Movement))]
+[RequireComponent(typeof(IGuardMovement))]
 public class VisionInRange : MonoBehaviour
 {
     private bool wasCaught = false;
     [SerializeField][Range(0,1)] private float colorSpeed = 0.05f;
     [SerializeField] private AudioSource alert;
 
-    private NPC_Movement npcMovement;
+    private IGuardMovement npcMovement;
 
     [SerializeField] private Transform jailCellLocation;
 
@@ -25,7 +25,7 @@ public class VisionInRange : MonoBehaviour
     // Set references
     private void Awake()
     {
-        npcMovement = GetComponent<NPC_Movement>();
+        npcMovement = GetComponent<IGuardMovement>();
     }
     // Called 1st
     // Initialization

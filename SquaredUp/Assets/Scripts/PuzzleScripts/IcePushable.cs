@@ -70,8 +70,6 @@ public class IcePushable : MonoBehaviour
         parentPhys.velocity = moveDirection * slideSpeed;
         // Update the previous direction
         previousDirection = parentPhys.velocity.GetDirection2D();
-
-        Debug.Log($"MoveVelocity is {parentPhys.velocity}");
     }
 
 

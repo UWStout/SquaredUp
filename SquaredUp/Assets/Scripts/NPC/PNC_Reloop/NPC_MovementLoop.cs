@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-public class NPC_MovementLoop : MonoBehaviour
+public class NPC_MovementLoop : MonoBehaviour, IGuardMovement
 {
     private Rigidbody2D rb = null;
 
