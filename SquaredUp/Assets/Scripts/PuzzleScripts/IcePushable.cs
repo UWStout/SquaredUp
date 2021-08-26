@@ -25,6 +25,22 @@ public class IcePushable : MonoBehaviour
     // Called when a collisions occurs with this gameobject
     private void OnCollisionEnter2D(Collision2D collision)
     {
+        HandleCollision(collision);
+    }
+    // Called when a collision occurs with this gameobject and a gameobject that
+    // has collided with this game object previously, and has not stopped yet.
+    private void OnCollisionStay2D(Collision2D collision)
+    {
+        // Previously, this was only called in OnCollisionEnter2D, but had to be added here
+        // because the ice can be colliding with a wall, and then if it hits the corner of
+        // another tile (on the same wall) it would not call it, and would instead allow
+        // the ice to move diagonally.
+        HandleCollision(collision);
+    }
+
+
+    private void HandleCollision(Collision2D collision)
+    {
         Vector2 moveDirection;
         // If the ice collided with the player, the ice should move away from the player
         if (collision.gameObject.CompareTag("Player"))
@@ -54,6 +70,8 @@ public class IcePushable : MonoBehaviour
         parentPhys.velocity = moveDirection * slideSpeed;
         // Update the previous direction
         previousDirection = parentPhys.velocity.GetDirection2D();
+
+        Debug.Log($"MoveVelocity is {parentPhys.velocity}");
     }
 
 
