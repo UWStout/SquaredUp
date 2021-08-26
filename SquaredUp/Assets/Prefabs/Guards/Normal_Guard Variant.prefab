@@ -23,6 +23,25 @@ MonoBehaviour:
   layerMask:
     serializedVersion: 2
     m_Bits: 1536
+--- !u!114 &3305678770177662388
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3506112666088936902}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7958796a16e50a849973b3edb018d4a0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  layerMask:
+    serializedVersion: 2
+    m_Bits: 268435456
+  radius: 100
+  objectsToActivate: []
+  monosToActivate:
+  - {fileID: -3998465452375178433}
 --- !u!114 &5392609512167541441
 MonoBehaviour:
   m_ObjectHideFlags: 0
