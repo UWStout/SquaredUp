@@ -1,6 +1,6 @@
-﻿using UnityEngine;
+﻿using System.Collections;
+using UnityEngine;
 using UnityEngine.SceneManagement;
-using UnityEngine.UI;
 
 public class PauseMenuScript : MonoBehaviour
 {
@@ -14,6 +14,8 @@ public class PauseMenuScript : MonoBehaviour
     private string pauseActionMapName = "PauseGame";
     [SerializeField]
     private string defaultActionMapName = "Player";
+
+    [SerializeField] private FadeText saveCompleteText = null;
 
     void Start()
     {
@@ -86,6 +88,7 @@ public class PauseMenuScript : MonoBehaviour
     public void SaveGame()
     {
         SaveManager.SaveGame();
+        saveCompleteText.ShowThenFade();
     }
 
     private void FlipMenu(GameObject g, GameObject o)
