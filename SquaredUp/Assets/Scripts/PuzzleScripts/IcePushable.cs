@@ -43,7 +43,7 @@ public class IcePushable : MonoBehaviour
     {
         Vector2 moveDirection;
         // If the ice collided with the player, the ice should move away from the player
-        if (collision.gameObject.CompareTag("Player"))
+        if (collision.gameObject.CompareTag("Player") || collision.gameObject.CompareTag("Ice"))
         {
             Direction2D hitFromDir = collision.GetDirectionHitCameFrom();
             moveDirection = hitFromDir.Vector;

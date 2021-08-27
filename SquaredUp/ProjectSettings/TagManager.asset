@@ -10,6 +10,7 @@ TagManager:
   - HUDscale
   - HUDdisplay
   - Lazer
+  - Ice
   layers:
   - Default
   - TransparentFX
