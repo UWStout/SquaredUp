@@ -36,7 +36,7 @@ public class ActivateInRange : MonoBehaviour
         }
         lastResult = inRange;
     }
-    private void OnDrawGizmos()
+    private void OnDrawGizmosSelected()
     {
         Gizmos.DrawWireSphere(transform.position, radius);
     }

@@ -3,23 +3,20 @@
 [RequireComponent(typeof(IGuardMovement))]
 public class VisionInRange : MonoBehaviour
 {
-    private bool wasCaught = false;
-    [SerializeField][Range(0,1)] private float colorSpeed = 0.05f;
-    [SerializeField] private AudioSource alert;
-
-    private IGuardMovement npcMovement;
-
-    [SerializeField] private Transform jailCellLocation;
-
-    //Serielaize vision cone to set locations for mesh and polygon collider
-    [SerializeField] private GameObject visionCone;
-    [SerializeField] private Transform visionOffset;
+    [SerializeField] private AudioSource alert = null;
+    [SerializeField] private Transform jailCellLocation = null;
+    [SerializeField] private GameObject visionCone = null;
+    [SerializeField] private Transform visionOffset = null;
+    [SerializeField] private string[] voiceLines = new string[] { "HEY YOU! STOP!!!" };
+    [SerializeField] [Range(0, 1)] private float colorSpeed = 0.05f;
     [SerializeField] private float viewWidth = 6f;
     [SerializeField] private float viewHeight = 14f;
     [SerializeField] private int rayCount = 10;
-    [SerializeField] private LayerMask layerMask;
-    //mesh
-    private Mesh mesh;
+    [SerializeField] private LayerMask layerMask = 1;
+
+    private IGuardMovement npcMovement = null;
+    private Mesh mesh = null;
+    private bool wasCaught = false;
 
     // Called 0th
     // Set references
@@ -127,7 +124,7 @@ public class VisionInRange : MonoBehaviour
             wasCaught = true;
             npcMovement.AllowMove(false);
             InputEvents.AdvanceDialogueEvent += FadeInOut;
-            DialogueController.Instance.StartDialogue(new string[] { "HEY YOU! STOP!!!" });
+            DialogueController.Instance.StartDialogue(voiceLines);
         }
     }
 

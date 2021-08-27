@@ -215,7 +215,6 @@ GameObject:
   - component: {fileID: 8717297440243521422}
   - component: {fileID: 8717297440243521421}
   - component: {fileID: 6183123621184765090}
-  - component: {fileID: 6005382412075748641}
   m_Layer: 22
   m_Name: Base_Guard
   m_TagString: Untagged
@@ -289,19 +288,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3fbdf9072a56fe34391615c22708f6da, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!114 &6005382412075748641
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8717297440243521417}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5c1eb9741a335ab418d19296fcb2743e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  movePoints: []
 --- !u!1 &9050006695890116158
 GameObject:
   m_ObjectHideFlags: 0

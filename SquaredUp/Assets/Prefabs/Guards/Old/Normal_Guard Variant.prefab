@@ -12,11 +12,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 03db969d466990f46896399decfab151, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  colorSpeed: 0.05
   alert: {fileID: 0}
   jailCellLocation: {fileID: 0}
   visionCone: {fileID: 3506112667058760945}
   visionOffset: {fileID: 7557761865407379907}
+  voiceLines:
+  - HEY YOU! STOP!!!
+  colorSpeed: 0.05
   viewWidth: 6
   viewHeight: 14
   rayCount: 10

@@ -1530,6 +1530,7 @@ GameObject:
   - component: {fileID: 2072241410518489459}
   - component: {fileID: 2638144812263462055}
   - component: {fileID: 8183317876690771843}
+  - component: {fileID: 1600037611392966014}
   m_Layer: 0
   m_Name: Movement/Scalable
   m_TagString: Player
@@ -1598,8 +1599,8 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 1, y: 1}
-  m_EdgeRadius: 0
+  m_Size: {x: 0.7777778, y: 0.7777778}
+  m_EdgeRadius: 0.2
 --- !u!114 &6257086274663262137
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1653,6 +1654,18 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 3fbdf9072a56fe34391615c22708f6da, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &1600037611392966014
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6257086274663262141}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1c220fa41f760b645a80cfcaa4eed110, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1 &6257086274752830770

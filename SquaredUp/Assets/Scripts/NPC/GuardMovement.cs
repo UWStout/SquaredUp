@@ -1,66 +1,41 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using UnityEngine;
 
-public class GuardMovement : MonoBehaviour
+/// <summary>
+/// Moves the guard to the specified points.
+/// </summary>
+public class GuardMovement : GuardMovementBase
 {
     [SerializeField] private float moveSpeed = 1.0f;
-    [SerializeField] private GuardMovementUnit[] moveUnits = new GuardMovementUnit[0];
 
     private Vector2 startPosition = Vector2.negativeInfinity;
+    private bool isRuntime = false;
 
-    private bool shouldMove = true;
-    private int curIndex = 0;
-    private Vector2 lastMoveDir = Vector2.negativeInfinity;
+    public Vector2 GetLastMoveDirection() => lastMoveDir;
+    private Vector2 lastMoveDir = Vector2.zero;
+    public bool CheckIsFirstMove() => isFirstMove;
     private bool isFirstMove = true;
-    private float waitTimer = 0;
-    private float timeToWait = 0;
 
 
     #region UnityMessages
-    private void Start()
+    // Called 0th
+    // Domestic Initialization
+    private void Awake()
     {
         startPosition = transform.position;
+        isRuntime = true;
     }
-    private void Update()
-    {
-        if (moveUnits.Length == 0)
-        {
-            return;
-        }
-        if (!shouldMove)
-        {
-            return;
-        }
-        if (waitTimer < timeToWait)
-        {
-            waitTimer += Time.deltaTime;
-            return;
-        }
-
-        GuardMovementUnit curUnit = moveUnits[curIndex];
-        Vector2 curTargetPos = startPosition + curUnit.GetPoint();
-
-        Vector2 curMoveDir = (curTargetPos - (Vector2)transform.position).normalized;
-        if (!isFirstMove && curMoveDir != lastMoveDir)
-        {
-            transform.position = curTargetPos;
-            curIndex = GetNextIndex();
-            isFirstMove = true;
-            waitTimer = 0;
-            timeToWait = curUnit.GetWaitTime();
-            return;
-        }
-            
-        isFirstMove = false;
-        lastMoveDir = curMoveDir;
-        transform.position += (Vector3)(curMoveDir * Time.deltaTime * moveSpeed);
-    }
+    // Debugging Gizmos
     private void OnDrawGizmosSelected()
     {
         Vector2 origin = transform.position;
+        if (isRuntime)
+        {
+            origin = startPosition;
+        }
 
         Gizmos.color = Color.red;
+        IReadOnlyList<GuardMovementUnit> moveUnits = GetMovementUnits();
         foreach (GuardMovementUnit unit in moveUnits)
         {
             if (unit.GetWaitTime() > 0)
@@ -71,64 +46,61 @@ public class GuardMovement : MonoBehaviour
             }
         }
         Gizmos.color = Color.yellow;
-        if (moveUnits.Length > 0)
+        if (moveUnits.Count > 0)
         {
             Gizmos.DrawLine(origin, origin + moveUnits[0].GetPoint());
         }
         Gizmos.color = Color.blue;
-        for (int i = 1; i < moveUnits.Length; ++i)
+        for (int i = 1; i < moveUnits.Count; ++i)
         {
             Gizmos.DrawLine(origin + moveUnits[i - 1].GetPoint(), origin + moveUnits[i].GetPoint());
         }
-        if (moveUnits.Length > 1)
+        if (moveUnits.Count > 1)
         {
-            Gizmos.DrawLine(origin + moveUnits[moveUnits.Length - 1].GetPoint(), origin + moveUnits[0].GetPoint());
+            Gizmos.DrawLine(origin + moveUnits[moveUnits.Count - 1].GetPoint(), origin + moveUnits[0].GetPoint());
         }
     }
     #endregion UnityMessages
 
 
-    public void AllowMove(bool condition)
+    public void Load(bool lShouldMove, int lCurIndex, float lWaitTimer, float lTimeToWait,
+        Vector2 lLastMoveDir, bool lIsFirstMove)
     {
-        shouldMove = condition;
+        base.Load(lShouldMove, lCurIndex, lWaitTimer, lTimeToWait);
+
+        lastMoveDir = lLastMoveDir;
+        isFirstMove = lIsFirstMove;
     }
 
 
-    private GuardMovementUnit[] GetGlobalPositionPath()
+    protected override void Move(GuardMovementUnit curUnit)
     {
-        List<GuardMovementUnit> globalPos = new List<GuardMovementUnit>(moveUnits.Length);
-        for (int i = 0; i < moveUnits.Length; ++i)
+        // Get the current move point;
+        Vector2 curTargetPos = startPosition + curUnit.GetPoint();
+
+        Vector2 curMoveDir = (curTargetPos - (Vector2)transform.position).normalized;
+        // Once we reach our destination
+        if (!isFirstMove && curMoveDir != lastMoveDir)
         {
-            GuardMovementUnit curUnit = moveUnits[i];
-            globalPos.Add(new GuardMovementUnit(curUnit.GetPoint() + startPosition, curUnit.GetWaitTime()));
+            OnUnitReached(curUnit);
+            return;
         }
-        return globalPos.ToArray();
+
+        isFirstMove = false;
+        lastMoveDir = curMoveDir;
+        FaceDirection(curMoveDir);
+        IncrementPosition(curMoveDir);
     }
-    private int GetNextIndex()
+    private void OnUnitReached(GuardMovementUnit unitReached)
     {
-        int index = curIndex + 1;
-        if (index >= moveUnits.Length)
-        {
-            index = 0;
-        }
-        return index;
+        transform.position = startPosition + unitReached.GetPoint();
+        isFirstMove = true;
+
+        IncrementNextUnit(unitReached);
     }
-}
-
-[Serializable]
-public struct GuardMovementUnit
-{
-    [SerializeField] private Vector2 moveToPoint;
-    [SerializeField] [Min(0.0f)] private float waitTime;
-
     
-    public GuardMovementUnit(Vector2 point, float wait)
+    private void IncrementPosition(Vector2 moveDir)
     {
-        moveToPoint = point;
-        waitTime = wait;
+        transform.position += (Vector3)(moveDir * Time.deltaTime * moveSpeed);
     }
-
-
-    public Vector2 GetPoint() => moveToPoint;
-    public float GetWaitTime() => waitTime;
 }
