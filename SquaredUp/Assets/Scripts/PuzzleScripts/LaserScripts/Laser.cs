@@ -157,6 +157,14 @@ public class Laser
         }
         curModifiers.Clear();
     }
+    public void RemoveLayerFromMask(int layer)
+    {
+        layerMask = layerMask & ~(1 << layer);
+    }
+    public void AddLayerToMask(int layer)
+    {
+        layerMask = layerMask | (1 << layer);
+    }
 
 
     /// <summary>
