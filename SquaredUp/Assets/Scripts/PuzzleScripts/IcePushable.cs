@@ -51,10 +51,11 @@ public class IcePushable : MonoBehaviour
         // If the ice collided with something else like a wall
         else
         {
-            Direction2D curMoveDirection = parentPhys.velocity.GetDirection2D();
+            Direction2D hitFromDir = collision.GetDirectionHitCameFrom();
+            //Direction2D curMoveDirection = parentPhys.velocity.GetDirection2D();
             // If the direction changed to the opposite direction we were previously moving in,
             // the ice cube probably had a direct collision and should stop moving
-            if (curMoveDirection.IsOppositeDirection(previousDirection))
+            if (hitFromDir.IsOppositeDirection(previousDirection))
             {
                 moveDirection = Vector2.zero;
             }
@@ -68,6 +69,7 @@ public class IcePushable : MonoBehaviour
 
         // Set the ice's velocity to be fully in its movement direction
         parentPhys.velocity = moveDirection * slideSpeed;
+        Debug.Log($"MoveDirection: {moveDirection}. Velocity: {parentPhys.velocity}");
         // Update the previous direction
         previousDirection = parentPhys.velocity.GetDirection2D();
     }
