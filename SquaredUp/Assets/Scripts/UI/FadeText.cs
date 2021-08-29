@@ -21,6 +21,10 @@ public class FadeText : MonoBehaviour
     {
         textToFade = GetComponent<TextMeshProUGUI>();
     }
+    private void OnDisable()
+    {
+        textToFade.enabled = false;
+    }
 
 
     public void ShowThenFade()
