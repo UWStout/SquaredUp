@@ -16,6 +16,7 @@ public class PauseMenuScript : MonoBehaviour
     private string defaultActionMapName = "Player";
 
     [SerializeField] private FadeText saveCompleteText = null;
+    [SerializeField] private AsyncLoadSceneWithLoadingBar asyncLoading = null;
 
     void Start()
     {
@@ -47,7 +48,7 @@ public class PauseMenuScript : MonoBehaviour
 
     public void StartGame()
     {
-        SceneManager.LoadScene("SquaredUp_Combined_TempNew");
+        asyncLoading.LoadLevel("SquaredUp_Combined_TempNew");
     }
 
     public void OpenPauseFromLore()

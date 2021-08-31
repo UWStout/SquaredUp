@@ -11,15 +11,6 @@ EditorBuildSettings:
   - enabled: 0
     path: Assets/Scenes/SquaredUp_Combined.unity
     guid: e0bf11f4a3c5f4048b08571b1d266af8
-  - enabled: 0
-    path: 
-    guid: 00000000000000000000000000000000
-  - enabled: 0
-    path: 
-    guid: 00000000000000000000000000000000
-  - enabled: 0
-    path: Assets/Scenes/Wyatt_FinalZone.unity
-    guid: 14bb3d15b3309604ebae5b512e46bee6
   - enabled: 1
     path: Assets/Scenes/SquaredUp_Combined_TempNew.unity
     guid: d30e99ad3ca50f24d9598458004c203a
