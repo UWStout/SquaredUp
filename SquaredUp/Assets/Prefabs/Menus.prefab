@@ -12391,7 +12391,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &8761551426000369454
 RectTransform:
   m_ObjectHideFlags: 0
@@ -12960,6 +12960,7 @@ MonoBehaviour:
   pauseActionMapName: PauseGame
   defaultActionMapName: Player
   saveCompleteText: {fileID: 1400654624445651073}
+  asyncLoading: {fileID: 0}
 --- !u!1 &8761551426277979196
 GameObject:
   m_ObjectHideFlags: 0
