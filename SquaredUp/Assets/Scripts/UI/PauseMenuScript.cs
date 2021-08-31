@@ -48,7 +48,7 @@ public class PauseMenuScript : MonoBehaviour
 
     public void StartGame()
     {
-        asyncLoading.LoadLevel("SquaredUp_Combined_TempNew");
+        asyncLoading.LoadLevel("SquaredUp_Combined");
     }
 
     public void OpenPauseFromLore()
