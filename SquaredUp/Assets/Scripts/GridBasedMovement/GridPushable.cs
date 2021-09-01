@@ -22,7 +22,6 @@ public class GridPushable : GridHittable
 
         gridMover.speed = hit.speed;
         QuadDirection2D dir = hit.direction.ToDirection2D(isHori).ToQuadDirection2D();
-        gridMover.Move(dir);
-        return false;
+        return gridMover.Move(dir);
     }
 }

@@ -3,6 +3,9 @@ using UnityEngine;
 
 public class TestCollider : MonoBehaviour
 {
+    private const float COLLIDER_OFFSET_AMOUNT = 0.05f;
+
+
     // Reference to the ChangeColorSkill
     [SerializeField] private ChangeColorSkill changeColorSkillRef = null;
     // Wall sorting layers names
@@ -38,66 +41,46 @@ public class TestCollider : MonoBehaviour
     /// <param name="colliderType">Shape of collider to turn into</param>
     /// <param name="size">The actual size of the collider</param>
     /// <param name="rotation">Rotation of the shape.</param>
-    public AvailableSpot CheckIfColliderWillHitWall(ShapeData.ShapeType colliderType, Vector2Int size, float rotation)
+    public AvailableSpot CheckIfColliderWillHitWall(ShapeData.ShapeType colliderType, Vector2 size, float rotation)
     {
         // Colored wall layer mask
         LayerMask colorWallLayerMask = GetCurrentColoredWallLayerMask();
 
-        bool foundHit;
-        //Vector2 roundedPos = RoundPositionToHalfInts(transform.position);
-        //Vector2 roundedPos = RoundPositionBasedOnSize(transform.position, size);
+        Vector2 roundedPos = RoundPositionBasedOnSize(transform.position, new Vector2(size.x, size.y), rotation);
 
         // Physics casts don't play well with negatives sizes, so fix that
-        size = new Vector2Int(Mathf.Abs(size.x), Mathf.Abs(size.y));
+        size = new Vector2(Mathf.Abs(size.x) - COLLIDER_OFFSET_AMOUNT, Mathf.Abs(size.y) - COLLIDER_OFFSET_AMOUNT);
 
-        // Test in 5 spots to try and see if the player can be pushed to those spots
-        Vector2 curPos = transform.position;
-        // Turn on the test collider of the given type see if there is a collision with a wall
-        switch (colliderType)
+        // Try in multiple spots around the player
+        // x and y for offset
+        // i | x | y
+        // ---------
+        // 0 | 0 | 0
+        // 1 | 0 | 1
+        // 2 | 1 | 0
+        // 3 | 1 | 1
+        for (int i = 0; i < 4; ++i)
         {
-            // BoxCollider2D
-            case ShapeData.ShapeType.BOX:
-                // Testing
-                //foundHit = PhysicsDebugging.BoxCast(curPos, size, 0, transform.up, 0, colorWallLayerMask);
-                // End Testing
-                foundHit = Physics2D.BoxCast(curPos, size, rotation, transform.up, 0, colorWallLayerMask);
-                break;
-            // CircleCollider2D
-            case ShapeData.ShapeType.CIRCLE:
-                // Testing
-                //foundHit = PhysicsDebugging.CircleCast(curPos, size.x * 0.5f, transform.up, 0, colorWallLayerMask);
-                // End Testing
-                foundHit = Physics2D.CircleCast(curPos, size.x * 0.5f, transform.up, 0, colorWallLayerMask);
-                break;
-            // Triangle needs to be a specific kind of polygon collider
-            case ShapeData.ShapeType.TRIANGLE:
-                foundHit = false;
-                RaycastHit2D[] polyhits;
-                // Testing
-                //polyhits = PhysicsDebugging.PolygonCast(curPos, size, rotation, ShapeData.TRIANGLE_POINTS, colorWallLayerMask);
-                // End Testing
-                polyhits = PolygonCast(curPos, size, rotation, ShapeData.TRIANGLE_POINTS, colorWallLayerMask);
-                foreach (RaycastHit2D pHit in polyhits)
-                {
-                    if (pHit)
-                    {
-                        foundHit = true;
-                        break;
-                    }
-                }
-                break;
-            default:
-                Debug.LogError("Unhandled ColliderType of '" + colliderType + "' in PlayerColliderController.cs");
-                return new AvailableSpot(false, Vector2.zero);
+            float tileSize = ActiveGrid.Instance.GetTileSize();
+            int x = i >= 2 ? 1 : 0;
+            int y = i % 2;
+            Vector2 offset = new Vector2(x, y) * tileSize;
+            Vector2 curPos;
+            // Add or subtract based on where the rounded position is
+            int xSign = transform.position.x < roundedPos.x ? -1 : 1;
+            int ySign = transform.position.y < roundedPos.y ? -1 : 1;
+            curPos.x = roundedPos.x + offset.x * xSign;
+            curPos.y = roundedPos.y + offset.y * ySign;
+
+            // If there was no hit, we found a place the player can be
+            if (!ShapeCast(colliderType, curPos, size, rotation, colorWallLayerMask))
+            {
+                return new AvailableSpot(true, curPos);
+            }
         }
-        //Debug.Break();
-        // If there was no hit, we found a place the player can be
-        if (!foundHit)
-        {
-            return new AvailableSpot(true, curPos);
-        }
+
         // If there was a hit, we cannot change
-        return new AvailableSpot(false, Vector2.zero);
+        return new AvailableSpot(false, roundedPos);
     }
 
     /// <summary>Checks if there is a wall or non-passable colored wall in a straight line from start to end.</summary>
@@ -131,13 +114,58 @@ public class TestCollider : MonoBehaviour
         return layerMaskVal;
     }
 
+
+    private bool ShapeCast(ShapeData.ShapeType shape, Vector2 pos, Vector2 size, float rotation, LayerMask layerMask,
+        bool isTest = false)
+    {
+        // Turn on the test collider of the given type see if there is a collision with a wall
+        switch (shape)
+        {
+            // BoxCollider2D
+            case ShapeData.ShapeType.BOX:
+                if (isTest)
+                {
+                    return PhysicsDebugging.OverlapBox(pos, size, rotation, layerMask);
+                }
+                return Physics2D.OverlapBox(pos, size, rotation, layerMask);
+            // CircleCollider2D
+            case ShapeData.ShapeType.CIRCLE:
+                if (isTest)
+                {
+                    return PhysicsDebugging.OverlapCircle(pos, size.x * 0.5f, layerMask);
+                }
+                return Physics2D.OverlapCircle(pos, size.x * 0.5f, layerMask);
+            // Triangle needs to be a specific kind of polygon collider
+            case ShapeData.ShapeType.TRIANGLE:
+                RaycastHit2D[] polyhits;
+                if (isTest)
+                {
+                    polyhits = PhysicsDebugging.OverlapPolygon(pos, size, rotation, ShapeData.TRIANGLE_POINTS, layerMask);
+                }
+                else
+                {
+                    polyhits = OverlapPolygon(pos, size, rotation, ShapeData.TRIANGLE_POINTS, layerMask);
+                }
+                foreach (RaycastHit2D pHit in polyhits)
+                {
+                    if (pHit)
+                    {
+                        return true;
+                    }
+                }
+                return false;
+            default:
+                Debug.LogError($"Unhandled ColliderType of '{shape}' in PlayerColliderController.cs");
+                return true;
+        }
+    }
     /// <summary>Does a bunch of lines casts between the points of the polygon. Returns the list of hits.</summary>
     /// <param name="origin">Center of the polygon.</param>
     /// <param name="size">Scale of the polygon.</param>
     /// <param name="rotation">Rotation of the polygon.</param>
     /// <param name="points">Offsets for the points of the polygon.</param>
     /// <param name="layerMask">LayerMask to check on.</param>
-    private RaycastHit2D[] PolygonCast(Vector2 origin, Vector2 size, float rotation, Vector2[] points, int layerMask)
+    private RaycastHit2D[] OverlapPolygon(Vector2 origin, Vector2 size, float rotation, Vector2[] points, int layerMask)
     {
         // Return list
         List<RaycastHit2D> hits = new List<RaycastHit2D>();
@@ -178,43 +206,27 @@ public class TestCollider : MonoBehaviour
         Vector2 translatedPoint = origin + rotatedPoint;
         return translatedPoint;
     }
-    /*
-    private Vector2 RoundPositionBasedOnSize(Vector2 position, Vector2Int size)
+
+    private Vector2 RoundPositionBasedOnSize(Vector2 position, Vector2 size, float rotationAngle)
     {
-        // x is even
-        if (size.x % 2 == 0)
+        //Debug.Log($"Position {position}. Size {size}. Rotation {rotationAngle}");
+        Vector2 rotSize = size.Rotate(rotationAngle);
+        rotSize = new Vector2(Mathf.Abs(rotSize.x), Mathf.Abs(rotSize.y));
+        Vector2Int rotSizeInt = new Vector2Int(Mathf.RoundToInt(rotSize.x), Mathf.RoundToInt(rotSize.y));
+        Vector2 offset = Vector2.zero;
+        if (rotSizeInt.x % 2 != 0)
         {
-            // y is even
-            if (size.y % 2 == 0)
-            {
-                return position;
-            }
-            // y is odd
-            else
-            {
-                float y = Mathf.Round(position.y) + 0.5f;
-                return new Vector2(position.x, y);
-            }
+            offset.x = 0.5f;
         }
-        // x is odd
-        else
+        if (rotSizeInt.y % 2 != 0)
         {
-            // y is even
-            if (size.y % 2 == 0)
-            {
-                float x = Mathf.Round(position.x) + 0.5f;
-                return new Vector2(x, position.y);
-            }
-            // y is odd
-            else
-            {
-                float x = Mathf.Round(position.x) + 0.5f;
-                float y = Mathf.Round(position.y) + 0.5f;
-                return new Vector2(x, y);
-            }
+            offset.y = 0.5f;
         }
+
+        Vector2 roundedPos = new Vector2Int(Mathf.RoundToInt(position.x), Mathf.RoundToInt(position.y));
+        //Debug.Log($"Final Pos {roundedPos + offset}");
+        return roundedPos + offset;
     }
-    */
 
     /// <summary>Rounds the given number to the closest half int</summary>
     private float RoundToHalfInt(float value)

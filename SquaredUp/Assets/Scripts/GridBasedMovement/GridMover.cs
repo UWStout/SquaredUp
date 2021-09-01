@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class GridMover : MonoBehaviour
 {
-    private const float COLLIDER_OFFSET_AMOUNT = 0.05f;
+    private const float COLLIDER_OFFSET_AMOUNT = 0.35f;
     private const float CLOSE_ENOUGH_DIST = 0.01f;
 
 
@@ -17,7 +17,6 @@ public class GridMover : MonoBehaviour
     private Vector2 targetPosition = Vector3.zero;
 
     public event Action<Collider2D> OnGridCollision;
-
 
     private void Start()
     {
@@ -35,13 +34,20 @@ public class GridMover : MonoBehaviour
     }
 
 
-    public void Move(QuadDirection2D direction)
+    public bool Move(QuadDirection2D direction)
     {
+        return Move(direction, out _);
+    }
+    public bool Move(QuadDirection2D direction, out bool isCurrenltyMoving)
+    {
+        //DrawPhysicsCheck(direction);
         // Don't move if we can't
         if (!CheckCanMove())
         {
-            return;
+            isCurrenltyMoving = true;
+            return false;
         }
+        isCurrenltyMoving = false;
 
         float tileSize = ActiveGrid.Instance.GetTileSize();
         LayerMask wallLayerMask = ActiveGrid.Instance.GetWallLayerMask();
@@ -65,12 +71,6 @@ public class GridMover : MonoBehaviour
         {
             hits.RemoveAt(selfHitIndex);
         }
-        if (hits.Count == 0)
-        {
-            // Can move if there is no collider
-            targetPosition = newTargetPos;
-            return;
-        }
         // Can't move if the collider doesn't have a grid wall to
         // potentially allow movement
         foreach (RaycastHit2D hit in hits)
@@ -78,36 +78,28 @@ public class GridMover : MonoBehaviour
             if (!hit.collider.TryGetComponent(out GridHittable hittable))
             {
                 OnGridCollision?.Invoke(hit.collider);
-                return;
+                return false;
             }
             // Ask the grid hittable if we can move
-            if (hittable.Hit(new GridHit(transform.position, direction, speed)))
+            if (!hittable.Hit(new GridHit(transform.position, direction, speed)))
             {
-                targetPosition = newTargetPos;
-                return;
+                // Hittable said no
+                OnGridCollision?.Invoke(hit.collider);
+                return false;
             }
-            // Hittable said no
-            OnGridCollision?.Invoke(hit.collider);
-        }
-    }
-    public void RecenterOnTile()
-    {
-        Vector2 rotSize = lossySize.Rotate(transform.eulerAngles.z);
-        rotSize = new Vector2(Mathf.Abs(rotSize.x), Mathf.Abs(rotSize.y));
-        Vector2Int rotSizeInt = new Vector2Int(Mathf.RoundToInt(rotSize.x), Mathf.RoundToInt(rotSize.y));
-        Vector2 offset = Vector2.zero;
-        if (rotSizeInt.x % 2 != 0)
-        {
-            offset.x = 0.5f;
-        }
-        if (rotSizeInt.y % 2 != 0)
-        {
-            offset.y = 0.5f;
         }
 
-        Vector2 roundedPos = new Vector2Int(Mathf.RoundToInt(transform.position.x), Mathf.RoundToInt(transform.position.y));
-        transform.position = roundedPos + offset;
-        targetPosition = transform.position;
+        // Can move if no collider, or all grid hittables said yes
+        targetPosition = newTargetPos;
+        return true;
+    }
+    /// <summary>
+    /// WARNING this has the potential to move the player off the grid.
+    /// Only use this if you are certain the point given will keep/put the player on the grid.
+    /// </summary>
+    public void SetTargetPosition(Vector3 newTarget)
+    {
+        targetPosition = newTarget;
     }
 
 
@@ -115,5 +107,13 @@ public class GridMover : MonoBehaviour
     {
         Vector2 difference = (Vector2)transform.position - targetPosition;
         return difference.sqrMagnitude <= CLOSE_ENOUGH_DIST;
+    }
+    private void DrawPhysicsCheck(QuadDirection2D direction)
+    {
+        float tileSize = ActiveGrid.Instance.GetTileSize();
+        LayerMask wallLayerMask = ActiveGrid.Instance.GetWallLayerMask();
+        Vector2 dir = direction.Vector * tileSize;
+        Vector2 fudgedSize = new Vector2(lossySize.x - COLLIDER_OFFSET_AMOUNT, lossySize.y - COLLIDER_OFFSET_AMOUNT);
+        PhysicsDebugging.OverlapBox((Vector2)transform.position + dir, fudgedSize, transform.eulerAngles.z, wallLayerMask);
     }
 }

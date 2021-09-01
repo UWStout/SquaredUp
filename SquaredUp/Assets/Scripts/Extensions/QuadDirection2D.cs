@@ -94,4 +94,8 @@ public struct QuadDirection2D
     {
         return base.GetHashCode();
     }
+    public override string ToString()
+    {
+        return direction.ToString();
+    }
 }

@@ -5,6 +5,8 @@ using UnityEngine;
 [RequireComponent(typeof(GridMover))]
 public class PlayerMovement : SingletonMonoBehav<PlayerMovement>
 {
+    private enum eDirectionPriority { Horizontal, Vertical };
+
     // References
     // Reference to the pivot of the player's eyes.
     [SerializeField] private Transform eyePivot = null;
@@ -35,6 +37,8 @@ public class PlayerMovement : SingletonMonoBehav<PlayerMovement>
     private bool isSlowWalking = false;
     // If the player is sprinting or not
     private bool isSprinting = false;
+
+    private eDirectionPriority lastMovementPriority = eDirectionPriority.Horizontal;
 
 
     // Called 0th
@@ -68,31 +72,68 @@ public class PlayerMovement : SingletonMonoBehav<PlayerMovement>
     // Called once every frame
     private void Update()
     {
+        Move();
+    }
+
+
+    /// <summary>
+    /// Tries to move the player in their current move direction.
+    /// </summary>
+    private void Move()
+    {
+        // Don't even try moving if we have no input direction (compares enums, saves performance)
         if (moveDir == QuadDirection2D.none)
         {
             return;
         }
-        gridMover.Move(moveDir);
-    }
-    /*
-    private void OnCollisionExit2D(Collision2D collision)
-    {
-        // This fixes a bug where if you hold down the movement keys
-        // you continue moving in whatever direction you push off the other thing of
-        if (allowMove)
+        // Try to move the player
+        if (gridMover.Move(moveDir, out bool isCurrentlyMoving))
         {
-           rb.velocity = moveVel;
+            return;
+        }
+        if (isCurrentlyMoving)
+        {
+            return;
+        }
+
+        // If player couldn't move then try moving them in x or y separately
+        Vector2 moveDirVector = moveDir.Vector;
+        // If they were moving only in the x or y, the player just can't move
+        if (moveDirVector.x == 0 || moveDirVector.y == 0)
+        {
+            return;
+        }
+
+        QuadDirection2D horiMoveDir = new Vector2(moveDirVector.x, 0).GetDirection2D().ToQuadDirection2D();
+        QuadDirection2D vertMoveDir = new Vector2(0, moveDirVector.y).GetDirection2D().ToQuadDirection2D();
+        // Try vertical first if we tried horizontal first last time
+        if (lastMovementPriority == eDirectionPriority.Horizontal)
+        {
+            // Vertical move try
+            if (gridMover.Move(vertMoveDir))
+            {
+                lastMovementPriority = eDirectionPriority.Vertical;
+                return;
+            }
+        }
+        // Horizontal move try
+        if (gridMover.Move(horiMoveDir))
+        {
+            lastMovementPriority = eDirectionPriority.Horizontal;
+            return;
+        }
+        // Try vertical second if we tried vertical first last time
+        if (lastMovementPriority == eDirectionPriority.Vertical)
+        {
+            // Vertical move try
+            if (gridMover.Move(vertMoveDir))
+            {
+                lastMovementPriority = eDirectionPriority.Vertical;
+                return;
+            }
         }
     }
-    private void OnCollisionEnter2D(Collision2D collision)
-    {
-        rb.velocity = new Vector2(Mathf.Round(rb.velocity.x), Mathf.Round(rb.velocity.y));
-    }
-    private void OnCollisionStay2D(Collision2D collision)
-    {
-        rb.velocity = moveVel;
-    }
-    */
+
 
     // Called when the player inputs movement.
     private void OnMovement(Vector2 rawInputVector)

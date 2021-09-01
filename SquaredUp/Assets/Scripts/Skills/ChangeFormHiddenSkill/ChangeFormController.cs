@@ -131,13 +131,13 @@ public class ChangeFormController : MonoBehaviour
             // Player could not change here, so display the error that could not change here
             else
             {
-                FailToChange(curShapeData);
+                FailToChange(curShapeData, availSpot.Position);
             }
         }
     }
 
     /// <summary>Display the error and sound error that the player cannot change here.</summary>
-    public void FailToChange(ShapeData shapeData)
+    public void FailToChange(ShapeData shapeData, Vector2 targetPos)
     {
         // Get the rotation from the facing direction and the current shape direction
         Vector2Int facingDir = playerMoveRef.GetFacingDirection();
@@ -150,7 +150,7 @@ public class ChangeFormController : MonoBehaviour
         }
 
         // Display cannot fit here error
-        ShowCannotFitHere(shapeData.TypeOfShape, size, shapeRot);
+        ShowCannotFitHere(shapeData.TypeOfShape, targetPos, size, shapeRot);
         // Play cannot fit sound
         failedTransformSound.Play();
 
@@ -284,8 +284,6 @@ public class ChangeFormController : MonoBehaviour
 
         // Call the second part of the transition
         changeFormCorout = StartCoroutine(ChangePositionCoroutine(targetSize, availSpot, areGrowing, lerpSpeed));
-
-        yield return null;
     }
 
     /// <summary>Coroutine to change the position of the player. Calls the GrowCoroutine once done.</summary>
@@ -359,15 +357,14 @@ public class ChangeFormController : MonoBehaviour
             yield return null;
         }
         // Set player position and rotation to get exact
-        //playerMoveTrans.position = availSpot;
+        playerMoveTrans.position = availSpot;
+        playerMoveTrans.GetComponent<GridMover>().SetTargetPosition(availSpot);
         angles = playerMoveTrans.eulerAngles;
         angles.z = targetRot;
         playerMoveTrans.eulerAngles = angles;
 
         // Call the last part of the transition
         changeFormCorout = StartCoroutine(GrowCoroutine(targetSize, shouldGrow, lerpSpeed));
-
-        yield return null;
     }
 
     /// <summary>Coroutine to smoothly raise the scale of the player. Last coroutine for changing form</summary>
@@ -396,15 +393,12 @@ public class ChangeFormController : MonoBehaviour
 
         // Finish the form change
         FinishFormChange();
-
-        yield return null;
     }
 
     /// <summary>Called by the last coroutine for changing forms.
     /// Allows the player to move, marks the form change as done, and calls the form change finish event.</summary>
     private void FinishFormChange()
     {
-        playerMoveRef.GetComponent<GridMover>().RecenterOnTile();
         // Let the player move again
         playerMoveRef.AllowMovement(true);
         // End the form change
@@ -417,13 +411,12 @@ public class ChangeFormController : MonoBehaviour
     /// <param name="shapeType">Type of shape the player tried to change to.</param>
     /// <param name="size">Size the player tried to change to.</param>
     /// <param name="rotation">Rotation of the shape to display.</param>
-    private void ShowCannotFitHere(ShapeData.ShapeType shapeType, Vector2Int size, float rotation)
+    private void ShowCannotFitHere(ShapeData.ShapeType shapeType, Vector2 pos, Vector2Int size, float rotation)
     {
         // Activate the cannot fit controller to show itself
-        Vector3 pos = playerMoveTrans.position;
-        pos.z = cannotFitCont.transform.position.z;
+        Vector3 posV3 = new Vector3(pos.x, pos.y, cannotFitCont.transform.position.z);
         Vector3 sizeV3 = new Vector3(size.x, size.y);
-        cannotFitCont.Activate(pos, sizeV3, rotation, shapeType);
+        cannotFitCont.Activate(posV3, sizeV3, rotation, shapeType);
     }
 
 }

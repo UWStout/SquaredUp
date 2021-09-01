@@ -58,7 +58,7 @@ public class ChangeShapeSkill : SkillBase<ShapeData>
         // Fail to change shape if the shape is not the previous data
         else if (data != prevData)
         {
-            changeFormCont.FailToChange(data);
+            changeFormCont.FailToChange(data, transform.position);
         }
     }
 
