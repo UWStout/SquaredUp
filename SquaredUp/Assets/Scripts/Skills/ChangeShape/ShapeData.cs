@@ -16,8 +16,8 @@ public class ShapeData : SkillStateData
     public ShapeType TypeOfShape { get { return typeOfShape; } }
 
     // Scale of this shape
-    [SerializeField] private Vector3 scale = Vector3.one;
-    public Vector3 Scale { get { return scale; } }
+    [SerializeField] private Vector2Int scale = Vector2Int.one;
+    public Vector2Int Scale { get { return scale; } }
 
     // If direction affects the scale
     [SerializeField] private bool directionAffectsScale = false;

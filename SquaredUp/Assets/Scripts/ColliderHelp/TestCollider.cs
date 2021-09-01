@@ -3,13 +3,6 @@ using UnityEngine;
 
 public class TestCollider : MonoBehaviour
 {
-    // Constants
-    // Amount to increment for testing position
-    private const float INCR_VAL = 0.125f;
-    // Amount of times to iterate for testing position
-    private const int ITERATIONS = 6;
-
-
     // Reference to the ChangeColorSkill
     [SerializeField] private ChangeColorSkill changeColorSkillRef = null;
     // Wall sorting layers names
@@ -45,76 +38,65 @@ public class TestCollider : MonoBehaviour
     /// <param name="colliderType">Shape of collider to turn into</param>
     /// <param name="size">The actual size of the collider</param>
     /// <param name="rotation">Rotation of the shape.</param>
-    public AvailableSpot CheckIfColliderWillHitWall(ShapeData.ShapeType colliderType, Vector3 size, float rotation)
+    public AvailableSpot CheckIfColliderWillHitWall(ShapeData.ShapeType colliderType, Vector2Int size, float rotation)
     {
         // Colored wall layer mask
         LayerMask colorWallLayerMask = GetCurrentColoredWallLayerMask();
 
-        bool foundHit = false;
-        Vector2 roundedPos = RoundPositionToHalfInts(transform.position);
+        bool foundHit;
+        //Vector2 roundedPos = RoundPositionToHalfInts(transform.position);
+        //Vector2 roundedPos = RoundPositionBasedOnSize(transform.position, size);
 
         // Physics casts don't play well with negatives sizes, so fix that
-        size = new Vector3(Mathf.Abs(size.x), Mathf.Abs(size.y), Mathf.Abs(size.z));
+        size = new Vector2Int(Mathf.Abs(size.x), Mathf.Abs(size.y));
 
         // Test in 5 spots to try and see if the player can be pushed to those spots
-        Vector2 curPos = roundedPos;
-        int curIter = 0;
-        for (int i = 0; i < 8 * ITERATIONS + 1; ++i)
+        Vector2 curPos = transform.position;
+        // Turn on the test collider of the given type see if there is a collision with a wall
+        switch (colliderType)
         {
-            // Turn on the test collider of the given type see if there is a collision with a wall
-            switch (colliderType)
-            {
-                // BoxCollider2D
-                case ShapeData.ShapeType.BOX:
-                    // Testing
-                    //foundHit = PhysicsDebugging.BoxCast(curPos, size, 0, transform.up, 0, colorWallLayerMask);
-                    // End Testing
-                    foundHit = Physics2D.BoxCast(curPos, size, rotation, transform.up, 0, colorWallLayerMask);
-                    break;
-                // CircleCollider2D
-                case ShapeData.ShapeType.CIRCLE:
-                    // Testing
-                    //foundHit = PhysicsDebugging.CircleCast(curPos, size.x * 0.5f, transform.up, 0, colorWallLayerMask);
-                    // End Testing
-                    foundHit = Physics2D.CircleCast(curPos, size.x * 0.5f, transform.up, 0, colorWallLayerMask);
-                    break;
-                // Triangle needs to be a specific kind of polygon collider
-                case ShapeData.ShapeType.TRIANGLE:
-                    foundHit = false;
-                    RaycastHit2D[] polyhits;
-                    // Testing
-                    //polyhits = PhysicsDebugging.PolygonCast(curPos, size, rotation, ShapeData.TRIANGLE_POINTS, colorWallLayerMask);
-                    // End Testing
-                    polyhits = PolygonCast(curPos, size, rotation, ShapeData.TRIANGLE_POINTS, colorWallLayerMask);
-                    foreach (RaycastHit2D pHit in polyhits)
+            // BoxCollider2D
+            case ShapeData.ShapeType.BOX:
+                // Testing
+                //foundHit = PhysicsDebugging.BoxCast(curPos, size, 0, transform.up, 0, colorWallLayerMask);
+                // End Testing
+                foundHit = Physics2D.BoxCast(curPos, size, rotation, transform.up, 0, colorWallLayerMask);
+                break;
+            // CircleCollider2D
+            case ShapeData.ShapeType.CIRCLE:
+                // Testing
+                //foundHit = PhysicsDebugging.CircleCast(curPos, size.x * 0.5f, transform.up, 0, colorWallLayerMask);
+                // End Testing
+                foundHit = Physics2D.CircleCast(curPos, size.x * 0.5f, transform.up, 0, colorWallLayerMask);
+                break;
+            // Triangle needs to be a specific kind of polygon collider
+            case ShapeData.ShapeType.TRIANGLE:
+                foundHit = false;
+                RaycastHit2D[] polyhits;
+                // Testing
+                //polyhits = PhysicsDebugging.PolygonCast(curPos, size, rotation, ShapeData.TRIANGLE_POINTS, colorWallLayerMask);
+                // End Testing
+                polyhits = PolygonCast(curPos, size, rotation, ShapeData.TRIANGLE_POINTS, colorWallLayerMask);
+                foreach (RaycastHit2D pHit in polyhits)
+                {
+                    if (pHit)
                     {
-                        if (pHit)
-                        {
-                            foundHit = true;
-                            break;
-                        }
+                        foundHit = true;
+                        break;
                     }
-                    break;
-                default:
-                    Debug.LogError("Unhandled ColliderType of '" + colliderType + "' in PlayerColliderController.cs");
-                    return new AvailableSpot(false, Vector2.zero);
-            }
-            //Debug.Break();
-            // If there was no hit, we found a place the player can be
-            if (!foundHit)
-            {
-                return new AvailableSpot(true, curPos);
-            }
-
-            float incAm = INCR_VAL * ((i / 8) + 1);
-            curPos = ChangeTestPosition(roundedPos, curIter, incAm);
-            // Change position based on iteration
-            int stateTracking = i % ITERATIONS;
-            if (stateTracking == 0)
-            {
-                ++curIter;
-            }
+                }
+                break;
+            default:
+                Debug.LogError("Unhandled ColliderType of '" + colliderType + "' in PlayerColliderController.cs");
+                return new AvailableSpot(false, Vector2.zero);
         }
+        //Debug.Break();
+        // If there was no hit, we found a place the player can be
+        if (!foundHit)
+        {
+            return new AvailableSpot(true, curPos);
+        }
+        // If there was a hit, we cannot change
         return new AvailableSpot(false, Vector2.zero);
     }
 
@@ -196,14 +178,43 @@ public class TestCollider : MonoBehaviour
         Vector2 translatedPoint = origin + rotatedPoint;
         return translatedPoint;
     }
-
-    /// <summary>Rounds the given position's x and y values to the closest half int</summary>
-    private Vector2 RoundPositionToHalfInts(Vector3 position)
+    /*
+    private Vector2 RoundPositionBasedOnSize(Vector2 position, Vector2Int size)
     {
-        float x = RoundToHalfInt(position.x);
-        float y = RoundToHalfInt(position.y);
-        return new Vector2(x, y);
+        // x is even
+        if (size.x % 2 == 0)
+        {
+            // y is even
+            if (size.y % 2 == 0)
+            {
+                return position;
+            }
+            // y is odd
+            else
+            {
+                float y = Mathf.Round(position.y) + 0.5f;
+                return new Vector2(position.x, y);
+            }
+        }
+        // x is odd
+        else
+        {
+            // y is even
+            if (size.y % 2 == 0)
+            {
+                float x = Mathf.Round(position.x) + 0.5f;
+                return new Vector2(x, position.y);
+            }
+            // y is odd
+            else
+            {
+                float x = Mathf.Round(position.x) + 0.5f;
+                float y = Mathf.Round(position.y) + 0.5f;
+                return new Vector2(x, y);
+            }
+        }
     }
+    */
 
     /// <summary>Rounds the given number to the closest half int</summary>
     private float RoundToHalfInt(float value)
@@ -227,53 +238,6 @@ public class TestCollider : MonoBehaviour
         {
             return valInt + 0.5f;
         }
-    }
-
-    /// <summary>Changes the given position to a different position based on the state</summary>
-    /// <param name="originalPos">Origin position</param>
-    /// <param name="stateTracking">State of the iteration</param>
-    /// <param name="incrementAmount">Amount to increment the x/y by</param>
-    /// <returns></returns>
-    private Vector2 ChangeTestPosition(Vector2 originalPos, int stateTracking, float incrementAmount)
-    {
-        Vector2 curPos = originalPos;
-        if (stateTracking == 0)
-        {
-            curPos.x += incrementAmount;
-        }
-        else if (stateTracking == 1)
-        {
-            curPos.x -= incrementAmount;
-        }
-        else if (stateTracking == 2)
-        {
-            curPos.y += incrementAmount;
-        }
-        else if (stateTracking == 3)
-        {
-            curPos.y -= incrementAmount;
-        }
-        else if (stateTracking == 4)
-        {
-            curPos.x += incrementAmount;
-            curPos.y += incrementAmount;
-        }
-        else if (stateTracking == 5)
-        {
-            curPos.x += incrementAmount;
-            curPos.y -= incrementAmount;
-        }
-        else if (stateTracking == 6)
-        {
-            curPos.x -= incrementAmount;
-            curPos.y += incrementAmount;
-        }
-        else if (stateTracking == 7)
-        {
-            curPos.x -= incrementAmount;
-            curPos.y -= incrementAmount;
-        }
-        return curPos;
     }
 
     /// <summary>Prints the hierarchy to get to the given child</summary>

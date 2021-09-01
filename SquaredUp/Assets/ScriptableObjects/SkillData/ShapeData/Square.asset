@@ -14,6 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   uiElement: {fileID: 9203763147008845070, guid: 0c55273c4cd5a634fa3962948a449174, type: 3}
   typeOfShape: 0
-  scale: {x: 1, y: 1, z: 1}
+  scale: {x: 2, y: 2}
   directionAffectsScale: 0
   hasShapeChangeBehavior: 0
+  shapeChangeBehave: {fileID: 0}
