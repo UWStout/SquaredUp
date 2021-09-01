@@ -92,6 +92,11 @@ public class ChangeColorSkill : SkillBase<ColorData>
     /// <returns>Color of the target material.</returns>
     public Color GetTargetColor()
     {
+        if (targetMat == null)
+        {
+            return Color.white;
+        }
+
         return targetMat.color;
     }
 

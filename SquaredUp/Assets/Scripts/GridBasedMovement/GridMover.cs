@@ -81,7 +81,7 @@ public class GridMover : MonoBehaviour
                 return false;
             }
             // Ask the grid hittable if we can move
-            if (!hittable.Hit(new GridHit(transform.position, direction, speed)))
+            if (!hittable.Hit(new GridHit(transform.position, direction, speed, gameObject)))
             {
                 // Hittable said no
                 OnGridCollision?.Invoke(hit.collider);
