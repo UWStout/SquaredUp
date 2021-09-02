@@ -22,7 +22,19 @@ PrefabInstance:
     - target: {fileID: 1323924071337390586, guid: da6e8429e2bd00c469c0100cfc406571, type: 3}
       propertyPath: m_Sprite
       value: 
-      objectReference: {fileID: 21300000, guid: 36dd55fcbafd11c4287043d0bd27e3e9, type: 3}
+      objectReference: {fileID: 21300000, guid: a565433861cc52e45979e0295a48dfc0, type: 3}
+    - target: {fileID: 5192252599357798664, guid: da6e8429e2bd00c469c0100cfc406571, type: 3}
+      propertyPath: activeColor.r
+      value: 0.043137256
+      objectReference: {fileID: 0}
+    - target: {fileID: 5192252599357798664, guid: da6e8429e2bd00c469c0100cfc406571, type: 3}
+      propertyPath: activeColor.g
+      value: 0.22352941
+      objectReference: {fileID: 0}
+    - target: {fileID: 5192252599357798664, guid: da6e8429e2bd00c469c0100cfc406571, type: 3}
+      propertyPath: activeColor.b
+      value: 0.32941177
+      objectReference: {fileID: 0}
     - target: {fileID: 7930442251270245824, guid: da6e8429e2bd00c469c0100cfc406571, type: 3}
       propertyPath: m_Name
       value: BlueOff

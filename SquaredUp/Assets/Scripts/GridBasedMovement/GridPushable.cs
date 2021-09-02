@@ -17,7 +17,10 @@ public class GridPushable : GridHittable
     public override bool Hit(GridHit hit)
     {
         // Determine which side the hitter is closer on, vertical or horizontal
-        Vector2 diff = hit.moverPosition - (Vector2)transform.position;
+        Transform moverTrans = hit.moverObj.transform;
+        Vector2 moverPos = moverTrans.position;
+        Vector2 moveSize = moverTrans.lossyScale;
+        Vector2 diff = moverPos - (Vector2)transform.position;
         bool isHori = Mathf.Abs(diff.x) > Mathf.Abs(diff.y);
 
         gridMover.speed = hit.speed;
