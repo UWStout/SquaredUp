@@ -21,6 +21,14 @@ public class TeleportTrigger : MonoBehaviour
         {
             pos.y = targetLocation.position.y;
         }
-        collision.transform.position = pos;
+
+        if (collision.TryGetComponent(out GridMover gridMover))
+        {
+            gridMover.SetPosition(pos);
+        }
+        else
+        {
+            collision.transform.position = pos;
+        }
     }
 }
