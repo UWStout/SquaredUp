@@ -9,12 +9,29 @@ public class ChangeShapeSkill : SkillBase<ShapeData>
     // Mesh transitioner to change the meshes shapes
     [SerializeField] private BlendTransitioner meshTransitioner = null;
 
+    public static ChangeShapeSkill instance { get; private set; }
+
     // Current state attempted
     private int curAttemptedStateIndex;
     // Current shape
     private ShapeData.ShapeType curShape = ShapeData.ShapeType.BOX;
 
 
+    // Called 0th
+    // Domestic Initialization
+    private void Awake()
+    {
+        if (instance == null)
+        {
+            instance = this;
+        }
+    }
+    // Called 1st
+    // Initialization
+    private void Start()
+    {
+        Use(0);
+    }
     // Called when this is enabled
     // Subscribe to event
     private void OnEnable()
@@ -27,12 +44,7 @@ public class ChangeShapeSkill : SkillBase<ShapeData>
     {
         ChangeFormController.OnAvailableSpotFound -= OnAvailableSpotFound;
     }
-    // Called 1st
-    // Initialization
-    private void Start()
-    {
-        Use(0);
-    }
+
 
     /// <summary>Changes the player to become the shape corresponding to the given index.
     /// Index matches what is specified in the editor. If index is unknown, consider using Use(ShapeData) instead.</summary>

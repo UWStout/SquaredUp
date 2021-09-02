@@ -711,7 +711,7 @@ MonoBehaviour:
         m_MethodName: SetPuzzleData
         m_Mode: 2
         m_Arguments:
-          m_ObjectArgument: {fileID: 11400000, guid: f7d3438731a93a14791bc3ba8977bc4a, type: 2}
+          m_ObjectArgument: {fileID: 11400000, guid: 1722c6c4515f30c458d152b13a61f93e, type: 2}
           m_ObjectArgumentAssemblyTypeName: PuzzleLoadData, Assembly-CSharp
           m_IntArgument: 0
           m_FloatArgument: 0
