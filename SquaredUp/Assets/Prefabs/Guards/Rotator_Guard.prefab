@@ -69,7 +69,7 @@ MonoBehaviour:
   rayCount: 1
   layerMask:
     serializedVersion: 2
-    m_Bits: 1536
+    m_Bits: 67139072
 --- !u!1001 &8764383658727832319
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -77,6 +77,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 5608446820926840930, guid: bf1ed4abbeb3b6246b94b6b740704271, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 4294967295
+      objectReference: {fileID: 0}
     - target: {fileID: 8717297440243521417, guid: bf1ed4abbeb3b6246b94b6b740704271, type: 3}
       propertyPath: m_Name
       value: Rotator_Guard

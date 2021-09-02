@@ -29,17 +29,30 @@ public class PlayerInteract : MonoBehaviour
     // Called when an object enters the trigger.
     private void OnTriggerEnter2D(Collider2D other)
     {
-        SwapInteractable(other.GetComponent<Interactable>());
+        if (other.TryGetComponent(out Interactable interactable))
+        {
+            SwapInteractable(interactable);
+        }
+        else
+        {
+            Debug.LogWarning($"{other.name} is on the interactable layer, but has no interactable");
+        }
     }
 
     // Called when an object leaves the trigger.
     private void OnTriggerExit2D(Collider2D other)
     {
-        Interactable leaveInteract = other.GetComponent<Interactable>();
-        if (currentInteract == leaveInteract)
+        if (other.TryGetComponent(out Interactable interactable))
         {
-            currentInteract.HideAlert();
-            currentInteract = null;
+            if (currentInteract == interactable)
+            {
+                currentInteract.HideAlert();
+                currentInteract = null;
+            }
+        }
+        else
+        {
+            Debug.LogWarning($"{other.name} is on the interactable layer, but has no interactable");
         }
     }
 
@@ -48,7 +61,14 @@ public class PlayerInteract : MonoBehaviour
     {
         if (currentInteract == null)
         {
-            SwapInteractable(other.GetComponent<Interactable>());
+            if (other.TryGetComponent(out Interactable interactable))
+            {
+                SwapInteractable(interactable);
+            }
+            else
+            {
+                Debug.LogWarning($"{other.name} is on the interactable layer, but has no interactable");
+            }
         }
     }
 
