@@ -110,8 +110,8 @@ public class PlayerMovement : SingletonMonoBehav<PlayerMovement>
             return;
         }
 
-        QuadDirection2D horiMoveDir = new Vector2(moveDirVector.x, 0).GetDirection2D().ToQuadDirection2D();
-        QuadDirection2D vertMoveDir = new Vector2(0, moveDirVector.y).GetDirection2D().ToQuadDirection2D();
+        QuadDirection2D horiMoveDir = new Vector2(moveDirVector.x, 0).ToDirection2D().ToQuadDirection2D();
+        QuadDirection2D vertMoveDir = new Vector2(0, moveDirVector.y).ToDirection2D().ToQuadDirection2D();
         // Try vertical first if we tried horizontal first last time
         if (lastMovementPriority == eDirectionPriority.Horizontal)
         {
@@ -164,8 +164,8 @@ public class PlayerMovement : SingletonMonoBehav<PlayerMovement>
         moveSpeed = isSprinting ? sprintSpeed : moveSpeed;
         gridMover.speed = moveSpeed;
         // Try to move in the right direction
-        Direction2D horDir = new Vector2(direction.x, 0).GetDirection2D();
-        Direction2D vertDir = new Vector2(0, direction.y).GetDirection2D();
+        Direction2D horDir = new Vector2(direction.x, 0).ToDirection2D();
+        Direction2D vertDir = new Vector2(0, direction.y).ToDirection2D();
         moveDir = horDir.Add(vertDir);
     }
     // Called when the player inputs slow walk.

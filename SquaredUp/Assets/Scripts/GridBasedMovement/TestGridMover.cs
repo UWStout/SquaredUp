@@ -19,11 +19,11 @@ public class TestGridMover : MonoBehaviour
         float vertInput = Input.GetAxisRaw("Vertical");
         if (Mathf.Abs(horiInput) == 1.0f)
         {
-            horiDir = new Vector2(horiInput, 0).GetDirection2D();
+            horiDir = new Vector2(horiInput, 0).ToDirection2D();
         }
         if (Mathf.Abs(vertInput) == 1.0f)
         {
-            vertDir = new Vector2(0, vertInput).GetDirection2D();
+            vertDir = new Vector2(0, vertInput).ToDirection2D();
         }
 
         QuadDirection2D moveDir = horiDir.Add(vertDir);

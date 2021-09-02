@@ -21,12 +21,14 @@ public class GridMoverSavable : SavableMonoBehav<GridMoverSavable>
     {
         TransformSaveData data = serializedObj as TransformSaveData;
 
+        Debug.Log($"Loading scale of {data.GetLocalScale()} for {name}");
         transform.localScale = data.GetLocalScale();
         transform.localRotation = data.GetLocalRotation();
         gridMover.SetPosition(data.GetGlobalPosition());
     }
     public override object Save()
     {
+        Debug.Log($"Saving scale of {transform.localScale} for {name}");
         return new TransformSaveData(transform);
     }
 }

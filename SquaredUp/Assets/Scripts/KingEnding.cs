@@ -8,7 +8,6 @@ public class KingEnding : MonoBehaviour
 {
     [SerializeField] private Follow camFollow = null;
     [SerializeField] private Transform kingTrans = null;
-    [SerializeField] private Transform playerTrans = null;
 
     [SerializeField] private float moveSpeed = 1.0f;
     [SerializeField] private float moveTime = 5.0f;
@@ -38,7 +37,9 @@ public class KingEnding : MonoBehaviour
         while (t < moveTime)
         {
             kingTrans.Translate(Vector3.right * moveSpeed * Time.deltaTime);
-            playerTrans.Translate(Vector3.right * moveSpeed * Time.deltaTime);
+            GridMover playerGridMover = PlayerMovement.Instance.GetComponent<GridMover>();
+            playerGridMover.speed = moveSpeed;
+            playerGridMover.Move(QuadDirection2D.right);
 
             t += Time.deltaTime;
             yield return null;
@@ -50,7 +51,7 @@ public class KingEnding : MonoBehaviour
     private void OnFadedOut()
     {
         kingTrans.position = kingOriginalPosition;
-        playerTrans.position = playerEndPos.position;
+        PlayerMovement.Instance.SetPlayerPosition(playerEndPos.position);
         levelThreeEntranceWall.SetActive(false);
         camFollow.StartFollow();
     }

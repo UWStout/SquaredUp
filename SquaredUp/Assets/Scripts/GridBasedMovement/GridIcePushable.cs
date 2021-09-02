@@ -5,7 +5,7 @@ public class GridIcePushable : GridHittable
 {
     private GridMover gridMover = null;
 
-    private QuadDirection2D slideDir = QuadDirection2D.none;
+    public QuadDirection2D slideDirection { get; set; } = QuadDirection2D.none;
 
 
     private void Awake()
@@ -22,9 +22,9 @@ public class GridIcePushable : GridHittable
     }
     private void Update()
     {
-        if (slideDir != QuadDirection2D.none)
+        if (slideDirection != QuadDirection2D.none)
         {
-            gridMover.Move(slideDir);
+            gridMover.Move(slideDirection);
         }
     }
 
@@ -35,13 +35,13 @@ public class GridIcePushable : GridHittable
         Vector2 diff = hit.moverPosition - (Vector2)transform.position;
         bool isHori = Mathf.Abs(diff.x) > Mathf.Abs(diff.y);
 
-        slideDir = hit.direction.ToDirection2D(isHori).ToQuadDirection2D();
+        slideDirection = hit.direction.ToDirection2D(isHori).ToQuadDirection2D();
         return false;
     }
 
 
     private void OnGridCollision(Collider2D col)
     {
-        slideDir = QuadDirection2D.none;
+        slideDirection = QuadDirection2D.none;
     }
 }

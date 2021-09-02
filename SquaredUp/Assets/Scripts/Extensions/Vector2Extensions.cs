@@ -12,7 +12,7 @@ public static class Vector2Extensions
     /// <param name="rawVector">Reference to self for extension.</param>
     public static Vector2 CastToCardinal(this Vector2 rawVector)
     {
-        Direction2D dir = GetDirection2D(rawVector);
+        Direction2D dir = ToDirection2D(rawVector);
         return dir.Vector;
     }
     /// <summary>
@@ -20,7 +20,7 @@ public static class Vector2Extensions
     /// </summary>
     /// <param name="vector">Reference to self for extension.</param>
     /// <returns>Closest Direction2D this vector is pointed in.</returns>
-    public static Direction2D GetDirection2D(this Vector2 vector)
+    public static Direction2D ToDirection2D(this Vector2 vector)
     {
         // Vector is zero = not pointed in any direction
         if (vector.x == 0.0f && vector.y == 0.0f)
@@ -51,6 +51,13 @@ public static class Vector2Extensions
                 return Direction2D.down;
             }
         }
+    }
+    public static QuadDirection2D ToQuadDirection2D(this Vector2 vector)
+    {
+        Direction2D dirX = new Vector2(vector.x, 0).ToDirection2D();
+        Direction2D dirY = new Vector2(0, vector.y).ToDirection2D();
+
+        return dirX.Add(dirY);
     }
     public static Vector2 Rotate(this Vector2 v, float degrees)
     {

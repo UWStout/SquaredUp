@@ -9,7 +9,7 @@ public class ScaleController : MonoBehaviour
 
     // Starting localScale of the scalable transform
     // Can't simply get it on awake or start because of loading from save creates race condition
-    [SerializeField] private Vector2Int originalScale = new Vector2Int(2, 2);
+    [SerializeField] private Vector2Int originalScale = new Vector2Int(1, 1);
     public Vector2Int OriginalScale
     {
         get { return originalScale; }
