@@ -41,16 +41,16 @@ public class GridMover : MonoBehaviour
     {
         return Move(direction, out _);
     }
-    public bool Move(QuadDirection2D direction, out bool isCurrenltyMoving)
+    public bool Move(QuadDirection2D direction, out bool isCurrentlyMoving)
     {
         //DrawPhysicsCheck(direction);
         // Don't move if we can't
         if (!CheckCanMove())
         {
-            isCurrenltyMoving = true;
+            isCurrentlyMoving = true;
             return false;
         }
-        isCurrenltyMoving = false;
+        isCurrentlyMoving = false;
 
         float tileSize = ActiveGrid.Instance.GetTileSize();
         LayerMask wallLayerMask = ActiveGrid.Instance.GetWallLayerMask();
@@ -61,18 +61,17 @@ public class GridMover : MonoBehaviour
             fudgedSize, transform.eulerAngles.z, dir.normalized, dir.magnitude, wallLayerMask));
         //RaycastHit2D hit = Physics2D.CircleCast(transform.position, MOVE_CHECK_RADIUS, dir.normalized, dir.magnitude, wallLayerMask);
         // Make sure we didn't hit ourself
-        int selfHitIndex = -1;
+        Stack<int> myColIndices = new Stack<int>();
         for (int i = 0; i < hits.Count; ++i)
         {
             if (hits[i].collider.gameObject == gameObject)
             {
-                selfHitIndex = i;
-                break;
+                myColIndices.Push(i);
             }
         }
-        if (selfHitIndex >= 0)
+        while (myColIndices.Count > 0)
         {
-            hits.RemoveAt(selfHitIndex);
+            hits.RemoveAt(myColIndices.Pop());
         }
         // Can't move if the collider doesn't have a grid wall to
         // potentially allow movement

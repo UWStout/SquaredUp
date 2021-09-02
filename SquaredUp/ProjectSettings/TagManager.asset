@@ -41,7 +41,7 @@ TagManager:
   - YellowWall
   - YellowWallCheck
   - Player
-  - 
+  - MoveOnlyWall
   - 
   - 
   m_SortingLayers:

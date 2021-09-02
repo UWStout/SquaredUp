@@ -1848,6 +1848,7 @@ MonoBehaviour:
   body: {fileID: 1461684265593741829}
   outline: {fileID: 7418370633445177851}
   outlineWidth: 18
+  ignoreZ: 0
 --- !u!114 &4898641650442204773
 MonoBehaviour:
   m_ObjectHideFlags: 0

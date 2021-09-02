@@ -89,6 +89,7 @@ public class Laser
         // Last point the laser hit
         Vector2 recentPoint = points.Peek();
         RaycastHit2D hit = Physics2D.Raycast(recentPoint + direction * LASER_SHOOT_OFFSET, direction, LASER_MAX_DISTANCE, layerMask);
+        // If there was a hit and the hit was not due to a mirror
         if (hit)
         {
             // Check to make sure that the hit thing was not the last thing we hit to avoid an infinite loop
