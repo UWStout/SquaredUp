@@ -57,7 +57,7 @@ public class ChangeColorSkill : SkillBase<ColorData>
     /// Index matches what is specified in the editor. If index is unknown, consider using Use(ColorData) instead.</summary>
     public override void Use(int stateIndex)
     {
-        if (!playerColorCheckRef.IsInWall)
+        if (!playerColorCheckRef.isInWall)
         {
             if (UpdateCurrentState(stateIndex))
             {

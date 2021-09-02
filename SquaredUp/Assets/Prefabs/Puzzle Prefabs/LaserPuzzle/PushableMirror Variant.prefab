@@ -133,14 +133,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 422463318323569489, guid: 8b885bcf3be21ce4c9c0d3334148dc7a, type: 3}
-      propertyPath: m_Size.x
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 422463318323569489, guid: 8b885bcf3be21ce4c9c0d3334148dc7a, type: 3}
-      propertyPath: m_Offset.x
-      value: 0
-      objectReference: {fileID: 0}
     - target: {fileID: 422463318323569491, guid: 8b885bcf3be21ce4c9c0d3334148dc7a, type: 3}
       propertyPath: m_Name
       value: PushableMirror Variant

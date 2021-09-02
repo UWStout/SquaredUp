@@ -19,9 +19,12 @@ public class GridPushable : GridHittable
         // Determine which side the hitter is closer on, vertical or horizontal
         Transform moverTrans = hit.moverObj.transform;
         Vector2 moverPos = moverTrans.position;
-        Vector2 moveSize = moverTrans.lossyScale;
+        Vector2 moverSize = moverTrans.lossyScale;
+        moverSize = moverSize.Rotate(moverTrans.eulerAngles.z);
         Vector2 diff = moverPos - (Vector2)transform.position;
-        bool isHori = Mathf.Abs(diff.x) > Mathf.Abs(diff.y);
+        // Scale the difference by the mover's size. The bigger magnitude of the result (x or y) is closer
+        Vector2 distComparisonV = diff / moverSize;
+        bool isHori = Mathf.Abs(distComparisonV.x) > Mathf.Abs(distComparisonV.y);
 
         gridMover.speed = hit.speed;
         QuadDirection2D dir = hit.direction.ToDirection2D(isHori).ToQuadDirection2D();

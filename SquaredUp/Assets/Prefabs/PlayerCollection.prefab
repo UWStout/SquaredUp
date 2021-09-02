@@ -1046,7 +1046,6 @@ GameObject:
   m_Component:
   - component: {fileID: 7987525851708486453}
   - component: {fileID: 7503979376264357203}
-  - component: {fileID: 6316371133384248312}
   - component: {fileID: 2689057773788072837}
   m_Layer: 11
   m_Name: ColorCheck
@@ -1081,22 +1080,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8a79d380d7165304ba5fbb34142aee44, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!58 &6316371133384248312
-CircleCollider2D:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5847830945095955907}
-  m_Enabled: 1
-  m_Density: 1
-  m_Material: {fileID: 0}
-  m_IsTrigger: 1
-  m_UsedByEffector: 0
-  m_UsedByComposite: 0
-  m_Offset: {x: 0, y: 0}
-  serializedVersion: 2
-  m_Radius: 0.49
 --- !u!61 &2689057773788072837
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -1121,7 +1104,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 0.98, y: 0.98}
+  m_Size: {x: 0.95, y: 0.95}
   m_EdgeRadius: 0
 --- !u!1 &6091333511261380859
 GameObject:
@@ -1764,7 +1747,6 @@ MonoBehaviour:
   - {fileID: 947864729812206118}
   - {fileID: 7456116821587791153}
   - {fileID: 7199380859550242871}
-  - {fileID: 5847830945095955907}
 --- !u!114 &9177552967270623550
 MonoBehaviour:
   m_ObjectHideFlags: 0

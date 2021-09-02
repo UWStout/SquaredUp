@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System.Collections.Generic;
+using UnityEngine;
 
 ///<summary>Checks if the player is inside a wall.
 ///
@@ -9,11 +10,11 @@
 public class PlayerInColorCheck : MonoBehaviour
 {
     // If the player is in a colored wall
-    private bool isInWall = false;
-    public bool IsInWall { get { return isInWall; } }
+    public bool isInWall { get; private set; }
 
     // The amount of walls the player is in
     private int amountWallsIn = 0;
+
 
     // When player enters a wall, player is now in a wall
     private void OnTriggerEnter2D(Collider2D collision)
@@ -21,7 +22,6 @@ public class PlayerInColorCheck : MonoBehaviour
         ++amountWallsIn;
         isInWall = true;
     }
-
     // When player exits in a wall, player is no longer in a wall
     private void OnTriggerExit2D(Collider2D collision)
     {
