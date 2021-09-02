@@ -16,7 +16,7 @@ public class ScaleController : MonoBehaviour
     }
 
     // Scale to apply based on the shape
-    private Vector3 shapeScale = Vector3.one;
+    [SerializeField] private Vector3 shapeScale = Vector3.one * 2;
     public Vector3 ShapeScale
     {
         get { return shapeScale; }

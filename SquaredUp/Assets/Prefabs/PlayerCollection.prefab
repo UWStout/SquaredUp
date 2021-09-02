@@ -1673,7 +1673,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   scalableTrans: {fileID: 6257086274663262138}
-  originalScale: {x: 2, y: 2}
+  originalScale: {x: 1, y: 1}
 --- !u!114 &2638144812263462055
 MonoBehaviour:
   m_ObjectHideFlags: 0
