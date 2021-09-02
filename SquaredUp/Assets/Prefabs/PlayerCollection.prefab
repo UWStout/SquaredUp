@@ -673,6 +673,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   scalableTrans: {fileID: 8567339245636238774}
   originalScale: {x: 45, y: 45}
+  shapeScale: {x: 2, y: 2, z: 2}
 --- !u!137 &8545668449240166798
 SkinnedMeshRenderer:
   m_ObjectHideFlags: 0
@@ -1106,7 +1107,7 @@ BoxCollider2D:
   m_Enabled: 1
   m_Density: 1
   m_Material: {fileID: 0}
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: 0}
@@ -1674,6 +1675,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   scalableTrans: {fileID: 6257086274663262138}
   originalScale: {x: 1, y: 1}
+  shapeScale: {x: 2, y: 2, z: 2}
 --- !u!114 &2638144812263462055
 MonoBehaviour:
   m_ObjectHideFlags: 0
