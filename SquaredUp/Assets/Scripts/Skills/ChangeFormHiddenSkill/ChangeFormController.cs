@@ -27,6 +27,8 @@ public class ChangeFormController : MonoBehaviour
     [SerializeField] private CannotFitVisualController cannotFitCont = null;
     // SFX for failing transformation
     [SerializeField] private AudioSource failedTransformSound = null;
+    // Name of the input map with no input
+    [SerializeField] private string noInputMap = "NoInput";
 
     // Coroutine variables for how fast to change the shape and when we are close enough
     [SerializeField] [Min(0.0001f)] private float changeSpeed = 1f;
@@ -217,8 +219,8 @@ public class ChangeFormController : MonoBehaviour
     private void StartChangeForm(Vector2Int targetSize, Vector3 availSpot, bool directionMatters)
     {
         //Debug.Log("StartChangeForm");
-        // Don't let the player move while changing form
-        playerMoveRef.AllowMovement(false);
+        // Don't let the player input while changing form
+        InputController.Instance.SwitchInputMap(noInputMap);
         // Play the sfx
         transformSizeSound.Play();
 
@@ -358,20 +360,20 @@ public class ChangeFormController : MonoBehaviour
         }
         // Set player position and rotation to get exact
         playerMoveTrans.position = availSpot;
-        playerMoveTrans.GetComponent<GridMover>().SetTargetPosition(availSpot);
         angles = playerMoveTrans.eulerAngles;
         angles.z = targetRot;
         playerMoveTrans.eulerAngles = angles;
+        playerMoveTrans.GetComponent<GridMover>().SetPosition(availSpot, targetSize, targetRot);
 
         // Call the last part of the transition
-        changeFormCorout = StartCoroutine(GrowCoroutine(targetSize, shouldGrow, lerpSpeed));
+        changeFormCorout = StartCoroutine(GrowCoroutine(targetSize, availSpot, shouldGrow, lerpSpeed));
     }
 
     /// <summary>Coroutine to smoothly raise the scale of the player. Last coroutine for changing form</summary>
     /// <param name="targetSize">Size to lerp towards</param>
     /// <param name="shouldGrow">If we should grow the player</param>
     /// <param name="lerpSpeed">The speed of the lerps done to grow.</param>
-    private IEnumerator GrowCoroutine(Vector3 targetSize, bool shouldGrow, float lerpSpeed)
+    private IEnumerator GrowCoroutine(Vector3 targetSize, Vector3 availSpot, bool shouldGrow, float lerpSpeed)
     {
         // Save the current size
         Vector3 startSize = playerScaleCont.ShapeScale;
@@ -399,8 +401,8 @@ public class ChangeFormController : MonoBehaviour
     /// Allows the player to move, marks the form change as done, and calls the form change finish event.</summary>
     private void FinishFormChange()
     {
-        // Let the player move again
-        playerMoveRef.AllowMovement(true);
+        // Let the player have controls again
+        InputController.Instance.PopInputMap(noInputMap);
         // End the form change
         changeFormCoroutFin = true;
         // Call the finish form change event

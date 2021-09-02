@@ -231,8 +231,8 @@ EdgeCollider2D:
   m_Offset: {x: 0, y: 0}
   m_EdgeRadius: 0
   m_Points:
-  - {x: -0.83, y: 0}
-  - {x: 0.83, y: 0}
+  - {x: -1, y: 0}
+  - {x: 1, y: 0}
   m_AdjacentStartPoint: {x: 0, y: 0}
   m_AdjacentEndPoint: {x: 0, y: 0}
   m_UseAdjacentStartPoint: 0
@@ -372,15 +372,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 422463318323569502, guid: 8b885bcf3be21ce4c9c0d3334148dc7a, type: 3}
       propertyPath: m_LocalScale.x
-      value: 1.44
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 422463318323569502, guid: 8b885bcf3be21ce4c9c0d3334148dc7a, type: 3}
       propertyPath: m_LocalScale.y
-      value: 1.44
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 422463318323569502, guid: 8b885bcf3be21ce4c9c0d3334148dc7a, type: 3}
       propertyPath: m_LocalScale.z
-      value: 1.44
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 1880433124774575204, guid: 8b885bcf3be21ce4c9c0d3334148dc7a, type: 3}
       propertyPath: m_Mesh
@@ -394,29 +394,33 @@ PrefabInstance:
       propertyPath: m_Mesh
       value: 
       objectReference: {fileID: 6059017325142356922, guid: b55e82b3263febe4e9c0a501c9f05777, type: 3}
+    - target: {fileID: 7354508944221798407, guid: 8b885bcf3be21ce4c9c0d3334148dc7a, type: 3}
+      propertyPath: outlineWidth
+      value: 0.3
+      objectReference: {fileID: 0}
     - target: {fileID: 7357564513430282882, guid: 8b885bcf3be21ce4c9c0d3334148dc7a, type: 3}
       propertyPath: m_RootOrder
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 7357564513430282882, guid: 8b885bcf3be21ce4c9c0d3334148dc7a, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 0.07
+      value: 0.03
       objectReference: {fileID: 0}
     - target: {fileID: 7357564513430282882, guid: 8b885bcf3be21ce4c9c0d3334148dc7a, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -0.07
+      value: -0.03
       objectReference: {fileID: 0}
     - target: {fileID: 7357564513430282882, guid: 8b885bcf3be21ce4c9c0d3334148dc7a, type: 3}
       propertyPath: m_LocalScale.x
-      value: 0.7
+      value: 0.8500001
       objectReference: {fileID: 0}
     - target: {fileID: 7357564513430282882, guid: 8b885bcf3be21ce4c9c0d3334148dc7a, type: 3}
       propertyPath: m_LocalScale.y
-      value: 0.7
+      value: 0.8500001
       objectReference: {fileID: 0}
     - target: {fileID: 7357564513430282882, guid: 8b885bcf3be21ce4c9c0d3334148dc7a, type: 3}
       propertyPath: m_LocalScale.z
-      value: 0.7
+      value: 0.85
       objectReference: {fileID: 0}
     - target: {fileID: 7357564513430282882, guid: 8b885bcf3be21ce4c9c0d3334148dc7a, type: 3}
       propertyPath: m_LocalRotation.w
@@ -428,8 +432,7 @@ PrefabInstance:
     - {fileID: 8554772273838856297, guid: 8b885bcf3be21ce4c9c0d3334148dc7a, type: 3}
     - {fileID: 1880433124774575204, guid: 8b885bcf3be21ce4c9c0d3334148dc7a, type: 3}
     - {fileID: 7274035384706882439, guid: 8b885bcf3be21ce4c9c0d3334148dc7a, type: 3}
-    - {fileID: 7354508944221798407, guid: 8b885bcf3be21ce4c9c0d3334148dc7a, type: 3}
-    - {fileID: 5237085605050075583, guid: 8b885bcf3be21ce4c9c0d3334148dc7a, type: 3}
+    - {fileID: 0}
   m_SourcePrefab: {fileID: 100100000, guid: 8b885bcf3be21ce4c9c0d3334148dc7a, type: 3}
 --- !u!1 &4230948476081987731 stripped
 GameObject:

@@ -11,9 +11,9 @@ GameObject:
   - component: {fileID: 422463318323569502}
   - component: {fileID: 422463318323569489}
   - component: {fileID: 7354508944221798407}
-  - component: {fileID: 8035962372671028426}
   - component: {fileID: 9023621478571437624}
   - component: {fileID: 6492581604636761732}
+  - component: {fileID: 1926890827116349347}
   m_Layer: 10
   m_Name: Pushable
   m_TagString: Untagged
@@ -78,18 +78,6 @@ MonoBehaviour:
   body: {fileID: 7357564513430282882}
   outline: {fileID: 5617297595019707499}
   outlineWidth: 0.2
---- !u!114 &8035962372671028426
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 422463318323569491}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3fbdf9072a56fe34391615c22708f6da, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &9023621478571437624
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -114,6 +102,18 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 231a11e1c2da872429a898067ecc2e7b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &1926890827116349347
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 422463318323569491}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e315c2d4bf5594e458b8f5fcb426b76b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1 &724636372425124949

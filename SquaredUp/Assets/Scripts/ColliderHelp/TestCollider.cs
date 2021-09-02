@@ -46,7 +46,7 @@ public class TestCollider : MonoBehaviour
         // Colored wall layer mask
         LayerMask colorWallLayerMask = GetCurrentColoredWallLayerMask();
 
-        Vector2 roundedPos = RoundPositionBasedOnSize(transform.position, new Vector2(size.x, size.y), rotation);
+        Vector2 gridPos = ActiveGrid.Instance.CastToGridPosition(transform.position, new Vector2(size.x, size.y), rotation);
 
         // Physics casts don't play well with negatives sizes, so fix that
         size = new Vector2(Mathf.Abs(size.x) - COLLIDER_OFFSET_AMOUNT, Mathf.Abs(size.y) - COLLIDER_OFFSET_AMOUNT);
@@ -67,10 +67,10 @@ public class TestCollider : MonoBehaviour
             Vector2 offset = new Vector2(x, y) * tileSize;
             Vector2 curPos;
             // Add or subtract based on where the rounded position is
-            int xSign = transform.position.x < roundedPos.x ? -1 : 1;
-            int ySign = transform.position.y < roundedPos.y ? -1 : 1;
-            curPos.x = roundedPos.x + offset.x * xSign;
-            curPos.y = roundedPos.y + offset.y * ySign;
+            int xSign = transform.position.x < gridPos.x ? -1 : 1;
+            int ySign = transform.position.y < gridPos.y ? -1 : 1;
+            curPos.x = gridPos.x + offset.x * xSign;
+            curPos.y = gridPos.y + offset.y * ySign;
 
             // If there was no hit, we found a place the player can be
             if (!ShapeCast(colliderType, curPos, size, rotation, colorWallLayerMask))
@@ -80,7 +80,7 @@ public class TestCollider : MonoBehaviour
         }
 
         // If there was a hit, we cannot change
-        return new AvailableSpot(false, roundedPos);
+        return new AvailableSpot(false, gridPos);
     }
 
     /// <summary>Checks if there is a wall or non-passable colored wall in a straight line from start to end.</summary>
@@ -205,27 +205,6 @@ public class TestCollider : MonoBehaviour
         Vector2 rotatedPoint = Quaternion.Euler(0.0f, 0.0f, rotation) * scaledPoint;
         Vector2 translatedPoint = origin + rotatedPoint;
         return translatedPoint;
-    }
-
-    private Vector2 RoundPositionBasedOnSize(Vector2 position, Vector2 size, float rotationAngle)
-    {
-        //Debug.Log($"Position {position}. Size {size}. Rotation {rotationAngle}");
-        Vector2 rotSize = size.Rotate(rotationAngle);
-        rotSize = new Vector2(Mathf.Abs(rotSize.x), Mathf.Abs(rotSize.y));
-        Vector2Int rotSizeInt = new Vector2Int(Mathf.RoundToInt(rotSize.x), Mathf.RoundToInt(rotSize.y));
-        Vector2 offset = Vector2.zero;
-        if (rotSizeInt.x % 2 != 0)
-        {
-            offset.x = 0.5f;
-        }
-        if (rotSizeInt.y % 2 != 0)
-        {
-            offset.y = 0.5f;
-        }
-
-        Vector2 roundedPos = new Vector2Int(Mathf.RoundToInt(position.x), Mathf.RoundToInt(position.y));
-        //Debug.Log($"Final Pos {roundedPos + offset}");
-        return roundedPos + offset;
     }
 
     /// <summary>Rounds the given number to the closest half int</summary>

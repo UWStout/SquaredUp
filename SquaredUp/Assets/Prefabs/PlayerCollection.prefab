@@ -1557,7 +1557,7 @@ GameObject:
   - component: {fileID: 6257086274663262137}
   - component: {fileID: 2072241410518489459}
   - component: {fileID: 2638144812263462055}
-  - component: {fileID: 8183317876690771843}
+  - component: {fileID: 8978338743492585060}
   m_Layer: 0
   m_Name: Movement/Scalable
   m_TagString: Player
@@ -1685,7 +1685,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f22b368ab2636f34698fcdd1a69812ce, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!114 &8183317876690771843
+--- !u!114 &8978338743492585060
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -1694,7 +1694,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 6257086274663262141}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3fbdf9072a56fe34391615c22708f6da, type: 3}
+  m_Script: {fileID: 11500000, guid: e315c2d4bf5594e458b8f5fcb426b76b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1 &6257086274752830770

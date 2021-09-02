@@ -282,9 +282,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   alertObj: {fileID: 5554477733576742626}
+  interactionEvents:
+    m_PersistentCalls:
+      m_Calls: []
   lines:
   - Color 'Color' unlocked.
-  vision: {fileID: 0}
+  afterTalkingEvents:
+    m_PersistentCalls:
+      m_Calls: []
   skillsToUnlock: 01000000
   statesToUnlock:
   - skillIndex: 1
@@ -314,7 +319,19 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 1896380346892685828, guid: e1fa718a105b83b40a12c37b5987ac63, type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: 1.1
+      value: 10.744999
+      objectReference: {fileID: 0}
+    - target: {fileID: 1896380346892685828, guid: e1fa718a105b83b40a12c37b5987ac63, type: 3}
+      propertyPath: m_AnchorMin.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1896380346892685828, guid: e1fa718a105b83b40a12c37b5987ac63, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1896380346892685828, guid: e1fa718a105b83b40a12c37b5987ac63, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2322673380542306573, guid: e1fa718a105b83b40a12c37b5987ac63, type: 3}
       propertyPath: m_LocalPosition.x
@@ -367,6 +384,22 @@ PrefabInstance:
     - target: {fileID: 2322673381319215602, guid: e1fa718a105b83b40a12c37b5987ac63, type: 3}
       propertyPath: m_SizeDelta.x
       value: 1.49
+      objectReference: {fileID: 0}
+    - target: {fileID: 2322673381319215602, guid: e1fa718a105b83b40a12c37b5987ac63, type: 3}
+      propertyPath: m_AnchorMin.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2322673381319215602, guid: e1fa718a105b83b40a12c37b5987ac63, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2322673381319215602, guid: e1fa718a105b83b40a12c37b5987ac63, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2322673381319215602, guid: e1fa718a105b83b40a12c37b5987ac63, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2322673381319215603, guid: e1fa718a105b83b40a12c37b5987ac63, type: 3}
       propertyPath: m_text

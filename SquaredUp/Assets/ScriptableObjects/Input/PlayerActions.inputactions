@@ -616,6 +616,12 @@
             "id": "8c4fc2a7-6850-4b2d-9447-b4feef3e5766",
             "actions": [],
             "bindings": []
+        },
+        {
+            "name": "NoInput",
+            "id": "a49bb872-f3b5-47cd-b652-767d563d7ae8",
+            "actions": [],
+            "bindings": []
         }
     ],
     "controlSchemes": []

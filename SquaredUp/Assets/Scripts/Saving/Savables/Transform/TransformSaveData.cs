@@ -12,6 +12,8 @@ public class TransformSaveData
     private float[] scale = new float[3];
     // Rotation as a 4D vector
     private float[] rot = new float[4];
+    // Global position vector
+    private float[] globalPos = new float[3];
 
     /// <summary>
     /// Create the save data for the transform.
@@ -32,6 +34,13 @@ public class TransformSaveData
         rot[1] = trans.localRotation.y;
         rot[2] = trans.localRotation.z;
         rot[3] = trans.localRotation.w;
+        // Global Position
+        globalPos = new float[3]
+        {
+            trans.position.x,
+            trans.position.y,
+            trans.position.z
+        };
     }
 
 
@@ -58,5 +67,13 @@ public class TransformSaveData
     public Quaternion GetLocalRotation()
     {
         return new Quaternion(rot[0], rot[1], rot[2], rot[3]);
+    }
+    /// <summary>
+    /// Gets the transform's global position saved in the data.
+    /// </summary>
+    /// <returns>Saved global position.</returns>
+    public Vector3 GetGlobalPosition()
+    {
+        return new Vector3(globalPos[0], globalPos[1], globalPos[2]);
     }
 }

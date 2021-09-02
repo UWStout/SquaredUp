@@ -18,7 +18,10 @@ public class GridMover : MonoBehaviour
 
     public event Action<Collider2D> OnGridCollision;
 
-    private void Start()
+
+    // Called 0th
+    // Domestic Initialization
+    private void Awake()
     {
         targetPosition = transform.position;
     }
@@ -94,12 +97,20 @@ public class GridMover : MonoBehaviour
         return true;
     }
     /// <summary>
-    /// WARNING this has the potential to move the player off the grid.
-    /// Only use this if you are certain the point given will keep/put the player on the grid.
+    /// Moves this object to a point on the grid closest to the given position.
     /// </summary>
-    public void SetTargetPosition(Vector3 newTarget)
+    public void SetPosition(Vector3 position)
     {
-        targetPosition = newTarget;
+        SetPosition(position, transform.lossyScale, transform.eulerAngles.z);
+    }
+    public void SetPosition(Vector3 position, Vector3 scale, float rotation, bool castToGridPos = true)
+    {
+        if (castToGridPos)
+        {
+            position = ActiveGrid.Instance.CastToGridPosition(position, scale, rotation);
+        }
+        transform.position = position;
+        targetPosition = position;
     }
 
 

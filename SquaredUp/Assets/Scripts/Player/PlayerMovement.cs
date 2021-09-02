@@ -49,6 +49,12 @@ public class PlayerMovement : SingletonMonoBehav<PlayerMovement>
 
         gridMover = GetComponent<GridMover>();
     }
+    // Called 1st
+    // Foreign Initialization
+    private void Start()
+    {
+        SetPlayerPosition(transform.position);
+    }
     // Called when the script is enabled.
     // Subscribe to events.
     private void OnEnable()
@@ -226,6 +232,15 @@ public class PlayerMovement : SingletonMonoBehav<PlayerMovement>
                 return new Vector2Int(0, -1);
             }
         }
+    }
+    /// <summary>
+    /// Sets the player's position to the given position.
+    /// Also upadtes the player's grid move target to that position.
+    /// </summary>
+    /// <param name="position"></param>
+    public void SetPlayerPosition(Vector2 position)
+    {
+        gridMover.SetPosition(position);
     }
 
 

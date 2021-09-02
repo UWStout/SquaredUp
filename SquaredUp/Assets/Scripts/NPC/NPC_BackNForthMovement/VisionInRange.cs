@@ -139,7 +139,7 @@ public class VisionInRange : MonoBehaviour
     /// <summary>Set the player to be at the jail.</summary>
     private void MovePlayerToJail()
     {
-        PlayerMovement.Instance.transform.position = jailCellLocation.position;
+        PlayerMovement.Instance.SetPlayerPosition(jailCellLocation.position);
     }
     /// <summary>Let the guard move again.</summary>
     private void AllowNPCMoveAgain()
