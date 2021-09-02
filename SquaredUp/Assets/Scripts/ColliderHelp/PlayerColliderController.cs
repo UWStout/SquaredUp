@@ -41,7 +41,7 @@ public class PlayerColliderController : MonoBehaviour
     /// <param name="colliderType">Type of collider to activate</param>
     /// <param name="size">The actual size of the collider to test</param>
     /// /// <param name="rotation">Rotation of the shape.</param>
-    public AvailableSpot ActivateCollider(ShapeData.ShapeType colliderType, Vector3 size, float rotation)
+    public AvailableSpot ActivateCollider(ShapeData.ShapeType colliderType, Vector2Int size, float rotation)
     {
         AvailableSpot availSpot = TestColliderChange(colliderType, size, rotation);
         if (availSpot.Available)
@@ -57,7 +57,7 @@ public class PlayerColliderController : MonoBehaviour
     /// <param name="colliderType">Shape of the collider to test.s</param>
     /// <param name="size">The actual size of the collider to test.</param>
     /// <param name="rotation">Rotation of the shape.</param>
-    public AvailableSpot TestColliderChange(ShapeData.ShapeType colliderType, Vector3 size, float rotation)
+    public AvailableSpot TestColliderChange(ShapeData.ShapeType colliderType, Vector2Int size, float rotation)
     {
         return testColliderRef.CheckIfColliderWillHitWall(colliderType, size, rotation);
     }

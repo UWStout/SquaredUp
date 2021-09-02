@@ -22,7 +22,7 @@ public static class Collision2DExtensions
         Vector2 rawHitDiff = pos2D - contactsCenter;
 
         // Get the direction from the difference
-        return rawHitDiff.GetDirection2D();
+        return rawHitDiff.ToDirection2D();
     }
     /// <summary>
     /// Determines the center of all the contact points.

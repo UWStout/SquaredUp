@@ -92,7 +92,7 @@ public class ChangeColorSkill : SkillBase<ColorData>
     /// <returns>Color of the target material.</returns>
     public Color GetTargetColor()
     {
-        return targetMat.color;
+        return playerMeshRendRef.material.color;
     }
 
 

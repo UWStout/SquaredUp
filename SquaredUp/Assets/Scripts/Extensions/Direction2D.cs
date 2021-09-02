@@ -66,4 +66,22 @@ public struct Direction2D
             }
         }
     }
+
+
+    public static bool operator ==(Direction2D a, Direction2D b)
+    {
+        return a.direction == b.direction;
+    }
+    public static bool operator !=(Direction2D a, Direction2D b)
+    {
+        return !(a == b);
+    }
+    public override bool Equals(object obj)
+    {
+        return base.Equals(obj);
+    }
+    public override int GetHashCode()
+    {
+        return base.GetHashCode();
+    }
 }

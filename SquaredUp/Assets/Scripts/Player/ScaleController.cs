@@ -9,14 +9,14 @@ public class ScaleController : MonoBehaviour
 
     // Starting localScale of the scalable transform
     // Can't simply get it on awake or start because of loading from save creates race condition
-    [SerializeField] private Vector3 originalScale = new Vector3(1.8f, 1.8f, 1.8f);
-    public Vector3 OriginalScale
+    [SerializeField] private Vector2Int originalScale = new Vector2Int(1, 1);
+    public Vector2Int OriginalScale
     {
         get { return originalScale; }
     }
 
     // Scale to apply based on the shape
-    private Vector3 shapeScale = Vector3.one;
+    [SerializeField] private Vector3 shapeScale = Vector3.one * 2;
     public Vector3 ShapeScale
     {
         get { return shapeScale; }
@@ -39,9 +39,17 @@ public class ScaleController : MonoBehaviour
     }
 
 
+    public Vector3 GetFullScale()
+    {
+        Vector3 originalScaleV3 = new Vector3(OriginalScale.x, OriginalScale.y, 1);
+        return Vector3.Scale(originalScaleV3, Vector3.Scale(ShapeScale, SizeScale));
+    }
+
+
     /// <summary>Applies the scale changes to the objects's scalable transorm</summary>
     private void ApplyScale()
     {
-        scalableTrans.localScale = Vector3.Scale(originalScale, Vector3.Scale(shapeScale, sizeScale));
+        Vector3 originScaleV3 = new Vector3(originalScale.x, originalScale.y, 1);
+        scalableTrans.localScale = Vector3.Scale(originScaleV3, Vector3.Scale(shapeScale, sizeScale));
     }
 }

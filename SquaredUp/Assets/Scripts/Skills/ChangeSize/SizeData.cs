@@ -5,6 +5,6 @@
 public class SizeData : SkillStateData
 {
     // Size to change to
-    [SerializeField] [Min(0.00001f)] private float size = 1f;
-    public float Size { get { return size; } }
+    [SerializeField] [Min(1)] private int size = 1;
+    public int Size { get { return size; } }
 }

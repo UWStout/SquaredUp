@@ -41,7 +41,7 @@ TagManager:
   - YellowWall
   - YellowWallCheck
   - Player
-  - 
+  - MoveOnlyWall
   - 
   - 
   m_SortingLayers:
@@ -57,9 +57,9 @@ TagManager:
   - name: Foreground
     uniqueID: 4016377389
     locked: 0
-  - name: WorldCanvas
-    uniqueID: 843038267
-    locked: 0
   - name: Default
     uniqueID: 0
+    locked: 0
+  - name: WorldCanvas
+    uniqueID: 843038267
     locked: 0

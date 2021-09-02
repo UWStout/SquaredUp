@@ -3,11 +3,7 @@ using UnityEngine;
 
 public class TestCollider : MonoBehaviour
 {
-    // Constants
-    // Amount to increment for testing position
-    private const float INCR_VAL = 0.125f;
-    // Amount of times to iterate for testing position
-    private const int ITERATIONS = 6;
+    private const float COLLIDER_OFFSET_AMOUNT = 0.05f;
 
 
     // Reference to the ChangeColorSkill
@@ -45,77 +41,46 @@ public class TestCollider : MonoBehaviour
     /// <param name="colliderType">Shape of collider to turn into</param>
     /// <param name="size">The actual size of the collider</param>
     /// <param name="rotation">Rotation of the shape.</param>
-    public AvailableSpot CheckIfColliderWillHitWall(ShapeData.ShapeType colliderType, Vector3 size, float rotation)
+    public AvailableSpot CheckIfColliderWillHitWall(ShapeData.ShapeType colliderType, Vector2 size, float rotation)
     {
         // Colored wall layer mask
         LayerMask colorWallLayerMask = GetCurrentColoredWallLayerMask();
 
-        bool foundHit = false;
-        Vector2 roundedPos = RoundPositionToHalfInts(transform.position);
+        Vector2 gridPos = ActiveGrid.Instance.CastToGridPosition(transform.position, new Vector2(size.x, size.y), rotation);
 
         // Physics casts don't play well with negatives sizes, so fix that
-        size = new Vector3(Mathf.Abs(size.x), Mathf.Abs(size.y), Mathf.Abs(size.z));
+        size = new Vector2(Mathf.Abs(size.x) - COLLIDER_OFFSET_AMOUNT, Mathf.Abs(size.y) - COLLIDER_OFFSET_AMOUNT);
 
-        // Test in 5 spots to try and see if the player can be pushed to those spots
-        Vector2 curPos = roundedPos;
-        int curIter = 0;
-        for (int i = 0; i < 8 * ITERATIONS + 1; ++i)
+        // Try in multiple spots around the player
+        // x and y for offset
+        // i | x | y
+        // ---------
+        // 0 | 0 | 0
+        // 1 | 0 | 1
+        // 2 | 1 | 0
+        // 3 | 1 | 1
+        for (int i = 0; i < 4; ++i)
         {
-            // Turn on the test collider of the given type see if there is a collision with a wall
-            switch (colliderType)
-            {
-                // BoxCollider2D
-                case ShapeData.ShapeType.BOX:
-                    // Testing
-                    //foundHit = PhysicsDebugging.BoxCast(curPos, size, 0, transform.up, 0, colorWallLayerMask);
-                    // End Testing
-                    foundHit = Physics2D.BoxCast(curPos, size, rotation, transform.up, 0, colorWallLayerMask);
-                    break;
-                // CircleCollider2D
-                case ShapeData.ShapeType.CIRCLE:
-                    // Testing
-                    //foundHit = PhysicsDebugging.CircleCast(curPos, size.x * 0.5f, transform.up, 0, colorWallLayerMask);
-                    // End Testing
-                    foundHit = Physics2D.CircleCast(curPos, size.x * 0.5f, transform.up, 0, colorWallLayerMask);
-                    break;
-                // Triangle needs to be a specific kind of polygon collider
-                case ShapeData.ShapeType.TRIANGLE:
-                    foundHit = false;
-                    RaycastHit2D[] polyhits;
-                    // Testing
-                    //polyhits = PhysicsDebugging.PolygonCast(curPos, size, rotation, ShapeData.TRIANGLE_POINTS, colorWallLayerMask);
-                    // End Testing
-                    polyhits = PolygonCast(curPos, size, rotation, ShapeData.TRIANGLE_POINTS, colorWallLayerMask);
-                    foreach (RaycastHit2D pHit in polyhits)
-                    {
-                        if (pHit)
-                        {
-                            foundHit = true;
-                            break;
-                        }
-                    }
-                    break;
-                default:
-                    Debug.LogError("Unhandled ColliderType of '" + colliderType + "' in PlayerColliderController.cs");
-                    return new AvailableSpot(false, Vector2.zero);
-            }
-            //Debug.Break();
+            float tileSize = ActiveGrid.Instance.GetTileSize();
+            int x = i >= 2 ? 1 : 0;
+            int y = i % 2;
+            Vector2 offset = new Vector2(x, y) * tileSize;
+            Vector2 curPos;
+            // Add or subtract based on where the rounded position is
+            int xSign = transform.position.x < gridPos.x ? -1 : 1;
+            int ySign = transform.position.y < gridPos.y ? -1 : 1;
+            curPos.x = gridPos.x + offset.x * xSign;
+            curPos.y = gridPos.y + offset.y * ySign;
+
             // If there was no hit, we found a place the player can be
-            if (!foundHit)
+            if (!ShapeCast(colliderType, curPos, size, rotation, colorWallLayerMask))
             {
                 return new AvailableSpot(true, curPos);
             }
-
-            float incAm = INCR_VAL * ((i / 8) + 1);
-            curPos = ChangeTestPosition(roundedPos, curIter, incAm);
-            // Change position based on iteration
-            int stateTracking = i % ITERATIONS;
-            if (stateTracking == 0)
-            {
-                ++curIter;
-            }
         }
-        return new AvailableSpot(false, Vector2.zero);
+
+        // If there was a hit, we cannot change
+        return new AvailableSpot(false, gridPos);
     }
 
     /// <summary>Checks if there is a wall or non-passable colored wall in a straight line from start to end.</summary>
@@ -149,13 +114,58 @@ public class TestCollider : MonoBehaviour
         return layerMaskVal;
     }
 
+
+    private bool ShapeCast(ShapeData.ShapeType shape, Vector2 pos, Vector2 size, float rotation, LayerMask layerMask,
+        bool isTest = false)
+    {
+        // Turn on the test collider of the given type see if there is a collision with a wall
+        switch (shape)
+        {
+            // BoxCollider2D
+            case ShapeData.ShapeType.BOX:
+                if (isTest)
+                {
+                    return PhysicsDebugging.OverlapBox(pos, size, rotation, layerMask);
+                }
+                return Physics2D.OverlapBox(pos, size, rotation, layerMask);
+            // CircleCollider2D
+            case ShapeData.ShapeType.CIRCLE:
+                if (isTest)
+                {
+                    return PhysicsDebugging.OverlapCircle(pos, size.x * 0.5f, layerMask);
+                }
+                return Physics2D.OverlapCircle(pos, size.x * 0.5f, layerMask);
+            // Triangle needs to be a specific kind of polygon collider
+            case ShapeData.ShapeType.TRIANGLE:
+                RaycastHit2D[] polyhits;
+                if (isTest)
+                {
+                    polyhits = PhysicsDebugging.OverlapPolygon(pos, size, rotation, ShapeData.TRIANGLE_POINTS, layerMask);
+                }
+                else
+                {
+                    polyhits = OverlapPolygon(pos, size, rotation, ShapeData.TRIANGLE_POINTS, layerMask);
+                }
+                foreach (RaycastHit2D pHit in polyhits)
+                {
+                    if (pHit)
+                    {
+                        return true;
+                    }
+                }
+                return false;
+            default:
+                Debug.LogError($"Unhandled ColliderType of '{shape}' in PlayerColliderController.cs");
+                return true;
+        }
+    }
     /// <summary>Does a bunch of lines casts between the points of the polygon. Returns the list of hits.</summary>
     /// <param name="origin">Center of the polygon.</param>
     /// <param name="size">Scale of the polygon.</param>
     /// <param name="rotation">Rotation of the polygon.</param>
     /// <param name="points">Offsets for the points of the polygon.</param>
     /// <param name="layerMask">LayerMask to check on.</param>
-    private RaycastHit2D[] PolygonCast(Vector2 origin, Vector2 size, float rotation, Vector2[] points, int layerMask)
+    private RaycastHit2D[] OverlapPolygon(Vector2 origin, Vector2 size, float rotation, Vector2[] points, int layerMask)
     {
         // Return list
         List<RaycastHit2D> hits = new List<RaycastHit2D>();
@@ -197,14 +207,6 @@ public class TestCollider : MonoBehaviour
         return translatedPoint;
     }
 
-    /// <summary>Rounds the given position's x and y values to the closest half int</summary>
-    private Vector2 RoundPositionToHalfInts(Vector3 position)
-    {
-        float x = RoundToHalfInt(position.x);
-        float y = RoundToHalfInt(position.y);
-        return new Vector2(x, y);
-    }
-
     /// <summary>Rounds the given number to the closest half int</summary>
     private float RoundToHalfInt(float value)
     {
@@ -227,53 +229,6 @@ public class TestCollider : MonoBehaviour
         {
             return valInt + 0.5f;
         }
-    }
-
-    /// <summary>Changes the given position to a different position based on the state</summary>
-    /// <param name="originalPos">Origin position</param>
-    /// <param name="stateTracking">State of the iteration</param>
-    /// <param name="incrementAmount">Amount to increment the x/y by</param>
-    /// <returns></returns>
-    private Vector2 ChangeTestPosition(Vector2 originalPos, int stateTracking, float incrementAmount)
-    {
-        Vector2 curPos = originalPos;
-        if (stateTracking == 0)
-        {
-            curPos.x += incrementAmount;
-        }
-        else if (stateTracking == 1)
-        {
-            curPos.x -= incrementAmount;
-        }
-        else if (stateTracking == 2)
-        {
-            curPos.y += incrementAmount;
-        }
-        else if (stateTracking == 3)
-        {
-            curPos.y -= incrementAmount;
-        }
-        else if (stateTracking == 4)
-        {
-            curPos.x += incrementAmount;
-            curPos.y += incrementAmount;
-        }
-        else if (stateTracking == 5)
-        {
-            curPos.x += incrementAmount;
-            curPos.y -= incrementAmount;
-        }
-        else if (stateTracking == 6)
-        {
-            curPos.x -= incrementAmount;
-            curPos.y += incrementAmount;
-        }
-        else if (stateTracking == 7)
-        {
-            curPos.x -= incrementAmount;
-            curPos.y -= incrementAmount;
-        }
-        return curPos;
     }
 
     /// <summary>Prints the hierarchy to get to the given child</summary>
