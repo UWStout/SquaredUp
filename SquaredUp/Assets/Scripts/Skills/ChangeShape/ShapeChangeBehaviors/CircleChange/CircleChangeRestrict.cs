@@ -22,7 +22,6 @@ public class CircleChangeRestrict : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        Debug.Log("TriggerEnter");
         // When inside a circle only zone, cannot change to not a circle.
         circleChangeBehave.RestrictChange = true;
         ++colAmount;
