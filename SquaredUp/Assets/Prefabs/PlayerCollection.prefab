@@ -1760,8 +1760,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   changeColorSkillRef: {fileID: 1937018708140037048}
-  wallLayerName: Wall
-  pushableLayerName: Push
+  nonColorWallsLayerMask:
+    serializedVersion: 2
+    m_Bits: 536872448
   coloredWallLayerNames:
   - GreenWall
   - RedWall

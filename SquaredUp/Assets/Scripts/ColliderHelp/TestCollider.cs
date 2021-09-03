@@ -9,12 +9,12 @@ public class TestCollider : MonoBehaviour
     // Reference to the ChangeColorSkill
     [SerializeField] private ChangeColorSkill changeColorSkillRef = null;
     // Wall sorting layers names
-    [SerializeField] private string wallLayerName = "Wall";
-    [SerializeField] private string pushableLayerName = "Push";
-    [SerializeField] private string[] coloredWallLayerNames = new string[0];
+    [SerializeField] private LayerMask nonColorWallsLayerMask = 0;
+    [SerializeField] private string[] coloredWallLayerNames = new string[]
+    {
+        "GreenWall", "RedWall", "BlueWall", "YellowWall"
+    };
     // Values of the layer masks
-    private int wallLayerValue = 0;
-    private int pushLayerValue = 0;
     private int[] coloredWallLayerValues = new int[0];
 
 
@@ -22,10 +22,6 @@ public class TestCollider : MonoBehaviour
     // Initialization
     private void Start()
     {
-        // Convert the given names to layer
-        wallLayerValue = 1 << LayerMask.NameToLayer(wallLayerName);
-        pushLayerValue = 1 << LayerMask.NameToLayer(pushableLayerName);
-
         coloredWallLayerValues = new int[coloredWallLayerNames.Length];
         int count = 0;
         foreach (string colWallName in coloredWallLayerNames)
@@ -100,14 +96,14 @@ public class TestCollider : MonoBehaviour
     /// <summary>Creates a LayerMask based off of what color the player is</summary>
     private LayerMask GetCurrentColoredWallLayerMask()
     {
-        int layerMaskVal = wallLayerValue | pushLayerValue;
+        int layerMaskVal = nonColorWallsLayerMask;
+        // Add the colored walls to the layer mask
         int passableIndex = changeColorSkillRef.GetPassableWallColorIndex();
-
         for (int i = 0; i < coloredWallLayerValues.Length; ++i)
         {
             if (i != passableIndex)
             {
-                layerMaskVal = layerMaskVal | coloredWallLayerValues[i];
+                layerMaskVal |= coloredWallLayerValues[i];
             }
         }
 
