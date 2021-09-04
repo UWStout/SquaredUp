@@ -5,15 +5,24 @@ using UnityEngine;
 public class MusicManager : MonoBehaviour
 {
     // Audio Sources that hold music tracks
+    // Level 1
     [SerializeField] private AudioSource jungle1;
     [SerializeField] private AudioSource jungle2;
     [SerializeField] private AudioSource village;
+    // Level 2
     [SerializeField] private AudioSource temple;
     [SerializeField] private AudioSource desert;
     [SerializeField] private AudioSource stealth;
     [SerializeField] private AudioSource castle;
+    // Level 3
+    [SerializeField] private AudioSource mountainEntrance;
+    [SerializeField] private AudioSource mountainPath;
+    [SerializeField] private AudioSource mountainVillage;
+    [SerializeField] private AudioSource mountainPass;
+
     // Enum and variable to hold what level section the player is in.
-    enum Sector { jungle1, jungle2, village, temple, desert, castle_start, castle_end, out_of_bounds };
+    enum Sector { jungle1, jungle2, village, temple, desert, castle_start, castle_end, 
+        mountainEntrance, mountainPath, mountainVillage, mountainPass, out_of_bounds };
     private Sector current_location; // Var holding current level Sector
     // Rigidbody2D that holds player's location
     [SerializeField] private Rigidbody2D player;
@@ -58,50 +67,71 @@ public class MusicManager : MonoBehaviour
         }
     }
 
+    private const int XSPAWN = 25; // Where the player initial x is
+    private const int YSPAWN = 151; // Where the player initial y is
+    private const int XLVL2 = 17; // How far Level 2 is offset in the x direction
     // Function that updates the current_location enum based on the x and y coordinates of the players Rigidbody2D
     void CheckForLocation()
     {
-        //Debug.Log("X: " + (player.position.x - 25) + "y: " + (player.position.y - 150));
-        //Spawn is 25, 151
+        //Debug.Log("X: " + (player.position.x - 25) + "y: " + (player.position.y - YSPAWN));
+        //Spawn is XSPAWN, 151
         //Debug.Log(player.position);
-        if (player.position.x - 25 > -60 && player.position.x - 25 < 40 && player.position.y - 150 > -5 && player.position.y - 150 < 80)
+        //Debug.Log(current_location);
+        if (player.position.x - XSPAWN > -60 && player.position.x - XSPAWN < 40 && player.position.y - YSPAWN > -5 && player.position.y - YSPAWN < 80)
         {
             current_location = Sector.jungle1;
             //Debug.Log("Jungle1");
         }
-        else if (player.position.x - 25 > -90 && player.position.x - 25 < 148 && player.position.y - 150 > 80 && player.position.y - 150 < 160)
+        else if (player.position.x - XSPAWN > -90 && player.position.x - XSPAWN < 148 && player.position.y - YSPAWN > 80 && player.position.y - YSPAWN < 160)
         {
             current_location = Sector.village;
             //Debug.Log("Village");
         }
-        else if (player.position.x - 25 > -180 && player.position.x - 25 < -90 && player.position.y - 150 > 4 && player.position.y - 150 < 132
-           || player.position.x - 25 > -275 && player.position.x - 25 < -180 && player.position.y - 150 > 82 && player.position.y - 150 < 132)
+        else if (player.position.x - XSPAWN > -180 && player.position.x - XSPAWN < -90 && player.position.y - YSPAWN > 4 && player.position.y - YSPAWN < 132
+           || player.position.x - XSPAWN > -275 && player.position.x - XSPAWN < -180 && player.position.y - YSPAWN > 82 && player.position.y - YSPAWN < 132)
         {
             current_location = Sector.jungle2;
             //Debug.Log("Jungle2");
         }
-        else if (player.position.x - 25 > -332 && player.position.x - 25 < -180 && player.position.y - 150 > -1 && player.position.y - 150 < 82
-            || player.position.x - 25 > -332 && player.position.x - 25 < -200 && player.position.y - 150 > 82 && player.position.y - 150 < 132)
+        else if (player.position.x - XSPAWN > -332 && player.position.x - XSPAWN < -180 && player.position.y - YSPAWN > -1 && player.position.y - YSPAWN < 82
+            || player.position.x - XSPAWN > -332 && player.position.x - XSPAWN < -200 && player.position.y - YSPAWN > 82 && player.position.y - YSPAWN < 132)
         {
             current_location = Sector.temple;
             //Debug.Log("Temple");
         }
         //Level 2 was moved to the left (x-17)
-        else if (player.position.x - 25 > 148 -17 && player.position.x - 25 < 363 -17 && player.position.y - 150 > 114 && player.position.y - 150 < 167)
+        else if (player.position.x - XSPAWN > 148 -17 && player.position.x - XSPAWN < 363 -17 && player.position.y - YSPAWN > 114 && player.position.y - YSPAWN < 167)
         {
             current_location = Sector.desert;
             //Debug.Log("Desert");
         }
-        else if (player.position.x - 25 > 148 && player.position.x - 25 < 463 - 17 && player.position.y - 150 > 167 && player.position.y - 150 < 375)
+        else if (player.position.x - XSPAWN > 148 && player.position.x - XSPAWN < 463 -XLVL2 && player.position.y - YSPAWN > 167 && player.position.y - YSPAWN < 375)
         {
             current_location = Sector.castle_start;
             //Debug.Log("Castle Start");
         }
-        else if (player.position.x - 25 > 463 - 17 && player.position.x - 25 < 568 -17 && player.position.y - 150 > 200 && player.position.y - 150 < 450
-            || player.position.x - 25 > 200-17 && player.position.x - 25 < 463 -17 && player.position.y - 150 > 417 && player.position.y - 150 < 450)
+        else if (player.position.x - XSPAWN > 463 -XLVL2 && player.position.x - XSPAWN < 568 -17 && player.position.y - YSPAWN > 200 && player.position.y - YSPAWN < 450
+            || player.position.x - XSPAWN > 200-17 && player.position.x - XSPAWN < 463 -17 && player.position.y - YSPAWN > 417 && player.position.y - YSPAWN < 450)
         {
             current_location = Sector.castle_end;
             //Debug.Log("Castle End");
+        } 
+        else if (player.position.x - XSPAWN > 252 -XLVL2 && player.position.x - XSPAWN < 369 -XLVL2 && player.position.y - YSPAWN > -97 && player.position.y - YSPAWN < 114)
+        {
+            current_location = Sector.mountainEntrance;
+        }
+        else if (player.position.x - XSPAWN > 369 -XLVL2 && player.position.x - XSPAWN < 447 -XLVL2 && player.position.y - YSPAWN > -100 && player.position.y - YSPAWN < 9
+            || player.position.x - XSPAWN > 447 -XLVL2 && player.position.x - XSPAWN < 529 -XLVL2 && player.position.y - YSPAWN > -68 && player.position.y - YSPAWN < 9)
+        {
+            current_location = Sector.mountainPath;
+        }
+        else if (player.position.x - XSPAWN > 465 -XLVL2 && player.position.x - XSPAWN < 648 -XLVL2 && player.position.y - YSPAWN > -251 && player.position.y - YSPAWN < -68)
+        {
+            current_location = Sector.mountainVillage;
+        }
+        else if (player.position.x - XSPAWN > 648 -XLVL2 && player.position.x - XSPAWN < 853 -XLVL2 && player.position.y - YSPAWN > -212 && player.position.y - YSPAWN < 112)
+        {
+            current_location = Sector.mountainPass;
         }
         else
         {
@@ -129,6 +159,10 @@ public class MusicManager : MonoBehaviour
                     desert.Stop();
                     stealth.Stop();
                     castle.Stop();
+                    mountainEntrance.Stop();
+                    mountainPass.Stop();
+                    mountainPath.Stop();
+                    mountainVillage.Stop();
                     yield return null;
                 }
 
@@ -143,6 +177,10 @@ public class MusicManager : MonoBehaviour
                     desert.Stop();
                     stealth.Stop();
                     castle.Stop();
+                    mountainEntrance.Stop();
+                    mountainPass.Stop();
+                    mountainPath.Stop();
+                    mountainVillage.Stop();
                     yield return null;
                 }
                 break;
@@ -156,6 +194,10 @@ public class MusicManager : MonoBehaviour
                     desert.Stop();
                     stealth.Stop();
                     castle.Stop();
+                    mountainEntrance.Stop();
+                    mountainPass.Stop();
+                    mountainPath.Stop();
+                    mountainVillage.Stop();
                     yield return null;
                 }
                 break;
@@ -169,6 +211,10 @@ public class MusicManager : MonoBehaviour
                     desert.Stop();
                     stealth.Stop();
                     castle.Stop();
+                    mountainEntrance.Stop();
+                    mountainPass.Stop();
+                    mountainPath.Stop();
+                    mountainVillage.Stop();
                     yield return null;
                 }
                 break;
@@ -182,6 +228,10 @@ public class MusicManager : MonoBehaviour
                     temple.Stop();
                     stealth.Stop();
                     castle.Stop();
+                    mountainEntrance.Stop();
+                    mountainPass.Stop();
+                    mountainPath.Stop();
+                    mountainVillage.Stop();
                     yield return null;
                 }
                 break;
@@ -195,6 +245,10 @@ public class MusicManager : MonoBehaviour
                     temple.Stop();
                     desert.Stop();
                     castle.Stop();
+                    mountainEntrance.Stop();
+                    mountainPass.Stop();
+                    mountainPath.Stop();
+                    mountainVillage.Stop();
                     yield return null;
                 }
                 break;
@@ -208,6 +262,78 @@ public class MusicManager : MonoBehaviour
                     temple.Stop();
                     desert.Stop();
                     stealth.Stop();
+                    mountainEntrance.Stop();
+                    mountainPass.Stop();
+                    mountainPath.Stop();
+                    mountainVillage.Stop();
+                    yield return null;
+                }
+                break;
+            case Sector.mountainEntrance:
+                if (!mountainEntrance.isPlaying)
+                {
+                    castle.Stop();
+                    jungle1.Stop();
+                    village.Stop();
+                    jungle2.Stop();
+                    temple.Stop();
+                    desert.Stop();
+                    stealth.Stop();
+                    mountainEntrance.Play();
+                    mountainPass.Stop();
+                    mountainPath.Stop();
+                    mountainVillage.Stop();
+                    yield return null;
+                }
+                break;
+            case Sector.mountainPath:
+                if (!mountainPath.isPlaying)
+                {
+                    castle.Stop();
+                    jungle1.Stop();
+                    village.Stop();
+                    jungle2.Stop();
+                    temple.Stop();
+                    desert.Stop();
+                    stealth.Stop();
+                    mountainEntrance.Stop();
+                    mountainPass.Stop();
+                    mountainPath.Play();
+                    mountainVillage.Stop();
+                    yield return null;
+                }
+                break;
+            case Sector.mountainVillage:
+                if (!mountainVillage.isPlaying)
+                {
+                    castle.Stop();
+                    jungle1.Stop();
+                    village.Stop();
+                    jungle2.Stop();
+                    temple.Stop();
+                    desert.Stop();
+                    stealth.Stop();
+                    mountainEntrance.Stop();
+                    mountainPass.Stop();
+                    mountainPath.Stop();
+                    mountainVillage.Play();
+                    yield return null;
+                }
+                break;
+            case Sector.mountainPass:
+                if (!mountainPass.isPlaying)
+                {
+                    castle.Stop();
+                    jungle1.Stop();
+                    village.Stop();
+                    jungle2.Stop();
+                    temple.Stop();
+                    desert.Stop();
+                    stealth.Stop();
+                    mountainEntrance.Stop();
+                    mountainPass.Play();
+                    mountainPath.Stop();
+                    mountainVillage.Stop();
                     yield return null;
                 }
                 break;
@@ -219,6 +345,10 @@ public class MusicManager : MonoBehaviour
                 temple.Stop();
                 desert.Stop();
                 stealth.Stop();
+                mountainEntrance.Stop();
+                mountainPass.Stop();
+                mountainPath.Stop();
+                mountainVillage.Stop();
                 yield return null;
                 break;
         }
