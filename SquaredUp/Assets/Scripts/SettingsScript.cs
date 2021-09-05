@@ -22,40 +22,13 @@ public class SettingsScript : MonoBehaviour
 
     public Dropdown resolutionDropdown;
 
-    Resolution[] resolutions;
-
 
     private void Start()
     {
-
-        resolutions = Screen.resolutions;
-
-        resolutionDropdown.ClearOptions();
-
-        List<string> options = new List<string>();
-
-        int currentResolutionIndex = 0;
-
-        for (int i = 0; i < resolutions.Length; i++)
-        {
-            string option = resolutions[i].width + "x" + resolutions[i].height;
-            options.Add(option);
-            //Debug.Log(option);
-            if (resolutions[i].width == Screen.currentResolution.width && resolutions[i].height == Screen.currentResolution.height)
-            {
-                currentResolutionIndex = i;
-            }
-        }
-
-        resolutionDropdown.AddOptions(options);
-        resolutionDropdown.value = currentResolutionIndex;
-        resolutionDropdown.RefreshShownValue();
-
-
         foreach (inputReferences _a in inputReferenceArray)
-        { 
+        {
             control = (System.Array.IndexOf(inputReferenceArray, _a));
-            
+
             if (!string.IsNullOrWhiteSpace(PlayerPrefs.GetString(control.ToString())))
             {
                 if (control <= 3)
@@ -76,29 +49,6 @@ public class SettingsScript : MonoBehaviour
 
         audioMixer.SetFloat("Volume", PlayerPrefs.GetFloat("Volume"));
         VolumeSlider.SetValueWithoutNotify(PlayerPrefs.GetFloat("Volume"));
-        SetResolution(options.IndexOf(PlayerPrefs.GetString("Resolution")));
-    }
-
-    public void SetResolution(int resolutionIndex)
-    {
-        if (resolutionIndex < resolutions.Length && resolutionIndex>0)
-        {
-            bool revert = false;
-            if (ControlMenu.activeSelf)
-            {
-                BlackScreen.SetActive(true);
-                ControlMenu.SetActive(false);
-                revert = true;
-            }
-            Resolution resolution = resolutions[resolutionIndex];
-            Screen.SetResolution(resolution.width, resolution.height, Screen.fullScreen);
-            PlayerPrefs.SetString("Resolution", resolution.ToString());
-            if (revert)
-            {
-                ControlMenu.SetActive(true);
-                BlackScreen.SetActive(false);
-            }
-        }
     }
 
     public void SetVolume(float volume_)
@@ -145,17 +95,17 @@ public class SettingsScript : MonoBehaviour
 
     private void RebindCompositeComplete()
     {
-        bindingDisplayNameText[control-1].text = InputControlPath.ToHumanReadableString(
-            inputReferenceArray[control-1].inputActions[0].action.bindings[control].effectivePath,
+        bindingDisplayNameText[control - 1].text = InputControlPath.ToHumanReadableString(
+            inputReferenceArray[control - 1].inputActions[0].action.bindings[control].effectivePath,
             InputControlPath.HumanReadableStringOptions.OmitDevice);
 
-        PlayerPrefs.SetString((control-1).ToString(), inputReferenceArray[0].inputActions[0].action.bindings[control].effectivePath);
+        PlayerPrefs.SetString((control - 1).ToString(), inputReferenceArray[0].inputActions[0].action.bindings[control].effectivePath);
         PlayerPrefs.Save();
         if (rebindCompositeOperation != null)
         {
             rebindCompositeOperation.Dispose();
         }
-        InputController.Instance.SwitchInputMap("PauseGame");
+        ResetActionMap();
     }
 
     public void StartRebinding(int control_)
@@ -181,10 +131,15 @@ public class SettingsScript : MonoBehaviour
 
         PlayerPrefs.SetString(control.ToString(), inputReferenceArray[control].inputActions[0].action.bindings[0].effectivePath);
         PlayerPrefs.Save();
-        if (rebindOperation!=null)
+        if (rebindOperation != null)
         {
             rebindOperation.Dispose();
         }
+        ResetActionMap();
+    }
+
+    public void ResetActionMap()
+    {
         InputController.Instance.SwitchInputMap("PauseGame");
     }
 
