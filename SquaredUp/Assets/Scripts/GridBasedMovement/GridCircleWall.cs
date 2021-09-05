@@ -1,5 +1,5 @@
 ﻿
-public class GridDiagonalCornerCircleWall : GridHittable
+public class GridCircleWall : GridHittable
 {
     public override bool Hit(GridHit hit)
     {
