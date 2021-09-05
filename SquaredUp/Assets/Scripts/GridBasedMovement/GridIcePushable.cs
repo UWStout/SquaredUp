@@ -32,7 +32,7 @@ public class GridIcePushable : GridHittable
     public override bool Hit(GridHit hit)
     {
         // Determine which side the hitter is closer on, vertical or horizontal
-        Vector2 diff = hit.moverPosition - (Vector2)transform.position;
+        Vector2 diff = hit.hitPosition - (Vector2)transform.position;
         bool isHori = Mathf.Abs(diff.x) > Mathf.Abs(diff.y);
 
         slideDirection = hit.direction.ToDirection2D(isHori).ToQuadDirection2D();
