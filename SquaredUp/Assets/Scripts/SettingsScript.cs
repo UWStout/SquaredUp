@@ -17,6 +17,7 @@ public class SettingsScript : MonoBehaviour
     private int control;
     private InputActionRebindingExtensions.RebindingOperation rebindOperation, rebindCompositeOperation, rebindLoopingOperation;
     private string[] move = { "Up", "Down", "Left", "Right" };
+    private bool JustHereFixingShit = false;
 
     public AudioMixer audioMixer;
 
@@ -79,9 +80,7 @@ public class SettingsScript : MonoBehaviour
     {
         control = control_;
         InputController.Instance.SwitchInputMap("EndGame");
-
-
-
+        Debug.Log("Start Rebinding");
         rebindCompositeOperation = inputReferenceArray[0].inputActions[0].action.PerformInteractiveRebinding()
             .WithTargetBinding(control)
             .WithExpectedControlType("Button")
@@ -92,20 +91,24 @@ public class SettingsScript : MonoBehaviour
 
     }
 
-
     private void RebindCompositeComplete()
     {
+        if (JustHereFixingShit)
+        {
+            Debug.Log("FixingShit");
+            return;
+        }
+        Debug.Log("Not Fixing Shit");
         bindingDisplayNameText[control - 1].text = InputControlPath.ToHumanReadableString(
             inputReferenceArray[control - 1].inputActions[0].action.bindings[control].effectivePath,
             InputControlPath.HumanReadableStringOptions.OmitDevice);
-
-        PlayerPrefs.SetString((control - 1).ToString(), inputReferenceArray[0].inputActions[0].action.bindings[control].effectivePath);
-        PlayerPrefs.Save();
+            PlayerPrefs.SetString((control - 1).ToString(), inputReferenceArray[0].inputActions[0].action.bindings[control].effectivePath);
+            PlayerPrefs.Save();
         if (rebindCompositeOperation != null)
         {
             rebindCompositeOperation.Dispose();
         }
-        ResetActionMap();
+        InputController.Instance.PopInputMap("EndGame");
     }
 
     public void StartRebinding(int control_)
@@ -121,6 +124,10 @@ public class SettingsScript : MonoBehaviour
 
     private void RebindComplete()
     {
+        if (JustHereFixingShit)
+        {
+            return;
+        }
         for (int i = 1; i < inputReferenceArray[control].inputActions.Length; i++)
         {
             inputReferenceArray[control].inputActions[i].action.ApplyBindingOverride(0, inputReferenceArray[control].inputActions[0].action.bindings[0].effectivePath);
@@ -128,19 +135,29 @@ public class SettingsScript : MonoBehaviour
         bindingDisplayNameText[control].text = InputControlPath.ToHumanReadableString(
             inputReferenceArray[control].inputActions[0].action.bindings[0].effectivePath,
             InputControlPath.HumanReadableStringOptions.OmitDevice);
-
-        PlayerPrefs.SetString(control.ToString(), inputReferenceArray[control].inputActions[0].action.bindings[0].effectivePath);
-        PlayerPrefs.Save();
+            PlayerPrefs.SetString(control.ToString(), inputReferenceArray[control].inputActions[0].action.bindings[0].effectivePath);
+            PlayerPrefs.Save();
         if (rebindOperation != null)
         {
             rebindOperation.Dispose();
         }
-        ResetActionMap();
+        InputController.Instance.PopInputMap("EndGame");
     }
 
     public void ResetActionMap()
     {
-        InputController.Instance.SwitchInputMap("PauseGame");
+        JustHereFixingShit = true;
+        if (rebindOperation != null)
+        {
+            rebindOperation.Complete();
+        }
+        if (rebindCompositeOperation != null)
+        {
+            rebindCompositeOperation.Complete();
+        }
+        JustHereFixingShit = false;
+        InputController.Instance.PopInputMap("EndGame");
+ 
     }
 
     [Serializable]
