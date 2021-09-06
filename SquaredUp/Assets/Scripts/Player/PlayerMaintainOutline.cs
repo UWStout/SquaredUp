@@ -15,6 +15,12 @@ public class PlayerMaintainOutline : MonoBehaviour
     private Coroutine maintainCoroutine = null;
 
 
+    // Called 1st
+    // Domestic Initialization
+    private void Start()
+    {
+        StartMaintainOutlineCoroutine();
+    }
     // Called when this component is enabled.
     // Subscribe to events.
     private void OnEnable()
