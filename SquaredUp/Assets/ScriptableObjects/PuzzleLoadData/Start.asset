@@ -12,6 +12,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f62c44123be7a9c4893978f1cdfefe9a, type: 3}
   m_Name: Start
   m_EditorClassIdentifier: 
-  startPos: {x: 781, y: 141, z: 0}
+  startPos: {x: -194, y: 189, z: 0}
   shapeUnlockStates: 0100000002000000
   colorUnlockStates: 0100000002000000

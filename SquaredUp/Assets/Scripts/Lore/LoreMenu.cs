@@ -6,7 +6,6 @@ using TMPro;
 [RequireComponent(typeof(Canvas))]
 public class LoreMenu : MonoBehaviour
 {
-    [SerializeField] private PlayerMovement movement; // Used to enable/disable player movement while opening/closing the lore menu
     [SerializeField] private Canvas loreCanvas; // Canvas on which the lore and menu is displayed
     [SerializeField] private LoreTextPickup[] texts = new LoreTextPickup[3];
     [SerializeField] private UnityEngine.UI.Button[] loreButtons = new UnityEngine.UI.Button[3];
@@ -50,6 +49,7 @@ public class LoreMenu : MonoBehaviour
     */
     public void UpdateLore()
     {
+        Debug.Log("Updating lore");
         // Check for each lore that is collected and enable corresponding button
         for (int i = 0; i < texts.Length; ++i)
         {

@@ -18,6 +18,16 @@ public class PauseMenuScript : MonoBehaviour
     [SerializeField] private FadeText saveCompleteText = null;
     [SerializeField] private AsyncLoadSceneWithLoadingBar asyncLoading = null;
 
+    private LoreMenu loreMenuReference = null;
+
+
+    private void Awake()
+    {
+        if (loreMenu != null)
+        {
+            loreMenuReference = loreMenu.GetComponent<LoreMenu>();
+        }
+    }
     void Start()
     {
         if (SceneManager.GetActiveScene().name == "MainMenu")
@@ -58,7 +68,7 @@ public class PauseMenuScript : MonoBehaviour
 
     public void OpenLoreFromPause()
     {
-        loreMenu.GetComponent<LoreMenu>().UpdateLore();
+        loreMenuReference.UpdateLore();
         FlipMenu(pauseMenu, loreMenu);
     }
 
