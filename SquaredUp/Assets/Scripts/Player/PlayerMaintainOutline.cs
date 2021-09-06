@@ -19,7 +19,7 @@ public class PlayerMaintainOutline : MonoBehaviour
     // Domestic Initialization
     private void Start()
     {
-        StartMaintainOutlineCoroutine();
+        UpdateBodyScale();
     }
     // Called when this component is enabled.
     // Subscribe to events.
