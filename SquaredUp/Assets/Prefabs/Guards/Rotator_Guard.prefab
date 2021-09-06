@@ -64,8 +64,8 @@ MonoBehaviour:
   voiceLines:
   - HEY YOU! STOP!!!
   colorSpeed: 0.05
-  viewWidth: 5.98
-  viewHeight: 13.98
+  viewWidth: 5.95
+  viewHeight: 13.95
   rayCount: 1
   layerMask:
     serializedVersion: 2

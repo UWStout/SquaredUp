@@ -20,7 +20,7 @@ MonoBehaviour:
   - HEY YOU! STOP!!!
   colorSpeed: 0.05
   viewWidth: 5.9
-  viewHeight: 13.98
+  viewHeight: 13.95
   rayCount: 10
   layerMask:
     serializedVersion: 2
