@@ -16,7 +16,6 @@ public class KingEnding : MonoBehaviour
     [SerializeField] private string noControlsMapName = "EndGame";
 
     [SerializeField] private Transform playerEndPos = null;
-    [SerializeField] private GameObject levelThreeEntranceWall = null;
 
     private Vector3 kingOriginalPosition = Vector3.zero;
 
@@ -52,7 +51,6 @@ public class KingEnding : MonoBehaviour
     {
         kingTrans.position = kingOriginalPosition;
         PlayerMovement.Instance.SetPlayerPosition(playerEndPos.position);
-        levelThreeEntranceWall.SetActive(false);
         camFollow.StartFollow();
     }
 
