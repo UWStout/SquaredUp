@@ -228,7 +228,7 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-  m_IsOn: 1
+  m_IsOn: 0
 --- !u!1 &226855899510750728
 GameObject:
   m_ObjectHideFlags: 0
@@ -9749,7 +9749,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ed9a4a3991e8bff41bf70bc32e848181, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  movement: {fileID: 0}
   loreCanvas: {fileID: 8761551425655527551}
   texts:
   - {fileID: 0}
