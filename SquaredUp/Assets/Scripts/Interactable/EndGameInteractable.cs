@@ -14,6 +14,7 @@ public class EndGameInteractable : Interactable
 
     private void CenterPlayer()
     {
+        PlayerMovement.Instance.GetComponent<GridMover>().enabled = false;
         EndGameController.Instance.PlayEndGameAnimation();
     }
 }
