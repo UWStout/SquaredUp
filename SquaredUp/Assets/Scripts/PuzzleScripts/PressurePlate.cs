@@ -10,22 +10,16 @@ public class PressurePlate : MonoBehaviour
     [SerializeField] private AudioSource releaseAudio = null;
     // Reference to the pressure plate sprite renderer
     [SerializeField] private SpriteRenderer pressurePlateSpriteRend = null;
+    // Starting color of the pressure plate
+    [SerializeField] private Color defaultColor = Color.white;
     // Color to change the pressure plate when it is triggered
     [SerializeField] private Color pressedColor = Color.white;
     // Amount of objects in the pressure plate's trigger
     private int amountIn = 0;
     // Amount of things that were previously on the pressure plate
     private int previousAmountIn = 0;
-    // Starting color of the pressure plate
-    private Color defaultColor = Color.white;
 
 
-    // Called 1st
-    // Initialization
-    private void Start()
-    {
-        defaultColor = pressurePlateSpriteRend.color;
-    }
     // Called when this object's trigger collides with another physics object
     private void OnTriggerEnter2D(Collider2D collision)
     {

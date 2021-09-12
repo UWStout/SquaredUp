@@ -184,6 +184,7 @@ MonoBehaviour:
   pressDownAudio: {fileID: 2570158700235690530}
   releaseAudio: {fileID: 3090026379382772576}
   pressurePlateSpriteRend: {fileID: 31894339202970533}
+  defaultColor: {r: 0.69803923, g: 0.6784314, b: 0.64705884, a: 1}
   pressedColor: {r: 0.41960785, g: 0.45882353, b: 0.5254902, a: 1}
 --- !u!114 &5140057742371166014
 MonoBehaviour:
