@@ -2073,7 +2073,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   m_text: 'All residents of the second realm are hereby united under the leadership
-    of Lord Sphermoth, the Intrepid. In doing so, the reigning order and authority
+    of Lord Spheremoth, the Intrepid. In doing so, the reigning order and authority
     of Lord Spheremoth is established. '
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: dc91e7f8b7bf20145ba0a1b5a4b68d4c, type: 2}
@@ -4572,7 +4572,7 @@ RectTransform:
   m_GameObject: {fileID: 4945232928463670949}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 0.87429, y: 0.87429, z: 0.87429}
+  m_LocalScale: {x: 0.7, y: 0.7, z: 0.7}
   m_Children: []
   m_Father: {fileID: 8761551425064570106}
   m_RootOrder: 1
@@ -5294,10 +5294,10 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   m_text: Any 3rd dimensional beings other than Lord Spheremoth and his loyal subjects
-    are hereby banished from this plane.  They shall not posses color or unique characteristics.
-    Lord Spheremoth is the one true ruler. Only he is permitted to possess a shape
-    outside of the 2nd dimension. He may also grant this special gift to those he
-    deems worthy.
+    are hereby banished from this plane.  They shall not possess color or unique
+    characteristics. Lord Spheremoth is the one true ruler. Only he is permitted
+    to possess a shape outside of the 2nd dimension. He may also grant this special
+    gift to those he deems worthy.
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: dc91e7f8b7bf20145ba0a1b5a4b68d4c, type: 2}
   m_sharedMaterial: {fileID: -8517254433017266214, guid: dc91e7f8b7bf20145ba0a1b5a4b68d4c, type: 2}
@@ -7080,8 +7080,8 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   m_text: Any resources amassed by the residents of the second realm are hereby subject
-    to inspection and sizure by Lord Spheremoth or those Lord Spheremoth has deemed
-    appropriate for ownership. This includes colors, distinguishing feauters, and
+    to inspection and seizure by Lord Spheremoth or those Lord Spheremoth has deemed
+    appropriate for ownership. This includes colors, distinguishing features, and
     resources, as well as anything Lord Spheremoth determines to be of importance.
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: dc91e7f8b7bf20145ba0a1b5a4b68d4c, type: 2}
@@ -9721,7 +9721,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &8761551425182775915
 Transform:
   m_ObjectHideFlags: 0
