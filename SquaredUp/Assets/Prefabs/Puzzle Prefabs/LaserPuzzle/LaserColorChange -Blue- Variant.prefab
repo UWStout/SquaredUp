@@ -11,6 +11,10 @@ PrefabInstance:
       propertyPath: lineColor
       value: 
       objectReference: {fileID: 2100000, guid: 54cf7ff8d3cced849bd367b8c32728c7, type: 2}
+    - target: {fileID: 683283737237484892, guid: 75236f66de3b05549b364e6d3b3df69f, type: 3}
+      propertyPath: _lineWallLayer
+      value: 14
+      objectReference: {fileID: 0}
     - target: {fileID: 2506033185794637154, guid: 75236f66de3b05549b364e6d3b3df69f, type: 3}
       propertyPath: layerMask.m_Bits
       value: 8664065

@@ -1,13 +1,10 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
 [DisallowMultipleComponent]
 public class LaserColorWallModifier : LaserColliderModifier
 {
     // Color that we need the laser to be to turn off the obstruction
     [SerializeField] private Material requiredColor = null;
-    [SerializeField] private int coloredLayer = 0;
 
 
     /// <summary>
@@ -22,18 +19,8 @@ public class LaserColorWallModifier : LaserColliderModifier
     {
         if (laser.GetLineColor() == requiredColor.color)
         {
-            laser.RemoveLayerFromMask(coloredLayer);
             laser.ShootLaser(incidentDirection);
         }
     }
-    /// <summary>
-    /// Clears the other colored laser and disables the line renderer.
-    /// 
-    /// Called when the laser stops hitting this collider.
-    /// </summary>
-    /// <param name="laser">Laser that stopped hitting the collider.</param>
-    public override void LaserRemoved(Laser laser)
-    {
-        laser.AddLayerToMask(coloredLayer);
-    }
+    public override void LaserRemoved(Laser laser) { }
 }

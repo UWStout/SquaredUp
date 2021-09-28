@@ -5,8 +5,6 @@
 /// </summary>
 public class StartLaserScript : MonoBehaviour
 {
-    // Layer mask to use to detect laser collisions
-    [SerializeField] private LayerMask layerMask = 1;
     // Line renderer to render the laser
     [SerializeField] private LineRenderer lineRenderer = null;
 
@@ -15,10 +13,10 @@ public class StartLaserScript : MonoBehaviour
 
 
     // Called 0th
-    // Domestic Initialization
-    private void Awake()
+    // Foreign Initialization
+    private void Start()
     {
-        laser = new Laser(lineRenderer, transform.position, transform.up, layerMask);
+        laser = new Laser(lineRenderer, transform.position, transform.up);
     }
     // Called once every frame
     private void Update()

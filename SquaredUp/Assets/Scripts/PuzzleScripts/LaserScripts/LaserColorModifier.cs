@@ -1,5 +1,7 @@
 ﻿using UnityEngine;
 
+using NaughtyAttributes;
+
 /// <summary>
 /// LaserColliderModifier that changes the color of the laser.
 /// </summary>
@@ -12,6 +14,8 @@ public class LaserColorModifier : LaserColliderModifier
     [SerializeField] [Min(0)] private float size = 1.5f;
     // Material holding the color to change to
     [SerializeField] private Material lineColor = null;
+    // Layer of the color wall
+    [SerializeField] [Layer] private int _lineWallLayer = 0;
 
     // Active laser that is being shot
     private Laser activeLaser = null;
@@ -43,7 +47,7 @@ public class LaserColorModifier : LaserColliderModifier
         // This is a heavy assumption that the laser is coming from one of four directions and that the object is a uniform size
         Vector2 startPos = hitPoint + incidentDirection * size;
         // Create the new laser (will update automatically from constructor)
-        activeLaser = new Laser(coloredLineRenderer, startPos, incidentDirection, laser);
+        activeLaser = new Laser(coloredLineRenderer, startPos, incidentDirection, new int[] { _lineWallLayer });
 
         // After the new laser has been shot, update the line renderer's last position (beginning position)
         // to be where the other laser ended

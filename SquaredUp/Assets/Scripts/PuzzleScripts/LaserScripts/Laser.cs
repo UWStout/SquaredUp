@@ -40,24 +40,30 @@ public class Laser
     /// <param name="start">Position to cast the laser from. First point of the line renderer.</param>
     /// <param name="direction">Direction to raycast in from the start position.</param>
     /// <param name="laserLayer">Layer to raycast on to detect colliders that the laser interacts with.</param>
-    public Laser(LineRenderer lineRend, Vector2 start, Vector2 direction, LayerMask laserLayer)
+    public Laser(LineRenderer lineRend, Vector2 start, Vector2 direction,
+        int[] removeLayers = null, int[] additionalLayers = null)
     {
         lineRenderer = lineRend;
         startPoint = start;
         initialDirection = direction;
-        layerMask = laserLayer;
+
+        layerMask = LaserLayerController.instance.laserLayerMask;
+        if (removeLayers != null)
+        {
+            foreach (int layer in removeLayers)
+            {
+                RemoveLayerFromMask(layer);
+            }
+        }
+        if (additionalLayers != null)
+        {
+            foreach (int layer in additionalLayers)
+            {
+                AddLayerToMask(layer);
+            }
+        }
 
         UpdateLaser();
-    }
-    /// <summary>
-    /// Constructs a laser. Calls UpdateLaser right away.
-    /// </summary>
-    /// <param name="lineRend">Line renderer to be used to draw the laser.</param>
-    /// <param name="start">Position to cast the laser from. First point of the line renderer.</param>
-    /// <param name="direction">Direction to raycast in from the start position.</param>
-    /// <param name="other">Other laser to copy the layer mask from.</param>
-    public Laser(LineRenderer lineRend, Vector2 start, Vector2 direction, Laser other) : this(lineRend, start, direction, other.layerMask)
-    {
     }
 
 
@@ -160,11 +166,15 @@ public class Laser
     }
     public void RemoveLayerFromMask(int layer)
     {
-        layerMask = layerMask & ~(1 << layer);
+        layerMask = layerMask.RemoveLayer(layer);
     }
     public void AddLayerToMask(int layer)
     {
-        layerMask = layerMask | (1 << layer);
+        layerMask = layerMask.AddAdditionalLayer(layer);
+    }
+    public LayerMask GetLayerMask()
+    {
+        return layerMask;
     }
 
 
