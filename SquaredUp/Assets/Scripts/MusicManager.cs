@@ -116,7 +116,8 @@ public class MusicManager : MonoBehaviour
             current_location = Sector.castle_end;
             //Debug.Log("Castle End");
         } 
-        else if (player.position.x - XSPAWN > 252 -XLVL2 && player.position.x - XSPAWN < 369 -XLVL2 && player.position.y - YSPAWN > -97 && player.position.y - YSPAWN < 114)
+        // 25 is an estimate of how far coords in some Level 3 parts got shifted.
+        else if (player.position.x - XSPAWN > 252 -XLVL2 && player.position.x - XSPAWN < 369 -XLVL2 + 20 && player.position.y - YSPAWN > -97 && player.position.y - YSPAWN < 114)
         {
             current_location = Sector.mountainEntrance;
         }
@@ -125,11 +126,11 @@ public class MusicManager : MonoBehaviour
         {
             current_location = Sector.mountainPath;
         }
-        else if (player.position.x - XSPAWN > 465 -XLVL2 && player.position.x - XSPAWN < 648 -XLVL2 && player.position.y - YSPAWN > -251 && player.position.y - YSPAWN < -68)
+        else if (player.position.x > 465 -XLVL2 + 30 && player.position.x - XSPAWN < 648 -XLVL2 && player.position.y - YSPAWN > -251 && player.position.y - YSPAWN < -68)
         {
             current_location = Sector.mountainVillage;
         }
-        else if (player.position.x - XSPAWN > 648 -XLVL2 && player.position.x - XSPAWN < 853 -XLVL2 && player.position.y - YSPAWN > -212 && player.position.y - YSPAWN < 112)
+        else if (player.position.x> 648 + 25 && player.position.x< 853 && player.position.y> -212 && player.position.y< 112)
         {
             current_location = Sector.mountainPass;
         }
@@ -338,18 +339,8 @@ public class MusicManager : MonoBehaviour
                 }
                 break;
             case Sector.out_of_bounds:
-                //Debug.Log("Out of bounds, no music plays");
-                jungle1.Stop();
-                village.Stop();
-                jungle1.Stop();
-                temple.Stop();
-                desert.Stop();
-                stealth.Stop();
-                mountainEntrance.Stop();
-                mountainPass.Stop();
-                mountainPath.Stop();
-                mountainVillage.Stop();
-                yield return null;
+                break;
+            default:
                 break;
         }
         PMCorotuineIsActive = false;
