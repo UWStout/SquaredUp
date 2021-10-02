@@ -31,19 +31,19 @@ public static class SaveSystem
 
     /// <summary>
     /// For setting the folder we will be saving in.
-    /// If the folder exists, we destroy it.
+    /// If the folder exists, we do nothing.
     /// We create a new folder with the given name.
     /// </summary>
     /// <param name="folderName">String name of the folder we will be saving in. Does not expect / before it.</param>
-    public static void RecreateMainSaveFolder(string folderName)
+    public static void CreateMainSaveFolder(string folderName)
     {
         // Get the fullPath
         string fullPath = Application.persistentDataPath + "/" + folderName;
         // Delete any already existing directory
         if (Directory.Exists(fullPath))
         {
-            DirectoryInfo dir = new DirectoryInfo(fullPath);
-            dir.Delete(true);
+            // No need to reset the directory if it exists already.
+            return;
         }
         // Create a new folder with the path
         Directory.CreateDirectory(fullPath);
@@ -107,5 +107,18 @@ public static class SaveSystem
         // The attempted path
         string path = Application.persistentDataPath + '/' + additionalPath;
         return File.Exists(path);
+    }
+
+    /// <summary>
+    /// Deletes the file at the end of the given path.
+    /// </summary>
+    /// <param name="additionalPath">Additional path from the base folder.</param>
+    public static void DeleteData(string additionalPath)
+    {
+        string path = Application.persistentDataPath + '/' + additionalPath;
+        if (File.Exists(path))
+        {
+            File.Delete(path);
+        }
     }
 }

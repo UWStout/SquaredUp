@@ -10,6 +10,8 @@ public class CanvasSingleton : MonoBehaviour
 
     // Completely black covering the canvas
     [SerializeField] private Image blackImage = null;
+    // Checkpoint popup
+    [SerializeField] private FadeText checkpointPopupText = null;
     // End game menu
     [SerializeField] private GameObject gameOverMenu = null;
 
@@ -36,6 +38,14 @@ public class CanvasSingleton : MonoBehaviour
         }
     }
 
+
+    /// <summary>
+    /// Shows the checkpoint reached text and then fades it.
+    /// </summary>
+    public void ShowCheckpointReached()
+    {
+        checkpointPopupText.ShowThenFade();
+    }
 
     /// <summary>Shows the game over menu.</summary>
     public void ShowGameOverMenu()

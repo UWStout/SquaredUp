@@ -10,6 +10,7 @@ public class DiscardSaveData : MonoBehaviour
     /// </summary>
     public void DeletePreviousSave()
     {
-        SaveManager.ResetSaveFolder();
+        SaveManager.DeleteSave();
+        SaveManager.DeleteSave(SaveManager.CHECKPOINT_SAVE_DATA_FILE_NAME);
     }
 }
