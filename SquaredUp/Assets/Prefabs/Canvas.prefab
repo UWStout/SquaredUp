@@ -861,6 +861,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1968065351764972144}
   - component: {fileID: 1539271995017763560}
+  - component: {fileID: 3916752704691292795}
   m_Layer: 5
   m_Name: Grid HUD
   m_TagString: Untagged
@@ -910,6 +911,19 @@ MonoBehaviour:
   downArrow: {fileID: 4709484655678852871}
   leftArrow: {fileID: 2062951645353233655}
   rightArrow: {fileID: 4623224426328930339}
+--- !u!114 &3916752704691292795
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1968065351764972147}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f11a679f22b7d1044b85fcd6c22100ab, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  skillHUDManager: {fileID: 1539271995017763560}
 --- !u!1 &1968065352838819353
 GameObject:
   m_ObjectHideFlags: 0
@@ -1832,6 +1846,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2417587983397263045}
+  - component: {fileID: 1577797778533805952}
   m_Layer: 5
   m_Name: Shapes
   m_TagString: Untagged
@@ -1862,6 +1877,18 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &1577797778533805952
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2563261371597460891}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3fbdf9072a56fe34391615c22708f6da, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &2714032988425653187
 GameObject:
   m_ObjectHideFlags: 0
@@ -2269,6 +2296,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6135341904557106475}
+  - component: {fileID: 4220789266286787394}
   m_Layer: 5
   m_Name: Colors
   m_TagString: Untagged
@@ -2300,6 +2328,18 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &4220789266286787394
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4230799491741839418}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3fbdf9072a56fe34391615c22708f6da, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &4483003006190477389
 GameObject:
   m_ObjectHideFlags: 0

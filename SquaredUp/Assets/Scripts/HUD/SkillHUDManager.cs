@@ -34,8 +34,8 @@ public class SkillHUDManager : MonoBehaviour
     private Color[] shapeImagesStartColors = new Color[0];
 
     // Indexing information
-    private int colorRowIndex = 0;
-    private int shapeColIndex = 0;
+    public int colorRowIndex { get; set; }
+    public int shapeColIndex { get; set; }
 
     // If the HUD is currently active
     private bool isHUDActive = false;
