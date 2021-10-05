@@ -10,7 +10,7 @@ public static class SaveManager
     // Holder name we will save the data in.
     private const string SAVE_FOLDER_NAME = "saves";
     // File we are saving the save data to.
-    private const string SAVE_DATA_FILE_NAME = "saveFile.savedata";
+    public const string SAVE_DATA_FILE_NAME = "saveFile.savedata";
     // File we are saving the checkpoints to.
     public const string CHECKPOINT_SAVE_DATA_FILE_NAME = "checkpoint.savedata";
 

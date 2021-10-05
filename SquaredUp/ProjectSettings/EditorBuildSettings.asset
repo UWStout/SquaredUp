@@ -11,5 +11,8 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/SquaredUp_Combined.unity
     guid: e0bf11f4a3c5f4048b08571b1d266af8
+  - enabled: 1
+    path: Assets/Scenes/LoadCheckpoint.unity
+    guid: fed3e360095cf3742805ae45868eb5b6
   m_configObjects:
     com.unity.input.settings: {fileID: 11400000, guid: 274377b162da12f4f9f7a790827ba44a, type: 2}

@@ -1752,7 +1752,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a3174f3f5c5b9dc42a9253fa189052a4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  m_pauseMenu: {fileID: 8761551426236527889}
   loadButton: {fileID: 8619998086500401912}
+  m_checkpointLoadSceneName: LoadCheckpoint
 --- !u!1 &1701416546152834932
 GameObject:
   m_ObjectHideFlags: 0
