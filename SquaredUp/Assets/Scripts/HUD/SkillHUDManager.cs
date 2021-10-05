@@ -249,7 +249,6 @@ public class SkillHUDManager : MonoBehaviour
         {
             if (colorRowIndex > 0)
             {
-                colorRow.anchoredPosition += new Vector2(horizontalSpace, 0);
                 --colorRowIndex;
                 UpdateVisuals();
             }
@@ -268,7 +267,6 @@ public class SkillHUDManager : MonoBehaviour
                 Skill colorSkill = SkillController.Instance.GetSkill(SkillController.SkillEnum.Color);
                 if (colorSkill.IsStateUnlocked(colorRowIndex + 1))
                 {
-                    colorRow.anchoredPosition += new Vector2(-horizontalSpace, 0);
                     ++colorRowIndex;
                     UpdateVisuals();
                 }
@@ -282,7 +280,6 @@ public class SkillHUDManager : MonoBehaviour
         {
             if (shapeColIndex > 0)
             {
-                shapeCol.anchoredPosition += new Vector2(0, -verticalSpace);
                 --shapeColIndex;
                 UpdateVisuals();
             }            
@@ -301,7 +298,6 @@ public class SkillHUDManager : MonoBehaviour
                 // And that state is unlocked
                 if (shapeSkill.IsStateUnlocked(shapeColIndex + 1))
                 {
-                    shapeCol.anchoredPosition += new Vector2(0, verticalSpace);
                     ++shapeColIndex;
                     UpdateVisuals();
                 }
@@ -313,6 +309,9 @@ public class SkillHUDManager : MonoBehaviour
     /// Also calls the OnVisualChange event.</summary>
     private void UpdateVisuals()
     {
+        colorRow.anchoredPosition = new Vector2(-colorRowIndex * horizontalSpace, 0);
+        shapeCol.anchoredPosition = new Vector2(0, shapeColIndex * verticalSpace);
+
         UpdateFadeImages();
         UpdateActiveArrows();
         // Call the event for when visuals are updated
