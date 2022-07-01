@@ -9214,7 +9214,7 @@ GameObject:
   - component: {fileID: 1221627577}
   - component: {fileID: 1221627576}
   m_Layer: 0
-  m_Name: Issac
+  m_Name: Isaac
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -9259,7 +9259,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: "Issac Moua \u2013 Narrative / Visual Design"
+  m_text: "Isaac Moua \u2013 Narrative / Visual Design"
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: dc91e7f8b7bf20145ba0a1b5a4b68d4c, type: 2}
   m_sharedMaterial: {fileID: -8517254433017266214, guid: dc91e7f8b7bf20145ba0a1b5a4b68d4c, type: 2}
